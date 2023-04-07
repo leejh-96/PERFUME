@@ -85,28 +85,50 @@
     </style>
     <script type="text/javascript">
     /* 장바구니 수량버튼 시작 */
+    
     function add(productAmount,cartProductCount,cartNo){
     	let result = $('#result'+cartNo).val();
     	let ratio = $('#ratio'+cartNo).text();
     	let price = $('#price'+cartNo).text();
     	let finalprice = $('#finalprice'+cartNo).text();
+    	/* 포맷데이터 , 제거 */
     	let formatprice = price.split(',').join("");
     	let formatfinalprice = finalprice.split(',').join("");
-    	
+    	/* 숫자타입으로 형변환 */
     	parprice = parseInt(formatprice);
     	parfinalprice = parseInt(formatfinalprice);
     	
     	if (ratio == "" || ratio == null || ratio == undefined || ( ratio != null && typeof ratio == "object" && !Object.keys(ratio).length ) ) {
-			console.log('비어있음')
-			++result
-			console.log(result)
-			$('#result'+cartNo).val(result);
 			
-			let won = result * parprice;
+    		/* 혜택이 없고 체크된 상태 체크 */
+    		/* if ($('input[type="checkbox"]:checked')) { */
+    			console.log('비어있음')
+    			++result
+    			console.log(result)
+    			$('#result'+cartNo).val(result);
+    			let won = result * parprice;
+    			let formmat = won.toLocaleString();
+    			$('#finalprice'+cartNo).text(formmat);
+    			
+			/* }else if () {
+				
+			}else {
+				
+			}
+    		 */
+    		
+    		
+    		
+    		
 			
-			let formmat = won.toLocaleString();
 			
-			$('#finalprice'+cartNo).text(formmat);
+			
+			
+			
+			
+			
+			
+			
     	}else {
 			console.log('안비어있음')
 			if (productAmount > result) {
@@ -178,27 +200,61 @@
     let sum = 0;
     let pricesum = 0;
     
-    function cartCheck(cartNo){
+    
+    
+    
+    
+    
+    
+    
+     function cartCheck(cartNo){ 
     	
-    	let result = $('#result'+cartNo).val();
+    	 let result = $('#result'+cartNo).val();
     	let price = $('#price'+cartNo).text();
     	let ratio = $('#ratio'+cartNo).text();
     	let finalprice = $('#finalprice'+cartNo).text();
     	let formatprice = price.split(',').join("");
     	let formatfprice = finalprice.split(',').join("");
-    	
+    	let parseresult = parseInt(result);
+		let parseformatprice = parseInt(formatprice);
+		let parseformatfinalprice = parseInt(formatfprice);
+		let parseratio = parseInt(ratio); 
+		
     	/* 같은 체크박스를 체크했을때 처리로직 */
-    	if ($('input[type="checkbox"]:checked')) {
-    		let amount = parseInt(result);
-    		let parse = parseInt(formatprice);
+    
+    	 if ($('input[type="checkbox"]:checked')) {
+    		 
     		
-    		sum += amount;
-    		pricesum += amount*parse;
+    		if (ratio == "" || ratio == null || ratio == undefined || ( ratio != null && typeof ratio == "object" && !Object.keys(ratio).length ) ) {
+    			sum += parseresult;
+    			pricesum += parseresult*parseformatprice;
+	    		$('#pcspan1').text(new Intl.NumberFormat('ko-kr').format(sum)); 
+	    		$('#pcspan2').text(new Intl.NumberFormat('ko-kr').format(pricesum));
     		
-    		$('#pcspan1').text(sum); 
-    		$('#pcspan2').text(pricesum);
+    		}else {
+    			sum += parseresult;
+    			pricesum += ((parseformatprice-((parseratio/100)*parseformatprice))*parseresult);
+    			$('#pcspan1').text(new Intl.NumberFormat('ko-kr').format(sum)); 
+	    		$('#pcspan2').text(new Intl.NumberFormat('ko-kr').format(pricesum));
+			} 
     		
-    		
+    		/* $('input[type="checkbox"]').prop('checked', false); */
+		 }else{
+			
+			/* $("input[type=checkbox]").prop("checked", true); */
+			
+			let pcspan1 = $('#pcspan1').text();
+			let pcspan2 = $('#pcspan2').text();
+			let formatpcspan2 = pcspan2.split(',').join("");
+			let parsepcspan1 = parseInt(pcspan1);
+			let parseformatpcspan2 = parseInt(formatpcspan2);
+			
+			sum += parsepcspan1-parseresult;
+			pricesum += parseformatpcspan2-parseformatfinalprice;
+			$('#pcspan1').text(new Intl.NumberFormat('ko-kr').format(sum));
+			$('#pcspan2').text(new Intl.NumberFormat('ko-kr').format(pricesum));
+			
+			
 		}
     	
     	
@@ -219,7 +275,7 @@
     	
     	
     	
-    }
+     } 
     
     /* 수량,상품가격,혜택,최종상품금액 */
     /* cartCheck(${cart.cartNo}) */
