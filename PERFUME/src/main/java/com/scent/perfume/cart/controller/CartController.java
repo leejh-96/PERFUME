@@ -22,10 +22,10 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
-	@RequestMapping("/")
+	@RequestMapping("/cartTest")
 	public String test() {
 		
-		return "test";
+		return "cart/test";
 	}
 	
 	@RequestMapping("/cart")
