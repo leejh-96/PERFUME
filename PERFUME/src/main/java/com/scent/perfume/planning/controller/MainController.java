@@ -1,4 +1,4 @@
-package com.scent.perfume;
+package com.scent.perfume.planning.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -33,7 +33,7 @@ public class MainController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "planning/main";
+		return "/planning/main";
 	}
 	
 }
