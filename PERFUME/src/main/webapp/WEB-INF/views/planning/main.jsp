@@ -12,10 +12,10 @@
     <meta charset="UTF-8">
     <title>Perfume</title>
     <!-- CSS 불러오기 -->
-    <link rel="stylesheet" href="${ path }/resources/css/planning/main.css">
+    <link rel="stylesheet" href="${ path }/css/planning/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- jQuery 불러오기 -->
-    <script src="${ path }/resources/js/jquery-3.6.3.js"></script>
+    <script src="${ path }/js/jquery-3.6.3.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <!-- 로그인 API 자바스크립트 불러오기 -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -23,146 +23,6 @@
 	<!-- 부트스트랩 자바스크립트 불러오기 -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
-
-
-	<!-- 스타일 적용되기 전까지만 임시로 ㅠ -->
-	<style>
-		* {
-		    box-sizing: border-box;
-		}
-		
-		body {
-		    margin: 0;
-		    font-family: Arial, sans-serif;
-		}
-		
-		.header-container {
-		    display: flex;
-		    justify-content: space-between;
-		    align-items: center;
-		    width: 1200px;
-		    margin: 0 auto;
-		    padding: 20px;
-		    height: 100px;
-		}
-		
-		.logo {
-		    font-size: 36px;
-		    font-weight: bold;
-		}
-		
-		nav ul {
-		    list-style: none;
-		    margin: 0;
-		    padding: 0;
-		    display: flex;
-		}
-		
-		nav li {
-		    margin-right: 20px;
-		}
-		
-		nav a {
-		    text-decoration: none;
-		    color: #333;
-		    font-size: 18px;
-		    font-weight: bold;
-		}
-		
-		/* 슬라이더 영역 */
-		.slider-container {
-		    max-width: 1200px;
-		    height: 100%;
-		    margin: 0 auto;
-		}
-		
-		/* 메인 아티클 영역*/
-		#article {
-		    height: 400px;
-		    background-color: #f8f7f2;
-		}
-		
-		
-		/* 배너 영역 */
-		#banner {
-		    height: 100px;
-		    background-color: #8f7754;
-		}
-		
-		/* 푸터 영역 */
-		.footer-nav {
-		    display: flex;
-		    justify-content: space-between;
-		    height:200px;
-		    align-items: center;
-		    background-color: #f8f7f2;
-		}
-		
-		.footer-nav ul {
-		    list-style: none;
-		    margin: 0;
-		    padding: 0;
-		    display: flex;
-		    justify-content: space-between;
-		    width: 100%;
-		}
-		
-		.footer-nav li {
-		    width: calc(100%/4);
-		    text-align: center;
-		    margin-top: 30px;
-		}
-		
-		.footer-nav li p {
-		    margin-top: 30px;
-		}
-		
-		.footer-nav li a {
-		    font-size: 30px;
-		}
-		
-		.footer-text {
-		    height: auto;
-		    font-size: large;
-		    text-align: center;
-		    margin-top: 30px;
-		}
-		
-		/* 모달창 CSS */
-		.modal {
-		    display: none;
-		    position: fixed;
-		    z-index: 1;
-		    left: 0;
-		    top: 0;
-		    width: 100%;
-		    height: 100%;
-		    overflow: auto;
-		    background-color: rgba(0,0,0,0.4);
-		}
-		
-		.modal-content {
-		    background-color: #fefefe;
-		    margin: 10% auto;
-		    padding: 20px;
-		    border: 1px solid #888;
-		    width: 80%;
-		}
-		
-		.close {
-		    color: #aaa;
-		    float: right;
-		    font-size: 28px;
-		    font-weight: bold;
-		}
-		
-		.close:hover,
-		.close:focus {
-		    color: black;
-		    text-decoration: none;
-		    cursor: pointer;
-		}
-	</style>
 </head>
 <body>
     <header>
@@ -175,7 +35,7 @@
                     <li><a href="#">SACHET</a></li>
                 </ul>
             </nav>
-            <h1 class="logo">Perfume</h1>
+            <h1 class="logo"><a href="${ path }/">Perfume</a></h1>
             <nav class="user-nav">
                 <ul>
                     <li><a href="#">EVENT</a></li>
@@ -200,8 +60,8 @@
                         <button type="submit">Login</button>
                     </div>
                     <div>
-                        <a href="${ path }/views/member/findId.jsp" id="findId">아이디 찾기</a>    
-                        <a href="${ path }/views/member/findPwd.jsp" id="findPwd">비밀번호 찾기</a><br><br>
+                        <a href="${ path }/views/planning/findId.jsp" id="findId">아이디 찾기</a>    
+                        <a href="${ path }/views/planning/findPwd.jsp" id="findPwd">비밀번호 찾기</a><br><br>
                         <button type="submit">회원가입</button><br><br>
                     </div>
                     <ul style="list-style: none;">
@@ -227,17 +87,17 @@
 	    <div class="carousel-inner">
 	      <div class="carousel-item active">
 	        <a href="#">
-	          <img src="${ path }/webapp/resources/images/planning/slider001.png" class="d-block w-100" alt="Slider Image 1">
+	          <img src="${ path }/images/planning/slider001.png" class="d-block w-100" alt="Slider Image 1">
 	        </a>
 	      </div>
 	      <div class="carousel-item">
 	        <a href="#">
-	          <img src="${ path }/webapp/resources/images/planning/slider002.png" class="d-block w-100" alt="Slider Image 2">
+	          <img src="${ path }/images/planning/slider002.png" class="d-block w-100" alt="Slider Image 2">
 	        </a>
 	      </div>
 	      <div class="carousel-item">
 	        <a href="#">
-	          <img src="${ path }/webapp/resources/images/planning/slider003.png" class="d-block w-100" alt="Slider Image 3">
+	          <img src="${ path }/images/planning/slider003.png" class="d-block w-100" alt="Slider Image 3">
 	        </a>
 	      </div>
 	    </div>
