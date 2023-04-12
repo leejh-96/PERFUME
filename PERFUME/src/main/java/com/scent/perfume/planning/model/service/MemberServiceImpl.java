@@ -1,7 +1,10 @@
 package com.scent.perfume.planning.model.service;
 
+import org.springframework.stereotype.Service;
+
 import com.scent.perfume.planning.model.vo.Member;
 
+@Service
 public class MemberServiceImpl implements MemberService {
 
 	@Override
