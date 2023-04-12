@@ -14,7 +14,7 @@
 <body>
 	장바구니 test
 	
-	<button onclick="location.href='${path}/cart?mNo=3'" name="cart" id="cart" >submit</button>
+	<button onclick="location.href='${path}/cart?memberNo=3'" name="cart" id="cart" >submit</button>
 	
 </body>
 </html>

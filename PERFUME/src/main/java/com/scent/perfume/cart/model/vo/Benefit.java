@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Benefit {
 
-	private int mNo;
+	private int memberNo;
 	private int benefitNo;
 	private int mbiNo;
 	private String mbiStatus;
