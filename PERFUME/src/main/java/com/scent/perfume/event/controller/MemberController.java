@@ -21,6 +21,9 @@ public class MemberController {
 		System.out.println("이벤트 작성 창 연결 테스트");	
 		return "event/eventWrite";
 	}
+	
+	
+	
 
 	
 	
