@@ -10,8 +10,13 @@ import com.scent.perfume.cart.model.mapper.CartMapper;
 import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.cart.model.vo.Cart;
 import com.scent.perfume.cart.model.vo.CartProduct;
-import com.scent.perfume.cart.model.vo.Member;
+import com.scent.perfume.cart.model.vo.CartMember;
+import com.scent.perfume.cart.model.vo.Order;
+import com.scent.perfume.cart.model.vo.OrderList;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class CartServiceImpl implements CartService{
 	
@@ -19,21 +24,21 @@ public class CartServiceImpl implements CartService{
 	private CartMapper cartMapper;
 
 	@Override
-	public Member selectCartMemberInfo(int mNo) {
+	public CartMember selectCartMemberInfo(int memberNo) {
 		
-		Member member = null;
+		CartMember member = null;
 		
-		member = cartMapper.selectCartMemberInfo(mNo);
+		member = cartMapper.selectCartMemberInfo(memberNo);
 		
 		return member;
 	}
 
 	@Override
-	public List<Cart> selectCartInfo(int mNo) {
+	public List<Cart> selectCartInfo(int memberNo) {
 		
 		List<Cart> clist = null;
 		
-		clist = cartMapper.selectCart(mNo);
+		clist = cartMapper.selectCart(memberNo);
 		
 		/* clist.get(0).getBList() */
 		
@@ -44,18 +49,90 @@ public class CartServiceImpl implements CartService{
 		return clist;
 	}
 
-	@Override
-	@Transactional
-	public int amountUpdate(int cartNo, int cartProductCount) {
-		
-		return cartMapper.amountUpdate(cartNo,cartProductCount);
-	}
-
 	/*
-	 * @Override public CartProduct selectCartProductInfo(int cartNo, int productNo)
-	 * {
+	 * @Override
 	 * 
-	 * return cartMapper.selectCartProductInfo(cartNo,productNo); }
+	 * @Transactional public int amountUpdate(int cartNo, int cartProductCount) {
+	 * 
+	 * return cartMapper.amountUpdate(cartNo,cartProductCount); }
 	 */
 
+	@Override
+	@Transactional
+	public int couponUpdate(int memberNo, int benefitNo) {
+		
+		return cartMapper.couponUpdate(memberNo,benefitNo);
+	}
+
+	@Override
+	@Transactional
+	public int couponReset(int memberNo, int benefitNo) {
+		
+		return cartMapper.couponReset(memberNo,benefitNo);
+	}
+
+	@Override
+	@Transactional
+	public int cartDelete(int memberNo, int cartNo) {
+		
+		return cartMapper.cartDelete(memberNo,cartNo);
+	}
+
+	@Override
+	@Transactional
+	public int orderInsert(Order order) {
+		
+		return cartMapper.orderInsert(order);
+	}
+
+	@Override
+	@Transactional
+	public int orderListInsert(OrderList orderList) {
+		
+		return cartMapper.orderListInsert(orderList);
+	}
+
+	@Override
+	public Order orderList(String orderNo) {
+		
+		Order order = null;
+		
+		order = cartMapper.orderList(orderNo);
+		
+		/*
+		 * int result1 = this.memberPointUpdate(order.getPoint(), order.getMemberNo());
+		 * log.info("result1 : {}",result1); int plusPoint =
+		 * (5/100)*order.getFinalPrice();
+		 * 
+		 * int result2 = this.memberPlusPoint(plusPoint, order.getMemberNo());
+		 * log.info("result2 : {}",result2);
+		 */
+		return order;
+	}
+
+	@Override
+	@Transactional
+	public int memberPointUpdate(int point, int memberNo) {
+		
+		log.info("point : {}",point);
+		log.info("memberNo : {}",memberNo);
+		
+		return cartMapper.minusPoint(point,memberNo);
+	}
+
+	@Override
+	@Transactional
+	public int memberPlusPoint(int plusPoint, int memberNo) {
+		
+		log.info("plusPoint : {}",plusPoint);
+		log.info("memberNo : {}",memberNo);
+		
+		return cartMapper.plusPoint(plusPoint,memberNo);
+	}
+	
+		
 }
+
+	
+
+
