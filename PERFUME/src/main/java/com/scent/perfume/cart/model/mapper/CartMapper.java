@@ -9,7 +9,6 @@ import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.cart.model.vo.Cart;
 import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.CartProduct;
-import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.Order;
 import com.scent.perfume.cart.model.vo.OrderList;
 
@@ -41,9 +40,9 @@ public interface CartMapper {
 
 	public String selectOrderPrimaryKey(@Param("orderNo") String orderNo);
 
-	public int minusPoint(@Param("memberNo")int memberNo,@Param("point") int point);
+	public int minusPoint(@Param("point") int point, @Param("memberNo")int memberNo);
 
-	public int plusPoint(@Param("memberNo")int memberNo,@Param("plusPoint") int plusPoint);
+	public int plusPoint(@Param("plusPoint") int plusPoint, @Param("memberNo")int memberNo);
 
 	public Order orderList(@Param("orderNo") String orderNo);
 	
