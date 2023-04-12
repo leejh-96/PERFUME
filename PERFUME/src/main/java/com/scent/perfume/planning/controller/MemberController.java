@@ -1,21 +1,13 @@
 package com.scent.perfume.planning.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.scent.perfume.planning.model.service.MemberService;
@@ -34,11 +26,11 @@ public class MemberController {
 
 	@PostMapping("/login")
 	public ModelAndView login(ModelAndView modelAndView,
-				@RequestParam String id, @RequestParam String password) {
+				@RequestParam String id, @RequestParam String pwd) {
 		
-		log.info("{}, {}", id, password);
+		log.info("{}, {}", id, pwd);
 		
-		Member loginMember = service.login(id, password);
+		Member loginMember = service.login(id, pwd);
 		
 		if(loginMember != null) {
 			modelAndView.addObject("loginMember", loginMember);
@@ -75,41 +67,6 @@ public class MemberController {
 		return "member/enroll";
 	}
 	
-	@PostMapping("/member/enroll")
-	public ModelAndView enroll(ModelAndView modelAndView, @ModelAttribute Member member) {
-		
-		log.info(member.toString());
-		
-		int result = 0;
-		
-		result = service.save(member);
-		
-		if(result > 0) {
-			modelAndView.addObject("msg", "회원가입이 정상적으로 완료되었습니다.");
-			modelAndView.addObject("location", "/");
-		} else {
-			modelAndView.addObject("msg", "회원가입을 실패하였습니다.");
-			modelAndView.addObject("location", "/member/enroll");
-		}
-		
-		modelAndView.setViewName("common/msg");
-		
-		return modelAndView;
-	}
-	
-	@PostMapping("/member/idCheck")	
-	public ResponseEntity<Map<String, Boolean>> idCheck(@RequestParam("userId") String id) {
-		Map<String, Boolean> map = new HashMap<>();
-		
-		map.put("duplicate", service.isDuplicateId(id));
-		
-		return ResponseEntity.ok()
-							 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-							 .body(map);
-//		return new ResponseEntity<Map<String,Boolean>>(map, HttpStatus.OK);
-//		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	}
-	
 	@GetMapping("/member/myPage")
 	public String myPage() {
 		log.info("회원 정보 수정 페이지 요청");
@@ -117,52 +74,23 @@ public class MemberController {
 		return "member/myPage";
 	}
 	
-	@PostMapping("/member/update")
-	public ModelAndView update(
-				ModelAndView modelAndView,
-				@SessionAttribute("loginMember") Member loginMember,
-				@ModelAttribute Member member) {
+	@GetMapping("/planning/findId")
+	public String findId() {
+		log.info("아이디 찾기 페이지 요청");
 		
-		int result = 0;
-		
-		member.setNo(loginMember.getNo());
-		
-		log.info(member.toString());
-		
-		result = service.save(member);
-		
-		if(result > 0) {
-			modelAndView.addObject("loginMember", service.findMemberById(loginMember.getId()));
-			modelAndView.addObject("msg", "회원 정보 수정을 완료했습니다.");
-		} else {
-			modelAndView.addObject("msg", "회원 정보 수정을 실패했습니다.");			
-		}
-		
-		modelAndView.addObject("location", "/member/myPage");
-		modelAndView.setViewName("common/msg");
-		
-		return modelAndView;
+		return "planning/findId";
 	}
 	
-	@GetMapping("/member/delete")
-	public ModelAndView delete(
-				ModelAndView modelAndView, 
-				@SessionAttribute("loginMember") Member loginMember) {
-	
-		int result = 0;
+	@GetMapping("/planning/findPwd")
+	public String findPwd() {
+		log.info("비밀번호 찾기 페이지 요청");
 		
-		result = service.delete(loginMember.getNo());
-		
-		if(result > 0) {
-			modelAndView.addObject("msg", "정상적으로 탈퇴되었습니다.");
-			modelAndView.addObject("location", "/logout");
-		} else {
-			modelAndView.addObject("msg", "회원 탈퇴를 실패하였습니다.");
-			modelAndView.addObject("location", "/member/myPage");
-		}
-		
-		modelAndView.setViewName("common/msg");
-		
-		return modelAndView;
+		return "planning/findPwd";
 	}
+	
+	// 카카오 로그인 API
+	RestTemplate restTemplate = new RestTemplate();
+	String url = "https://kauth.kakao.com/.well-known/openid-configuration";
+	String response = restTemplate.getForObject(url, String.class);
+	
 }

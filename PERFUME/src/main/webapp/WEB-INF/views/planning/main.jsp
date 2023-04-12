@@ -40,8 +40,19 @@
                 <ul>
                     <li><a href="#">EVENT</a></li>
                     <li><a href="#">COMMUNITY</a></li>
-                    <li><a href="#" class="openLogin">LOGIN</a></li>
-                    <li><a href="#">JOIN</a></li>
+                    <c:if test="${ empty loginMember }">
+	                    <li><a href="#" class="openLogin">LOGIN</a></li>
+	                    <li><a href="#">JOIN</a></li>
+                    </c:if>
+                    <c:if test="${ not empty loginMember }">
+						<li><a href="${ path }/logout">LOGOUT</a></li>
+						<c:if test="${ not empty loginMember && loginMember.division == '2' }">
+							<li><a href="#">MY PAGE</a></li>                                        
+						</c:if>
+						<c:if test="${ not empty loginMember && loginMember.division == '1' }">
+							<li><a href="#">ADMIN PAGE</a></li>                                        
+						</c:if>              
+                    </c:if>
                 </ul>
             </nav>
         </div>
@@ -51,17 +62,18 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2 style="text-align: center;">LOGIN</h2>
-                <form>
+                <form id="loginForm" action="${ path }/login" method="POST">
                     <div>
                         <label for="id" style="font-weight: bold;">아이디</label><br>
                         <input type="text" id="id" name="id" required placeholder="아이디를 입력하세요."><br>
-                        <label for="password" style="font-weight: bold;">비밀번호</label><br>
-                        <input type="password" id="password" name="password" required placeholder="비밀번호를 입력하세요."><br><br>
-                        <button type="submit">Login</button>
+                        <label for="pwd" style="font-weight: bold;">비밀번호</label><br>
+                        <input type="password" id="pwd" name="pwd" required placeholder="비밀번호를 입력하세요."><br><br>
+                        <button type="submit">Login</button><br><br>
                     </div>
+                </form>
                     <div>
-                        <a href="${ path }/views/planning/findId.jsp" id="findId">아이디 찾기</a>    
-                        <a href="${ path }/views/planning/findPwd.jsp" id="findPwd">비밀번호 찾기</a><br><br>
+                        <button type="button" id="findId"><a href="${ path }/planning/findId">아이디 찾기</a></button>
+                        <button type="button" id="findPwd"><a href="${ path }/planning/findPwd">비밀번호 찾기</a></button><br><br>
                         <button type="submit">회원가입</button><br><br>
                     </div>
                     <ul style="list-style: none;">
@@ -70,7 +82,6 @@
                         <li onclick="googleLogin();"><button type="button" href="javascript:void(0)">구글로 로그인</button></li>
                         <li onclick="appleLogin();"><button type="button" href="javascript:void(0)">애플로 로그인</button></li>
                     </ul>
-                </form>
             </div>
         </div>
     </header>
