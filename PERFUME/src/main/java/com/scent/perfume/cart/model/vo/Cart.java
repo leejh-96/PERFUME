@@ -22,7 +22,7 @@ public class Cart {
 	private Date cartDate;
 	private Date cartUpdateDate;
 	private CartProduct cartProduct;
-	private List<Member> memberList;
+	private List<CartMember> memberList;
 	private Benefit benefitList;
 
 }
