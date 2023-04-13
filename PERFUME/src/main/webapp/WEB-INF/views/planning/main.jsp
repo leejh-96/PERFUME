@@ -15,10 +15,6 @@
     <link rel="stylesheet" href="${ path }/css/planning/main.css">
     <!-- jQuery 불러오기 -->
     <script src="${ path }/js/jquery-3.6.3.js"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <!-- 로그인 API 자바스크립트 불러오기 -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/planning/header.jsp"/>

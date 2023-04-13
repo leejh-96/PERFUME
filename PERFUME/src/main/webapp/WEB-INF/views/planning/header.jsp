@@ -13,13 +13,10 @@
     <title>Perfume</title>
     <!-- CSS 불러오기 -->
     <link rel="stylesheet" href="${ path }/css/planning/header.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- jQuery 불러오기 -->
     <script src="${ path }/js/jquery-3.6.3.js"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <!-- 로그인 API 자바스크립트 불러오기 -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 </head>
 <body>
     <header>
@@ -27,7 +24,7 @@
             <nav class="main-nav">
                 <ul>
                     <li><a href="#">ABOUT US</a></li>
-                    <li><a href="#">SPECIAL</a></li>
+                    <li><a href="${ path }/planning/special">SPECIAL</a></li>
                     <li><a href="#">SCENT</a></li>
                     <li><a href="#">SACHET</a></li>
                 </ul>
@@ -132,15 +129,6 @@
 	        },
 	        })
 	    }
-	
-	    // 네이버로 로그인 구현
-	    var naver_id_login = new naver_id_login("e8Ese8BEMBY_9FWnW9xY", "http://localhost:8088/perfume/");
-		var state = naver_id_login.getUniqState();
-		naver_id_login.setButton("white", 2,40);
-		naver_id_login.setDomain("http://localhost:8088");
-		naver_id_login.setState(state);
-		naver_id_login.setPopup();
-		naver_id_login.init_naver_id_login();
     </script>
         
     </header>

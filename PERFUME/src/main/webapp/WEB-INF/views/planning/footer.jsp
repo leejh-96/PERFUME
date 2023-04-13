@@ -11,16 +11,16 @@
         <div>
             <nav class="footer-nav">
                 <ul>
-                    <li><a href="#">GIFT</a>
-                        <p>지금 당장 당신의 마음을 보여주세요.</p>
+                    <li><a href="#">NOTICE</a>
+                        <p>PERFUME의 중요 소식을 확인해보세요.</p>
                     </li>
                     <li><a href="#">SAMPLE</a>
                         <p>적당량의 SAMPLE을 소개합니다.</p>    
                     </li>
-                    <li><a href="#">시향지 요청</a>
-                        <p>원하는 향을 신청해보세요.</p>
+                    <li><a href="#">EVENT</a>
+                        <p>다양한 이벤트에 참여해보세요</p>
                     </li>
-                    <li><a href="#">문의하기</a>
+                    <li><a href="#">ASK</a>
                         <p>언제나 고객과 함께하겠습니다.</p>
                     </li>
                 </ul>
