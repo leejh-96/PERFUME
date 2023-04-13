@@ -211,6 +211,7 @@ public class CartController {
 		return "cart/orderList";
 	}
 	
+	@ResponseBody
 	@RequestMapping("/order/pointUpdate/{point}/{memberNo}")
 	public int pointUpdate(@PathVariable("point") int point,
 						   @PathVariable("memberNo") int memberNo) {
@@ -221,6 +222,7 @@ public class CartController {
 		return cartService.memberPointUpdate(point,memberNo);
 	}
 	
+	@ResponseBody
 	@RequestMapping("/order/plusPoint/{plusPoint}/{memberNo}")
 	public int plusPoint(@PathVariable("plusPoint") int plusPoint,
 						 @PathVariable("memberNo") int memberNo) {

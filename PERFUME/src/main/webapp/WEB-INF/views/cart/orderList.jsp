@@ -196,10 +196,10 @@
                 <div class="col ordercomplete-table">
                     <!-- 주문상품정보 -->
                     <table class="table table-borderless table-sm">
-                        <tr>
+                        <!-- <tr>
                             <td>상품금액</td>
                             <td><span></span>원</td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td>배송비</td>
                             <td>+${order.delivery}원</td>
