@@ -14,23 +14,23 @@ body {
 #article {
     height: 400px;
     background-color: #f8f7f2;
+    display: flex; /* flexbox 사용 */
+  	align-items: center; /* 수직 정렬 */
 }
 
 .slick-slider {
-	width: 50%;
-	height: 100%;
+	display: flex; /* flexbox 사용 */
+	align-items: center; /* 수직 정렬 */
 }
 
-.slick-slider div {
-	height: 100%;
-	background-color: #d8d8d8;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 24px;
-	font-weight: bold;
-	color: #000;
+.slick-slider > div {
+	flex-shrink: 0; /* 크기 조정 금지 */
+	text-align: center; /* 수평 정렬 */
+	background-color: #eee; /* 슬라이드의 배경색 지정 */
+	margin: 0 5px; /* 요소 간 좌우 간격 설정 */
+	padding: 10px 0; /* 슬라이드의 내부 여백 설정 */
 }
+
 
 /* 배너 영역 */
 #banner {
