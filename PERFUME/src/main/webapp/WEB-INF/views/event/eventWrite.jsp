@@ -118,7 +118,7 @@
                         </tr>                       
                         <tr>
                             <td id="contentBody"colspan="4">
-	                            <textarea id="summernote" name="content" rows="15" cols="50"></textarea>
+	                            <textarea id="summernote" name="content" rows="1" cols="1"></textarea>
                             </td>
                         </tr>    
                     </thead>
