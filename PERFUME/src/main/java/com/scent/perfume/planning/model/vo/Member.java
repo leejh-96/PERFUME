@@ -1,9 +1,10 @@
 package com.scent.perfume.planning.model.vo;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import oracle.sql.DATE;
 
 @Data
 @NoArgsConstructor
@@ -23,7 +24,7 @@ public class Member {
 	
 	private String name;
 	
-	private DATE birht;
+	private Date birth;
 	
 	private String gender;
 	
@@ -35,9 +36,9 @@ public class Member {
 	
 	private int point;
 	
-	private DATE create;
+	private Date create;
 	
-	private DATE update;
+	private Date update;
 	
 	private String mailStatus;
 }
