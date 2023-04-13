@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* 슬라이더 영역 */
+.slider-container {
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+}
