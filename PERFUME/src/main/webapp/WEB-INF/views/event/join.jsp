@@ -281,7 +281,7 @@
             </div>
         </div>
 <!-- 전화번호 인증 버튼 연결 챗 gpt 확인하기 -->
-        <div class="form-group">
+        <div class="form-group">    
             <div class="col-md-6 mb-3">
                 <label for="phone">전화번호</label>
                 <div id="phDiv">
