@@ -430,7 +430,10 @@
         }, false);
 
     })();
-
+    
+    $(document).ready(function(){
+    	
+    
         // 아이디 체크
         $('#userId').keyup((event) => {
         // let id = event.target.value;                // 자바스크립트용 표현
@@ -662,6 +665,8 @@
                 .css({color: 'red', fontweight: 'bold'});
         }
         });
+        
+    }); /* 도큐먼트레디함수마무리 */
 
 
         // 약관 동의 전체 체크 기능
