@@ -1,0 +1,89 @@
+package com.scent.perfume.event.controller;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.scent.perfume.util.MultipartFileUtil;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+public class EventController {
+	@Autowired
+	private ResourceLoader resourceLoader;
+		// ResourceLoader 스프링에서 리소스 읽어오는 빈, 조금 더 편하게 읽어오게 만들어줌
+	
+	
+	// 게시글 작성 연결
+	@RequestMapping("/eventWrite")
+	public String eventView() {
+		System.out.println("이벤트 작성 창 연결 테스트");
+		return "event/eventWrite";
+	}	
+	
+	// 썸머노트 다중 이미지 업로드
+	@RequestMapping(value="/uploadSummernoteImageFile", method= RequestMethod.POST, produces="application/json; charset=utf8")
+	@ResponseBody
+	public Object uploadSummernoteImageFile(@RequestParam("file") MultipartFile upfile,
+			HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<>();
+		
+		
+		// 1. 파일을 업로드 했는지 확인 후 파일을 저장(물리적 위치에)
+		if(upfile != null && !upfile.isEmpty()) {	// !upfile.isEmpty() => false이면. 비었다의 반대니까 false
+			String location = null;
+			String renamedFileName = null;
+			
+			try {
+				location = resourceLoader.getResource("resources/upload/event").getFile().getPath();
+						// resourceLoader를 통해 지정한 폴더에서 파일을 가져와서, 파일의 경로를 가져옴
+				
+				System.out.println("로케이션" + location);
+				
+				renamedFileName = MultipartFileUtil.save(upfile, location);
+				
+				System.out.println("리네임 파일 네임 " + renamedFileName);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+//			// vo Board board 오브젝트에 값 set 해주기
+//			if(renamedFileName != null) {
+//				board.setOriginalFileName(upfile.getOriginalFilename());
+//				board.setRenamedFileName(renamedFileName);
+//			}
+			
+			
+			
+			if(renamedFileName != null) {
+				map.put("url", request.getContextPath() + "/resources/upload/event/" + renamedFileName);
+				map.put("responseCode", "success");
+				System.out.println("마지막 로케이션" + location);
+				System.out.println("맵 url : " + map.get("url"));
+				System.out.println("성공했나용");
+			} else {
+				map.put("responseCode", "error");
+				System.out.println("실패했나용");
+				}
+				
+		
+			}
+			return map;
+	
+	}
+
+}
