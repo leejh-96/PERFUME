@@ -25,18 +25,18 @@
                 <ul>
                     <li><a href="#">ABOUT US</a></li>
                     <li><a href="${ path }/planning/special">SPECIAL</a></li>
-                    <li><a href="#">SCENT</a></li>
+                    <li><a href="${ path }/product/list">SCENT</a></li>
                     <li><a href="#">SACHET</a></li>
                 </ul>
             </nav>
             <h1 class="logo"><a href="${ path }/">Perfume</a></h1>
             <nav class="user-nav">
                 <ul>
-                    <li><a href="#">EVENT</a></li>
+                    <li><a href="${ path }/eventList">EVENT</a></li>
                     <li><a href="#">COMMUNITY</a></li>
                     <c:if test="${ empty loginMember }">
 	                    <li><a href="#" class="openLogin">LOGIN</a></li>
-	                    <li><a href="#">JOIN</a></li>
+	                    <li><a href="${ path }/join">JOIN</a></li>
                     </c:if>
                     <c:if test="${ not empty loginMember }">
 						<li><a href="${ path }/logout">LOGOUT</a></li>
@@ -69,7 +69,7 @@
                     <div>
                         <a href="${ path }/planning/findId"><button type="button" id="findId">아이디 찾기</button></a>
                         <a href="${ path }/planning/findPwd"><button type="button" id="findPwd">비밀번호 찾기</button></a><br><br>
-                        <button type="submit">회원가입</button><br><br>
+                        <button type="button" onclick="location.href='${ path }/join';">회원가입</button><br><br>
                     </div>
                     <ul style="list-style: none;">
                         <li onclick="naverLogin();"><button type="button">네이버로 로그인</button></li>
