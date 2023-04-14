@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+#title {
+	margin-top: 50px;
+	margin-bottom: 70px;
+}
+
+h2 {
+	text-align: center;
+}
+
+#special-content {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+#special-content > div:first-child {
+	margin-right: 20px;
+}

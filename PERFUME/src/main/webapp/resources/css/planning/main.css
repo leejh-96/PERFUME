@@ -39,16 +39,6 @@ body {
     background-color: red;
 }
 
-.slick-prev,
-.slick-next {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 30px;
-	height: 30px;
-	background-color: #fff;
-}
-
 /* 배너 영역 */
 #banner {
 	text-align: center;
