@@ -3,6 +3,7 @@ package com.scent.perfume.event.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.scent.perfume.event.model.service.EventServiceImpl;
 import com.scent.perfume.util.MultipartFileUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,12 +28,53 @@ public class EventController {
 	private ResourceLoader resourceLoader;
 		// ResourceLoader 스프링에서 리소스 읽어오는 빈, 조금 더 편하게 읽어오게 만들어줌
 	
+	@Autowired
+	EventServiceImpl eventServiceImpl;
+	
+	// 회원가입 페이지 연결
+	@RequestMapping("/aboutSite")
+	public String aboutSite() {
+		System.out.println("사이트 소개창 연결 테스트");
+		return "event/aboutSite";
+	}
+	
+	
 	// 회원가입 페이지 연결
 	@RequestMapping("/join")
 	public String join() {
 		System.out.println("회원가입 창 연결 테스트");
 		return "event/join";
-	}	
+	}
+	
+	// 문자 메세지 전송 컨트롤러
+	@RequestMapping("/sendSMS") //jsp 페이지 넘긴 mapping 값
+	@ResponseBody    
+    public String sendSMS(String phoneNumber) {
+ 
+		//랜덤숫자 생성
+        Random rand  = new Random();
+        String numStr = "";
+        for(int i=0; i<4; i++) {
+            String ran = Integer.toString(rand.nextInt(10));
+            numStr+=ran;
+        }
+        
+        // 휴대폰 api 쪽으로 가기
+        eventServiceImpl.certifiedPhoneNumber(phoneNumber, numStr);
+        
+        //찐으로 쓸 때  return numStr; 서비스 api도 변경하기
+        return "0000";
+    }
+	
+	
+	
+	
+	
+//////////////////////////////////////////////////////위 회원가입 아래 이벤트 게시판/////////////////////////////////////////////////////////////////////////	
+	
+	
+	
+	
 
 	// 이벤트 게시판 연결
 	@RequestMapping("/eventList")
@@ -61,7 +104,6 @@ public class EventController {
 			HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<>();
 		
-		
 		// 1. 파일을 업로드 했는지 확인 후 파일을 저장(물리적 위치에)
 		if(upfile != null && !upfile.isEmpty()) {	// !upfile.isEmpty() => false이면. 비었다의 반대니까 false
 			String location = null;
@@ -87,8 +129,6 @@ public class EventController {
 //				board.setRenamedFileName(renamedFileName);
 //			}
 			
-			
-			
 			if(renamedFileName != null) {
 				map.put("url", request.getContextPath() + "/resources/upload/event/" + renamedFileName);
 				map.put("responseCode", "success");
@@ -99,11 +139,16 @@ public class EventController {
 				map.put("responseCode", "error");
 				System.out.println("실패했나용");
 				}
-				
-		
 			}
-			return map;
-	
+		
+			return map;	
 	}
 
+	
+	
+	
+//////////////////////////////////////////////////////위 이벤트 게시판 아래 이벤트 내용 /////////////////////////////////////////////////////////////////////////
+	
+	
+	
 }
