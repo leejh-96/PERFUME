@@ -88,9 +88,10 @@ public class MemberController {
 		return "planning/findPwd";
 	}
 	
-	// 카카오 로그인 API
-	RestTemplate restTemplate = new RestTemplate();
-	String url = "https://kauth.kakao.com/.well-known/openid-configuration";
-	String response = restTemplate.getForObject(url, String.class);
-	
+	@GetMapping("/planning/special")
+	public String special() {
+		log.info("기획전 페이지 요청");
+		
+		return "planning/special";
+	}
 }

@@ -14,26 +14,45 @@ body {
 #article {
     height: 400px;
     background-color: #f8f7f2;
+    display: flex; /* flexbox 사용 */
+  	align-items: center; /* 수직 정렬 */
 }
 
 .slick-slider {
-	width: 50%;
-	height: 100%;
+	display: flex; /* flexbox 사용 */
+	align-items: center; /* 수직 정렬 */
+	overflow: hidden; /* 슬라이더 영역 보이지 않게 처리 */
+	white-space: nowrap; /* 슬라이드 요소를 한 줄로 배치 */
 }
 
-.slick-slider div {
-	height: 100%;
-	background-color: #d8d8d8;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 24px;
-	font-weight: bold;
-	color: #000;
+.slick-slider > div {
+	flex-shrink: 0; /* 크기 조정 금지 */
+	text-align: center; /* 수평 정렬 */
+	margin: 0 5px; /* 요소 간 좌우 간격 설정 */
+	padding: 10px 0; /* 슬라이드의 내부 여백 설정 */
+	display: inline-block;
+}
+
+.slick-slider > div img {
+    width: 100px;
+    height: 150px;
+    background-color: red;
+}
+
+.slick-prev,
+.slick-next {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 30px;
+	height: 30px;
+	background-color: #fff;
 }
 
 /* 배너 영역 */
 #banner {
-    height: 100px;
-    background-color: #8f7754;
+	text-align: center;
+	width: 100%;
+    height: 100%;
+    margin: 0 auto;
 }
