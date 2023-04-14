@@ -26,10 +26,30 @@ public class EventController {
 	private ResourceLoader resourceLoader;
 		// ResourceLoader 스프링에서 리소스 읽어오는 빈, 조금 더 편하게 읽어오게 만들어줌
 	
+	// 회원가입 페이지 연결
+	@RequestMapping("/join")
+	public String join() {
+		System.out.println("회원가입 창 연결 테스트");
+		return "event/join";
+	}	
+
+	// 이벤트 게시판 연결
+	@RequestMapping("/eventList")
+	public String eventList() {
+		System.out.println("이벤트 게시판 창 연결 테스트");
+		return "event/eventList";
+	}	
+
+	// 이벤트 게시글 연결
+	@RequestMapping("/eventView")
+	public String eventView() {
+		System.out.println("이벤트 상세 게시글 연결 테스트");
+		return "event/eventView";
+	}
 	
 	// 게시글 작성 연결
 	@RequestMapping("/eventWrite")
-	public String eventView() {
+	public String eventWrite() {
 		System.out.println("이벤트 작성 창 연결 테스트");
 		return "event/eventWrite";
 	}	
