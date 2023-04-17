@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.scent.perfume.event.model.service.EventServiceImpl;
-import com.scent.perfume.util.MultipartFileUtil;
+import com.scent.perfume.common.util.*;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.scent.perfume.util;
+package com.scent.perfume.common.util;
 
 import java.io.File;
 import java.io.IOException;

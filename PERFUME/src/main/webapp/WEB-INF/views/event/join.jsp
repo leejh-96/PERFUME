@@ -152,7 +152,7 @@
         <div class="form-group">
             <div class="col-md-6 mb-3">
                 <label for="userId">아이디</label>
-                <input type="text" class="form-control" id="userId" placeholder="아이디 입력" pattern="^[a-z][a-z0-9]{3,11}$"
+                <input type="text" name="id" id="userId" class="form-control" placeholder="아이디 입력" pattern="^[a-z][a-z0-9]{3,11}$"
                         data-toggle="tooltip" data-placement="top" title="첫 글자는 반드시 영문 소문자, 4 ~ 12자의 영문 소문자 숫자" required>
                 <span id="idCheck" style="font-size: small;"></span>
             </div>
@@ -160,7 +160,7 @@
         <div class="form-group">
             <div class="col-md-6 mb-3">
                 <label for="password">비밀번호</label>
-                <input type="password" id="password" class="form-control" placeholder="비밀번호 입력" 
+                <input type="password" name="pwd" id="password" class="form-control" placeholder="비밀번호 입력" 
                         data-toggle="tooltip" data-placement="top" title="하나 이상의 대소문자, 하나의 숫자 및 하나의 특수 문자(!,@,$,%,&,*)를 포함한 8 ~ 12자"
                         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$" required>
                 <span id="pwdCheck" style="font-size: small;"></span>
@@ -177,7 +177,7 @@
         <div class="form-group">
             <div class="col-md-6 mb-3">
                 <label for="name">이름</label>
-                <input type="text" id="name" class="form-control" placeholder="이름 입력"
+                <input type="text" name="name" id="name" class="form-control" placeholder="이름 입력"
                         pattern="^[가-힣]{2,10}$" required>
                 <span id="nameCheck" style="font-size: small;"></span>
             </div>
@@ -191,8 +191,8 @@
             </div>
             <div id="divBirth2" class="form-row">
                 <div id="divBirth3" class="col-md-6 mb-3">
-                    <input type="text" class="form-control" id="birth-year" placeholder="년" pattern="^(19[0-9][0-9]|20\d{2})$" required>
-                    <select class="custom-select" id="birth-month" required>
+                    <input type="text" name="birthYear" id="birth-year" class="form-control" placeholder="년" pattern="^(19[0-9][0-9]|20\d{2})$" required>
+                    <select name="birthMonth" id="birth-month" class="custom-select" required>
                         <option selected disabled value="">월</option>
                         <option value="01">1월</option>
                         <option value="02">2월</option>
@@ -207,7 +207,7 @@
                         <option value="11">11월</option>
                         <option value="12">12월</option>
                     </select>
-                    <input type="text" class="form-control" id="birth-date" placeholder="일" required>
+                    <input type="text" name="birthDate" id="birth-date" class="form-control" placeholder="일" required>
                     <small id="birthHelpBlock" class="form-text text-muted">
                     년(네 자리 ex.1995) 일(두 자리 ex.01)로 입력해주세요.
                     </small>
@@ -218,7 +218,7 @@
         <div class="form-group">
             <div class="col-md-6 mb-3">
                 <label for="gender">성별</label>
-                <select class="custom-select" id="gender" name="gender" required>
+                <select name="gender" id="gender" class="custom-select" required>
                     <option selected disabled value="">성별</option>
                     <option value="01">남성</option>
                     <option value="02">여성</option>
@@ -228,7 +228,7 @@
         <div class="form-group">
             <div class="col-md-6 mb-3">
                 <label for="email">이메일</label>
-                <input type="email" id="email" class="form-control" placeholder="이메일 입력"
+                <input type="email" name="mail" id="email" class="form-control" placeholder="이메일 입력"
                         pattern="^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$" required>
                 <small id="emailHelpBlock" class="form-text text-muted">
                     이메일 인증을 위해 필수 입력사항입니다.
@@ -241,7 +241,7 @@
             <div class="col-md-6 mb-3">
                 <label for="phone">전화번호</label>
                 <div id="phDiv">
-                    <input type="tel" id="phone" class="form-control" placeholder="휴대폰 번호를 입력해주세요" pattern="^[0-9]{10,11}$" required>
+                    <input type="tel" name="phone" id="phone" class="form-control" placeholder="휴대폰 번호를 입력해주세요" pattern="^[0-9]{10,11}$" required>
                     <button type="button" id="btnPh1" class="btn btn-secondary" disabled>인증번호 받기</button><br>
                 </div>
                 <div>
@@ -263,13 +263,13 @@
                     <input type="button" id="addressBtn"class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
                 </div>
                 <div class="addressDiv">
-                    <input type="text" id="sample6_address" class="form-control" placeholder="주소" >
+                    <input type="text" name="addr1" id="sample6_address" class="form-control" placeholder="주소" >
                 </div>
                 <div class="addressDiv">
-                    <input type="text" id="sample6_detailAddress"class="form-control"  placeholder="상세주소">
+                    <input type="text" name="addr2" id="sample6_detailAddress" class="form-control" placeholder="상세주소">
                 </div>
                 <div class="addressDiv">
-                    <input type="text" id="sample6_extraAddress" class="form-control" placeholder="참고항목">
+                    <input type="text" name="addr3" id="sample6_extraAddress" class="form-control" placeholder="참고항목">
                 </div>
             </div>
         </div>
@@ -318,7 +318,7 @@
 
 ⑥이 약관에서 정하지 아니한 사항과 이 약관의 해석에 관하여는 전자상거래 등에서의 소비자보호에 관한 법률, 약관의 규제 등에 관한 법률, 공정거래위원회가 정하는 전자상거래 등에서의 소비자 보호지침 및 관계법령 또는 상관례에 따릅니다.</pre>
                     </div>
-                    <label class="form-check-label"><input type="checkbox" name="option2" id="optional-agreement" class="form-check-input"> <b>[선택]</b> 마케팅 용도와 광고성 정보 수신에 동의합니다.</label>
+                    <label class="form-check-label"><input type="checkbox" name="tCheck" id="optional-agreement" class="form-check-input"> <b>[선택]</b> 마케팅 용도와 광고성 정보 수신에 동의합니다.</label>
                     <button type="button" id="btnAgr2" class="btn btn-secondary btn-sm" onclick="showOptionalAgreement()">+</button>
                     <div id="optional-agreement-content" class="divAgr">
                         <h6><b>선택 약관</b></h6>
