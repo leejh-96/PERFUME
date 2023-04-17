@@ -1,6 +1,9 @@
 package com.scent.perfume.event.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -9,14 +12,24 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.scent.perfume.event.model.service.EventService;
 import com.scent.perfume.event.model.service.EventServiceImpl;
+import com.scent.perfume.event.model.vo.Terms;
+import com.scent.perfume.planning.model.vo.Member;
 import com.scent.perfume.common.util.*;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +40,12 @@ public class EventController {
 	@Autowired
 	private ResourceLoader resourceLoader;
 		// ResourceLoader 스프링에서 리소스 읽어오는 빈, 조금 더 편하게 읽어오게 만들어줌
-	
+	@Autowired
+	private EventService service;
 	@Autowired
 	EventServiceImpl eventServiceImpl;
 	
-	// 회원가입 페이지 연결
+// 사이트 소개 페이지 연결
 	@RequestMapping("/aboutSite")
 	public String aboutSite() {
 		System.out.println("사이트 소개창 연결 테스트");
@@ -39,14 +53,26 @@ public class EventController {
 	}
 	
 	
-	// 회원가입 페이지 연결
-	@RequestMapping("/join")
+// 회원가입 페이지 연결
+	@GetMapping("join")
 	public String join() {
 		System.out.println("회원가입 창 연결 테스트");
 		return "event/join";
 	}
 	
-	// 문자 메세지 전송 컨트롤러
+// 아이디 중복 검사
+	@PostMapping("/event/idCheck")
+	public ResponseEntity<Map<String, Boolean>> idCheck(@RequestParam("id") String id){	
+		Map<String, Boolean> map = new HashMap<>();
+		
+		map.put("duplicate", service.isDuplicateId(id));
+		
+		return ResponseEntity.ok()
+							 .header(HttpHeaders.CONTENT_TYPE, MediaType
+							 .APPLICATION_JSON_VALUE).body(map);		
+	}
+	
+// 전화번호 인증 문자 메세지 전송 컨트롤러
 	@RequestMapping("/sendSMS") //jsp 페이지 넘긴 mapping 값
 	@ResponseBody    
     public String sendSMS(String phoneNumber) {
@@ -66,7 +92,47 @@ public class EventController {
         return "0000";
     }
 	
+// 회원가입
+	@PostMapping("join")
+	public ModelAndView login(ModelAndView modelAndView, @ModelAttribute Member member, @ModelAttribute Terms terms,
+					@RequestParam("birthYear") String birthYear, @RequestParam("birthMonth") String birthMonth, @RequestParam String birthDate, 
+					@RequestParam("addr1") String addr1, @RequestParam(required = false) String addr2, @RequestParam(required = false) String addr3, @RequestParam(defaultValue = "N") String tCheck) {
 	
+		log.info(member.toString());
+		log.info("join() - 호출 : {} {} {} {} {} {} {}", new Object[] {birthYear, birthMonth, birthDate, addr1, addr2, addr3, tCheck});
+
+		// 생년월일 합치기
+		Date birth = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		try {
+			birth =(Date) sdf.parse(birthYear + birthMonth + birthDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}        
+        member.setBirth(birth);
+        
+        // 주소 합치기
+        String addr = addr1 + " " + addr2 + " " + addr3;
+        member.setAddr(addr);
+        
+		log.info(member.toString());
+		
+		int result = 0;
+		
+		result = service.save(member, terms, tCheck);	// tCheck 선택약관동의
+		
+		if(result > 0) {
+			modelAndView.addObject("msg", "회원가입이 정상적으로 완료되었습니다. 등록한 이메일을 확인하시고 이메일 인증을 완료해 주시기 바랍니다.");
+			modelAndView.addObject("location", "/");
+		} else {
+			modelAndView.addObject("msg", "회원가입이 정상적으로 완료되지 않았습니다. 다시 시도해주십시오.");
+			modelAndView.addObject("location", "/join");			
+		}
+
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+	}
 	
 	
 	

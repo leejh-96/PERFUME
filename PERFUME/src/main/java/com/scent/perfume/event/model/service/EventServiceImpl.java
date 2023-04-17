@@ -3,7 +3,14 @@ package com.scent.perfume.event.model.service;
 import java.util.HashMap;
 
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.scent.perfume.event.model.mapper.EventMapper;
+import com.scent.perfume.event.model.vo.Terms;
+import com.scent.perfume.planning.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.api.Message;
@@ -12,6 +19,12 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 @Slf4j
 @Service
 public class EventServiceImpl implements EventService {
+	// 매퍼
+	@Autowired
+	private EventMapper mapper;
+	// 비밀번호 암호화
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	// 회원가입 전화번호인증 문자전송
 	public void certifiedPhoneNumber(String phoneNumber, String numStr) {
@@ -37,5 +50,42 @@ public class EventServiceImpl implements EventService {
 
    }
 
+// 회원가입
+	@Override
+	@Transactional // 트랜잭션 처리(커밋 롤백)를 해주는 메소드
+	public int save(Member member, Terms terms, String tCheck) {
+		
+		int result = 0;
+		int mNo = 0;
+		
+		if(member.getNo() > 0) {
+			// update
+			
+		} else {
+			// insert
+			// 패스워드 암호화
+			member.setPwd(passwordEncoder.encode(member.getPwd()));
+			
+			// Member에 값 넣기
+			mapper.insertMember(member);
+			
+			// db에서 id와 일치하는 mNo값 가져오기
+			mNo = mapper.selectMnoById(member.getId());
+			
+			terms.setMNo(mNo);
+			terms.setTCheck(tCheck);
+			
+			// 가져온 mNo로 Terms에 값 넣기
+			result = mapper.insertTerms(terms);
+		}
+		
+		return result;
+	}
+
+// 회원가입 아이디 중복 검사
+	@Override
+	public Boolean isDuplicateId(String id) {
+		return mapper.selectMemberById(id) != null;
+	}
 
 }
