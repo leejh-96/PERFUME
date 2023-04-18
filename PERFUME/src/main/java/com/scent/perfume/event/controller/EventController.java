@@ -122,7 +122,7 @@ public class EventController {
 		result = service.save(member, terms, tCheck);	// tCheck 선택약관동의
 		
 		if(result > 0) {
-			modelAndView.addObject("msg", "회원가입이 정상적으로 완료되었습니다. 등록한 이메일을 확인하시고 이메일 인증을 완료해 주시기 바랍니다.");
+			modelAndView.addObject("msg", "회원가입 인증 이메일이 발송되었습니다. 등록한 이메일을 확인해주시고 인증 절차를 거쳐주시기 바랍니다.");
 			modelAndView.addObject("location", "/");
 		} else {
 			modelAndView.addObject("msg", "회원가입이 정상적으로 완료되지 않았습니다. 다시 시도해주십시오.");
