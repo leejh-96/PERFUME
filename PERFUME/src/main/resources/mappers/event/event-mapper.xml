@@ -65,5 +65,15 @@
 		)	
 	</insert>
 	
+<!-- 회원가입 이메일 인증
+	id를 통해 M_MAILSTATUS 컬럼 난수로 변경 -->
+	<update id="getKey" parameterType="map">
+		UPDATE MEMBER SET M_MAILSTATUS = #{key} WHERE M_ID = #{id}
+	</update>
+	<!-- M_MAILSTATUS Y로 변경 -->
+	<update id="updateMMailStatus" parameterType="map">
+		UPDATE MEMBER SET M_MAILSTATUS = 'Y' WHERE M_ID = #{id} AND M_MAILSTATUS = #{key}
+	</update>
+	
 	
 </mapper>

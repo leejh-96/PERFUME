@@ -15,15 +15,20 @@
   <title>aboutSite</title>
 
   <style>
-    body{
+  	body{
       background-color: #f6f6f2;
-    }
+  	}
+  	:not(header){
+      background-color: #f6f6f2;
+  	}
     section{
       width: 1200px;
+      text-align: center;
       margin-left: auto;
       margin-right: auto;
     }
     .img{
+      width: 80%;
       margin-left: auto;
       margin-right: auto;
     }
@@ -32,10 +37,10 @@
 <script src="${ path }/js/jquery.fade-in.js"></script>
 </head>
 <body>
-  <section>
-    <img class="img fade-in" src="images/aboutSite/001.png">
-    <img class="img fade-in" src="${ path }/images/aboutSite/002.png">
-    <img class="img fade-in" src="${ path }/images/aboutSite/003.png">
-  </section>
-</body>
-</html>
+	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
+	<section>
+			<img class="img fade-in" src="images/aboutSite/001.png">
+			<img class="img fade-in" src="${ path }/images/aboutSite/002.png">
+			<img class="img fade-in" src="${ path }/images/aboutSite/003.png">
+	</section>
+ <jsp:include page="/WEB-INF/views/planning/footer.jsp"/>
