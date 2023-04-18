@@ -148,7 +148,7 @@
 
     <h6 style="color:red;">아이디, 이메일 전화 번호 중복 검사 ajax로, 약관 체크박스 변경 셀렉트 색상 변경, 비번 안전 보통 등등, 유효성 검사 완료해야 폼 넘어가게</h6>
     <h1 id="title" align="center">회원가입</h1>
-    <form class="needs-validation" name="memberJoinFrm" action="${ path }/join" method="POST" novalidate>
+    <form class="needs-validation" name="memberJoinFrm" action="${ path }/join" method="POST" onsubmit="return check()" novalidate>
         <div class="form-group">
             <div class="col-md-6 mb-3">
                 <label for="userId">아이디</label>
@@ -333,7 +333,7 @@
             </div>
         </div>
         <div id="submitDiv">
-            <button id="btnSubmit" class="btn btn-secondary btn-lg" type="submit" onclick="return check();" >회원가입</button>
+            <button id="btnSubmit" class="btn btn-secondary btn-lg" type="submit" >회원가입</button>
         </div>
     </form>
     </section>
@@ -341,10 +341,6 @@
     
 
     <script>
-
-//    let validate = [];
-//    let validate = false;
-
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function() {
 
@@ -574,7 +570,6 @@
 	//휴대폰 번호인증
 	var code2 = "";
 		$("#btnPh1").click(function(){
-		    alert('인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.');
 		    var phone = $("#phone").val();
 		    $.ajax({
 		        type:"POST",				// post 형식으로 발송
@@ -599,14 +594,108 @@
 		        alert('인증되었습니다.')
 		        $('#btnPh1').attr("disabled", true);
 		        $('#btnPh2').attr("disabled", true);
+		        $('#verification-code').attr("disabled", true);
+		        $('#phoneCheck').text("전화번호 인증이 완료되었습니다.").css({color: 'green', fontweight: 'bold'});
 		    }else{
 		        alert('인증을 실패하였습니다.')
+		        $('#phoneCheck').text("전화번호 인증을 완료하지 못했습니다. 다시 시도해주세요.").css({color: 'red', fontweight: 'bold'});
 		    }
 		});
-         
-     
+  	
     }); /* 도큐먼트레디함수마무리 */
 
+    // 제출 유효성 검사
+    function check(){
+    	
+    	var inval_Arr = new Array(10).fill(false);
+
+       	//아이디 체크
+       	if(document.getElementById("idCheck").style.color === 'red'){
+       		document.getElementById("idCheck").focus();
+   	        inval_Arr[0] = false;
+       	} else {
+       		inval_Arr[0] = true;
+       	}    
+
+       	// 비밀번호 체크
+ 	   	if(document.getElementById("pwdCheck").style.color === 'red'){
+   	        inval_Arr[1] = false;
+   	    } else {
+   	    	inval_Arr[1] = true;    	
+   	    }
+   	    	
+   	    // 비번 일치 체크	
+       	if(document.getElementById("conPwdCheck").style.color === 'red'){
+   	        inval_Arr[2] = false;
+   	    } else {
+   	    	inval_Arr[2] = true;	    	
+   	    }
+    	    	
+   	    // 이름 체크	
+       	if(document.getElementById("nameCheck").style.color === 'red'){
+   	        inval_Arr[3] = false;
+   	    } else {
+   	    	inval_Arr[3] = true;
+   	    }
+   	    	
+   	    // 생년월일 체크	
+       	if(document.getElementById("birthCheck").style.color === 'red'){
+           	inval_Arr[4] = false;
+   	    } else {
+   	    	inval_Arr[4] = true; 	
+   	    }
+   	    	
+   	    // 이메일 체크	
+       	if(document.getElementById("emailCheck").style.color === 'red'){
+   	        inval_Arr[5] = false;
+   	    } else {
+   	    	inval_Arr[5] = true;	    	
+   	    }
+   	    	
+   	    // 폰 정규식 체크	
+       	if(document.getElementById("phoneCheck").style.color === 'red'){
+   	        inval_Arr[6] = false;
+   	    } else {
+   	    	inval_Arr[6] = true;	    	
+   	    }
+   	    	
+   	   	// 폰 인증 체크	
+		if(!document.getElementById("verification-code").disabled){
+   	        inval_Arr[7] = false;
+   	    } else {
+   	    	inval_Arr[7] = true;
+   	    }
+   	    	
+   	    // 주소 체크	
+       	if((document.getElementById("sample6_postcode").value === null || document.getElementById("sample6_postcode").value === '')
+           || (document.getElementById("sample6_address").value === null || document.getElementById("sample6_address").value === '')){
+           	inval_Arr[8] = false;
+   	    } else {
+   	    	inval_Arr[8] = true;
+   	    }
+   	    
+   	    // 필수약관 체크
+       	if(!document.getElementById("essential-agreement").checked){
+   	        inval_Arr[9] = false;
+   	    } else {
+   	    	inval_Arr[9] = true;
+   	    }
+   	    	
+       	let validAll = true;
+       	for(let i = 0; i < inval_Arr.length; i++){
+       	  if(inval_Arr[i] === false){
+       	    validAll = false;
+       	  }
+       	}
+
+       	if(validAll){
+       	  return true;
+       	} else {
+       	  alert('입력한 정보들을 다시 한 번 확인해 주세요.');
+       	  return false;
+       	}
+    }
+    
 
         // 약관 동의 전체 체크 기능
         function checkAll() {
