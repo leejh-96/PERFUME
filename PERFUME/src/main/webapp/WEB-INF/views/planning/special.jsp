@@ -15,14 +15,13 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/planning/slider.jsp"/>
     
 	<div id="title">
 		<h2>기획전</h2>
 	</div>
 	<div>
 		<div id="special-content" class="special01">
-			<div><a href="#"><img src="${ path }/images/planning/special01.png"></a></div>
+			<div><a href="${ path }/planning/special01"><img src="${ path }/images/planning/special01.png"></a></div>
 			<div class="text">
 				<p>기획전 1</p>
 				<p>기획전 1 디테일 내용</p>
@@ -31,7 +30,7 @@
 		</div>
 		
 		<div id="special-content" class="special02">
-			<div><a href="#"><img src="${ path }/images/planning/special02.png"></a></div>
+			<div><a href="${ path }/planning/special02"><img src="${ path }/images/planning/special02.png"></a></div>
 			<div class="text">
 				<p>기획전 2</p>
 				<p>기획전 2 디테일 내용</p>
@@ -40,7 +39,7 @@
 		</div>
 		
 		<div id="special-content" class="special03">
-			<div><a href="#"><img src="${ path }/images/planning/special03.png"></a></div>
+			<div><a href="${ path }/planning/special03"><img src="${ path }/images/planning/special03.png"></a></div>
 			<div class="text">
 				<p>기획전 3</p>
 				<p>기획전 3 디테일 내용</p>
@@ -49,7 +48,7 @@
 		</div>
 		
 		<div id="special-content" class="special04">
-			<div><a href="#"><img src="${ path }/images/planning/special04.png"></a></div>
+			<div><a href="${ path }/planning/special04"><img src="${ path }/images/planning/special04.png"></a></div>
 			<div class="text">
 				<p>기획전 4</p>
 				<p>기획전 4 디테일 내용</p>
@@ -58,7 +57,7 @@
 		</div>
 		
 		<div id="special-content" class="special05">
-			<div><a href="#"><img src="${ path }/images/planning/special05.png"></a></div>
+			<div><a href="${ path }/planning/special05"><img src="${ path }/images/planning/special05.png"></a></div>
 			<div class="text">
 				<p>기획전 5</p>
 				<p>기획전 5 디테일 내용</p>

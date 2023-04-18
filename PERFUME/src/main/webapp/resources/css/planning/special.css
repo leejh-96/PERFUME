@@ -18,3 +18,21 @@ h2 {
 #special-content > div:first-child {
 	margin-right: 20px;
 }
+
+.product-info {
+	display: flex;
+}
+
+.product-img {
+	flex: 1;
+	text-align: center;
+}
+
+.product-text {
+	flex: 2;
+	padding: 0 0 0 20px;
+}
+
+.product-img a img {
+	width: 20%;
+}
