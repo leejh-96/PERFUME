@@ -47,5 +47,17 @@
 		WHERE M_ID = #{id} AND M_STATUS = 'Y'
 	</select>
 	
+	
+	<select id="getMemberByEmail" parameterType="string" resultType="string">
+		SELECT M_ID
+		FROM MEMBER
+		WHERE M_MAIL = #{userEmail}
+	</select>
+	
+	<select id="getPassword" parameterType="map" resultType="string">
+		SELECT M_PWD
+		FROM MEMBER
+		WHERE M_NAME = #{userName} AND M_ID = #{userId} AND M_MAIL = #{userEmail}
+	</select>
 </mapper>
 
