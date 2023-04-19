@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -29,6 +30,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.scent.perfume.event.model.service.EventService;
 import com.scent.perfume.event.model.service.EventServiceImpl;
 import com.scent.perfume.event.model.service.UserMailSendService;
+import com.scent.perfume.event.model.vo.Board;
+import com.scent.perfume.event.model.vo.MemberBenefitInfo;
 import com.scent.perfume.event.model.vo.Terms;
 import com.scent.perfume.planning.model.vo.Member;
 import com.scent.perfume.cart.model.vo.Benefit;
@@ -145,31 +148,39 @@ public class EventController {
 	
 // 이메일 인증 컨트롤러 전송된 이메일 링크 타면 나오는 페이지 연결
 	@GetMapping("/join/key_update")
-	public String key_alterConfirm(@RequestParam("m_id") String id, @RequestParam("m_mailstatus") String key, Benefit benefit) {
+	public String key_alterConfirm(@RequestParam("m_id") String id, @RequestParam("m_mailstatus") String key, Benefit benefit, MemberBenefitInfo memBenefitInfo) {
 								// UserMailSendService 서비스의 mailSendWithUserKey 메소드 a태그 내 url에서 name 속성 지정한 값을 RequestParam의 속성명으로 주기 
-		mailsender.alter_userKey_service(id, key, benefit);
+		mailsender.alter_userKey_service(id, key, benefit, memBenefitInfo);
 		
 		return "event/userJoinSuccess";
 	}
-	
-
 	
 	
 //////////////////////////////////////////////////////위 회원가입 아래 이벤트 게시판/////////////////////////////////////////////////////////////////////////	
 	
 	
-	
-	
-
 	// 이벤트 게시판 연결
-	@RequestMapping("/eventList")
-	public String eventList() {
+	@GetMapping("/eventList")
+	public ModelAndView eventList(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
 		System.out.println("이벤트 게시판 창 연결 테스트");
-		return "event/eventList";
+		
+		int listCount = service.getEventCount();
+		
+		log.info("page : {}", page);
+		log.info("listCount : {}", listCount);
+		
+		PageInfo pageInfo = new PageInfo(page, 10, listCount, 10);
+		List<Board> list = service.getEventList(pageInfo);
+		
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("list", list);
+		modelAndView.setViewName("evetn/eventList");
+		
+		return modelAndView;
 	}	
 
 	// 이벤트 게시글 연결
-	@RequestMapping("/eventView")
+	@GetMapping("/eventView")
 	public String eventView() {
 		System.out.println("이벤트 상세 게시글 연결 테스트");
 		return "event/eventView";

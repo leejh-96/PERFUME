@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>boardList</title>
+    <title>eventList</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <style>
@@ -75,9 +75,11 @@
     <section>
         <h2 align="center">EVENT</h2>
         <div id="boardListTable">
-            <div id="writeButton">    
-                <button type="button" class="btn btn-outline-secondary btn-sm">글쓰기</button>
-                <button type="button" class="btn btn-outline-secondary btn-sm">쿠폰등록</button>
+            <div id="writeButton">
+            	<c:if test="${ loginMember.어드민일때만 보이게 }">
+					<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${ path }/event/eventWrite'">글쓰기</button>
+		            <button type="button" class="btn btn-outline-secondary btn-sm">쿠폰등록</button>
+				</c:if>
             </div>
             <br><br>
             <table id="boardList" class="table table-hover">
@@ -89,21 +91,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="">1</td>
-                        <td class="">제목</td>
-                        <td class="">날짜</td>
-                    </tr>
-                    <tr>
-                        <td class="">2</td>
-                        <td class="">Jacob</td>
-                        <td class="">Thornton</td>
-                    </tr>
-                    <tr>
-                        <td class="" scope="row">3</td>
-                        <td class="">Larry the Bird</td>
-                        <td class="">@twitter</td>
-                    </tr>
+                	<c:if test="${ empty list }">
+						<tr>
+							<td colspan="3">
+								조회된 게시글이 없습니다.
+							</td>
+						</tr>	
+					</c:if>
+					<c:if test="${ not empty list }">
+						<c:forEach var="event" items="${ list }">
+							<tr>
+		                        <td>${ event.no }</td>
+		                        <td>
+		                        	<a href="${ path }/event/eventView?no=${ event.bNo }">
+<!-- 이미지 가져오기 -->
+		                        	</a>
+		                        	<a href="${ path }/event/eventView?no=${ event.bNo }">
+			                        	${ event.bTitle }
+		                        	</a>
+		                        </td>
+		                        <td>
+		                        	<fmt:formatDate type="date" value="${ event.bCreateDate }" />
+		                        </td>
+		                    </tr>
+						</c:forEach>
+					</c:if>
                 </tbody>
             </table>
         </div>
@@ -123,15 +135,30 @@
                 </div>
             </form>
             <div id="pageBar">
-                <button type="button" class="btn btn-outline-secondary">&laquo;</button>
-                <button type="button" class="btn btn-outline-secondary">&lsaquo;</button>
-                <button type="button" class="btn btn-outline-secondary">1</button>
-                <button type="button" class="btn btn-outline-secondary">2</button>
-                <button type="button" class="btn btn-outline-secondary">3</button>
-                <button type="button" class="btn btn-outline-secondary">4</button>
-                <button type="button" class="btn btn-outline-secondary">5</button>
-                <button type="button" class="btn btn-outline-secondary">&rsaquo;</button>
-                <button type="button" class="btn btn-outline-secondary">&raquo;</button>
+            	<!-- 맨 처음으로 -->
+                <button type="button" class="btn btn-outline-secondary"
+                		onclick="location.href='${ path }/event/eventList?page=1'">&laquo;</button>
+                <!-- 이전 페이지로 -->
+                <button type="button" class="btn btn-outline-secondary"
+                		onclick="location.href='${ path }/event/eventList?page=${ pageInfo.prevPage }'">&lsaquo;</button>
+                <!-- 5개 페이지 목록 -->
+                <c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
+					<c:choose>
+						<c:when test="${ status.current == pageInfo.currentPage}">
+							<button class="btn btn-outline-secondary" disabled>${ status.current }</button>
+						</c:when>
+						<c:otherwise>						
+							<button class="btn btn-outline-secondary"
+									onclick="location.href='${ path }/event/eventList?page=${ status.current }'">${ status.current }</button>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<!-- 다음 페이지로 -->
+                <button type="button" class="btn btn-outline-secondary"
+                		onclick="location.href='${ path }/event/eventList?page=${ pageInfo.nextPage }'">&rsaquo;</button>
+                <!-- 맨 끝으로 -->
+                <button type="button" class="btn btn-outline-secondary"
+                		onclick="location.href='${ path }/event/eventList?page=${ pageInfo.maxPage }'">&raquo;</button>
             </div>
         </div>
     </section>

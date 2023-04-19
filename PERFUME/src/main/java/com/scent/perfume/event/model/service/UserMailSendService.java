@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.event.model.mapper.EventMapper;
+import com.scent.perfume.event.model.vo.MemberBenefitInfo;
 
 // 메일 보내는 서비스
 @Service
@@ -92,26 +92,29 @@ public class UserMailSendService {
 
 	}
 
-	// 인증 확인 메소드(M_MAILSTATUS Y로 바꾸는 메소드)
+	// 메일 인증 확인 메소드(M_MAILSTATUS Y로 바꾸는 메소드)
 	// 회원가입 쿠폰 증정 메소드
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class})
-	public int alter_userKey_service(String id, String key, Benefit benefit) {
+	public int alter_userKey_service(String id, String key, Benefit benefit, MemberBenefitInfo memBenefitInfo) {
 
 		int result = 0;
 		int mNo = 0;
+		int bnNo = 0;
 		
 		mapper.updateMMailStatus(id, key);
 		
-		// 회원가입 쿠폰 발급 BENEFIT table에 insert
+		// 회원가입 쿠폰 발급
+		// BENEFIT table에 insert
 		mapper.insertBenefit(benefit);
-		// 쿠폰 발급 
-		//mapper.selectBenefit
 		
-		// 받아온 id로 회원 번호 찾기 M_NO
+		// id로 회원 번호 가져오기
 		mNo = mapper.selectMnoById(id);
 		
+		bnNo = benefit.getBenefitNo();
+			// benefit.getBenefitNo > eventmapper.xml의 insertBenefit()의 useGeneratedKeys="true" keyColumn="BN_NO" keyProperty="benefitNo" 속성으로 값을 넣어줘서 가져올 수 있음
 		
-		
+		// BENEFIT BN_NO와 mNo를 갖고 MEMBER_BENEFIT_INFO 테이블 insert
+		result = mapper.insertMemberBenefitInfo(bnNo, mNo, memBenefitInfo);
 		return result;
 	}
 
