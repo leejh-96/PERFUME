@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Product {
 
+	String pmname;
+	
+	String ptname;
+	
 	int pno;
 	
 	int PMno;
@@ -42,6 +46,10 @@ public class Product {
 	List<ProductBenefit> productbenefit;
 	
 	List<PBenefit> benefit;
+	
+	List<ProductFile> productfile;
+	
+	List<ProductBoard> productboard;
 	
 	Date date;
 	

@@ -23,17 +23,24 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
   <script src="${path }/js/jquery-3.6.3.js"></script>
   <script src="${path }/slick/slick.min.js"></script>
 
 
+<link rel="stylesheet" href="${ path }/css/planning/slider.css">
+<link rel="stylesheet" href="${ path }/css/planning/footer.css">
+
+
+<link rel="stylesheet" href="${ path }/css/planning/header.css">
   <link rel="stylesheet" href="${path }/slick/slick-theme.css">
   <link rel="stylesheet" href="${path }/slick/slick.css">
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Open+Sans&display=swap');
     
         div * {
-/*              border: 2px solid red;   */
+/*             border: 2px solid red;     */
             box-sizing: border-box;
             
         }
@@ -43,12 +50,13 @@
         }
         #section2_1{
             font-family: 'Nanum Myeongjo', serif;
-        /* background-color: #f6f6f2; */
+/*          background-color: #f6f6f2;  */
         }
         .wrap {
             width:100%;
-            height:3500px;
+            height:4000px;
             margin:auto;
+            font-family: 'Nanum Myeongjo', serif;
         }
 
         #header{
@@ -61,7 +69,6 @@
         }
 
         #header1{ width: 30%;}
-        #navigator{ width: 50%; }
         #header2{ width: 20%; }
         #header>div {
             float: left;
@@ -73,23 +80,15 @@
             
         }
 
-        #footer {
-            height: 8%;
-            background-color: rgb(157, 226, 203);
+/*         #footer { */
+/*             height: 8%; */
+/*             background-color: rgb(157, 226, 203); */
         
-        }
-        #section1 {height: 15%;
+/*         } */
+        #section1 {height: 17%;
              /* border-bottom: 1px solid;  */
-             background-color: rgb(54, 58, 62);
-             font-size: small; }
-          #section2 {height: 85%; } 
-
-        /* #section3 {height: 8%; text-align: center;}
-
-        #section4 {height: 10%;}
-
-        #section5 {height: 45%;} */
-       
+          }
+       #section2 {height: 83%; } 
 
        #section2>div {height: 100%; float: left;}
        #aside1 {width: 12%;}
@@ -119,79 +118,20 @@
        #s5_brand>div { float: left; height: 100%;}
     
 
-       #listwrap {height: 70%; }
-       #pagebar {height: 30%; text-align: center; }
+       #listwrap {height: 80%; }
+       #pagebar {height: 20%; text-align: center; }
 
 
 
-        
+      
 
-        #navi{
-            list-style-type: none;
-            margin:0;
-            padding:0;
-            height:100%;
-            
-        }
+/*         h2 { */
+/*             line-height: 0; */
+/*         } */
 
-        #navi>li{
-            float:left;
-            width:25%;
-            height:100%;
-            text-align:center;
-            font-size:11px;
-            line-height:35px;
-           
-        }
-
-        #navi a{
-            text-decoration: none;
-            font-size: 1.4em;
-            font-weight: 900;
-            height: 100%;
-            line-height: 3;
-        }
-
-        #navi a:hover{
-            color: darkblue;
-        }
-
-        #navi>li>ul{
-            list-style-type: none;
-            padding: 0;
-            display: none;
-        }
-
-        #navi>li>a:hover+ul{
-            display: block;
-        }
-
-        #navi>li>ul:hover {
-            display: block;
-        }
-
-        #navi>li>ul a{
-            font-size: 1.4em;
-        }
-
-        h2 {
-            line-height: 0;
-        }
-
-        a{  
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 900;
-        line-height: 3.5;
-        }
-
-        a:hover {
-        text-decoration : none;
-        font-size: 11px;
-        }
 
     #scent {
-    font-size: 25px;
+    font-size: 27px;
     font-weight: bold;
     }
     
@@ -308,45 +248,51 @@
   padding: 10px;
 } */
 
-    .spinner-wrapper{
+   .spinner-wrapper{
+       background-color: white;
+       position: fixed;
        top: 0;
        left: 0;
        width: 100%;
-       height: 30%;
+       height: 100%;
        z-index: 9999;
        display: flex;
        justify-content: center;
        align-items: center;
-       transition: all 2s;
+       transition: all 1.2s;
     }  
 
-    .spinner-wrapper2{
-       top: 0;
-       left: 0;
-       width: 100%;
-       height: 30%;
-       z-index: 9999;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       transition: all 2s;
-    }  
-
+    
     .spinner-border {
-        height: 40px;
-        width: 40px;
+       height: 30px;
+        width: 30px;
+        border: 2px solid;
+   
+        border-top: 2px solid white;
     }
 
-    .etcsymbols{ text-align: center; background-color: white;} 
-    .p-status{text-align: right; height: 10%; padding: 5px;}
+    .etcsymbols{ text-align: right; background-color: white;} 
+    .p-status-wrap{border-bottom: 25px solid  transparent;
+    border-top: 25px solid rgb(231, 231, 135); width:0; height: 0;
+    border-left: 25px solid rgb(216, 201, 134);
+    border-right: 25px solid transparent;
+  
+    }
 
 
     .link {
         color: #333;
-        font-size: 11px;
+         font-size: 13px; 
+          font-weight: 900;
+          line-height: 3.5;
+         
     }
 
- 
+ 	
+ 	 .link:hover {
+        text-decoration : none;
+        font-size: 13px;
+        }
 
     .slider .slick-list {
     margin:0 -20px;
@@ -356,7 +302,11 @@
     margin:0 20px;
 }
 
-.scentname {width: 100%; background-color: white; opacity: 0.8; text-align: center; font-weight: bold;  } 
+.scentcate {
+    box-shadow: 1px 1px 10px #bbb;
+}
+
+.scentname {width: 100%;  opacity: 0.9; text-align: right; font-weight: bold;    } 
 
     .banner>div{ height: 80%;float: left;}
     .btn_best {
@@ -430,55 +380,157 @@
 	
 #new {
     height: 100%;
-    border-radius: 0%;
+    
     /* vertical-align: bottom; */
    /* margin-top: -100px; */
    background-color: teal;
 }	
 	
 	
+#discount {
+       height: 70%; 
+/*     background-color: rgb(120, 116, 100); */
+/*     border-radius: 50%; */
+/*     line-height: 30px; */
+/*     font-size: 15px; */
+/*     width: 20%;  */
+}
+	
+	
+#big {
+max-width: 100%;
+}
+
+#card-img {
+       box-shadow: 1px 1px 5px #e8e7e7;
+       max-width: 100%;
+       max-height: 100%;
+       }
+       
+       
+       .card-img-top {
+       max-width: 100%;
+       max-height: 100%;
+       }
     </style>
 </head>
 <body>
+ <div class="spinner-wrapper" >
+ <div class="spinner-border" role="status">
+  <span class="sr-only">Loading...</span>
+ </div>
+  </div>
+
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 
 
     <div class="wrap">
-        <div id="header">
-            <div id="header1">
-                <h2 align="center">planner</h2>
-            </div>
-            <div id="navigator">
-                <ul id="navi">
-                    <li><a href="#">menu1</a></li>
-                    <li>
-                        <a href="#">menu2</a>
-                        <ul>
-                            <li><a href="#">x</a></li>
-                            <li><a href="#">x</a></li>
-                            <li><a href="#">x</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">menu3</a>
-                        <ul>
-                            <li><a href="#">x</a></li>
-                            <li><a href="#">x</a></li>
-                            <li><a href="#">x</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">menu4</a></li>
+      <header>
+        <div class="header-container">
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#">ABOUT US</a></li>
+                    <li><a href="${ path }/planning/special">SPECIAL</a></li>
+                    <li><a href="#">SCENT</a></li>
+                    <li><a href="#">SACHET</a></li>
                 </ul>
-            </div>
-            <div id="header2">
-                <a href="#" id="login">Log In</a>
+            </nav>
+            <h1 class="logo"><a href="${ path }/">Perfume</a></h1>
+            <nav class="user-nav">
+                <ul>
+                    <li><a href="#">EVENT</a></li>
+                    <li><a href="#">COMMUNITY</a></li>
+                    <c:if test="${ empty loginMember }">
+	                    <li><a href="#" class="openLogin">LOGIN</a></li>
+	                    <li><a href="#">JOIN</a></li>
+                    </c:if>
+                    <c:if test="${ not empty loginMember }">
+						<li><a href="${ path }/logout">LOGOUT</a></li>
+						<c:if test="${ not empty loginMember && loginMember.division == '2' }">
+							<li><a href="#">MY PAGE</a></li>                                      
+							<li><a href="${ path }/cart?memberNo=3">CART</a></li>                                      
+						</c:if>
+						<c:if test="${ not empty loginMember && loginMember.division == '1' }">
+							<li><a href="#">ADMIN PAGE</a></li>                                        
+						</c:if>              
+                    </c:if>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- 로그인 모달창 구현 -->
+        <div class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 style="text-align: center;">LOGIN</h2>
+                <form id="loginForm" action="${ path }/login" method="POST">
+                    <div>
+                        <label for="id" style="font-weight: bold;">아이디</label><br>
+                        <input type="text" id="id" name="id" required placeholder="아이디를 입력하세요."><br>
+                        <label for="pwd" style="font-weight: bold;">비밀번호</label><br>
+                        <input type="password" id="pwd" name="pwd" required placeholder="비밀번호를 입력하세요."><br><br>
+                        <button type="submit">Login</button><br><br>
+                    </div>
+                </form>
+                    <div>
+                        <a href="${ path }/planning/findId"><button type="button" id="findId">아이디 찾기</button></a>
+                        <a href="${ path }/planning/findPwd"><button type="button" id="findPwd">비밀번호 찾기</button></a><br><br>
+                        <button type="submit">회원가입</button><br><br>
+                    </div>
+                    <ul style="list-style: none;">
+                        <li onclick="naverLogin();"><button type="button">네이버로 로그인</button></li>
+                        <li onclick="kakaoLogin();"><button type="button">카카오로 로그인</button></li>
+                        <li onclick="googleLogin();"><button type="button">구글로 로그인</button></li>
+                        <li onclick="appleLogin();"><button type="button">애플로 로그인</button></li>
+                    </ul>
             </div>
         </div>
+    
+        
+    </header>
 
         <div id="section">
             <div id="section1">
-               <img src="">
+               <section class="slider">
+	  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+	    <!-- 인디케이터 -->
+	    <ol class="carousel-indicators">
+	      <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+	      <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+	      <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
+	    </ol>
+	
+	    <!-- 슬라이드 이미지 -->
+	    <div class="carousel-inner">
+	      <div class="carousel-item active">
+	        <a href="#">
+	          <img src="${ path }/images/planning/slider001.png" class="d-block w-100" alt="Slider Image 1">
+	        </a>
+	      </div>
+	      <div class="carousel-item">
+	        <a href="#">
+	          <img src="${ path }/images/planning/slider002.png" class="d-block w-100" alt="Slider Image 2">
+	        </a>
+	      </div>
+	      <div class="carousel-item">
+	        <a href="#">
+	          <img src="${ path }/images/planning/slider003.png" class="d-block w-100" alt="Slider Image 3">
+	        </a>
+	      </div>
+	    </div>
+	
+	    <!-- 이전, 다음 버튼 -->
+	    <button class="carousel-control-prev border-0" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+		  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		  <span class="visually-hidden">이전</span>
+		</button>
+		<button class="carousel-control-next border-0" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+		  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		  <span class="visually-hidden">다음</span>
+		</button>
+	  </div>
+	</section>
             </div>
             <div id="section2">
                 <div id="aside1">
@@ -486,7 +538,7 @@
                 </div>
                 <div id="section2_1">
                     <div id="s1">
-
+							
                     </div>
                     <div id="s2" style="position: relative;">
                         <div style="position: absolute; height: 100%;">
@@ -507,11 +559,7 @@
                                 따스함이 느껴지는 우디함까지,<br>
                                 6가지 향의 계열로 구분된 다양한 프레그런스 제품들을 만나보세요.
                             </div>
-                            <div class="spinner-wrapper2" style="position: absolute; display: none;">
-                                <div class="spinner-border" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                  </div>
-                                </div>
+                            
                           
                             <div id="button-area" >
                                 <button type="button" id="scent-detail-button">more detail</button>
@@ -531,12 +579,25 @@
                         </div>
                         <div id="scent-list">
                             <div class="center">
-                            
-                            	<c:forEach var="topcate" items="${ topcate }">
-                                <div class="scentcate" style="position: relative;" data-id="${listcount2}" ><div class="scentname" style="position: absolute; bottom:0;">${topcate.ptname}</div>
-                                <button type="button" id="scents" style="background-color: rgb(233, 203, 89);" value="${topcate.ptno}"  onclick="location.href='${ path }/scent?no=${topcate.ptno}'"></button>
+                            	<div class="scentcate" style="position: relative;" data-id="3"> <div class="scentname" style="position: absolute; bottom:0;">CITRUS</div>
+                                 <a href="${ path }/product/scent?no=1"><img src="https://img.freepik.com/free-photo/citrus-background-with-assorted-fresh-citrus-fruits_114579-9901.jpg?size=626&ext=jpg&ga=GA1.1.1462281178.1681576788&semt=sph" src="" id="big"></a>
                                 </div>
-                               	</c:forEach>
+                                <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">FRUITY</div>
+                                 <a href="${ path }/product/scent?no=2"><img src="https://t4.ftcdn.net/jpg/05/12/54/69/240_F_512546992_UGywRqXpPQhyljBPI1HUuxjXLOojRzXe.jpg" src="" id="big"></a>
+                                </div>
+                                <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">SPICY</div>
+                                 <a href="${ path }/product/scent?no=3"><img src="https://img.freepik.com/free-photo/still-life-of-cosmetic-products_23-2149163108.jpg?w=1060&t=st=1681578891~exp=1681579491~hmac=07489f94c2933710dbaeccb1b44abec4d2b2db3ea63a14633aa17c8b67cdfe21" src="" id="big"></a>
+                                </div>
+                                <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">FLORAL</div>
+                                 <a href="${ path }/product/scent?no=4"><img src="https://img.freepik.com/free-photo/simplistic-pink-and-white-roses-and-copy-space-background_23-2148408316.jpg?size=626&ext=jpg&ga=GA1.2.1462281178.1681576788&semt=sph" src="" id="big"></a>
+                                </div>
+                                <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">WOODY</div>
+                                 <a href="${ path }/product/scent?no=5"><img src="https://t3.ftcdn.net/jpg/04/98/69/46/240_F_498694611_qUPJVlIdwV2cTU1QXrka1HqR9ea8D7oC.jpg" src="" id="big"></a>
+                                </div>
+                                <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">LIGHTFLORAL</div>
+                                 <a href="${ path }/product/scent?no=6"><img src="https://img.freepik.com/free-photo/bunch-of-fresh-twigs-and-plants-in-vase_23-2148104490.jpg?size=626&ext=jpg&ga=GA1.2.1462281178.1681576788&semt=ais" src="" id="big"></a>
+                                </div>
+                            	
                             </div>
                             <div class="banner">
                             <div class="btn_best">
@@ -551,7 +612,7 @@
                             <div class="btn_sale">
                                 <div id="btn_wrap" style="position: relative;">
                                     <div style="position: absolute; color: gray; font-weight: bold; width: 100%; text-align: left; bottom: 20px;">
-                                        <h6 style="font-size: 25px; font-weight: bold;">SALE PRODUCT</h6>
+                                    <a class="link" href="${ path }/product/salelist"> <h6 style="font-size: 25px; font-weight: bold;">SALE PRODUCT</h6></a>
                                     </div>
                                     <img src="https://img.freepik.com/free-photo/top-view-closeup-of-white-daisy-flowers-floating-on-the-water_181624-38043.jpg?size=626&ext=jpg&ga=GA1.1.686292353.1680604484&semt=sph" class="" alt="..." >
                                 </div>
@@ -637,11 +698,7 @@
                     </div>
                     <div id="s6" >
                         <div id="listwrap" style="position: relative;">   
-                            <div class="spinner-wrapper" style="position: absolute; display: none;"  >
-                                <div class="spinner-border" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                  </div>
-                                </div>
+                           
                             <div class="row" ><c:if test="${empty list }">
                             <div class=" col-lg-12" style="text-align: center; font-size: 25px;" >
                                     조회된 검색 결과가 없습니다.
@@ -649,8 +706,8 @@
                                     </div>
                                     
                                </c:if>
-                                    <c:forEach var="product" items="${ list }">
-  
+                                    <c:forEach var="product" items="${ list }" >
+  									
                                     <fmt:formatDate value="${product.date}" pattern="yyyy-MM-dd hh:mm:ss" var="newdate"/>
                                     
                                    <c:set var="sevenDayAfter" value="<%=new Date(new Date().getTime() + 60*60*24*1000*7)%>"/>
@@ -659,12 +716,39 @@
                                 <div class="col-sm-6 col-lg-3">
                      
                                     <div class="card">
-                                        <div style="position: relative;"> <a href="${ path }/product/detail?no=${product.pno}"> <img src="https://perfumegraphy.com/web/product/medium/202204/4b8b15fa7d389cd0aa2743c699bd1cd5.jpg" class="card-img-top" alt="..." > </a></div>
+                                        <div id="card-img" style="position: relative;">
+                                        
+                                        <c:forEach var="productfile" items="${ product.productfile }">
+                                        <c:if test="${productfile.pfsort eq '1' }">
+                                         <a href="${ path }/product/detail?no=${product.pno}"> 
+                                        
+                                        <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="card-img-top" alt="..." > </a>
+                                        </c:if>
+                                        </c:forEach>
+                                        	<div class="etcsymbols"style=" width: 100%; height: 10%; bottom: 0px; padding: 5px;">
+                                
+    
+                                            <span class="material-symbols-outlined" style="vertical-align: bottom; visibility: hidden;" id="share">share</span>
+                                        </div> 
+                                        
+                                        </div>
+                                        
+                                        <div class="p-status-wrap" style="position: absolute;">   
+                                        </div>
+                                        <div style="position: absolute; text-align: center; padding: 3px;">
+                                            <h5 style="color: white; font-weight: bold; font-size: 13px; ">NEW</h5>
+                                            
+                                        </div>
+                                        
                                         <div class="p-status"style="position: absolute; width: 100%;">
                                         
-<%--                                         <c:if test="${product.date}"> --%>
                                         
-                                        <span class="badge badge-danger">new</span>
+                                        
+                                        
+                                        
+                                        
+                                        
+<%--                                         <c:if test="${product.date}"> --%>
 <%--                                         </c:if> --%>
                                         
                                       <%--   <c:forEach var="benefit" items="${product.benefit}">
@@ -678,34 +762,62 @@
                                             </c:if>
                                             </c:forEach> --%>
                                         </div>
-                                        <div class="etcsymbols"style="position: absolute; width: 100%; height: 8%; bottom: 170px ">
-                                            <span class="material-symbols-outlined">favorite</span>&nbsp;&nbsp;
-                                            <span class="material-symbols-outlined">shopping_cart</span>&nbsp;&nbsp;
-                                            <span class="material-symbols-outlined">share</span>
-                                        </div>
-                                        
-                                        <div>
                                        
-                                       <h5 id="pname">${product.name } </h5>
-                                       <p class="card-text">${product.eng }</p>
+                                        <hr>
+                                        <div>
+                                       <h6 style="font-size: 10px; font-weight: bold;">${product.brand }</h6>
+                                       <h5 id="pname" style="font-size: 18px; font-weight: bold;">${product.name } </h5>
+                                       <p class="card-text" style="font-size: 10px;">${product.eng }</p>
                                    
                                         </div>
                                         
                                         <hr>
-                                          <c:forEach var="benefit" items="${product.benefit}">
-                                          <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="enddate"/> 
-                                           <c:if test="${not empty product.benefit }">
+                                        <div style="position: relative;">
+                                             <c:forEach var="benefit" items="${product.benefit}" begin="0" end="0">
+                                             <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="enddate"/>
+                                             <c:if test="${not empty product.benefit }">
+                                            <div style="position: absolute; height: 90%; width: 100%; text-align: right; padding: 1px;">
+                                                <span class="badge badge-danger" id="discount"> SALE <br>   ${benefit.bnratio}%</span>
+                                            </div>
+                                            <!-- 원가 - (원가 * 할인율) = 세일가  -->
                                            
-                                        	<p class="card-text" id="pprice">${product.price } <span>won</span> <br>
-                                            <span class="originprice">${product.price }<span class="originprice">won</span></span></p>
-                                        	</c:if>
+                                           
+                                           
+                                           
+                                           
+                                            
+                                            
+                                            <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
+                                             <fmt:parseNumber var="saleprice" value="${product.price*salepricerate}"/>
+                                             <fmt:parseNumber var="productsaleprice" value="${product.price-saleprice}"/>
+                                            <p class="card-text" id="pprice" ><fmt:formatNumber value="${productsaleprice}" pattern="###,###"/><span style="font-size: 12px;">won</span> <br>
+                                            <span class="originprice">
+                                            <fmt:formatNumber value="${product.price}" pattern="###,###"/>
+                                            <span class="originprice" style="font-size: 8px;">won</span></span></p>
+                                            
+                                            </c:if>
+											</c:forEach>
+                                            <c:if test="${empty product.productbenefit }">
+                                            <p class="card-text" id="pprice"><fmt:formatNumber value="${product.price}" pattern="###,###"/>  <span style="font-size: 12px;">won</span></p>
+                                            </c:if>
+                                           
+                                        </div>
+                                        
+                                        
+<%--                                           <c:forEach var="benefit" items="${product.benefit}"> --%>
+<%--                                           <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="enddate"/>  --%>
+<%--                                            <c:if test="${not empty product.benefit }"> --%>
+                                           
+<%--                                         	<p class="card-text" id="pprice">${product.price } <span>won</span> <br> --%>
+<%--                                             <span class="originprice">${product.price }<span class="originprice">won</span></span></p> --%>
+<%--                                         	</c:if> --%>
                                           
-                                          </c:forEach>
-                                          <c:if test="${empty product.productbenefit }">
-                                          <p class="card-text" id="pprice">${product.price } <span>won</span></p> 
-                                          </c:if> 
+<%--                                           </c:forEach> --%>
+<%--                                           <c:if test="${empty product.productbenefit }"> --%>
+<%--                                           <p class="card-text" id="pprice">${product.price } <span>won</span></p>  --%>
+<%--                                           </c:if>  --%>
                                           
-                                         <%--  </c:forEach> --%>
+                                        
                                       </div>
                                       </div>  
                                 </c:forEach>
@@ -816,7 +928,34 @@
             </div>
         </div>
         <div id="footer">
-
+			<footer>
+        <div>
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="#">NOTICE</a>
+                        <p>PERFUME의 중요 소식을 확인해보세요.</p>
+                    </li>
+                    <li><a href="#">SAMPLE</a>
+                        <p>적당량의 SAMPLE을 소개합니다.</p>    
+                    </li>
+                    <li><a href="#">EVENT</a>
+                        <p>다양한 이벤트에 참여해보세요</p>
+                    </li>
+                    <li><a href="#">ASK</a>
+                        <p>언제나 고객과 함께하겠습니다.</p>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <pre class="footer-text">
+            상호명 <b>PERFUME</b>     대표자 <b>이정수</b>     사업자등록번호 <b>123-45-67890</b>     통신판매업신고번호 <b>제 2023-서울강남-0001호</b><br>
+            고객센터 <b>070-1212-3434</b>     주소 <b>06234 서울특별시 강남구 테헤란로 14길 6 (역삼동) 남도빌딩 4층 PERFUME </b><br>
+            개인정보보호책임자 <b>공민지(cs@perfume.com)</b><br><br>    
+            ※ <b>PERFUME</b>에서 제공하는 모든 콘텐츠는 <b>저작권법에 의하여 보호받는 저작물</b>로서, 모든 권리는 <b>PERFUME</b>에 있습니다.<br>
+            본사이트에서 제공되는 콘텐츠를 무단으로 복제 및 배포하는 경우 <b>저작권법에 의하여 처벌</b>받을 수 있습니다.<br><br>
+            <b>Copyright ⓒ PERFUME. All rights reserved.</b>
+        </pre>
+    </footer>
         </div>
     </div>
 </body>
@@ -824,7 +963,22 @@
 
 
 <script>
- 
+ 	
+const spinnerWrapperE1 = document.querySelector('.spinner-wrapper');
+
+window.addEventListener('load', () => {
+spinnerWrapperE1.style.opacity = '0';
+
+setTimeout(() => {
+    spinnerWrapperE1.style.display = 'none';
+}, 1200);
+
+});
+
+
+
+
+
 
      
     var gender = document.getElementsByClassName('gender');
@@ -853,7 +1007,7 @@
 
 
     $(document).ready( function() {
-    	var id = $(".scentcate").attr('data-id') -1;
+    	
         $('.center').slick({
         	 dots: true,
         	  infinite: false,
@@ -866,67 +1020,43 @@
         		
         	  });
 
+ 
    
-    $(document).ready(function() {
-    $(".gender").on({
-        "click":function(){
-        	
-            $(".spinner-wrapper").show().delay(500).fadeOut(300);
-            $(".row").hide().delay(600).fadeIn(400);
-           
-
-           
-        }
-
-    
-
-    });
-
-    $(".link").on({
-        "click":function(){
-            $(".spinner-wrapper").show().delay(500).fadeOut(300);
-            $(".row").hide().delay(600).fadeIn(400);
-    }
-
-    });
 
 
-    $(".scentcate").on({
-        "click":function(){
-            $(".spinner-wrapper2").show().delay(500).fadeOut(300);
-            $("#scent-detail").hide().delay(600).fadeIn(400);
-            $("#button-area").hide().delay(600).fadeIn(400);
-            $("#scent").hide().delay(600).fadeIn(400);
-    }
-
-
-    });
-
-});
 
  
    
 
   
-  $(".card-img-top").on({
-    "mouseover":function(){
-       
-        $(this).css({'opacity':'0.5'});
-        $(".etcsymbols").fadeIn(200);
-        // $(".etcsymbols").css({'opacity':'0.5'});
+    $(".card").on({
+        "mouseenter":function(){
+           
+            $(this).find('#share').css("visibility","visible");
+        
+      
 
 
 
-    },
-    "mouseout":function(){
-        $(this).css({'opacity':'1'});
-        $(".etcsymbols").fadeOut(200);
+        },
+        "mouseleave":function(){
+            $(this).find('#share').css("visibility","hidden");
+            
+        }
+      });
+ 
+      $(".card-img-top").on({
+        "mouseenter":function(){
+           
+            $(this).css({'opacity':'0.6'});
 
-    }
-
-
-  });
-
+        },
+        
+        "mouseleave":function(){
+            $(this).css({'opacity':'1'});
+            
+        }
+      });
   $(".scentcate").on({
     "mouseover":function(){
        
@@ -942,5 +1072,74 @@
    }
 
   });
+  
+  
+//부트스트랩 캐러샐 슬라이드 구현
+  $(document).ready(function(){
+	    $('#myCarousel').carousel();
+	});
+  
+  $('.carousel-indicators li').click(function(){
+      var goToSlide = $(this).data('slide-to');
+      $('#myCarousel').carousel(goToSlide);
+  });
+  
+  // 캐러셀 객체 생성
+	$('.carousel').carousel({
+		interval: 4000, // 이미지 전환 시간(ms)
+	    pause: "hover", // 마우스 호버 시 멈춤 여부
+	    wrap: true // 무한 루프 여부
+	})
+	
+	
+	// 로그인 모달창
+	    // 모달창 가져오기
+	    var modal = document.querySelector('.modal');
+	
+	    // 모달창을 열 버튼 가져오기
+	    var btn = document.querySelector('.openLogin');
+	
+	    // 모달창을 닫는 span 요소 가져오기
+	    var span = document.querySelector('.close');
+	
+	    // 모달창 버튼 클릭 시 모달창 구현 
+	    btn.onclick = function() {
+	        modal.style.display = 'block';
+	    }
+	
+	    // X버튼 클릭 시 모달창 닫기
+	    span.onclick = function() {
+	        modal.style.display = 'none';
+	    }
+	
+	    // 모달창 바깥 클릭 시 모달창 닫기
+	    window.onclick = function(event) {
+	        if (event.target == modal) {
+	            modal.style.display = 'none';
+	        }
+	    }
+	
+	    // 카카오로 로그인 구현
+	    Kakao.init('838aa760211421e8483192e159afd189'); //발급받은 키 중 javascript키를 사용해준다.
+	    console.log(Kakao.isInitialized()); // sdk초기화여부판단
+	
+	    function kakaoLogin() {
+	        Kakao.Auth.login({
+	        success: function (response) {
+	            Kakao.API.request({
+	            url: '/',
+	            success: function (response) {
+	                console.log(response)
+	            },
+	            fail: function (error) {
+	                console.log(error)
+	            },
+	            })
+	        },
+	        fail: function (error) {
+	            console.log(error)
+	        },
+	        })
+	    }
 </script>
 </html>

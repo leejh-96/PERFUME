@@ -6,11 +6,12 @@ import java.util.List;
 import com.scent.perfume.common.util.PageInfo;
 import com.scent.perfume.product.model.vo.Option;
 import com.scent.perfume.product.model.vo.Product;
+import com.scent.perfume.product.model.vo.ProductBoard;
 import com.scent.perfume.product.model.vo.TopCate;
 
 public interface ProductService {
 
-	int getProductCount(String gender);
+	int getProductCount(String gender, String sort, String bn, String keyword);
 
 	List<Product> getProductList(PageInfo pageInfo, String gender, String sort, String bn, String keyword);
 
@@ -22,9 +23,10 @@ public interface ProductService {
 
 	List<Product> findByPtNo(int no);
 
-	int getScentProductCountByNo(int no);
+	int getScentProductCountByNo(int no, String gender, String bn, String keyword);
 
-	List<Product> getScentPrductList(PageInfo pageInfo, int no);
+	List<Product> getScentProductList(PageInfo pageInfo, int no, String gender, String bn, String sort, String keyword);
+	
 
 	TopCate findScentByNo(int no);
 
@@ -33,6 +35,32 @@ public interface ProductService {
 	List<Product> getProductListByGender(PageInfo pageInfo, String gender);
 
 	List<Product> getBrandList();
+
+	List<Option> findProductOptionByNo(int no);
+
+	int getProductPaperCount();
+
+	List<Product> getProductPaperList(PageInfo pageInfo , String sort);
+
+	List<ProductBoard> findProductBoardByNo(PageInfo pageInfo, int no);
+
+	int getProductBoardCount(int no);
+
+	List<ProductBoard> findGradebyNo(int no);
+
+	int getSaleProductCount();
+
+	List<Product> getSaleProductList(PageInfo pageInfo);
+
+	int getProductQnaCount(int no);
+
+	List<ProductBoard> findProductQnaByNo(PageInfo qnapageInfo, int no);
+
+
+
+	
+
+	
 	
 
 

@@ -14,6 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eventWrite</title>
     
+    <!-- eventWrite CSS -->
+<%--     <link rel="stylesheet" href="${ path }/css/event/eventWrite.css"> --%>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <!-- Bootstrap jQuery, JS -->
@@ -27,7 +29,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
   
-    <style>
+<style>
         h2{
             margin-top: 50px;
             margin-bottom: 60px;
@@ -99,10 +101,11 @@
             background-color: rgb(90, 98, 104);
             border-color: rgb(90, 98, 104);
         }
-    </style>
+</style>
 </head>
 <body>
-    <section>
+<%-- <jsp:include page="/WEB-INF/views/planning/header.jsp"/>
+ --%>    <section>
         <h2 align="center">EVENT</h2>
         <div id="boardListTable">
             <form action="#" method="POST">
@@ -138,7 +141,6 @@
             
         </div>
     </section>
-
 
 	<script>
 	/* .ready()  >  제이쿼리에서 사용하는 자바스크립트의 onload와 같은 기능을 하는 메소드 */
@@ -216,9 +218,6 @@
  	});
 	</script>
 
-	
-
-
-
+<%-- <jsp:include page="/WEB-INF/views/planning/footer.jsp"/> --%>
 </body>
 </html>

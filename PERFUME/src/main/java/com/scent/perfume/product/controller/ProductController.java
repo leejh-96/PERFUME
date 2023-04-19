@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +19,7 @@ import com.scent.perfume.common.util.PageInfo;
 import com.scent.perfume.product.model.service.ProductService;
 import com.scent.perfume.product.model.vo.Option;
 import com.scent.perfume.product.model.vo.Product;
+import com.scent.perfume.product.model.vo.ProductBoard;
 import com.scent.perfume.product.model.vo.TopCate;
 
 @Controller
@@ -34,10 +36,10 @@ public class ProductController {
 	public ModelAndView list(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page
 			, @RequestParam(required = false) String gender, @RequestParam(required = false) String bn
 			, @RequestParam(required = false) String sort , @RequestParam(required = false) String keyword) {
-		System.out.println(keyword);
+
 		
 		// PRODUCT 리스트
-		int listCount = service.getProductCount(gender);
+		int listCount = service.getProductCount(gender, bn, sort, keyword);
 		
 		
 		PageInfo pageInfo = new PageInfo(page, 10, listCount, 12);
@@ -50,7 +52,7 @@ public class ProductController {
 				int listCount2 = service.getTopCateCount();
 				List<TopCate> topcate = service.getTopCateList();
 				
-		System.out.println(list);
+			
 		
 		// TOPCATEGORY modelAndView
 		modelAndView.addObject("listCount2",listCount2);
@@ -58,6 +60,8 @@ public class ProductController {
 
 		// BRAND modelAndView
 		modelAndView.addObject("brand",brand);
+		
+		
 		
 		// PRODUCT modelAndView
 		modelAndView.addObject("pageInfo", pageInfo);
@@ -73,19 +77,43 @@ public class ProductController {
 		
 	}
 	
-
-
-	
 	// 상품 상세페이지 이동
 	@GetMapping("/detail")
-	public ModelAndView view(ModelAndView modelAndView, @RequestParam int no) {
-	    System.out.println(no);
-			
-		List<Product> list= service.findProductByNo(no);
+	public ModelAndView view(ModelAndView modelAndView, @RequestParam int no, @RequestParam(defaultValue = "1") int page) {
+	   
 		
-		System.out.println("값" + list);
+		List<Product> list= service.findProductByNo(no);
+		 
+		
+		
+		List<Option> option = service.findProductOptionByNo(no);
+		
+		
+		int listCount = service.getProductBoardCount(no);
+		int qnalistCount = service.getProductQnaCount(no);
+		
+		
+		
+	
+		PageInfo pageInfo = new PageInfo(page, 10, listCount, 5);
+		PageInfo qnapageInfo = new PageInfo(page, 10, qnalistCount, 5);
+		
+		List<ProductBoard> board = service.findProductBoardByNo(pageInfo, no);
+		
+		List<ProductBoard> qnaboard = service.findProductQnaByNo(qnapageInfo, no);
+		
+		List<ProductBoard> grade = service.findGradebyNo(no);
 			
+		System.out.println(qnaboard);
+		
+		modelAndView.addObject("grade", grade);
 		modelAndView.addObject("list", list);
+		modelAndView.addObject("no", no);
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("qnapageInfo", qnapageInfo);
+		modelAndView.addObject("board", board);
+		modelAndView.addObject("qnaboard", qnaboard);
+		modelAndView.addObject("option", option);
 		modelAndView.setViewName("product/detail");
 			
 		return modelAndView;
@@ -97,32 +125,91 @@ public class ProductController {
 
 	
 	@GetMapping("/scent")
-	public ModelAndView scent(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, @RequestParam int no) {
-		int listCount = service.getScentProductCountByNo(no);
+	public ModelAndView scent(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, @RequestParam int no,
+			 @RequestParam(required = false) String gender, @RequestParam(required = false) String bn
+			, @RequestParam(required = false) String sort , @RequestParam(required = false) String keyword) {
 		
+		
+		int listCount = service.getScentProductCountByNo(no, gender, bn, keyword);
 		TopCate scent =  service.findScentByNo(no);
-		
-		System.out.println(scent);
 		
 		int listCount2 = service.getTopCateCount();
 		List<TopCate> topcate = service.getTopCateList();
 		
-		PageInfo pageInfo = new PageInfo(page, 10, listCount, 10);
-		List<Product> product = service.getScentPrductList(pageInfo, no);
+		List<Product> brand = service.getBrandList();
 		
-		System.out.println(product);
-		modelAndView.addObject("scent", scent);
-		modelAndView.addObject("product", product);
+		PageInfo pageInfo = new PageInfo(page, 10, listCount, 10);
+		List<Product> list = service.getScentProductList(pageInfo, no, gender, bn, sort, keyword);
+		
+	
 		modelAndView.addObject("listCount2",listCount2);
 		modelAndView.addObject("topcate",topcate);
-		modelAndView.setViewName("/scent");
+		
+		modelAndView.addObject("no", no);
+		
+		modelAndView.addObject("scent", scent);
+		modelAndView.addObject("list", list);
+		modelAndView.addObject("brand",brand);
+		modelAndView.addObject("gender", gender);
+		modelAndView.addObject("bn", bn);
+		modelAndView.addObject("sort",sort);
+		modelAndView.setViewName("product/scent");
 		
 		return modelAndView;
 		
 	}
 	
 	
+	@GetMapping("/paper")
+	public ModelAndView modelAndView(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(required = false) String sort) {
+		
+		System.out.println(sort);
+		int listCount = service.getProductPaperCount();
+		
+		
+	
+		
+		
+		PageInfo pageInfo = new PageInfo(page, 10, listCount, 12);
+		List<Product> list = service.getProductPaperList(pageInfo, sort);
+		
 
+		
+		
+		modelAndView.addObject("list", list);
+		modelAndView.setViewName("product/paper");
+		
+		return modelAndView;
+	}
+	
+	
+	@GetMapping("/salelist")
+	public ModelAndView modelAndView(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
+		
+		int listCount = service.getSaleProductCount();
+		
+		
+		PageInfo pageInfo = new PageInfo(page, 10, listCount, 12);
+		List<Product> list = service.getSaleProductList(pageInfo);
+		
+	
+		modelAndView.addObject("list", list);
+		modelAndView.setViewName("product/salelist");
+		return modelAndView;
+	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		
 	}
 	
