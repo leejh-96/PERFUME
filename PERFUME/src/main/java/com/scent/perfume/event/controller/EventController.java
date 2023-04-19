@@ -31,6 +31,7 @@ import com.scent.perfume.event.model.service.EventServiceImpl;
 import com.scent.perfume.event.model.service.UserMailSendService;
 import com.scent.perfume.event.model.vo.Terms;
 import com.scent.perfume.planning.model.vo.Member;
+import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.common.util.*;
 
 import lombok.extern.slf4j.Slf4j;
@@ -99,9 +100,9 @@ public class EventController {
 	@PostMapping("join")
 	public ModelAndView login(ModelAndView modelAndView, @ModelAttribute Member member, @ModelAttribute Terms terms,
 					@RequestParam("birthYear") String birthYear, @RequestParam("birthMonth") String birthMonth, @RequestParam String birthDate, 
-					@RequestParam("addr1") String addr1, @RequestParam(required = false) String addr2, @RequestParam(required = false) String addr3, @RequestParam(defaultValue = "N") String tCheck,
+					@RequestParam("addr1") String addr1, @RequestParam(required = false) String addr2, 
+					@RequestParam(required = false) String addr3, @RequestParam(defaultValue = "N") String tCheck,
 					HttpServletRequest request) {
-	
 		log.info(member.toString());
 		log.info("join() - 호출 : {} {} {} {} {} {} {}", new Object[] {birthYear, birthMonth, birthDate, addr1, addr2, addr3, tCheck});
 
@@ -112,7 +113,8 @@ public class EventController {
 			birth =(Date) sdf.parse(birthYear + birthMonth + birthDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
-		}        
+		}
+		
         member.setBirth(birth);
         
         // 주소 합치기
@@ -135,7 +137,7 @@ public class EventController {
 			modelAndView.addObject("msg", "회원가입이 정상적으로 완료되지 않았습니다. 다시 시도해주십시오.");
 			modelAndView.addObject("location", "/join");			
 		}
-
+		
 		modelAndView.setViewName("common/msg");
 		
 		return modelAndView;
@@ -143,9 +145,9 @@ public class EventController {
 	
 // 이메일 인증 컨트롤러 전송된 이메일 링크 타면 나오는 페이지 연결
 	@GetMapping("/join/key_update")
-	public String key_alterConfirm(@RequestParam("m_id") String id, @RequestParam("m_mailstatus") String key) {
+	public String key_alterConfirm(@RequestParam("m_id") String id, @RequestParam("m_mailstatus") String key, Benefit benefit) {
 								// UserMailSendService 서비스의 mailSendWithUserKey 메소드 a태그 내 url에서 name 속성 지정한 값을 RequestParam의 속성명으로 주기 
-		mailsender.alter_userKey_service(id, key);
+		mailsender.alter_userKey_service(id, key, benefit);
 		
 		return "event/userJoinSuccess";
 	}

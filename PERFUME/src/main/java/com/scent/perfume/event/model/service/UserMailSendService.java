@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.event.model.mapper.EventMapper;
 
 // 메일 보내는 서비스
@@ -56,6 +60,7 @@ public class UserMailSendService {
 	}
 	
 	// 회원가입 이메일 발송(인증링크 발송)
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class})
 	public void mailSendWithUserKey(String mail, String id, HttpServletRequest request) {	// 경로 설정을 위한 HttpServletRequest
 
 		String key = getKey(false, 20);
@@ -75,10 +80,12 @@ public class UserMailSendService {
 				 * 로그인할 때 MAIL_STATUS가 Y라는 조건을 걸어주기
 				 */	
 		try {
+			
 			sendMail.setSubject("[본인인증] 향수 쇼핑몰 회원가입 인증 메일입니다.", "utf-8");
 			sendMail.setText(htmlStr, "utf-8", "html");
 			sendMail.addRecipient(RecipientType.TO, new InternetAddress(mail));
 			mailSender.send(sendMail);
+			
 		} catch(MessagingException e) {
 			e.printStackTrace();
 		}
@@ -86,11 +93,24 @@ public class UserMailSendService {
 	}
 
 	// 인증 확인 메소드(M_MAILSTATUS Y로 바꾸는 메소드)
-	public int alter_userKey_service(String id, String key) {
+	// 회원가입 쿠폰 증정 메소드
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class})
+	public int alter_userKey_service(String id, String key, Benefit benefit) {
 
 		int result = 0;
+		int mNo = 0;
 		
 		mapper.updateMMailStatus(id, key);
+		
+		// 회원가입 쿠폰 발급 BENEFIT table에 insert
+		mapper.insertBenefit(benefit);
+		// 쿠폰 발급 
+		//mapper.selectBenefit
+		
+		// 받아온 id로 회원 번호 찾기 M_NO
+		mNo = mapper.selectMnoById(id);
+		
+		
 		
 		return result;
 	}
