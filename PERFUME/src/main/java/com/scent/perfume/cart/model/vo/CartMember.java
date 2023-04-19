@@ -27,6 +27,7 @@ public class CartMember {
 	private int memberPoint;
 	private Date memberCreateDate;
 	private Date memberUpdateDate;
+	private String memberMailStatus;
 	
 	private List<Benefit> memberBenefitList;
 	private List<Cart> memberCartList;
