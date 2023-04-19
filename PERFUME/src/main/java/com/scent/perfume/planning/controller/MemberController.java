@@ -1,13 +1,16 @@
 package com.scent.perfume.planning.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.scent.perfume.planning.model.service.MemberService;
@@ -23,25 +26,32 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	// 로그인 처리
-
 	@PostMapping("/login")
-	public ModelAndView login(ModelAndView modelAndView,
-				@RequestParam String id, @RequestParam String pwd) {
-		
+	public ModelAndView login(ModelAndView modelAndView, @RequestParam String id, @RequestParam String pwd) {
 		log.info("{}, {}", id, pwd);
 		
 		Member loginMember = service.login(id, pwd);
 		
-		if(loginMember != null) {
+		if (loginMember != null && loginMember.getMailStatus().equals("Y")) {
 			modelAndView.addObject("loginMember", loginMember);
 			modelAndView.setViewName("redirect:/");
-		} else {
+			} else if (loginMember != null && loginMember.getMailStatus().equals("N")) {
+				modelAndView.addObject("msg", "이메일 인증 후 로그인해주세요.");
+				modelAndView.addObject("location", "/");
+				modelAndView.setViewName("common/msg");
+			} else {
 			modelAndView.addObject("msg", "아이디나 패스워드가 일치하지 않습니다.");
 			modelAndView.addObject("location", "/");
 			modelAndView.setViewName("common/msg");
 		}
-		
 		return modelAndView;
+	}
+
+	@GetMapping("/login")
+	public String login() {
+		log.info("로그인 페이지 요청");
+		
+		return "planning/login";
 	}
 	
 	/*
@@ -81,11 +91,33 @@ public class MemberController {
 		return "planning/findId";
 	}
 	
+	@RequestMapping(value = "/planning/findIdResult", method = RequestMethod.POST)
+	public String findIdResult(@RequestParam String userEmail,
+			Model model) {
+	    String id = service.findMemberByEmail(userEmail);
+	    
+	    model.addAttribute("id", id);
+	    return "planning/findIdResult";
+	}
+	
 	@GetMapping("/planning/findPwd")
 	public String findPwd() {
 		log.info("비밀번호 찾기 페이지 요청");
 		
-		return "planning/findPwd";
+		return "/planning/findPwd";
+	}
+	
+	@RequestMapping(value = "/planning/findPwdResult", method = RequestMethod.POST)
+	public String findPassword(Model model, String userName, String userId, String userEmail) {
+	    String password = service.getPassword(userName, userId, userEmail);
+	    
+	    if (password == null) {
+	    	model.addAttribute("msg", "비밀번호 찾기에 실패했습니다. 회원 정보를 다시 확인해주세요.");
+	    	return "planning/findPwdResult";
+	    } else {
+	    	model.addAttribute("msg", userId + "님의 비밀번호는 " + password + "입니다.");
+	    	return "planning/findPwdResult";
+	    }
 	}
 	
 	@GetMapping("/planning/special")
@@ -94,4 +126,40 @@ public class MemberController {
 		
 		return "planning/special";
 	}
+	
+	@GetMapping("/planning/special01")
+	public String special01() {
+		log.info("기획전 1번 페이지 요청");
+		
+		return "planning/special01";
+	}
+	
+	@GetMapping("/planning/special02")
+	public String special02() {
+		log.info("기획전 2번 페이지 요청");
+		
+		return "planning/special02";
+	}
+	
+	@GetMapping("/planning/special03")
+	public String special03() {
+		log.info("기획전 3번 페이지 요청");
+		
+		return "planning/special03";
+	}
+	
+	@GetMapping("/planning/special04")
+	public String special04() {
+		log.info("기획전 4번 페이지 요청");
+		
+		return "planning/special04";
+	}
+	
+	@GetMapping("/planning/special05")
+	public String special05() {
+		log.info("기획전 5번 페이지 요청");
+		
+		return "planning/special05";
+	}
+	
 }
