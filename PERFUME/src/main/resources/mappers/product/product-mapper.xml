@@ -22,6 +22,72 @@
 		<collection property="topcate" javaType="TopCate" columnPrefix="PT_" resultMap="topcateResultMap"/>
 		<collection property="benefit" javaType="List" columnPrefix="B_" resultMap="benefitResultMap"/>
 		<collection property="productbenefit" javaType="List" columnPrefix="PB_" resultMap="productbenefitResultMap"/>
+		<collection property="productfile" javaType="List" columnPrefix="PF_" resultMap="productfileResultMap"/>
+		<collection property="productboard" javaType="List" columnPrefix="PBO_" resultMap="productboardresultmap"/>
+	</resultMap>
+
+            
+
+    <resultMap id="productboardresultmap"  type="ProductBoard" >
+	    <id property="pbno" column="PB_NO"/>
+	    <result property="pno" column="P_NO"/>
+	    <result property="pbtitle" column="PB_TITLE"/>
+		<result property="pbcontent" column="PB_CONTENT"/>
+	    <result property="pbdate" column="PB_DATE"/>
+	    <result property="pbupdate" column="PB_UPDATE"/>
+	    <result property="pbstatus" column="PB_STATUS"/>
+	    <result property="pbgrade" column="PB_GRADE"/>
+	    <result property="pbpwd" column="PB_PWD"/>
+	</resultMap>
+
+	<resultMap id="productboardcategoryresultmap"  type="ProductBoardCategory" >
+	    <id property="pbcno" column="PBC_NO"/>
+		<result property="pbcname" column="PBC_NAME"/>
+	</resultMap>
+
+
+
+
+
+
+	<resultMap id="productDetailResultMap" type="Product">
+		<id property="pno" column="P_NO"/>
+		<result property="PMno" column="PM_NO"/>
+		<result property="brand" column="P_BRAND"/>
+		<result property="title" column="P_TITLE"/>
+		<result property="name" column="P_NAME"/>
+		<result property="eng" column="P_ENG"/>
+		<result property="price" column="P_PRICE"/>
+		<result property="date" column="P_DATE"/>
+		<result property="status" column="P_STATUS"/>
+		<result property="gender" column="P_GENDER"/>
+		<result property="detail" column="P_DETAIL"/>
+<!-- 		<collection property="option" javaType="arraylist" select="selectOptionByNo2" column="P_NO"/> -->
+<!-- 		<collection property="productfile" javaType="arraylist"  select="selectProductFileByNo2" column="P_NO"/> -->
+		<collection property="productfile" javaType="List" columnPrefix="PF_" resultMap="productfileResultMap"/>
+	</resultMap>
+    
+
+	<resultMap id="fileDetailresultmap"  type="ProductFile" >
+	    <id property="pfno" column="PF_NO"/>
+		<result property="pno" column="P_NO"/>
+		<result property="pforiginalfilename" column="PF_ORIGINALFILENAME"/>
+		<result property="pfrenamefilename" column="PF_RENAMEFILENAME"/>
+	    <result property="pfsort" column="PF_SORT"/>
+	</resultMap>
+
+
+	<resultMap id="productfileResultMap" type="ProductFile">
+		<id property="pfno" column="PF_NO"/>
+		<result property="pno" column="P_NO"/>
+		<result property="pforiginalfilename" column="PF_ORIGINALFILENAME"/>
+		<result property="pfrenamefilename" column="PF_RENAMEFILENAME"/>
+<!-- 		<result property="pfsize" column="PF_SIZE"/> -->
+<!-- 		<result property="pftype" column="PF_TYPE"/> -->
+<!-- 		<result property="pfdate" column="PF_DATE"/> -->
+<!-- 		<result property="pfupdate" column="PF_UPDATE"/> -->
+<!-- 		<result property="pfstatus" column="PF_STATUS"/> -->
+		<result property="pfsort" column="PF_SORT"/>
 	</resultMap>
 
 	<resultMap id="benefitResultMap" type="PBenefit">
@@ -36,9 +102,6 @@
 		<result property="bnhit" column="BN_HIT"/>
 	</resultMap>
 	
-	
-	
-
 	<resultMap id="productbenefitResultMap" type="ProductBenefit">
 		<id property="Pbfno" column="PBF_NO"/>
 		<result property="bnno" column="BN_NO"/>
@@ -75,9 +138,42 @@
 	</resultMap>
 
 
-
 	<select id="selectProductByNo" parameterType="_int"  resultMap="productListResultMap">
-			SELECT P.P_NO,
+<!-- 			SELECT P.P_NO, -->
+<!--                    P.PM_NO, -->
+<!--                    P.P_BRAND, -->
+<!--                    P.P_TITLE, -->
+<!--                    P.P_NAME, -->
+<!--                    P.P_ENG, -->
+<!--                    P.P_DETAIL, -->
+<!--                    P.P_STATUS, -->
+<!--                    P.P_GENDER, -->
+<!--                    P.P_PRICE, -->
+<!--                    P.P_DATE, -->
+<!--                    P.P_UPDATE, -->
+<!--                    PT.PT_NAME AS PT_PT_NAME, -->
+<!--                    B.BN_STATUS AS B_BN_STATUS,  -->
+<!--                    B.BN_ENDDATE AS B_BN_ENDDATE,      -->
+<!--                    B.BN_NAME AS B_BN_NAME, -->
+<!--                    B.BN_RATIO AS B_BN_RATIO, -->
+<!--                    O.PO_NO AS O_PO_NO, -->
+<!-- 			       O.P_NO AS O_P_NO, -->
+<!-- 			       O.PO_NAME AS O_PO_NAME, -->
+<!-- 			       O.PO_PRICE AS O_PO_PRICE, -->
+<!-- 			       O.PO_AMOUNT AS O_PO_AMOUNT, -->
+<!-- 			       PF.PF_RENAMEFILENAME AS PF_PF_RENAMEFILENAME, -->
+<!-- 			       PF.PF_SORT AS PF_PF_SORT -->
+<!-- 			FROM PRODUCT P -->
+<!-- 			LEFT OUTER JOIN PRODUCT_OPTION O ON (P.P_NO = O.P_NO) -->
+<!--             LEFT OUTER JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO) -->
+<!--             LEFT OUTER JOIN PRODUCT_TOPCATEGORY PT ON (PM.PT_NO = PT.PT_NO) -->
+<!--             LEFT OUTER JOIN PRODUCT_BENEFIT PB ON (P.P_NO = PB.P_NO) -->
+<!--             LEFT OUTER JOIN BENEFIT B ON (PB.BN_NO = B.BN_NO) -->
+<!--             LEFT OUTER JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO) -->
+<!-- 			WHERE P.P_NO = #{no} -->
+<!-- 			ORDER BY PF_PF_RENAMEFILENAME -->
+	
+				 SELECT     P.P_NO,
                    P.PM_NO,
                    P.P_BRAND,
                    P.P_TITLE,
@@ -89,15 +185,35 @@
                    P.P_PRICE,
                    P.P_DATE,
                    P.P_UPDATE,
-                   O.PO_NO AS O_PO_NO,
-			       O.P_NO AS O_P_NO,
-			       O.PO_NAME AS O_PO_NAME,
-			       O.PO_PRICE AS O_PO_PRICE,
-			       O.PO_AMOUNT AS O_PO_AMOUNT
-			FROM PRODUCT_OPTION O
-			LEFT OUTER JOIN PRODUCT P ON (P.P_NO = O.P_NO)
+                   PT.PT_NAME AS PT_PT_NAME,
+                   B.BN_STATUS AS B_BN_STATUS, 
+                   B.BN_ENDDATE AS B_BN_ENDDATE,     
+                   B.BN_NAME AS B_BN_NAME,
+                   B.BN_RATIO AS B_BN_RATIO,
+			       PF.PF_RENAMEFILENAME AS PF_PF_RENAMEFILENAME,
+			       PF.PF_SORT AS PF_PF_SORT
+			FROM PRODUCT P
+            JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO)
+            JOIN PRODUCT_TOPCATEGORY PT ON (PM.PT_NO = PT.PT_NO)
+            LEFT OUTER JOIN PRODUCT_BENEFIT PB ON (P.P_NO = PB.P_NO)
+            LEFT OUTER JOIN BENEFIT B ON (PB.BN_NO = B.BN_NO)
+            JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO)
 			WHERE P.P_NO = #{no}
+			ORDER BY PF_PF_RENAMEFILENAME
 	</select>
+
+
+	<select id="selectProductOptionByNo" parameterType="_int"  resultMap="optionResultMap">
+			SELECT PO_NO,
+				   P_NO,
+                   PO_NAME,
+                   PO_PRICE,
+                   PO_AMOUNT
+            FROM PRODUCT_OPTION
+            WHERE P_NO = #{no}
+	</select>
+
+
 
 
 
@@ -151,61 +267,89 @@
 		PRODUCT P 
 		LEFT OUTER JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO)
 		LEFT OUTER JOIN PRODUCT_TOPCATEGORY PT ON (PM.PT_NO = PT.PT_NO)
-        WHERE PT.PT_NO = #{no} 
+        WHERE PM.PM_C_NO = 1 AND
+        PT.PT_NO = #{no} 
+        
+        <if test="gender != null">
+        	AND P.P_GENDER = #{gender}
+        </if>
+         <if test="brand != null ">
+         	AND P.P_BRAND = #{brand}
+         </if>
+         <if test="keyword != null">
+        		AND P.P_TITLE LIKE '%' || #{keyword} || '%'
+        		OR  P.P_BRAND LIKE '%' || #{keyword} || '%'
+        		OR  P.P_BRAND LIKE '%' || #{keyword} || '%'
+        		OR  P.P_NAME LIKE '%' || #{keyword} || '%' 
+        		OR  P.P_ENG LIKE '%' || #{keyword} || '%'
+        </if>
+        
 	</select>
 
-	<select id="selectScentProductByNo"  parameterType="_int" resultMap="productListResultMap">
-<!-- 		SELECT P.P_NO, -->
-<!-- 		       P.PM_NO, -->
-<!-- 		       PM.PM_NO AS PM_PM_NO, -->
-<!-- 		       PM.PT_NO AS PM_PT_NO, -->
-<!-- 		       P.P_BRAND,  -->
-<!-- 		       P.P_TITLE,  -->
-<!-- 		       P.P_NAME,  -->
-<!-- 		       P.P_ENG,  -->
-<!-- 		       P.P_GENDER,  -->
-<!-- 		       P.P_PRICE,  -->
-<!-- 		       PT.PT_NO AS PT_PT_NO,  -->
-<!-- 		       PT.PT_NAME AS PT_PT_NAME,  -->
-<!-- 		       PT.PT_DETAIL AS PT_PT_DETAIL -->
-<!-- 		FROM -->
-<!-- 		PRODUCT P  -->
-<!-- 		LEFT OUTER JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO) -->
-<!-- 		LEFT OUTER JOIN PRODUCT_TOPCATEGORY PT ON (PM.PT_NO = PT.PT_NO) -->
-<!--         WHERE PT.PT_NO = #{no} -->
-		
-			SELECT     P.P_NO,
-		 		       P.PM_NO, 
-		 		       PM.PM_NAME AS PM_PM_NAME, 
-				       P.P_BRAND,  
-				       P.P_TITLE,  
-				       P.P_NAME,  
-		 		       P.P_ENG,  
-		 		       P.P_GENDER,  
-		 		       P.P_PRICE,
-		               B.BN_NAME AS B_BN_NAME,
-		               B.BN_RATIO AS B_BN_RATIO,
-		               B.BN_STATUS AS B_BN_STATUS,
-		               PT.PT_NO AS PT_PT_NO,
-		               PT.PT_NAME AS PT_PT_NAME,
-		               PT.PT_DETAIL AS PT_PT_DETAIL
-		    FROM 
-		    PRODUCT P
-		    LEFT OUTER JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO)
-		    LEFT OUTER JOIN PRODUCT_TOPCATEGORY PT ON (PM.PT_NO = PT.PT_NO)
-		    LEFT OUTER JOIN PRODUCT_BENEFIT PB ON (P.P_NO = PB.P_NO)
-		    LEFT OUTER JOIN BENEFIT B ON (PB.BN_NO = B.BN_NO)
-		    WHERE PM.PM_C_NO = 1 AND
-		    PT.PT_NO = #{no}
+	<select id="selectScentProductByNo" parameterType="map"   resultMap="productListResultMap">
+			  SELECT DISTINCT P_NO,
+       					PB.P_NO AS PB_P_NO,
+                        P_BRAND,
+                        P_ENG,
+                        P_NAME,
+                        P_STATUS,
+                        P_GENDER,
+                        P_DATE,
+                        P_PRICE,
+                        BN_NAME B_BN_NAME,
+                        BN_RATIO B_BN_RATIO,
+                        BN_ENDDATE AS B_BN_ENDDATE,
+                        PF_RENAMEFILENAME AS PF_PF_RENAMEFILENAME,
+                        PF_SORT AS PF_PF_SORT
+        FROM 
+   		PRODUCT P
+        JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO)
+        JOIN PRODUCT_TOPCATEGORY PT ON (PM.PT_NO = PT.PT_NO)
+        LEFT OUTER JOIN PRODUCT_BENEFIT PB ON (P.P_NO = PB.P_NO)
+        LEFT OUTER JOIN BENEFIT B ON (PB.BN_NO = B.BN_NO)
+        LEFT OUTER JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO)
+        WHERE PM.PM_C_NO = 1
+        AND PF.PF_SORT = 1
+        AND PT.PT_NO = #{no}
+        
+         <if test="keyword != null">
+        		AND P.P_TITLE LIKE '%' || #{keyword} || '%'
+        		OR  P.P_BRAND LIKE '%' || #{keyword} || '%'
+        		OR  P.P_BRAND LIKE '%' || #{keyword} || '%'
+        		OR  P.P_NAME LIKE '%' || #{keyword} || '%' 
+        		OR  P.P_ENG LIKE '%' || #{keyword} || '%'
+        	</if>
+         <if test="gender != null">
+        	AND P.P_GENDER = #{gender}
+         </if>
+         <if test="brand != null ">
+         	AND P.P_BRAND = #{brand}
+         </if>
+         
+         <if test="sort != null">
+        	<choose>
+				<when test='sort.equals("1")'>
+					ORDER BY P.P_DATE DESC
+				</when>
+				<when test='sort.equals("2")'>
+					ORDER BY P.P_PRICE ASC
+				</when>
+				<when test='sort.equals("3")'>
+					ORDER BY P.P_PRICE DESC
+				</when>
+			</choose>
+        </if>
+         
+         
+         
 	</select>
 
 
 	<select id="selectScentByNo" parameterType="_int" resultMap="topcateResultMap">
-	
 		SELECT * FROM 
         PRODUCT_TOPCATEGORY
         WHERE PT_NO = #{no}
-	
+		
 	</select>
 
 
@@ -214,62 +358,59 @@
 	전체리스트 향수 (리스트)
 	 -->
 	<select id="selectAll" resultMap="productListResultMap">
-<!-- 		SELECT P.P_NO, -->
-<!-- 		       P.PM_NO, -->
-<!-- 		       PM.PM_NO AS PM_PM_NO, -->
-<!-- 		       PM.PT_NO AS PM_PT_NO, -->
-<!-- 		       P.P_BRAND,  -->
-<!-- 		       P.P_TITLE,  -->
-<!-- 		       P.P_NAME,  -->
-<!-- 		       P.P_ENG,  -->
-<!-- 		       P.P_GENDER,  -->
-<!-- 		       P.P_PRICE,  -->
-<!-- 		       PT.PT_NO AS PT_PT_NO,  -->
-<!-- 		       PT.PT_NAME AS PT_PT_NAME  -->
-<!-- 		FROM -->
-<!-- 		PRODUCT P  -->
-<!-- 		LEFT OUTER JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO) -->
-<!-- 		LEFT OUTER JOIN PRODUCT_TOPCATEGORY PT ON (PM.PT_NO = PT.PT_NO) -->
-		
-		
-		
-<!-- 		SELECT P.P_NO, -->
-<!-- 		       P.PM_NO, -->
-<!-- 		       PM.PM_NAME AS PM_PM_NAME, -->
-<!-- 		       P.P_BRAND,  -->
-<!-- 		       P.P_TITLE,  -->
-<!-- 		       P.P_NAME,  -->
-<!-- 		       P.P_ENG,  -->
-<!-- 		       P.P_GENDER,  -->
-<!-- 		       P.P_PRICE -->
-<!--     FROM  -->
-<!--     PRODUCT P -->
-<!--     JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO) -->
-<!--     WHERE PM.PM_C_NO = 1 -->
-    
-    
-        SELECT 
-               P.P_NO,
-               PB.P_NO AS PB_P_NO,
-               P.PM_NO, 
- 		       PM.PM_NAME AS PM_PM_NAME,
-		       P.P_BRAND,  
-		       P.P_TITLE,  
-		       P.P_NAME,  
- 		       P.P_ENG,  
- 		       P.P_GENDER,  
- 		       P.P_PRICE,
- 		       P.P_DATE,
-               B.BN_STATUS AS B_BN_STATUS, 
-               B.BN_ENDDATE AS B_BN_ENDDATE,     
-               B.BN_NAME AS B_BN_NAME,
-               B.BN_RATIO AS B_BN_RATIO
+
+<!--         SELECT  -->
+<!--                P.P_NO, -->
+<!--                PB.P_NO AS PB_P_NO, -->
+<!--                P.PM_NO,  -->
+<!--  		       PM.PM_NAME AS PM_PM_NAME, -->
+<!-- 		       P.P_BRAND,   -->
+<!-- 		       P.P_TITLE,   -->
+<!-- 		       P.P_NAME,   -->
+<!--  		       P.P_ENG,   -->
+<!--  		       P.P_GENDER,   -->
+<!--  		       P.P_PRICE, -->
+<!--  		       P.P_DATE, -->
+<!--                B.BN_STATUS AS B_BN_STATUS,  -->
+<!--                B.BN_ENDDATE AS B_BN_ENDDATE,      -->
+<!--                B.BN_NAME AS B_BN_NAME, -->
+<!--                B.BN_RATIO AS B_BN_RATIO, -->
+<!--                PF.PF_RENAMEFILENAME AS PF_PF_RENAMEFILENAME, -->
+<!--                PF.PF_SORT AS PF_PF_SORT -->
+<!--         FROM  -->
+<!--         PRODUCT P -->
+<!--         LEFT OUTER JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO) -->
+<!--         LEFT OUTER JOIN PRODUCT_BENEFIT PB ON (P.P_NO = PB.P_NO) -->
+<!--         LEFT OUTER JOIN BENEFIT B ON (PB.BN_NO = B.BN_NO) -->
+<!--         LEFT OUTER JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO) -->
+        
+<!--         WHERE PM.PM_C_NO = 1   -->
+       
+       
+       		SELECT DISTINCT P_NO,
+       					PB.P_NO AS PB_P_NO,
+                        P_BRAND,
+                        P_ENG,
+                        P_NAME,
+                        P_STATUS,
+                        P_GENDER,
+                        P_DATE,
+                        P_PRICE,
+                        BN_NAME B_BN_NAME,
+                        BN_RATIO B_BN_RATIO,
+                        BN_ENDDATE AS B_BN_ENDDATE,
+                        PF_RENAMEFILENAME AS PF_PF_RENAMEFILENAME,
+                        PF_SORT AS PF_PF_SORT
         FROM 
-        PRODUCT P
-        LEFT OUTER JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO)
+   		PRODUCT P
+        JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO)
         LEFT OUTER JOIN PRODUCT_BENEFIT PB ON (P.P_NO = PB.P_NO)
         LEFT OUTER JOIN BENEFIT B ON (PB.BN_NO = B.BN_NO)
-        WHERE PM.PM_C_NO = 1  
+        LEFT OUTER JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO)
+        WHERE PM.PM_C_NO = 1
+        AND PF.PF_SORT = 1
+       
+       
         	<if test="keyword != null">
         		AND P.P_TITLE LIKE '%' || #{keyword} || '%'
         		OR  P.P_BRAND LIKE '%' || #{keyword} || '%'
@@ -302,6 +443,9 @@
 	</select>
 
 
+
+<!-- count 가져오는 방식이 2가지인데, 개수만 유추해오는 방식, 
+     아래는  모든걸 가져오는데, sort 1인 경우만 가져와서 상품 개수 유추 -->
 	<select id="selectProductCount" resultType="_int" >
 		SELECT COUNT(*) FROM 
    		PRODUCT P
@@ -310,7 +454,16 @@
         <if test="gender != null">
         	AND P.P_GENDER = #{gender}
         </if>
-       
+         <if test="brand != null ">
+         	AND P.P_BRAND = #{brand}
+         </if>
+         <if test="keyword != null">
+        		AND P.P_TITLE LIKE '%' || #{keyword} || '%'
+        		OR  P.P_BRAND LIKE '%' || #{keyword} || '%'
+        		OR  P.P_BRAND LIKE '%' || #{keyword} || '%'
+        		OR  P.P_NAME LIKE '%' || #{keyword} || '%' 
+        		OR  P.P_ENG LIKE '%' || #{keyword} || '%'
+        </if>
         
 		
 	</select>
@@ -346,6 +499,225 @@
         JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO)
         WHERE PM.PM_C_NO = 1	
 	</select>
+	
+	
+	
+	<select id="selectProductFileByNo" parameterType="_int" resultMap="productListResultMap">
+	 SELECT P.P_NO,
+	        PF_RENAMEFILENAME AS PF_PF_RENAMEFILENAME,
+            PF_SORT AS PF_PF_SORT
+            FROM PRODUCT P
+            JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO)
+            WHERE P.P_NO = #{no}
+            ORDER BY PF_SORT
+	
+	</select>
+	
+	<select id="selectProductPaperCount" resultType="_int" >
+	SELECT COUNT(*)
+           FROM PRODUCT P
+	       JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO)
+	       LEFT OUTER JOIN PRODUCT_BENEFIT PB ON (P.P_NO = PB.P_NO)
+	       LEFT OUTER JOIN BENEFIT B ON (PB.BN_NO = B.BN_NO)
+	       LEFT OUTER JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO)
+	       WHERE PM.PM_C_NO = 2
+	       AND PF.PF_SORT = 1
+	
+	
+	
+	</select>
+	
+	
+	
+	<select id="selectPaperAll" resultMap="productListResultMap">
+		SELECT DISTINCT P_NO,
+						PT_NAME AS PT_PT_NAME,
+       					PB.P_NO AS PB_P_NO,
+                        P_BRAND,
+                        P_ENG,
+                        P_NAME,
+                        P_STATUS,
+                        P_GENDER,
+                        P_DATE,
+                        P_PRICE,
+                        BN_NAME B_BN_NAME,
+                        BN_RATIO B_BN_RATIO,
+                        BN_ENDDATE AS B_BN_ENDDATE,
+                        PF_RENAMEFILENAME AS PF_PF_RENAMEFILENAME,
+                        PF_SORT AS PF_PF_SORT
+        FROM 
+   		PRODUCT P
+        JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO)
+        JOIN PRODUCT_TOPCATEGORY PT ON (PT.PT_NO = PM.PT_NO)
+        LEFT OUTER JOIN PRODUCT_BENEFIT PB ON (P.P_NO = PB.P_NO)
+        LEFT OUTER JOIN BENEFIT B ON (PB.BN_NO = B.BN_NO)
+        LEFT OUTER JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO)
+        WHERE PM.PM_C_NO = 2
+        AND PF.PF_SORT = 1
+        <if test="sort != null">
+        	<choose>
+				<when test='sort.equals("1")'>
+					ORDER BY P.P_DATE DESC
+				</when>
+				<when test='sort.equals("2")'>
+					ORDER BY P.P_PRICE ASC
+				</when>
+				<when test='sort.equals("3")'>
+					ORDER BY P.P_PRICE DESC
+				</when>
+			</choose>
+        </if>
+	</select>
+	
+	
+	<select id="selectProductBoardByNo" parameterType="_int" resultMap="productboardresultmap" >
+		SELECT PB_NO,
+               P_NO,
+               PB_TITLE,
+               PB_CONTENT,
+               PB_DATE,
+               PB_UPDATE,
+               PB_STATUS,
+               PB_GRADE
+        FROM PRODUCT_BOARD PBO
+        JOIN PRODUCT_BOARD_CATEGORY PBC ON (PBO.PBC_NO = PBC.PBC_NO)
+        WHERE PBC.PBC_NO = 1
+        AND PBO.P_NO = #{no}
+	
+	</select>
+	
+	<select id="selectProductQnaByNo"  parameterType="_int" resultMap="productboardresultmap">
+		SELECT PB_NO,
+               P_NO,
+               PB_TITLE,
+               PB_CONTENT,
+               PB_DATE,
+               PB_UPDATE,
+               PB_STATUS,
+               PB_GRADE,
+               PB_PWD
+        FROM PRODUCT_BOARD PBO
+        JOIN PRODUCT_BOARD_CATEGORY PBC ON (PBO.PBC_NO = PBC.PBC_NO)
+        WHERE PBC.PBC_NO = 2
+        AND PBO.P_NO = #{no}
+	
+	
+	</select>
+	
+	
+	
+	
+	<select id="selectProductBoardCount" parameterType="_int" resultType="_int">
+	 SELECT COUNT(*)   
+	 FROM PRODUCT_BOARD PBO
+	 JOIN PRODUCT_BOARD_CATEGORY PBC ON (PBO.PBC_NO = PBC.PBC_NO)
+	 WHERE PBC.PBC_NO = 1
+	 AND PBO.P_NO = #{no}
+	
+	</select>
+	
+	<select id="selectQnaBoardCount" parameterType="_int" resultType="_int">
+	SELECT COUNT(*)   
+	 FROM PRODUCT_BOARD PBO
+	 JOIN PRODUCT_BOARD_CATEGORY PBC ON (PBO.PBC_NO = PBC.PBC_NO)
+	 WHERE PBC.PBC_NO = 2
+	 AND PBO.P_NO = #{no}
+
+	</select>
+	
+	
+	
+	
+	<select id="selectGradeByNo" parameterType="_int" resultMap="productboardresultmap">
+		SELECT PB_GRADE
+        FROM PRODUCT_BOARD PBO
+        JOIN PRODUCT_BOARD_CATEGORY PBC ON (PBO.PBC_NO = PBC.PBC_NO)
+        WHERE PBC.PBC_NO = 1
+        AND PBO.P_NO = #{no}
+        AND PB_GRADE IS NOT NULL
+	
+	</select>
+	
+	
+<!-- 	<select id=""> -->
+<!-- 	SELECT * -->
+<!--     FROM ( -->
+<!--          SELECT DISTINCT P_NO, -->
+<!--        					PB.P_NO AS PB_P_NO, -->
+<!--                         P_BRAND, -->
+<!--                         P_ENG, -->
+<!--                         P_NAME, -->
+<!--                         P_STATUS, -->
+<!--                         P_GENDER, -->
+<!--                         P_DATE, -->
+<!--                         P_PRICE, -->
+<!--                         P_HIT, -->
+<!--                         BN_NAME B_BN_NAME, -->
+<!--                         BN_RATIO B_BN_RATIO, -->
+<!--                         BN_ENDDATE AS B_BN_ENDDATE, -->
+<!--                         PF_RENAMEFILENAME AS PF_PF_RENAMEFILENAME, -->
+<!--                         PF_SORT AS PF_PF_SORT -->
+<!--         FROM  -->
+<!--    		PRODUCT P -->
+<!--         JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO) -->
+<!--         LEFT OUTER JOIN PRODUCT_BENEFIT PB ON (P.P_NO = PB.P_NO) -->
+<!--         LEFT OUTER JOIN BENEFIT B ON (PB.BN_NO = B.BN_NO) -->
+<!--         LEFT OUTER JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO) -->
+<!--         WHERE PM.PM_C_NO = 1 -->
+<!--         AND PF.PF_SORT = 1 -->
+<!--         ORDER BY P_HIT DESC -->
+<!--        ) -->
+<!--  WHERE ROWNUM <= 10; -->
+	
+	
+	
+<!-- 	</select> -->
+	
+	
+	
+	<select id="selectSaleProductCount" resultType="_int">
+	SELECT COUNT(*)
+	        FROM 
+	   		PRODUCT P
+	        JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO)
+	        INNER JOIN PRODUCT_BENEFIT PB ON (P.P_NO = PB.P_NO)
+	        INNER JOIN BENEFIT B ON (PB.BN_NO = B.BN_NO)
+	        LEFT OUTER JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO)
+	        WHERE PM.PM_C_NO = 1
+	        AND PF.PF_SORT = 1
+	
+	</select>
+	
+	
+	<select id="selectSaleProductList" resultMap="productListResultMap">
+	     SELECT         DISTINCT P_NO,
+       					PB.P_NO AS PB_P_NO,
+                        P_BRAND,
+                        P_ENG,
+                        P_NAME,
+                        P_STATUS,
+                        P_GENDER,
+                        P_DATE,
+                        P_PRICE,
+                        BN_NAME B_BN_NAME,
+                        BN_RATIO B_BN_RATIO,
+                        BN_ENDDATE AS B_BN_ENDDATE,
+                        PF_RENAMEFILENAME AS PF_PF_RENAMEFILENAME,
+                        PF_SORT AS PF_PF_SORT
+        FROM 
+   		PRODUCT P
+        JOIN PRODUCT_MIDCATEGORY PM ON (P.PM_NO = PM.PM_NO)
+        INNER JOIN PRODUCT_BENEFIT PB ON (P.P_NO = PB.P_NO)
+        INNER JOIN BENEFIT B ON (PB.BN_NO = B.BN_NO)
+        LEFT OUTER JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO)
+        WHERE PM.PM_C_NO = 1
+        AND PF.PF_SORT = 1
+
+	</select>
+	
+	
+	
+	
 	
 </mapper>
 

@@ -41,6 +41,8 @@
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/images/**" location="/resources/images/" />
 	<resources mapping="/upload/**" location="/resources/upload/" />
+	<resources mapping="/slick/**" location="/resources/slick/" />
+	
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -77,7 +79,5 @@
 	<tx:annotation-driven 
 		transaction-manager="transactionManager"
 		proxy-target-class="true"/>
-	
-	
 	
 </beans:beans>

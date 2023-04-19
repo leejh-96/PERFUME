@@ -12,6 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,14 +21,17 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="./js/jquery-3.6.3.js"></script>
-  <script src="./slick/slick.min.js"></script>
+  <script src="${path }/js/jquery-3.6.3.js"></script>
+  <script src="${path }/slick/slick.min.js"></script>
 
-  <link rel="stylesheet" href="./slick/slick-theme.css">
-  <link rel="stylesheet" href="./slick/slick.css">
+  <link rel="stylesheet" href="${path }/slick/slick-theme.css">
+  <link rel="stylesheet" href="${path }/slick/slick.css">
+  
+  <link rel="stylesheet" href="${ path }/css/planning/footer.css">
+<%--   <link rel="stylesheet" href="${ path }/css/planning/header.css"> --%>
 <style>
-       div * {
-            /* border: 2px solid red; */
+       div * {              
+/*             border: 2px solid red;    */
             box-sizing: border-box;
             
         }
@@ -40,9 +44,9 @@
              /* background-color: #f6f6f2; */
         }
 
-        #header {height: 1%;  background-color: navy;}
-        #section {height: 96%;}
-        #footer {height: 3%; background-color: beige}
+       
+        #section {height: 100%;}
+/*       #footer {height: 3%; }  */
      
 
         /* .product_title {border-top: 3px solid; }  */
@@ -61,7 +65,10 @@
         } */
 
 
-        #s1 {height: 2%;}
+        #s1 {height: 2%; border-top: 1px solid #ccc;}
+        
+         #s1_1 {height: 40%; background-color: navy;}
+        #s1_2 {height: 60%;}
 
         #s2 {height: 16%;}
 
@@ -80,55 +87,7 @@
 
 
 
-        #navi{
-            list-style-type: none;
-            margin:0;
-            padding:0;
-            height:100%;
-            
-        }
-
-        #navi>li{
-            float:left;
-            width:25%;
-            height:100%;
-            text-align:center;
-            font-size:11px;
-            line-height:35px;
-           
-        }
-
-        #navi a{
-            text-decoration: none;
-           
-            font-size: 1.4em;
-            font-weight: 900;
-            height: 100%;
-            line-height: 3;
-        }
-
-        #navi a:hover{
-            color: darkblue;
-        }
-
-        #navi>li>ul{
-            list-style-type: none;
-            padding: 0;
-            display: none;
-        }
-
-        #navi>li>a:hover+ul{
-            display: block;
-        }
-
-        #navi>li>ul:hover {
-            display: block;
-        }
-
-        #navi>li>ul a{
-            font-size: 1.4em;
-        }
-
+        
       
 
         /* a{  
@@ -138,11 +97,11 @@
         line-height: 3.5;
         } */
 
-        a:hover {
-        color: darkblue;
-        text-decoration : none;
-        font-size: 13px;
-        }
+/*         a:hover { */
+/*         color: darkblue; */
+/*         text-decoration : none; */
+/*         font-size: 13px; */
+/*         } */
         
 
         #product {height: 90%;}
@@ -264,8 +223,8 @@
         #product-qna {width: 80%;}
         
         #qna-name{text-align: center; height: 6%;}
-        #qna-content {height: 82%;}
-        #qna-page{height: 7%;}
+        #qna-content {height: 78%;}
+        #qna-page{height: 11%; text-align: center;  border-top: 1px solid #ccc;}
         
 
         #product-guide-wrap {height: 86%;}
@@ -291,14 +250,15 @@
             width: 70%;
         }
 
-
+		#review-filter>div {height: 100%; float: left;}
         #review-filter {height: 7%;}
-        #review-content{height: 86%;}
-        #review-page {height: 7%;}
+       #review-content{height: 78%;}
+        #review-page {height: 15%; border-top: 1px solid #ccc;}
 
         #review-table {
             width: 100%;
             font-size: 12px;
+            
         }
 
         
@@ -325,7 +285,7 @@
 
        }
 
-       #related-list {height: 92%;}
+       #related-list {height: 80%;}
     
 
        .slick-arrow{
@@ -381,7 +341,7 @@
  
     #sumbimg1{width: 25%;}
 
-    .img1 {max-width: 100%;
+    .img1 {max-width: 100%; max-height : 100%;
     }
 
     .big { max-width: 100%;}
@@ -396,43 +356,154 @@
     #quantity {width: 15%; height: 50%; text-align: center; font-size: 12px;}
 
     .opt-table>div{height: 100%; float: left;}
+    
+    
+    #detailimg {
+    	height: 25%;
+    	max-height : 100%;
+    }
+    
+    .rfilter {
+            padding: 10px;
+            font-weight: bold;
+        }
+   	thead {
+            
+            font-weight:bold;
+            border-bottom: 1px solid #ccc;
+        
+        }
+        
+        #reviewline {
+
+            border-bottom: 1px solid #ccc;
+        }
+    
+    	 .link {
+        color: #333;
+         font-size: 13px; 
+          font-weight: 900;
+          line-height: 3.5;
+         
+    }
+
+ 	
+ 	 .link:hover {
+        text-decoration : none;
+        font-size: 13px;
+        }
+    
+    	#qnaname>div {height: 100%; float:left;}
+    
+    
 </style>
 </head>
 <body>
     <div class="wrap">
-        <div id="header">
-            <div id="header1">
-                <h2 align="center">planner</h2>
-            </div>
-            <div id="navigator">
-                <ul id="navi">
-                    <li><a href="#">menu1</a></li>
-                    <li>
-                        <a href="#">menu2</a>
-                        <ul>
-                            <li><a href="#">x</a></li>
-                            <li><a href="#">x</a></li>
-                            <li><a href="#">x</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">menu3</a>
-                        <ul>
-                            <li><a href="#">x</a></li>
-                            <li><a href="#">x</a></li>
-                            <li><a href="#">x</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">menu4</a></li>
+         <header>
+        <div class="header-container">
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#">ABOUT US</a></li>
+                    <li><a href="${ path }/planning/special">SPECIAL</a></li>
+                    <li><a href="#">SCENT</a></li>
+                    <li><a href="#">SACHET</a></li>
                 </ul>
+            </nav>
+            <h1 class="logo"><a href="${ path }/">Perfume</a></h1>
+            <nav class="user-nav">
+                <ul>
+                    <li><a href="#">EVENT</a></li>
+                    <li><a href="#">COMMUNITY</a></li>
+                    <c:if test="${ empty loginMember }">
+	                    <li><a href="#" class="openLogin">LOGIN</a></li>
+	                    <li><a href="#">JOIN</a></li>
+                    </c:if>
+                    <c:if test="${ not empty loginMember }">
+						<li><a href="${ path }/logout">LOGOUT</a></li>
+						<c:if test="${ not empty loginMember && loginMember.division == '2' }">
+							<li><a href="#">MY PAGE</a></li>                                      
+							<li><a href="${ path }/cart?memberNo=3">CART</a></li>                                      
+						</c:if>
+						<c:if test="${ not empty loginMember && loginMember.division == '1' }">
+							<li><a href="#">ADMIN PAGE</a></li>                                        
+						</c:if>              
+                    </c:if>
+                </ul>
+            </nav>
+        </div>
+
+ <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">댓글 작성</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <table class="">
+                        <tr>
+                            <td>아이디</td>
+                            <td>ismoon</td>
+                        </tr>
+                        <tr>
+                            <td>내용</td>
+                            <td><textarea name="" id="" cols="30" rows="10"></textarea></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button"  >작성하기</button>
+                  <button type="button"  data-dismiss="modal">취소</button>
+                </div>
+              </div>
             </div>
-            <div id="header2">
-                <a href="#" id="login">Log In</a>
+          </div>
+
+
+
+
+
+        <!-- 로그인 모달창 구현 -->
+        <div class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 style="text-align: center;">LOGIN</h2>
+                <form id="loginForm" action="${ path }/login" method="POST">
+                    <div>
+                        <label for="id" style="font-weight: bold;">아이디</label><br>
+                        <input type="text" id="id" name="id" required placeholder="아이디를 입력하세요."><br>
+                        <label for="pwd" style="font-weight: bold;">비밀번호</label><br>
+                        <input type="password" id="pwd" name="pwd" required placeholder="비밀번호를 입력하세요."><br><br>
+                        <button type="submit">Login</button><br><br>
+                    </div>
+                </form>
+                    <div>
+                        <a href="${ path }/planning/findId"><button type="button" id="findId">아이디 찾기</button></a>
+                        <a href="${ path }/planning/findPwd"><button type="button" id="findPwd">비밀번호 찾기</button></a><br><br>
+                        <button type="submit">회원가입</button><br><br>
+                    </div>
+                    <ul style="list-style: none;">
+                        <li onclick="naverLogin();"><button type="button">네이버로 로그인</button></li>
+                        <li onclick="kakaoLogin();"><button type="button">카카오로 로그인</button></li>
+                        <li onclick="googleLogin();"><button type="button">구글로 로그인</button></li>
+                        <li onclick="appleLogin();"><button type="button">애플로 로그인</button></li>
+                    </ul>
             </div>
         </div>
+    
+        
+    </header>
         <div id="section">
-            <div id="s1">
-                
+            <div id="s1" >
+                 <div id="s1_1">
+
+                </div>
+                <div id="s1_2">
+
+                </div>
             </div>
             <div id="s2">
                
@@ -441,21 +512,34 @@
 
                     </div>
                     <c:forEach var="product" items="${ list }">
+                    
                     <div style="width: 70%;"  >
-                        <div style="height: 60%; width: 100%;">
-                        <img src="https://www.chanel.com/images/t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_auto,fl_lossy,dpr_1.2/w_620//bleu-de-chanel-eau-de-toilette-spray-3-4fl-oz--packshot-default-107460-9518357020702.jpg" class="big" alt="">
+                        <div style="height: 60%; width: 100%;" id="mainimg">
+                        <c:forEach var="productfile" items="${ product.productfile }" begin="0"  end="0" >
+                      
+                        <c:if test="${productfile.pfsort eq '1' }">
+                     
+                        <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="big" alt="">
+                        </c:if>
+                        </c:forEach>
                         </div>  
                         
                         <div id="sumb-wrap" style="height: 15%;">
+                         <c:forEach var="productfile" items="${ product.productfile }"  begin="0"  end="0">
+                         	<c:if test="${productfile.pfsort eq '1' }">
                             <div id="sumbimg1" >
-                                <img src="https://www.chanel.com/images/t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_auto,fl_lossy,dpr_1.2/w_620//bleu-de-chanel-eau-de-toilette-spray-3-4fl-oz--packshot-default-107460-9518357020702.jpg" class="img1" alt="">
+                                <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="img1" alt="">
                             </div>
-                            <div id="sumbimg2" >
-                                <img src="https://www.chanel.com/images//t_one/t_fnbedito//q_auto:good,f_auto,fl_lossy,dpr_1.2/w_620/bleu-de-chanel-eau-de-parfum-spray-3-4fl-oz--packshot-alternative-v1-107360-8851960922142.jpg" class="img1" alt="">
+                            </c:if>
+                            </c:forEach>
+                            <c:forEach var="productfile" items="${ product.productfile }" begin="1" end="2">
+                            <c:if test="${productfile.pfsort eq '2' }">
+                            <div id="sumbimg1" >
+                                <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="img1" alt="">
                             </div>
-                            <div id="sumbimg3" >
-                               
-                            </div>
+                            </c:if>
+                            
+                            </c:forEach>
                         </div>
 
                         <div style="height: 25%;">
@@ -478,10 +562,14 @@
                     <div id="product-l-meaning">
                         ${product.title }
                     </div>
+             
                     <div id="product-sizeinfo">
-                        <h6 style="font-size: 12px;">scent : <span><strong>     woody</strong> </span></h6>  
-                        <h6 style="font-size: 12px;">size :  <span><strong>   30ml, 50ml, 100ml</strong></span> </h6>    
+                        <h6 style="font-size: 12px;">scent : <span><strong>${product.topcate.ptname }</strong> </span></h6> 
+                         
+                        <h6 style="font-size: 12px;">size :  <span><strong> <c:forEach var="option" items="${option}"> ${option.poname}ml </c:forEach></strong></span> </h6>   
+                     
                     </div>
+               
                     <div id="product-caution">
                         <h6 style="font-size: 13px;"><b>구매 시 주의사항</b></h6>
                         1. 제작과정에서 생긴 작은 기포나 미세한 스크래치가 있을 수 있습니다.<br>
@@ -498,16 +586,37 @@
                         <div id="price">
                         
                         
-                       
-                        <h3><strong>${product.price }</strong></h3>
+                        <c:forEach var="benefit" items="${product.benefit}" begin="0" end="0">
+                        <c:if test="${not empty product.benefit }">
+                        <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
+                        <fmt:parseNumber var="saleprice" value="${product.price*salepricerate}"/>
+                        <fmt:parseNumber var="productsaleprice" value="${product.price-saleprice}"/>
+                        
+                        
+                        <h3><strong><fmt:formatNumber value="${productsaleprice}" pattern="###,###"/></strong></h3>
+                        </c:if>
+                        
+                        
+                      
+                     	</c:forEach>
+                     	  <c:if test="${empty product.benefit }">
+                        
+                        <h3><strong><fmt:formatNumber value="${product.price}" pattern="###,###"/></strong></h3>
+                        </c:if>
+                     	
                      	
                         </div>
                         <div id="origin_price">
                        
                         </div>
+                        <c:forEach var="benefit" items="${product.benefit}">
+                        <c:set var="bnratio" value="${benefit.bnratio}%" />
+                      
+                        </c:forEach>
                         <div id="sale">
-                            <h3>10%</h3>
+                            <h3>${bnratio}</h3>
                         </div>
+                        
                     </div>
 
                     <div id="product-benefits">
@@ -536,7 +645,7 @@
                                     <option id="btn" value="" selected link_image="">용량(필수)</option>
                                     <option value="" disabled link_image="">-------------------</option>
                                     
-                                    <c:forEach var="option" items="${product.option}">
+                                    <c:forEach var="option" items="${option}">
                                     <option data-pono1="${option.pono }" value="${option.poname}" value2="" id="test">${option.poname}ml<span>[</span>재고 : ${option.poamount}<span>]</span></option>
                                  	</c:forEach>
                                 </select>
@@ -557,7 +666,7 @@
                         </table>
                         </div>
                     </div>
-                              <c:forEach var="option" items="${product.option}">
+                              <c:forEach var="option" items="${option}">
                         <div class="opt-table" id="opt${option.poname}" data-id="${option.poname}"style="border: 1px solid #ccc; padding: 10px; display: none;">
                                     <div style="width: 55%; font-size: 12px; line-height: 40px;">
                                     <p>${product.eng } -<span class="sizeval">${option.poname}ml</span></p></div>
@@ -569,7 +678,21 @@
                                                         </span>
                                                     </div>
                                                     <div class="price" style="width: 20%; line-height: 40px; font-size: 12px;">
-                                    <span id="selected-price">${option.poprice}</span>&nbsp;<span>원<span>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="prepareOrder.delBuyGoods($(this),1,0);prepareOrder.getSizeRecommend('product_size_recommend','2060719','0',false,'');return false;">x</a></span>
+                                                    
+                                                    <c:forEach var="benefit" items="${product.benefit}" begin="0" end="0">
+							                        <c:if test="${not empty product.benefit }">
+							                        <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
+							                        <fmt:parseNumber var="saleprice" value="${option.poprice*salepricerate}"/>
+							                        <fmt:parseNumber var="productsaleprice" value="${option.poprice-saleprice}"/>
+                                    <span id="selected-price">${productsaleprice}</span>&nbsp;<span>원<span>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="prepareOrder.delBuyGoods($(this),1,0);prepareOrder.getSizeRecommend('product_size_recommend','2060719','0',false,'');return false;">x</a></span>
+                                    
+					                                </c:if>
+					                                </c:forEach>
+					                                
+					                                <c:if test="${empty product.benefit }">
+					                         <span id="selected-price">${option.poprice}</span>&nbsp;<span>원<span>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="prepareOrder.delBuyGoods($(this),1,0);prepareOrder.getSizeRecommend('product_size_recommend','2060719','0',false,'');return false;">x</a></span>       
+					                                </c:if>
+					                                
                                     </div>
                                 </div>
                                 </c:forEach>   
@@ -628,22 +751,23 @@
                 <hr style="width:80%">
                 <div id="product-menu">
                     
-                    <a name="pinfo" href="#pinfo"> 상품 상세정보 </a> <span class="bar">|</span> 
-                    <a href="#payguide"> 상품 구매안내 </a> <span class="bar">|</span> 
-					<a href="#review"> REVIEW </a> <span class="bar">|</span>
-					<a href="#qna"> 상품 QNA </a> <span class="bar">|</span>
-					<a href="#related"> 관련 상품</a>
+                    <a class="link" name="pinfo" href="#pinfo"> 상품 상세정보 </a> <span class="bar">|</span> 
+                    <a class="link" href="#payguide"> 상품 구매안내 </a> <span class="bar">|</span> 
+					<a class="link" href="#review"> REVIEW </a> <span class="bar">|</span>
+					<a class="link" href="#qna"> 상품 QNA </a> <span class="bar">|</span>
+					<a class="link" href="#related"> 관련 상품</a>
                 </div>
                 <div id="product">
-                    <div>
-                     <img src="https://www.chanel.com/images//t_one/t_fnbedito//q_auto:good,f_auto,fl_lossy,dpr_1.2/w_620/bleu-de-chanel-eau-de-toilette-spray-3-4fl-oz--packshot-alternative-v1-107460-8851960627230.jpg" alt="">
+                <p style="font-weight: bold; font-size: 25px;"> ${product.eng }     </p>
+                 <c:forEach var="productfile" items="${ product.productfile }">
+                	<c:if test="${productfile.pfsort eq '2' }">
+                    <div id="detailimg">
+                     <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="img1" alt="">
                     </div>
-                    <div>
-                    <img src="https://www.chanel.com/images//t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_auto,fl_lossy,dpr_1.2/w_620/bleu-de-chanel-eau-de-toilette-spray-3-4fl-oz--packshot-default-107460-9518357020702.jpg" alt="">
-                    </div>
-                    <div>
-                    <img src="https://www.chanel.com/images//t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_auto,fl_lossy,dpr_1.2/w_620/bleu-de-chanel-2-in-1-moisturizer-for-face-and-beard-1-7fl-oz--packshot-default-107680-8833833762846.jpg" alt=""> 
-                    </div>
+                   </c:if>
+                   <br><br><br>
+                  
+                    </c:forEach>
                     <div>
                         프로젝트 (퍼퓸)의 모든 디자인, 일러스트, 사진들은 <br>
                         상표 및 디자인 특허,
@@ -657,11 +781,11 @@
             <div id="s4">
                 <hr style="width:80%">
                 <div id="product-menu">
-                    <a href="#pinfo"> 상품 상세정보 </a> <span class="bar">|</span> 
-                    <a name="payguide"	href="#payguide"> 상품 구매안내 </a> <span class="bar">|</span> 
-					<a href="#review"> REVIEW </a> <span class="bar">|</span>
-					<a href="#qna"> 상품 QNA </a> <span class="bar">|</span>
-					<a href="#related"> 관련 상품</a>
+                    <a class="link" href="#pinfo"> 상품 상세정보 </a> <span class="bar">|</span> 
+                    <a class="link" name="payguide"	href="#payguide"> 상품 구매안내 </a> <span class="bar">|</span> 
+					<a class="link" href="#review"> REVIEW </a> <span class="bar">|</span>
+					<a class="link" href="#qna"> 상품 QNA </a> <span class="bar">|</span>
+					<a class="link" href="#related"> 관련 상품</a>
                 </div>
                 <div id="d2"></div>
                 <div id="product-guide-wrap">
@@ -720,11 +844,11 @@
             <div id="s5">
                 <hr style="width:80%">
                 <div id="product-menu">
-                    <a href="#pinfo"> 상품 상세정보 </a> <span class="bar">|</span> 
-                    <a href="#payguide"> 상품 구매안내 </a> <span class="bar">|</span> 
-					<a name="review" href="#review"> REVIEW </a> <span class="bar">|</span>
-					<a href="#qna"> 상품 QNA </a> <span class="bar">|</span>
-					<a href="#related"> 관련 상품</a>
+                    <a class="link" href="#pinfo"> 상품 상세정보 </a> <span class="bar">|</span> 
+                    <a class="link" href="#payguide"> 상품 구매안내 </a> <span class="bar">|</span> 
+					<a class="link" name="review" href="#review"> REVIEW </a> <span class="bar">|</span>
+					<a class="link" href="#qna"> 상품 QNA </a> <span class="bar">|</span>
+					<a class="link" href="#related"> 관련 상품</a>
                 </div>
                 <div id="product-review-wrap">
                     <div id="d3">
@@ -738,55 +862,128 @@
                             <h4><b>REVIEW</b></h4>
                         </div>
                         <div id="grade-wrap">
-                            <div id="grade">
+                            <div id="grade" style="background-color: rgb(74, 65, 65); color: white; ">
                                 <br>
-                                <h1>4.7 <span>/</span> <span>5</span></h1>
-                                <h6>3명 참여</h6>
-                                 
+                                <c:set var = "total" value = "0" />
+                                 <c:set value="${fn:length(grade)}" var="gradeCount"/>
+                                <c:forEach var="productboard" items="${grade}" varStatus="status">
+                               <c:set var= "total" value="${total + productboard.pbgrade}"/>
+                               </c:forEach>
+                                <h1>
+                                <span> 
+                                <fmt:formatNumber value="${total / gradeCount}" pattern=".0"/>/</span> 
+                                <span>5</span>
+                                </h1>
+                                <h6>${gradeCount}명 참여</h6>
                             </div>
-                            <div id="grade_graph"></div>
+                            <div id="grade_graph" style="background-color: rgb(224, 224, 224);"></div>
                         </div>
                         <div id="review-wrap">
                             <div id="review-filter">
-                                
+                                <div style="width: 20%;" class="rfilter"><p>REVIEW</p></div>
+                                <div style="width: 80%; text-align: right;"  class="rfilter" >
+                                    <button>write</button>
+                                    <button>list</button>
+                                </div>
 
                             </div>
                             <div id="review-content">
+                           
+                            <div class="accordion" id="accordionExample"> 
+                            
                                 <table id="review-table">
-                                    <tr class="xans-record-">
-                                        <td>4</td>
-                                        <td width="800px">
-                                            <a href="">이정도면 만족스럽네요 !</a><span>[1]</span>
+                                	<thead>
+                                        <tr >
+                                            <td align="center">번호</td>
+                                            <td align="center">제목</td>
+                                            <td>아이디</td>
+                                            <td align="center">등록 시간</td>
+                                            <td align="center">평점</td>
+                                        </tr>
+                                    </thead>
+                                  <c:forEach var="productboard" items="${board}" varStatus="status">
+                                  <tbody style="height: 60px;">
+                                    <tr class="xans-record-" id="reviewline">
+                                        <td  align="center">${productboard.pbno}</td>
+                                        <td width="600px" >
+<!--                                             <a data-toggle="collapse" href=#collapseExample${productboard.pbno} role="button" aria-expanded="false" aria-controls="collapseExample"> -->
+									 <a class="link" type="button" data-toggle="collapse" data-target="#collapseOne${productboard.pbno}" aria-expanded="false" aria-controls="collapseOne${productboard.pbno}">
+                                            ${productboard.pbtitle}</a>
+<!--                                             </a> -->
+                                            <span>[1]</span>
                                         </td>
                                         <td>ismoon</td>
-                                        <td>2022-12-30 03:26:10</td>
-                                        <td>121</td>
-                                        <td><img src="//img.echosting.cafe24.com/skin/base/board/ico_point5.gif" alt="5점"/></td>
+                                        <td align="center">${productboard.pbdate}</td>
+                                 
+                                        <td align="center"><c:choose>
+                                            <c:when test="${productboard.pbgrade <= 4.5 && productboard.pbgrade > 3.5}">★★★★☆</c:when>
+											<c:when test="${productboard.pbgrade <= 3.5 && productboard.pbgrade > 2.5}">★★★☆☆</c:when>
+											<c:when test="${productboard.pbgrade <= 2.5 && productboard.pbgrade > 1.5}">★★☆☆☆</c:when>
+											<c:when test="${productboard.pbgrade <= 1.5 && productboard.pbgrade > 0}">★☆☆☆☆</c:when>
+											<c:when test="${productboard.pbgrade == 0}"></c:when>
+										
+											</c:choose></td>
                                     </tr>
-                                    <tr class="xans-record-">
-                                        <td>4</td>
-                                        <td width="800px">
-                                            <a href="">아주 실망스럽네요..</a><span>[1]</span>
-                                        </td>
-                                        <td>test1</td>
-                                        <td>2022-12-30 03:26:10</td>
-                                        <td>67</td>
-                                        <td><img src="//img.echosting.cafe24.com/skin/base/board/ico_point5.gif" alt="5점"/></td>
-                                    </tr>
-                                    <tr class="xans-record-">
-                                        <td>4</td>
-                                        <td width="800px">
-                                            <a href="">만족</a><span>[1]</span>
-                                        </td>
-                                        <td> 네이버 페이 구매자</td>
-                                        <td>2022-12-30 03:26:10</td>
-                                        <td>28</td>
-                                        <td><img src="//img.echosting.cafe24.com/skin/base/board/ico_point5.gif" alt="5점"/></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div id="review-page">
+                                  <tr >
+                                      
+                <td colspan="5">
+<%--                 <div class="collapse" id="collapseExample${productboard.pbno}" id="toglespace"> --%>
+                <div id="collapseOne${productboard.pbno}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+               <div>
+                <div style="height: 80px; border: 1px solid #ccc; " id="reviewcontent" >
+                     ${productboard.pbcontent}
 
+                </div>
+                <div style="height: 30px; border: 1px solid #ccc; padding: 5px;" >
+                	<button type="button" data-toggle="modal" data-target="#staticBackdrop" id="reviewreply">댓글 작성</button> <button>신고 하기</button>
+                </div>
+                
+                <br><br>
+                <!-- <div class="replyform" >
+                    <div style="height: 60%;">
+
+                    </div>
+                    <div style="">
+
+                    </div>
+              
+                </div> -->
+               </div>
+                </div>
+               </td>
+            </tr>
+            </tbody>
+                                    </c:forEach>
+                                      
+                                </table>
+                                </div>
+                            </div>
+        
+                            <div id="review-page" style="text-align: center">
+									<!-- 맨 처음으로 -->
+			<button onclick="location.href='${ path }/product/detail?page=1'">&lt;&lt;</button>
+
+			<!-- 이전 페이지로 -->
+			<button onclick="location.href='${ path }/product/detail?page=${ pageInfo.prevPage }'">&lt;</button>
+
+			<!--  10개 페이지 목록 -->
+			<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
+				<c:choose>
+					<c:when test="${ status.current == pageInfo.currentPage}">
+						<button disabled>${ status.current }</button>
+					</c:when>
+					<c:otherwise>						
+						<button onclick="location.href='${ path }/product/detail?page=${ status.current }'">${ status.current }</button>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+
+
+			<!-- 다음 페이지로 -->
+			<button onclick="location.href='${ path }/product/detail?page=${ pageInfo.nextPage }'">&gt;</button>
+
+			<!-- 맨 끝으로 -->
+			<button onclick="location.href='${ path }/product/detail?page=${ pageInfo.maxPage }'">&gt;&gt;</button>
                             </div>
     
                         </div>
@@ -797,61 +994,189 @@
             <div id="s6">
                 <hr style="width:80%">
                 <div id="product-menu">
-                    <a href="#pinfo"> 상품 상세정보 </a> <span class="bar">|</span> 
-                    <a href="#payguide"> 상품 구매안내 </a> <span class="bar">|</span> 
-					<a href="#review"> REVIEW </a> <span class="bar">|</span>
-					<a name="qna" href="#qna"> 상품 QNA </a> <span class="bar">|</span>
-					<a href="#related"> 관련 상품</a>
+                    <a class="link" href="#pinfo"> 상품 상세정보 </a> <span class="bar">|</span> 
+                    <a class="link" href="#payguide"> 상품 구매안내 </a> <span class="bar">|</span> 
+					<a class="link" href="#review"> REVIEW </a> <span class="bar">|</span>
+					<a class="link" name="qna" href="#qna"> 상품 QNA </a> <span class="bar">|</span>
+					<a class="link" href="#related"> 관련 상품</a>
                 </div>
                 <div id="product-qna-wrap">
-                    <div id="d3"></div>
+                    <div id="d3">
+                    
+                    
+                    </div>
+                    
                     <div id="product-qna">
+                    
+              
                         <div id="d5">
                             
                         </div>
                         <div id="qna-name">
                             <h4><b>QnA</b></h4>
                         </div>
+                        
+                        <div id="qnaname">
+                        <div style="width: 20%;" class="rfilter"><p>QnA</p></div>
+                                <div style="width: 80%; text-align: right;"  class="rfilter" >
+                                    <button>write</button>
+                                    <button>list</button>
+                                </div>
+                        </div>
                         <div id="qna-content">
-                            <table id="review-table">
-                                <tr class="xans-record-">
-                                    <td>4</td>
-                                    <td width="800px">
-                                        <a href="">이정도면 만족스럽네요 !</a><span>[1]</span>
-                                    </td>
-                                    <td>ismoon</td>
-                                    <td>2022-12-30 03:26:10</td>
-                                    <td>121</td>
-                                    <td><img src="//img.echosting.cafe24.com/skin/base/board/ico_point5.gif" alt="5점"/></td>
-                                </tr>
-                                <tr class="xans-record-">
-                                    <td>4</td>
-                                    <td width="800px">
-                                        <a href="">아주 실망스럽네요..</a><span>[1]</span>
-                                    </td>
-                                    <td>test1</td>
-                                    <td>2022-12-30 03:26:10</td>
-                                    <td>67</td>
-                                    <td><img src="//img.echosting.cafe24.com/skin/base/board/ico_point5.gif" alt="5점"/></td>
-                                </tr>
-                                <tr class="xans-record-">
-                                    <td>4</td>
-                                    <td width="800px">
-                                        <a href="">만족</a><span>[1]</span>
-                                    </td>
-                                    <td> 네이버 페이 구매자</td>
-                                    <td>2022-12-30 03:26:10</td>
-                                    <td>28</td>
-                                    <td><img src="//img.echosting.cafe24.com/skin/base/board/ico_point5.gif" alt="5점"/></td>
-                                </tr>
-                               
-        
-                                    </table>
+                         <div class="accordion" id="accordion1"> 
+                            
+                                <table id="review-table">
+                                	<thead>
+                                        <tr >
+                                            <td align="center">번호</td>
+                                            <td align="center">제목</td>
+                                            <td>아이디</td>
+                                            <td align="center">등록 시간</td>
+                                            <td align="center">평점</td>
+                                        </tr>
+                                    </thead>
+                                  <c:forEach var="productboard" items="${qnaboard}" varStatus="status">
+                                  <tbody style="height: 60px;">
+                                    <tr class="xans-record-" id="reviewline">
+                                        <td  align="center">${productboard.pbno}</td>
+                                        <td width="600px" >
+<!--                                             <a data-toggle="collapse" href=#collapseExample${productboard.pbno} role="button" aria-expanded="false" aria-controls="collapseExample"> -->
+										<c:if test="${not empty productboard.pbpwd }">
+										<span class="material-symbols-sharp">
+lock
+</span>
+										</c:if>
+									 <a class="link" type="button" data-toggle="collapse" data-target="#collapseOne${productboard.pbno}" aria-expanded="false" aria-controls="collapseOne${productboard.pbno}">
+                                            ${productboard.pbtitle}</a>
+<!--                                             </a> -->
+                                            <span>[1]</span>
+                                        </td>
+                                        <td>ismoon</td>
+                                        <td align="center">${productboard.pbdate}</td>
+                                 
+                                        <td align="center"><c:choose>
+                                            <c:when test="${productboard.pbgrade <= 4.5 && productboard.pbgrade > 3.5}">★★★★☆</c:when>
+											<c:when test="${productboard.pbgrade <= 3.5 && productboard.pbgrade > 2.5}">★★★☆☆</c:when>
+											<c:when test="${productboard.pbgrade <= 2.5 && productboard.pbgrade > 1.5}">★★☆☆☆</c:when>
+											<c:when test="${productboard.pbgrade <= 1.5 && productboard.pbgrade > 0}">★☆☆☆☆</c:when>
+											<c:when test="${productboard.pbgrade == 0}"></c:when>
+										
+											</c:choose></td>
+                                    </tr>
+                                    
+                                    <c:if test="${not empty productboard.pbpwd }">
+                                  <tr id="secretwrap${productboard.pbno}">
+                                      
+                <td colspan="5">
+<%--                 <div class="collapse" id="collapseExample${productboard.pbno}" id="toglespace"> --%>
+           <div id="collapseOne${productboard.pbno}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
+               <div>    
+                <div class="secret">
+                		<label for="password">비밀번호 : </label>
+                     <input type="password" name="password" id="pwd1${productboard.pbno}" >
+                     <button id="btnno" value="${productboard.pbno}" onclick="qnaStatus(${productboard.pbno}, '${productboard.pbpwd}')" > 확인 </button>
+                </div>     
+               <br><br>  
+               </div>
+           </div>
+               </td>
+            </tr>
+            <tr id="pwdpasswrap${productboard.pbno}" style="display: none">                       
+                <td colspan="5">
+<%--                 <div class="collapse" id="collapseExample${productboard.pbno}" id="toglespace"> --%>
+                <div id="collapseOne${productboard.pbno}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
+               <div>
+                <div style="height: 80px; border: 1px solid #ccc; " id="reviewcontent" >
+                     ${productboard.pbcontent}
 
+                </div>
+                <div style="height: 30px; border: 1px solid #ccc; padding: 5px;" >
+                	<button type="button" data-toggle="modal" data-target="#staticBackdrop" id="reviewreply">댓글 작성</button> <button>신고 하기</button>
+                </div>
+                
+                <br><br>
+                <!-- <div class="replyform" >
+                    <div style="height: 60%;">
+
+                    </div>
+                    <div style="">
+
+                    </div>
+              
+                </div> -->
+               </div>
+                </div>
+               </td>
+            </tr>
+            
+            
+            
+            
+            </c:if>
+             <c:if test="${empty productboard.pbpwd }">
+                              <tr>
+                                      
+                <td colspan="5">
+<%--                 <div class="collapse" id="collapseExample${productboard.pbno}" id="toglespace"> --%>
+                <div id="collapseOne${productboard.pbno}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
+               <div>
+                <div style="height: 80px; border: 1px solid #ccc; " id="reviewcontent" >
+                     ${productboard.pbcontent}
+
+                </div>
+                <div style="height: 30px; border: 1px solid #ccc; padding: 5px;" >
+                	<button type="button" data-toggle="modal" data-target="#staticBackdrop" id="reviewreply">댓글 작성</button> <button>신고 하기</button>
+                </div>
+                
+                <br><br>
+                <!-- <div class="replyform" >
+                    <div style="height: 60%;">
+
+                    </div>
+                    <div style="">
+
+                    </div>
+              
+                </div> -->
+               </div>
+                </div>
+               </td>
+            </tr>
+            </c:if>
+            
+            </tbody>
+                                    </c:forEach>
+                                      
+                                </table>
+                                </div>
 
                         </div>
                         <div id="qna-page">
+						<!-- 맨 처음으로 -->
+			<button onclick="location.href='${ path }/product/detail?page=1'">&lt;&lt;</button>
 
+			<!-- 이전 페이지로 -->
+			<button onclick="location.href='${ path }/product/detail?page=${ pageInfo.prevPage }'">&lt;</button>
+
+			<!--  10개 페이지 목록 -->
+			<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
+				<c:choose>
+					<c:when test="${ status.current == pageInfo.currentPage}">
+						<button disabled>${ status.current }</button>
+					</c:when>
+					<c:otherwise>						
+						<button onclick="location.href='${ path }/product/detail?page=${ status.current }'">${ status.current }</button>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+
+
+			<!-- 다음 페이지로 -->
+			<button onclick="location.href='${ path }/product/detail?page=${ pageInfo.nextPage }'">&gt;</button>
+
+			<!-- 맨 끝으로 -->
+			<button onclick="location.href='${ path }/product/detail?page=${ pageInfo.maxPage }'">&gt;&gt;</button>
                         </div>
 
                     </div>
@@ -943,11 +1268,81 @@
         </div>
         </c:forEach>
         <div id="footer">
-
+		<footer>
+        <div>
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="#">NOTICE</a>
+                        <p>PERFUME의 중요 소식을 확인해보세요.</p>
+                    </li>
+                    <li><a href="#">SAMPLE</a>
+                        <p>적당량의 SAMPLE을 소개합니다.</p>    
+                    </li>
+                    <li><a href="#">EVENT</a>
+                        <p>다양한 이벤트에 참여해보세요</p>
+                    </li>
+                    <li><a href="#">ASK</a>
+                        <p>언제나 고객과 함께하겠습니다.</p>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <pre class="footer-text">
+            상호명 <b>PERFUME</b>     대표자 <b>이정수</b>     사업자등록번호 <b>123-45-67890</b>     통신판매업신고번호 <b>제 2023-서울강남-0001호</b><br>
+            고객센터 <b>070-1212-3434</b>     주소 <b>06234 서울특별시 강남구 테헤란로 14길 6 (역삼동) 남도빌딩 4층 PERFUME </b><br>
+            개인정보보호책임자 <b>공민지(cs@perfume.com)</b><br><br>    
+            ※ <b>PERFUME</b>에서 제공하는 모든 콘텐츠는 <b>저작권법에 의하여 보호받는 저작물</b>로서, 모든 권리는 <b>PERFUME</b>에 있습니다.<br>
+            본사이트에서 제공되는 콘텐츠를 무단으로 복제 및 배포하는 경우 <b>저작권법에 의하여 처벌</b>받을 수 있습니다.<br><br>
+            <b>Copyright ⓒ PERFUME. All rights reserved.</b>
+        </pre>
+    </footer>
         </div>
     </div>
+    
+    
 </body>
 <script>
+
+function qnaStatus(no, password) {
+	console.log(no,password);
+		
+	pwd = $('#pwd1'+ no).val();
+	console.log(pwd)
+	       
+	if(password == pwd ) {
+		$('#secretwrap' + no).hide();
+		$('#pwdpasswrap' + no).show();	
+		
+	}if(password !== pwd) {
+		alert('비밀번호를 다시 입력해주세요');
+	}
+	
+
+}
+
+
+
+
+
+
+
+
+
+$("#mainimg").on({
+    "mouseenter":function(){
+       
+        $(this).css({'opacity':'0.8'});
+
+    },
+    
+    "mouseleave":function(){
+        $(this).css({'opacity':'1'});
+        
+    }
+  });
+
+
+
 $(document).ready( function() {
         $('.center').slick({
   dots: true,
@@ -987,9 +1382,10 @@ $(document).ready( function() {
   
 	
   });
+  
+  				
+			
 
- 
-$(document).ready(function() {
 		
 	
 			
@@ -1028,7 +1424,7 @@ $(document).ready(function() {
 	    
 	     
    	    	
-	 	});
+	 
 		
 		  
 		      
@@ -1041,13 +1437,19 @@ $(document).ready(function() {
       
       
       
-    
+    $('#reviewreply').on('click', () => {
+				if(${ empty loginMember}) {
+					alert('로그인 후 이용해 주세요.')	;
+					
+					$('.mainlogin').focus();
+				}
+			});
       
 	
+
+
       
-      
-      
-    
+          
       
      
   

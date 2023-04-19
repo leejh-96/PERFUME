@@ -10,6 +10,7 @@ import com.scent.perfume.common.util.PageInfo;
 import com.scent.perfume.product.model.mapper.ProductMapper;
 import com.scent.perfume.product.model.vo.Option;
 import com.scent.perfume.product.model.vo.Product;
+import com.scent.perfume.product.model.vo.ProductBoard;
 import com.scent.perfume.product.model.vo.TopCate;
 
 @Service
@@ -18,9 +19,9 @@ public class ProductServiceImpl implements ProductService{
 	private ProductMapper mapper;
 		
 	@Override
-	public int getProductCount(String gender) {
+	public int getProductCount(String gender, String sort, String bn, String keyword) {
 		
-		return mapper.selectProductCount(gender);
+		return mapper.selectProductCount(gender, sort, bn, keyword);
 	}
 
 	@Override
@@ -57,21 +58,7 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.selectProductByPtNo(no);
 	}
 
-	@Override
-	public int getScentProductCountByNo(int no) {
-		
-		return mapper.selectScentProductCountByNo(no);
-	}
-
-	@Override
-	public List<Product> getScentPrductList(PageInfo pageInfo, int no) {
-		int limit = pageInfo.getListLimit();
-		int offset = (pageInfo.getCurrentPage() - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return mapper.selectScentProductByNo(rowBounds, no);
-	}
-
+	
 	@Override
 	public TopCate findScentByNo(int no) {
 		return mapper.selectScentByNo(no);
@@ -98,6 +85,102 @@ public class ProductServiceImpl implements ProductService{
 		
 		return mapper.selectBrandList();
 	}
+
+	@Override
+	public int getScentProductCountByNo(int no, String gender, String bn, String keyword) {
+		
+		return mapper.selectScentProductCountByNo(no, gender, bn, keyword);
+	}
+
+	@Override
+	public List<Product> getScentProductList(PageInfo pageInfo, int no, String gender, String bn, String sort,
+			String keyword) {
+		
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return mapper.selectScentProductByNo(rowBounds, no, gender, bn, sort, keyword);
+	}
+
+	@Override
+	public List<Option> findProductOptionByNo(int no) {
+		
+		return mapper.selectProductOptionByNo(no);
+	}
+
+	@Override
+	public int getProductPaperCount() {
+		
+		return mapper.selectProductPaperCount();
+	}
+
+	@Override
+	public List<Product> getProductPaperList(PageInfo pageInfo, String sort) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return mapper.selectPaperAll(sort, rowBounds);
+	}
+
+	@Override
+	public List<ProductBoard> findProductBoardByNo(PageInfo pageInfo, int no) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return mapper.selectProductBoardByNo(no, rowBounds);
+	}
+
+	@Override
+	public int getProductBoardCount(int no) {
+
+		
+		return mapper.selectProductBoardCount(no);
+	}
+
+	@Override
+	public List<ProductBoard> findGradebyNo(int no) {
+		
+		return mapper.selectGradeByNo(no);
+	}
+
+	@Override
+	public int getSaleProductCount() {
+		
+		return mapper.selectSaleProductCount();
+	}
+
+	@Override
+	public List<Product> getSaleProductList(PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return mapper.selectSaleProductList(rowBounds);
+	}
+
+	@Override
+	public int getProductQnaCount(int no) {
+		
+		return mapper.selectQnaBoardCount(no);
+	}
+
+	@Override
+	public List<ProductBoard> findProductQnaByNo(PageInfo qnapageInfo, int no) {
+		int limit = qnapageInfo.getListLimit();
+		int offset = (qnapageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		
+		
+		return mapper.selectProductQnaByNo(no, rowBounds);
+	}
+
+
+
+	
 	
 
 }
