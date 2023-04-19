@@ -44,7 +44,7 @@
 	
 	<select id="selectMemberById" parameterType="string" resultMap="memberResultMap">
 		<include refid="selectMemberSql" />
-		WHERE M_ID = #{id} AND M_STATUS = 'Y' AND M_MAILSTATUS = 'Y'
+		WHERE M_ID = #{id} AND M_STATUS = 'Y'
 	</select>
 	
 	<select id="selectMailStatusById" parameterType="string" resultType="string">
@@ -52,7 +52,6 @@
 	    FROM MEMBER
 	    WHERE M_ID = #{id}
 	</select>
-	
 	
 	<select id="getMemberByEmail" parameterType="string" resultType="string">
 		SELECT M_ID
