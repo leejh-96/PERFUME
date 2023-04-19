@@ -7,6 +7,7 @@
 
 
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,24 +24,25 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
-  <script src="${path }/js/jquery-3.6.3.js"></script>
+  <script src="${path }/js/jquery-3.6.3.min.js"></script>
   <script src="${path }/slick/slick.min.js"></script>
-
 
 <link rel="stylesheet" href="${ path }/css/planning/slider.css">
 <link rel="stylesheet" href="${ path }/css/planning/footer.css">
 
 
 <link rel="stylesheet" href="${ path }/css/planning/header.css">
+
+
+
+
   <link rel="stylesheet" href="${path }/slick/slick-theme.css">
   <link rel="stylesheet" href="${path }/slick/slick.css">
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Open+Sans&display=swap');
     
-        div * {
-/*             border: 2px solid red;     */
+         div * {
+/*            border: 2px solid red;     */
             box-sizing: border-box;
             
         }
@@ -107,16 +109,12 @@
        #s3_2 {width: 34%; font-size: smaller;}
        #s3_3 {width: 33%;}
 
-       #s5_product {height: 50%;font-size: 25px; font-weight: bold;}
-       #s5_button {height: 15%; text-align: center;}
-       #s5_brand {height: 20%;  }
-       #productfilter { height: 15%; border-top: 1px solid #ccc; text-align: right; }
+       #s5_product {height: 85%; font-size: 25px; font-weight: bold;}
        
-       #s5_button>div {float: left; height: 100%;}
-   
+       
+       #productfilter { height: 15%; border-top: 1px solid #ccc; }
+       
 
-       #s5_brand>div { float: left; height: 100%;}
-    
 
        #listwrap {height: 80%; }
        #pagebar {height: 20%; text-align: center; }
@@ -326,8 +324,8 @@
     #btn_wrap>img{height: 100%; width: 100%;}
 
 
-    #s5_productwrap {height: 40%;}
-    #d7 {height: 60%;}
+    #s5_productwrap {height: 50%;}
+    #d7 {height: 50%;}
 
 	.originprice {font-size: 12px; color: slategray; text-decoration: line-through;}
 	
@@ -412,21 +410,27 @@ max-width: 100%;
        max-width: 100%;
        max-height: 100%;
        }
+       
+       #banner {
+        max-width: 100%;
+        max-height: 100%;
+        
+       }
+       
+        #filtercaution { width: 50%; padding: 5px;}
+       #filter {width: 50%; text-align: right;}
+       #productfilter>div { height: 100%; float: left;}
     </style>
 </head>
 <body>
- <div class="spinner-wrapper" >
- <div class="spinner-border" role="status">
-  <span class="sr-only">Loading...</span>
- </div>
-  </div>
 
-<jsp:useBean id="now" class="java.util.Date" />
-<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
-
-
+    <div class="spinner-wrapper" >
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
     <div class="wrap">
-      <header>
+        <header>
         <div class="header-container">
             <nav class="main-nav">
                 <ul>
@@ -492,6 +496,7 @@ max-width: 100%;
 
         <div id="section">
             <div id="section1">
+               <div id="section1">
                <section class="slider">
 	  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
 	    <!-- 인디케이터 -->
@@ -532,19 +537,20 @@ max-width: 100%;
 	  </div>
 	</section>
             </div>
+            </div>
             <div id="section2">
                 <div id="aside1">
 
                 </div>
                 <div id="section2_1">
                     <div id="s1">
-							
+
                     </div>
                     <div id="s2" style="position: relative;">
-                        <div style="position: absolute; height: 100%;">
+                        <div style="position: absolute; height: 100%";>
                             <p></p>   
                         </div>
-                        <p id="scent" align="center"> SCENT </p>
+                        <p id="scent" align="center">SPECIAL </p>
                         
                     </div>
                         
@@ -554,149 +560,67 @@ max-width: 100%;
                         </div>
                         <div id="s3_2" style="text-align:center; position: relative;">
                             <div id="scent-detail">
-                                정교하면서도 심플하고, <br>아름답게 빚어낸 퍼퓸의 다양한 프레그런스를 소개합니다. <br>
-                                프레쉬하고 기분까지 좋아지는 시트러스 향부터 풍성한 플로럴 그리고 <br>
-                                따스함이 느껴지는 우디함까지,<br>
-                                6가지 향의 계열로 구분된 다양한 프레그런스 제품들을 만나보세요.
+                                본인에게 어울리는 향을 직접 찾아보세요 ! <br>
+                                PERFUME은 향을 맡아보고 살 수 있는 SPECIAL을 제공합니다 <br>
+                                완전 밀봉되어 있는 시향지는 오리지널 향 그대로 시향 할 수 있습니다.
+                                <br><br>
+
+                                <b>SCENT TEST PAPER ?</b> <br><br>
+
+                                -향수나 디퓨저 등 향 제품을 시향할 때 사용합니다. <br>
+                                -시향에 적합한 흡수력, 두께의 재질로 제작됩니다. <br>
+
                             </div>
-                            
+                           
                           
-                            <div id="button-area" >
-                                <button type="button" id="scent-detail-button">more detail</button>
-                               
-                            </div>    
+                           
                             </div>
                         
                         <div id="s3_3">
                             
                         </div>
                     </div>
-                    <div id="s4">
-                        <div id="d3">
-<%-- onclick="location.href='${ path }/board/list?page=1'" --%>
-<%--  onclick="location.href='${ path }/list?scent=${topcate.ptno}'"  --%>
-<%-- <a href="${ path }/scent?no=${topcate.ptno}"></a> --%>
-                        </div>
-                        <div id="scent-list">
-                            <div class="center">
-                            	<div class="scentcate" style="position: relative;" data-id="3"> <div class="scentname" style="position: absolute; bottom:0;">CITRUS</div>
-                                 <a href="${ path }/product/scent?no=1"><img src="https://img.freepik.com/free-photo/citrus-background-with-assorted-fresh-citrus-fruits_114579-9901.jpg?size=626&ext=jpg&ga=GA1.1.1462281178.1681576788&semt=sph" src="" id="big"></a>
-                                </div>
-                                <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">FRUITY</div>
-                                 <a href="${ path }/product/scent?no=2"><img src="https://t4.ftcdn.net/jpg/05/12/54/69/240_F_512546992_UGywRqXpPQhyljBPI1HUuxjXLOojRzXe.jpg" src="" id="big"></a>
-                                </div>
-                                <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">SPICY</div>
-                                 <a href="${ path }/product/scent?no=3"><img src="https://img.freepik.com/free-photo/still-life-of-cosmetic-products_23-2149163108.jpg?w=1060&t=st=1681578891~exp=1681579491~hmac=07489f94c2933710dbaeccb1b44abec4d2b2db3ea63a14633aa17c8b67cdfe21" src="" id="big"></a>
-                                </div>
-                                <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">FLORAL</div>
-                                 <a href="${ path }/product/scent?no=4"><img src="https://img.freepik.com/free-photo/simplistic-pink-and-white-roses-and-copy-space-background_23-2148408316.jpg?size=626&ext=jpg&ga=GA1.2.1462281178.1681576788&semt=sph" src="" id="big"></a>
-                                </div>
-                                <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">WOODY</div>
-                                 <a href="${ path }/product/scent?no=5"><img src="https://t3.ftcdn.net/jpg/04/98/69/46/240_F_498694611_qUPJVlIdwV2cTU1QXrka1HqR9ea8D7oC.jpg" src="" id="big"></a>
-                                </div>
-                                <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">LIGHTFLORAL</div>
-                                 <a href="${ path }/product/scent?no=6"><img src="https://img.freepik.com/free-photo/bunch-of-fresh-twigs-and-plants-in-vase_23-2148104490.jpg?size=626&ext=jpg&ga=GA1.2.1462281178.1681576788&semt=ais" src="" id="big"></a>
-                                </div>
-                            	
-                            </div>
-                            <div class="banner">
-                            <div class="btn_best">
-                                <div id="btn_wrap" style="position: relative;">
-                                    <div style="position: absolute; color: black;  width: 100%; text-align: left; bottom: 20px;">
-                                        <h6 style="font-size: 25px; font-weight: bold;">BEST PRODUCT</h6>
-                                    </div>
-                                    <img src="https://img.freepik.com/premium-photo/medicinal-herbs-and-tinctures-homeopathy-selective-focus_73944-28706.jpg?size=626&ext=jpg&ga=GA1.1.686292353.1680604484&semt=sph" class="" alt="...">
-                                    
-                                </div>
-                            </div>
-                            <div class="btn_sale">
-                                <div id="btn_wrap" style="position: relative;">
-                                    <div style="position: absolute; color: gray; font-weight: bold; width: 100%; text-align: left; bottom: 20px;">
-                                    <a class="link" href="${ path }/product/salelist"> <h6 style="font-size: 25px; font-weight: bold;">SALE PRODUCT</h6></a>
-                                    </div>
-                                    <img src="https://img.freepik.com/free-photo/top-view-closeup-of-white-daisy-flowers-floating-on-the-water_181624-38043.jpg?size=626&ext=jpg&ga=GA1.1.686292353.1680604484&semt=sph" class="" alt="..." >
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        <div id="d4">
-
-                        </div>
-
-
-
-                    </div>
-
+                   
                   
                     <div id="s5">
                         <div id="s5_product">
+                       
                         <div id="d7">
+                    
                         </div>
-                        <div id="s5_productwrap">
+                        <div id="s5_productwrap" >
+                                
                             <div align="center">
-                                PERFUME
+                                SCENT TEST PAPER 
                                 </div>
                         </div>
-                    </div>
-                        <div id="s5_button">
-                          
-                          <button class="gender" type="button" id="gender1" value="F"  onclick="location.href='${ path }/product/list?gender=F'">FEMME</button> &nbsp; &nbsp;
-                            <button class="gender" type="button" id="gender1" value="M" onclick="location.href='${ path }/product/list?gender=M'">HOMME</button> 
+                        <div style="height: 100%;">
+
                         </div>
-                        <div id="s5_brand">
-                            <!-- <p id="scent"><mark  style="background-color: rgb(243, 239, 236)"> BRAND</mark>  </p> -->
-                            <table id="brand-select">
-                            <tr>
-                                <th  width="100px">BRAND</th>
-                                <c:forEach var="product" items="${ brand }">
-                                
-                                <td >
-                            
-                                <label for="brand"></label>
-                    			 <c:if test="${not empty gender}">
-                                <input type="checkbox" name="brand" onclick="location.href='${ path }/product/list?gender=${gender}&bn=${product.brand}'" >${product.brand}
-                                 </c:if>
-                                 <c:if test="${empty gender}">
-                                 <input type="checkbox" name="brand" onclick="location.href='${ path }/product/list?bn=${product.brand}'" >${product.brand}
-                                 </c:if>
-                                </td>
-                                
-                                </c:forEach>
-                            </tr>
-                            </table>
                         </div>
+                        
                     
+                        
                         <div id="productfilter">
-                        <c:choose>
-                        	<c:when test="${not empty gender && not empty bn}">
-                        		<a class="link"	href="${ path }/product/list?gender=${gender}&bn=${bn}&sort=1"> 최신 상품 </a> <span class="bar">|</span> 
-								<a class="link"	href="${ path }/product/list?gender=${gender}&bn=${bn}&sort=2"> 낮은 가격 </a> <span class="bar">|</span>
-								<a class="link"	href="${ path }/product/list?gender=${gender}&bn=${bn}&sort=3"> 높은 가격 </a> <span class="bar">|</span>
-								<a class="link"	href="${ path }/product/list?gender=${gender}&bn=${bn}&sort=4"> 사용 후기</a>
-                        	</c:when>
-                        	<c:when test="${not empty gender && empty bn}">
-                        		<a class="link"	href="${ path }/product/list?gender=${gender}&sort=1"> 최신 상품 </a> <span class="bar">|</span> 
-								<a class="link"	href="${ path }/product/list?gender=${gender}&sort=2"> 낮은 가격 </a> <span class="bar">|</span>
-								<a class="link"	href="${ path }/product/list?gender=${gender}&sort=3"> 높은 가격 </a> <span class="bar">|</span>
-								<a class="link"	href="${ path }/product/list?gender=${gender}&sort=4"> 사용 후기</a>
-                        	</c:when>
-                        	<c:when test="${empty gender && not empty bn}">
-                        		<a class="link"	href="${ path }/product/list?bn=${bn}&sort=1"> 최신 상품 </a> <span class="bar">|</span> 
-								<a class="link"	href="${ path }/product/list?bn=${bn}&sort=2"> 낮은 가격 </a> <span class="bar">|</span>
-								<a class="link"	href="${ path }/product/list?bn=${bn}&sort=3"> 높은 가격 </a> <span class="bar">|</span>
-								<a class="link"	href="${ path }/product/list?bn=${bn}&sort=4"> 사용 후기</a>
-                        	</c:when>
-                        	<c:otherwise>
-	                        	<a class="link"	href="${ path }/product/list?sort=1"> 최신 상품 </a> <span class="bar">|</span> 
-								<a class="link"	href="${ path }/product/list?sort=2"> 낮은 가격 </a> <span class="bar">|</span>
-								<a class="link"	href="${ path }/product/list?sort=3"> 높은 가격 </a> <span class="bar">|</span>
-								<a class="link"	href="${ path }/product/list?sort=4"> 사용 후기</a>
-                        	</c:otherwise>
-                        </c:choose>
+                        <div id="filtercaution">
+                                    <p style="font-size: 11px; color: tomato;
+                                    font-weight: bold;">시향지는 향 선택이 따로 없습니다.  <br>상품 위에 향을 표기 해놨으니 이용할 때 확인 부탁드립니다.</p>
+
+                            </div>
+                            <div id="filter">
+                                <a class="link"	href="${ path }/product/paper?sort=1"> 최신 상품 </a> <span class="bar">|</span> 
+								<a class="link"	href="${ path }/product/paper?sort=2"> 낮은 가격 </a> <span class="bar">|</span>
+								<a class="link"	href="${ path }/product/paper?sort=3"> 높은 가격 </a> <span class="bar">|</span>
+								<a class="link"	href="${ path }/product/paper?sort=4"> 사용 후기</a>
+							</div>
+								
                         </div>
                        
                     </div>
+
+                    
                     <div id="s6" >
+                      
                         <div id="listwrap" style="position: relative;">   
                            
                             <div class="row" ><c:if test="${empty list }">
@@ -765,7 +689,7 @@ max-width: 100%;
                                        
                                         <hr>
                                         <div>
-                                       <h6 style="font-size: 10px; font-weight: bold;">${product.brand }</h6>
+                                       <h6 style="font-size: 10px; font-weight: bold;">${product.topcate.ptname }</h6>
                                        <h5 id="pname" style="font-size: 18px; font-weight: bold;">${product.name } </h5>
                                        <p class="card-text" style="font-size: 10px;">${product.eng }</p>
                                    
@@ -784,9 +708,6 @@ max-width: 100%;
                                            
                                            
                                            
-                                           
-                                            
-                                            
                                             <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
                                              <fmt:parseNumber var="saleprice" value="${product.price*salepricerate}"/>
                                              <fmt:parseNumber var="productsaleprice" value="${product.price-saleprice}"/>
@@ -800,6 +721,7 @@ max-width: 100%;
                                             <c:if test="${empty product.productbenefit }">
                                             <p class="card-text" id="pprice"><fmt:formatNumber value="${product.price}" pattern="###,###"/>  <span style="font-size: 12px;">won</span></p>
                                             </c:if>
+                                           
                                            
                                         </div>
                                         
@@ -823,112 +745,42 @@ max-width: 100%;
                                 </c:forEach>
                                 </div>  
                             </div>
-                        
                         <div id="pagebar">
-                        	<div>
+                            
+                            <div>
                               
                                 <div class="search">
-                                <form action="${path }/product/list?search" method="GET">
-                                
-                                    <input type="text" name="keyword" placeholder="검색어 입력" id="searchform">
+                                    <input type="text" placeholder="검색어 입력" id="searchform">
+                                    <!-- <img  class="searchimg" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"> -->
                                     <button type="button"id="searchbtn" ><span class="material-symbols-outlined">
                                         search
                                         </span></button>
-                                </form>
                                 </div>
                                  
                             </div>
                             <br>
-                        <c:choose>
-                        	<c:when test="${not empty gender && not empty bn}">
-                        		<button onclick="location.href='${ path }/product/list?gender=${gender}&bn=${bn}&page=1'">&lt;&lt;</button>
-							    <button onclick="location.href='${ path }/product/list?gender=${gender}&bn=${bn}&page=${ pageInfo.prevPage }'">&lt;</button>
-				
-							<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
-								<c:choose>
-									<c:when test="${ status.current == pageInfo.currentPage}">
-										<button disabled>${ status.current }</button>
-									</c:when>
-									<c:otherwise>						
-										<button onclick="location.href='${ path }/product/list?page=${ status.current }'">${ status.current }</button>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							
-							<button onclick="location.href='${ path }/product/list?gender=${gender}&bn=${bn}&page=${ pageInfo.nextPage }'">&gt;</button>
-							<button onclick="location.href='${ path }/product/list?gender=${gender}&bn=${bn}&page=${ pageInfo.maxPage }'">&gt;&gt;</button>
-                        	
-                        	</c:when>
-                        
-                        <c:when test="${not empty gender && empty bn}">
-                        	<button onclick="location.href='${ path }/product/list?gender=${gender}&page=1'">&lt;&lt;</button>
-							<button onclick="location.href='${ path }/product/list?gender=${gender}&page=${ pageInfo.prevPage }'">&lt;</button>
-				
-							<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
-								<c:choose>
-									<c:when test="${ status.current == pageInfo.currentPage}">
-										<button disabled>${ status.current }</button>
-									</c:when>
-									<c:otherwise>						
-										<button onclick="location.href='${ path }/product/list?page=${ status.current }'">${ status.current }</button>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							
-							<button onclick="location.href='${ path }/product/list?gender=${gender}&page=${ pageInfo.nextPage }'">&gt;</button>
-							<button onclick="location.href='${ path }/product/list?gender=${gender}&page=${ pageInfo.maxPage }'">&gt;&gt;</button>
-                        
-                        </c:when>
-                        
-                        <c:when test="${empty gender && not empty bn}">
-                        	<button onclick="location.href='${ path }/product/list?bn=${bn}&page=1'">&lt;&lt;</button>
-							<button onclick="location.href='${ path }/product/list?bn=${bn}&page=${ pageInfo.prevPage }'">&lt;</button>
-				
-							<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
-								<c:choose>
-									<c:when test="${ status.current == pageInfo.currentPage}">
-										<button disabled>${ status.current }</button>
-									</c:when>
-									<c:otherwise>						
-										<button onclick="location.href='${ path }/product/list?page=${ status.current }'">${ status.current }</button>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							
-							<button onclick="location.href='${ path }/product/list?bn=${bn}&page=${ pageInfo.nextPage }'">&gt;</button>
-							<button onclick="location.href='${ path }/product/list?bn=${bn}&page=${ pageInfo.maxPage }'">&gt;&gt;</button>
-                        </c:when>
-                        <c:otherwise>
-							<button onclick="location.href='${ path }/product/list?page=1'">&lt;&lt;</button>
-							<button onclick="location.href='${ path }/product/list?page=${ pageInfo.prevPage }'">&lt;</button>
-				
-							<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
-								<c:choose>
-									<c:when test="${ status.current == pageInfo.currentPage}">
-										<button disabled>${ status.current }</button>
-									</c:when>
-									<c:otherwise>						
-										<button onclick="location.href='${ path }/product/list?page=${ status.current }'">${ status.current }</button>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							
-							<button onclick="location.href='${ path }/product/list?page=${ pageInfo.nextPage }'">&gt;</button>
-							<button onclick="location.href='${ path }/product/list?page=${ pageInfo.maxPage }'">&gt;&gt;</button>
-						</c:otherwise>
-						</c:choose>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                  <li class="page-item disabled">
+                                    <a class="page-link">Previous</a>
+                                  </li>
+                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                  <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                  </li>
+                                </ul>
+                              </nav>
                         </div>
-                       
                     </div>
                 </div>
                 <div id="aside2">
-                
-                
                 </div>
             </div>
         </div>
         <div id="footer">
-			<footer>
+<footer>
         <div>
             <nav class="footer-nav">
                 <ul>
@@ -963,24 +815,7 @@ max-width: 100%;
 
 
 <script>
- 	
-const spinnerWrapperE1 = document.querySelector('.spinner-wrapper');
-
-window.addEventListener('load', () => {
-spinnerWrapperE1.style.opacity = '0';
-
-setTimeout(() => {
-    spinnerWrapperE1.style.display = 'none';
-}, 1200);
-
-});
-
-
-
-
-
-
-     
+    // var div2 = document.querySelectorAll('.div2');
     var gender = document.getElementsByClassName('gender');
     
 
@@ -1006,74 +841,112 @@ setTimeout(() => {
 
 
 
-    $(document).ready( function() {
-    	
-        $('.center').slick({
-        	 dots: true,
-        	  infinite: false,
-        	  speed: 300,
-        	  slidesToShow: 5,
-        	  slidesToScroll: 1
-        	  
-        	});
-        	  
-        		
-        	  });
-
- 
-   
-
-
-
- 
-   
-
-  
-    $(".card").on({
-        "mouseenter":function(){
-           
-            $(this).find('#share').css("visibility","visible");
-        
-      
-
-
-
-        },
-        "mouseleave":function(){
-            $(this).find('#share').css("visibility","hidden");
-            
-        }
-      });
- 
-      $(".card-img-top").on({
-        "mouseenter":function(){
-           
-            $(this).css({'opacity':'0.6'});
-
-        },
-        
-        "mouseleave":function(){
-            $(this).css({'opacity':'1'});
-            
-        }
-      });
-  $(".scentcate").on({
-    "mouseover":function(){
+$(document).ready( function() {
        
-       $(this).css({'opacity':'0.8'});
-    
+        $('.center').slick({
+  dots: true,
+  infinite: false,
+  speed: 300,
+  slidesToShow: 5,
+  slidesToScroll: 1
+  
+});
+  
+	
+  } );
 
 
 
-   },
-   "mouseout":function(){
-       $(this).css({'opacity':'1'});
+  const spinnerWrapperE1 = document.querySelector('.spinner-wrapper');
 
-   }
+    window.addEventListener('load', () => {
+    spinnerWrapperE1.style.opacity = '0';
+
+    setTimeout(() => {
+        spinnerWrapperE1.style.display = 'none';
+    }, 1000);
 
   });
+   
+    $(document).ready(function() {
+    $(".gender").on({
+        "click":function(){
+            $(".spinner-wrapper").show().delay(500).fadeOut(300);
+            $(".row").hide().delay(600).fadeIn(400);
+
+           
+        }
+
+    
+
+    });
+
+    $(".link").on({
+        "click":function(){
+            $(".spinner-wrapper").show().delay(500).fadeOut(300);
+            $(".row").hide().delay(600).fadeIn(400);
+    }
+
+    });
+
+
+    $(".scentcate").on({
+        "click":function(){
+            $(".spinner-wrapper2").show().delay(500).fadeOut(300);
+            $("#scent-detail").hide().delay(600).fadeIn(400);
+            $("#button-area").hide().delay(600).fadeIn(400);
+            $("#scent").hide().delay(600).fadeIn(400);
+    }
+
+
+    });
+
+});
+
+ 
+// #card-img:hover .etcsymbols {
+//     display: block;
+// }
+
+
+$(".card").on({
+    "mouseenter":function(){
+       
+        $(this).find('#share').css("visibility","visible");
+    
   
+
+
+
+    },
+    "mouseleave":function(){
+        $(this).find('#share').css("visibility","hidden");
+        
+    }
+  });
+
+
+
+
+
   
+  $(".card-img-top").on({
+    "mouseenter":function(){
+       
+        $(this).css({'opacity':'0.6'});
+    
+  
+
+
+
+    },
+    "mouseleave":function(){
+        $(this).css({'opacity':'1'});
+        
+    }
+  });
+
+
 //부트스트랩 캐러샐 슬라이드 구현
   $(document).ready(function(){
 	    $('#myCarousel').carousel();
@@ -1141,5 +1014,10 @@ setTimeout(() => {
 	        },
 	        })
 	    }
+
+
+
+
+
 </script>
 </html>
