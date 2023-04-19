@@ -3,6 +3,7 @@ package com.scent.perfume.event.model.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.event.model.vo.Terms;
 import com.scent.perfume.planning.model.vo.Member;
 
@@ -30,5 +31,8 @@ public interface EventMapper {
 	int getKey(@Param("id") String id, @Param("key") String key);
 	// id를 통해 M_MAILSTATUS 컬럼을 N으로 변경
 	int updateMMailStatus(@Param("id") String id, @Param("key") String key);
+	
+// 회원가입 쿠폰 발급
+	int insertBenefit(Benefit benefit);
 	
 }

@@ -75,5 +75,17 @@
 		UPDATE MEMBER SET M_MAILSTATUS = 'Y' WHERE M_ID = #{id} AND M_MAILSTATUS = #{key}
 	</update>
 	
+<!-- 회원가입 쿠폰 발급 -->
+	<!-- BENEFIT 테이블 insert -->
+	<insert id="insertBenefit" parameterType="Benefit"
+			useGeneratedKeys="true" keyColumn="BN_NO" keyProperty="benefitNo">
+		INSERT INTO BENEFIT (
+		    BN_NO, BN_NAME, BN_TITLE, BN_CONTENT, BN_CREATEDATE, BN_ENDDATE, BN_RATIO, BN_STATUS, BN_HIT
+		) VALUES (
+		    SEQ_BENEFIT_BN_NO.NEXTVAL, '쿠폰', '회원가입쿠폰', '회원가입시 5% 할인 쿠폰 증정', DEFAULT, SYSDATE + 30, 5, 'Y', DEFAULT
+		)
+	</insert>
+	<!-- MEMBER_BENEFIT_INFO에 insert -->
+	
 	
 </mapper>
