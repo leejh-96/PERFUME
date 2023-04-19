@@ -9,12 +9,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title></title>
 </head>
 <body>
-	장바구니 test
-	
-	<button onclick="location.href='${path}/cart?memberNo=3'" name="cart" id="cart" >장바구니테스트</button>
-	<button onclick="location.href='${path}/admin/product'">관리자테스트</button>
+		</div><!-- 밑에 4개 div는 꼭 포함시켜야함~ -->
+        </div><!-- 밑에 4개 div는 꼭 포함시켜야함~ -->
+    </div><!-- 밑에 4개 div는 꼭 포함시켜야함~ -->
+</div><!-- 밑에 4개 div는 꼭 포함시켜야함~ -->
 </body>
 </html>

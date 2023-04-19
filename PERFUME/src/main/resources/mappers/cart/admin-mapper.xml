@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.scent.perfume.cart.model.mapper.AdminMapper">
+
+	<sql id="benefitList">
+		SELECT  bn_no,
+			    bn_name,
+			    bn_title,
+			    bn_content,
+			    bn_createdate,
+			    bn_enddate,
+			    bn_ratio,
+			    bn_status,
+			    bn_hit
+		FROM  benefit
+		ORDER BY 1 DESC
+	</sql>
+
+	<resultMap id="ProductAllResultMap" type="CartProduct">
+		<id property="topCategoryName" column="PT_NAME"/> 
+		<result property="midCategoryName" column="PM_NAME"/>
+		<result property="productNo" column="P_NO"/>
+		<result property="productName" column="P_NAME"/>
+		<result property="productBrand" column="P_BRAND"/>
+		<result property="productPrice" column="P_PRICE"/>
+		<result property="productDate" column="P_DATE"/>
+		<result property="renameFileName" column="PF_RENAMEFILENAME"/>
+	</resultMap>
+	
+	<resultMap id="ProductDetailResultMap" type="CartProduct">
+		<id property="topCategoryName" column="PT_NAME"/> 
+		<result property="midCategoryName" column="PM_NAME"/>
+		<result property="pmNo" column="PM_NO"/>
+		<result property="productNo" column="P_NO"/>
+		<result property="productName" column="P_NAME"/>
+		<result property="productEngName" column="p_eng"/>
+		<result property="productTitle" column="p_title"/>
+		<result property="productDetail" column="p_detail"/>
+		<result property="productGender" column="p_gender"/>
+		<result property="productBrand" column="P_BRAND"/>
+		<result property="productPrice" column="P_PRICE"/>
+		<result property="productDate" column="P_DATE"/>
+		<result property="productUpdate" column="p_update"/>
+		<collection property="pfList" javaType="arraylist" select="selectFileDetail" column="P_NO"/>
+		<collection property="poList" javaType="arraylist" select="selectOptionDetail" column="P_NO"/>
+	</resultMap>
+	
+	<resultMap id="FileDetailResultMap" type="AdminProductFile">
+		<id property="fileNo" column="pf_no"/> 
+		<result property="productNo" column="p_no"/>
+		<result property="originalFileName" column="pf_originalfilename"/>
+		<result property="renameFileName" column="pf_renamefilename"/>
+		<result property="fileSort" column="pf_sort"/>
+	</resultMap>
+	
+	<resultMap id="OptionDetailResultMap" type="productOption">
+		<id property="poNo" column="po_no"/> 
+		<result property="productNo" column="p_no"/>
+		<result property="poName" column="po_name"/>
+		<result property="poPrice" column="po_price"/>
+		<result property="poAmount" column="po_amount"/>
+	</resultMap>
+				
+	<resultMap id="AdminMemberListResultMap" type="CartMember">
+		<id property="memberNo" column="m_no"/> 
+		<result property="memberDevision" column="m_division"/>
+		<result property="memberStatus" column="m_status"/>
+		<result property="memberPath" column="m_path"/>
+		<result property="memberId" column="m_id"/>
+		<result property="memberPwd" column="m_pwd"/>
+		<result property="memberName" column="m_name"/>
+		<result property="memberBirth" column="m_birth"/>
+		<result property="gender" column="m_gender"/>
+		<result property="memberMail" column="m_mail"/>
+		<result property="memberPhone" column="m_phone"/>
+		<result property="memberAddr" column="m_addr"/>
+		<result property="memberPoint" column="m_point"/>
+		<result property="memberCreateDate" column="m_create"/>
+		<result property="memberUpdateDate" column="m_update"/>
+		<result property="memberMailStatus" column="m_mailstatus"/>
+	</resultMap>
+	
+	<resultMap id="BenefitListResultMap" type="Benefit">
+		<id property="benefitNo" column="bn_no"/> 
+		<result property="benefitName" column="bn_name"/>
+		<result property="benefitTitle" column="bn_title"/>
+		<result property="benefitContent" column="bn_content"/>
+		<result property="benefitCreateDate" column="bn_createdate"/>
+		<result property="benefitEndDate" column="bn_enddate"/>
+		<result property="benefitRatio" column="bn_ratio"/>
+		<result property="benefitStatus" column="bn_status"/>
+		<result property="benefitHit" column="bn_hit"/>
+		<collection property="benefitFileList" javaType="arraylist" select="selectBenefitFile" column="bn_no"/>
+		<collection property="productList" javaType="arraylist" select="selectProductAll" column="bn_no"/>
+	</resultMap>
+	
+	<resultMap id="benefitFileResultMap" type="AdminProductFile">
+		<result property="renameFileName" column="BF_RENAMEFILENAME"/>
+	</resultMap>
+
+	<insert id="insertProduct" useGeneratedKeys="true" keyColumn="P_NO" keyProperty="productNo" parameterType="CartProduct">
+		INSERT INTO product (
+	    					p_no,pm_no,p_name,p_eng,p_detail,p_status,p_gender,p_date,p_update,p_brand,p_title,p_price
+							) VALUES (
+	    					SEQ_PRODUCT_P_NO.NEXTVAL,
+	    					#{product.pmNo},
+	    					#{product.productName},
+	    					#{product.productEngName},
+	    					#{product.productDetail},
+	    					DEFAULT,
+	    					#{product.productGender},
+	    					DEFAULT,
+	    					DEFAULT,
+	    					#{product.productBrand},
+	    					#{product.productTitle},
+	    					#{product.productPrice}
+							)
+	</insert>
+	
+	<insert id="insertProductOption" parameterType="productOption">
+		INSERT INTO product_option (
+    								po_no,p_no,po_name,po_price,po_amount
+									) VALUES (
+									    SEQ_PRODUCT_OPTION_PO_NO.NEXTVAL,
+									    #{productNo},
+									    #{pOption.poName},
+									    #{pOption.poPrice},
+									    #{pOption.poAmount}
+									)
+	</insert>
+	
+	<insert id="insertProductFile" parameterType="AdminProductFile">
+		INSERT INTO product_file (
+   				 				  pf_no,p_no,pf_originalfilename,pf_renamefilename,pf_size,pf_type,pf_date,pf_update,pf_status,pf_sort
+								  ) VALUES (
+								    SEQ_PRODUCT_FILE_PF_NO.NEXTVAL,
+								    #{productNo},
+								    #{originalFilename},
+								    #{renamedFileName},
+								    DEFAULT,
+								    DEFAULT,
+								    DEFAULT,
+								    DEFAULT,
+								    DEFAULT,
+								    #{fileSort}
+								  )
+	</insert>
+	
+	<select id="getProductCount" resultType="_int">
+		SELECT count(*)
+		FROM
+		    product_topcategory PT
+		    JOIN product_midcategory PM ON(PT.PT_NO = PM.PT_NO)
+		    JOIN product P ON (PM.PM_NO = P.PM_NO)
+		    JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO)
+	    WHERE P.P_STATUS = 'Y' AND PF.PF_SORT = 1
+	</select>
+	
+	<select id="selectProductAll" resultMap="ProductAllResultMap">
+		SELECT
+			   PT.PT_NAME,
+			   PM.PM_NAME,
+			   P.P_NO,
+			   P.P_NAME,
+			   P.P_BRAND,
+			   P.P_PRICE,
+			   P.P_DATE,
+			   PF.PF_RENAMEFILENAME
+		 FROM
+			    product_topcategory PT
+			    JOIN product_midcategory PM ON(PT.PT_NO = PM.PT_NO)
+			    JOIN product P ON (PM.PM_NO = P.PM_NO)
+			    JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO)
+			    WHERE P.P_STATUS = 'Y' AND PF.PF_SORT = 1
+			    ORDER BY 3 DESC
+	</select>
+	
+	<select id="selectproductDetail" parameterType="_int" resultMap="ProductDetailResultMap">
+		SELECT  PT.PT_NAME,
+		        PM.PM_NAME,
+		        P.P_NO,
+		        P.PM_NO,
+		        P.p_name,
+		        P.p_eng,
+		        P.p_detail,
+		        P.p_gender,
+		        P.p_date,
+		        P.p_update,
+		        P.p_brand,
+		        P.p_title,
+		        P.p_price
+		FROM product_topcategory pt
+		JOIN product_midcategory PM ON (PT.PT_NO = PM.PT_NO)
+		JOIN product P ON (PM.PM_NO = P.PM_NO)
+		WHERE P.P_STATUS = 'Y' AND P.P_NO = #{productNo}
+	</select>
+	
+	<select id="selectFileDetail" parameterType="_int" resultMap="FileDetailResultMap">
+		SELECT  pf_no,
+			    p_no,
+			    pf_originalfilename,
+			    pf_renamefilename,
+			    pf_sort
+		FROM  product_file
+		      where p_no = #{productNo} and pf_status = 'Y'
+	</select>
+	
+	<select id="selectOptionDetail" parameterType="_int" resultMap="OptionDetailResultMap">
+		SELECT  po_no,
+			    p_no,
+			    po_name,
+			    po_price,
+			    po_amount
+		FROM  product_option
+    	where p_no = #{productNo}
+	</select>
+	
+	<update id="updateProduct" parameterType="CartProduct">
+		UPDATE PRODUCT
+		SET pm_no = #{product.pmNo},
+		    p_gender = #{product.productGender},
+		    p_brand = #{product.productBrand},
+		    p_title = #{product.productTitle},
+		    p_name = #{product.productName},
+		    p_eng = #{product.productEngName},
+		    p_price = #{product.productPrice},
+		    p_detail = #{product.productDetail},
+		    p_update = SYSDATE
+		WHERE
+		P_NO = #{product.productNo} AND P_STATUS = 'Y'
+	</update>
+	
+	<update id="updateProductOption" parameterType="productOption">
+		UPDATE product_option
+		SET
+		    <!-- po_name = #{pOption.poName}, -->
+		    po_price = #{pOption.poPrice},
+		    po_amount = #{pOption.poAmount}
+		WHERE P_NO = #{productNo} AND PO_NO = #{pOption.poNo}
+	</update>
+	
+	<update id="updateProductFile">
+		UPDATE product_file
+		SET
+		    pf_originalfilename = #{originalFilename},
+		    pf_renamefilename = #{renamedFileName},
+		    pf_sort = #{fileSort},
+		    pf_update = SYSDATE
+		WHERE
+		P_NO = #{productNo} AND PF_SORT = #{fileSort} AND PF_STATUS = 'Y'
+	</update>
+	
+	<update id="deleteProductFile" parameterType="_int">
+		UPDATE product_file
+		SET PF_STATUS = 'N'
+		WHERE p_no = #{productNo} and pf_status = 'Y'
+	</update>
+	
+	<update id="deleteProduct" parameterType="_int">
+		UPDATE product
+		SET p_status = 'N'
+		WHERE  p_no = #{productNo} and p_status = 'Y'
+	</update>
+	
+	<select id="getMemberCount" resultType="_int">
+		SELECT count(*)
+		FROM member
+    	where M_DIVISION = 2 and M_STATUS = 'Y'
+	</select>
+	
+	<select id="getAdminMemberList" resultMap="AdminMemberListResultMap">
+		SELECT  m_no,
+			    m_division,
+			    m_status,
+			    m_path,
+			    m_id,
+			    m_pwd,
+			    m_name,
+			    m_birth,
+			    m_gender,
+			    m_mail,
+			    m_phone,
+			    m_addr,
+			    m_point,
+			    m_create,
+			    m_update,
+			    m_mailstatus
+		FROM member
+    	where M_DIVISION = 2 
+    	ORDER BY 14 DESC
+	</select>
+	
+	<select id="selectMemberDetail" parameterType="_int" resultMap="AdminMemberListResultMap">
+		SELECT  m_no,
+			    m_division,
+			    m_status,
+			    m_path,
+			    m_id,
+			    m_pwd,
+			    m_name,
+			    m_birth,
+			    m_gender,
+			    m_mail,
+			    m_phone,
+			    m_addr,
+			    m_point,
+			    m_create,
+			    m_update,
+			    m_mailstatus
+		FROM member
+	    where M_DIVISION = 2 and M_STATUS = 'Y' and m_no = #{memberNo}
+	</select>
+	
+	<select id="idCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM member
+		WHERE M_ID = #{id}  
+	</select>
+	
+	<update id="memberUpdate" parameterType="CartMember">
+		UPDATE member
+		SET m_id = #{member.memberId},
+		    m_pwd = #{member.memberPwd},
+		    m_mail = #{member.memberMail},
+		    m_phone = #{member.memberPhone},
+		    m_addr = #{member.memberAddr}
+		WHERE m_no = #{member.memberNo}
+	</update>
+	
+	<select id="adminPwdCheck" resultType="string">
+		SELECT M_PWD
+		FROM member
+		WHERE m_division = 1
+	</select>
+	
+	<update id="memberDelete" parameterType="_int">
+		UPDATE member
+		SET m_status = 'N'
+		WHERE  m_no = #{memberNo}
+	</update>
+	
+	<update id="memberRecover" parameterType="_int">
+		UPDATE member
+		SET m_status = 'Y'
+		WHERE  m_no = #{memberNo}
+	</update>
+	
+	<select id="getBenefitCount" resultType="_int">
+		SELECT count(*)
+		FROM benefit
+	</select>
+	
+	<select id="getAdminBenefitList" resultMap="BenefitListResultMap">
+		<include refid="benefitList"/>
+	</select>
+	
+	<select id="selectAdminBenefitList" resultMap="BenefitListResultMap">
+		<include refid="benefitList"/>
+	</select>
+	
+	<update id="benefitStatusUpdate" parameterType="Benefit">
+		UPDATE benefit
+		SET bn_status = 'N'
+		WHERE bn_no = #{benefit.benefitNo}
+	</update>
+	
+	<select id="selectBenefitDetail" parameterType="_int" resultMap="BenefitListResultMap">
+		SELECT  bn_no,
+			    bn_name,
+			    bn_title,
+			    bn_content,
+			    bn_createdate,
+			    bn_enddate,
+			    bn_ratio,
+			    bn_status,
+			    bn_hit
+		FROM  benefit
+        WHERE BN_NO = #{benefitNo} 
+	</select>
+	
+	<select id="selectBenefitFile" parameterType="_int" resultMap="benefitFileResultMap">
+		SELECT BF.BF_RENAMEFILENAME
+		FROM benefit b
+        join benefit_file bf on(b.bn_no = bf.bn_no)
+        WHERE B.BN_NO = #{benefitNo} and BF.BF_STATUS = 'Y'
+	</select>
+	
+	<insert id="benefitInsert" useGeneratedKeys="true" keyColumn="bn_no" keyProperty="benefitNo" parameterType="Benefit" >
+		INSERT INTO benefit (bn_no,bn_name,bn_title,bn_content,bn_createdate,bn_enddate,bn_ratio,bn_status,bn_hit)
+		VALUES (  SEQ_BENEFIT_BN_NO.NEXTVAL,
+			       #{benefit.benefitName},
+			       #{benefit.benefitTitle},
+			       #{benefit.benefitContent},
+			       SYSDATE,
+			       #{benefit.benefitEndDate},
+			       #{benefit.benefitRatio},
+			       DEFAULT,
+			       DEFAULT
+				)
+	</insert>
+	
+	<insert id="benefitFileInsert" parameterType="AdminProductFile">
+	INSERT INTO benefit_file (  bf_no,
+							    bn_no,
+							    bf_originalfilename,
+							    bf_renamefilename,
+							    bf_size,
+							    bf_type,
+							    bf_date,
+							    bf_update,
+							    bf_status
+					) VALUES (	SEQ_BENEFIT_FILE_BF_NO.NEXTVAL,
+							    #{file.productNo},
+							    #{file.originalFileName},
+							    #{file.renameFileName},
+							    DEFAULT,
+							    DEFAULT,
+							    DEFAULT,
+							    DEFAULT,
+							    DEFAULT
+							)
+	</insert>
+	
+	<update id="benefitUpdate" parameterType="Benefit">
+		UPDATE benefit
+		SET  
+		     bn_title = #{benefit.benefitTitle},
+		     bn_content = #{benefit.benefitContent},
+		     bn_createdate = SYSDATE,
+		     bn_enddate = #{benefit.benefitEndDate},
+		     bn_ratio = #{benefit.benefitRatio},
+		     bn_name = #{benefit.benefitName}
+		WHERE bn_no = #{benefit.benefitNo}
+	</update>
+	
+	<update id="benefitFileUpdate" parameterType="AdminProductFile">
+		UPDATE benefit_file
+		SET bf_originalfilename = #{file.originalFileName},
+		    bf_renamefilename = #{file.renameFileName},
+		    bf_update = SYSDATE
+		WHERE  bn_no = #{file.productNo}
+	</update>
+	
+	<select id="benefitApplyCheck" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM product_benefit
+    	where bn_no = #{benefitNo} and p_no = #{productNo}
+	</select>
+	
+	<insert id="benefitProductInsert" parameterType="_int">
+		INSERT INTO product_benefit (pbf_no,bn_no,p_no)
+		VALUES (SEQ_PRODUCT_BENEFIT_PBF_NO.NEXTVAL,#{benefitNo},#{productNo})
+	</insert>
+	
+	<delete id="benefitProductDelete" parameterType="_int">
+		DELETE FROM product_benefit
+		WHERE bn_no = #{benefitNo} AND p_no = #{productNo}
+	</delete>
+	
+	<delete id="benefitProductAllDelete" parameterType="_int">
+		DELETE FROM product_benefit
+		WHERE bn_no = #{benefitNo}
+	</delete>
+	
+	<delete id="benefitFileAllDelete" parameterType="_int">
+		DELETE FROM benefit_file
+		WHERE bn_no = #{benefitNo}
+	</delete>
+	
+	<delete id="benefitDelete" parameterType="_int">
+		DELETE FROM benefit
+		WHERE bn_no = #{benefitNo}
+	</delete>
+	
+	
+	
+	
+	
+
+</mapper>

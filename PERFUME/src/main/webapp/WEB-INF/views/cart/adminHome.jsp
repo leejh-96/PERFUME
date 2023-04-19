@@ -9,12 +9,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자페이지-home</title>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+<style type="text/css">
+/* 관리자페이지-home */
+
+
+
+
+
+/* 관리자페이지-home */
+</style> 
 </head>
 <body>
-	장바구니 test
+
+<jsp:include page="/WEB-INF/views/cart/common/adminSidebar.jsp"/>
 	
-	<button onclick="location.href='${path}/cart?memberNo=3'" name="cart" id="cart" >장바구니테스트</button>
-	<button onclick="location.href='${path}/admin/product'">관리자테스트</button>
+	<h1>관리자페이지 HOME</h1>
+	
+<jsp:include page="/WEB-INF/views/cart/common/adminFootDiv.jsp"/>
+
+
 </body>
 </html>
