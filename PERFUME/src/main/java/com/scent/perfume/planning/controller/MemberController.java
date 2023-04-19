@@ -1,7 +1,6 @@
 package com.scent.perfume.planning.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,7 @@ public class MemberController {
 		if (loginMember != null && loginMember.getMailStatus().equals("Y")) {
 			modelAndView.addObject("loginMember", loginMember);
 			modelAndView.setViewName("redirect:/");
-			} else if (loginMember != null && loginMember.getMailStatus().equals("N")) {
+			} else if (loginMember != null && loginMember.getMailStatus() != "Y") {
 				modelAndView.addObject("msg", "이메일 인증 후 로그인해주세요.");
 				modelAndView.addObject("location", "/");
 				modelAndView.setViewName("common/msg");

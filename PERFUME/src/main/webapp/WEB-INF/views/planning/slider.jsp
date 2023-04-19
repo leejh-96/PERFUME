@@ -32,17 +32,17 @@
 	    <!-- 슬라이드 이미지 -->
 	    <div class="carousel-inner">
 	      <div class="carousel-item active">
-	        <a href="#">
+	        <a href="${ path }/planning/special02">
 	          <img src="${ path }/images/planning/slider001.png" class="d-block w-100" alt="Slider Image 1">
 	        </a>
 	      </div>
 	      <div class="carousel-item">
-	        <a href="#">
+	        <a href="${ path }/planning/special01">
 	          <img src="${ path }/images/planning/slider002.png" class="d-block w-100" alt="Slider Image 2">
 	        </a>
 	      </div>
 	      <div class="carousel-item">
-	        <a href="#">
+	        <a href="${ path }/planning/special03">
 	          <img src="${ path }/images/planning/slider003.png" class="d-block w-100" alt="Slider Image 3">
 	        </a>
 	      </div>

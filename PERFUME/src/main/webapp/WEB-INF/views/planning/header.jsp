@@ -28,7 +28,7 @@
                     <li><a href="${ path }/aboutSite">ABOUT US</a></li>
                     <li><a href="${ path }/planning/special">SPECIAL</a></li>
                     <li><a href="${ path }/product/list">SCENT</a></li>
-                    <li><a href="#">SACHET</a></li>
+                    <li><a href="#">MOUILLETTE</a></li>
                 </ul>
             </nav>
             <h1 class="logo"><a href="${ path }/">Perfume</a></h1>
@@ -43,7 +43,7 @@
                     <c:if test="${ not empty loginMember }">
 						<li><a href="${ path }/logout">LOGOUT</a></li>
 						<c:if test="${ not empty loginMember && loginMember.division == '2' }">
-							<li><a href="#">MY PAGE</a></li>                                      
+							<li><a href="${ path }/mypage">MY PAGE</a></li>                                      
 							<li><a href="${ path }/cart?memberNo=3">CART</a></li>                                      
 						</c:if>
 						<c:if test="${ not empty loginMember && loginMember.division == '1' }">
@@ -76,7 +76,6 @@
                     <ul style="list-style: none;">
                         <li onclick="kakaoLogin();"><button type="button">카카오로 로그인</button></li>
                         <li id="googleLogin" onclick="googleLogin();"><button type="button">구글로 로그인</button></li>
-                        <li onclick="naverLogin();"><button type="button">네이버로 로그인</button></li>
                     </ul>
             </div>
         </div>
@@ -131,19 +130,9 @@
 	        },
 	        })
 	    }
-	    
-	    // 다음은 어떤 로그인을 구현해볼까...
-	    // 네이버로 로그인 구현
-	    var naver_id_login = new naver_id_login("e8Ese8BEMBY_9FWnW9xY", "http://localhost:8088");
-        var state = naver_id_login.getUniqState();
-        naver_id_login.setButton("white", 2,40);
-        naver_id_login.setDomain("http://localhost:8088");
-        naver_id_login.setState(state);
-        naver_id_login.setPopup();
-        naver_id_login.init_naver_id_login();
         
         // 구글로 로그인 구현
-        //처음 실행하는 함수
+        // 처음 실행하는 함수
 		function init() {
 			gapi.load('auth2', function() {
 				gapi.auth2.init();
@@ -178,9 +167,6 @@
 		function onSignInFailure(t){		
 			console.log(t);
 		}
-        
-        
-        // 애플로 로그인 구현
     </script>
         
     </header>
