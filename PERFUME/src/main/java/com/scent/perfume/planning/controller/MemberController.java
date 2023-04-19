@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.scent.perfume.planning.model.service.MemberService;
@@ -26,27 +25,27 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	// 로그인 처리
-	
 	@PostMapping("/login")
-	public ModelAndView login(ModelAndView modelAndView,
-				@RequestParam String id, @RequestParam String pwd) {
-		
+	public ModelAndView login(ModelAndView modelAndView, @RequestParam String id, @RequestParam String pwd) {
 		log.info("{}, {}", id, pwd);
 		
 		Member loginMember = service.login(id, pwd);
 		
-		if(loginMember != null) {
+		if (loginMember != null && loginMember.getMailStatus().equals("Y")) {
 			modelAndView.addObject("loginMember", loginMember);
 			modelAndView.setViewName("redirect:/");
-		} else {
+			} else if (loginMember != null && loginMember.getMailStatus().equals("N")) {
+				modelAndView.addObject("msg", "이메일 인증 후 로그인해주세요.");
+				modelAndView.addObject("location", "/");
+				modelAndView.setViewName("common/msg");
+			} else {
 			modelAndView.addObject("msg", "아이디나 패스워드가 일치하지 않습니다.");
 			modelAndView.addObject("location", "/");
 			modelAndView.setViewName("common/msg");
 		}
-		
 		return modelAndView;
 	}
-	
+
 	@GetMapping("/login")
 	public String login() {
 		log.info("로그인 페이지 요청");

@@ -47,7 +47,7 @@
 							<li><a href="${ path }/cart?memberNo=3">CART</a></li>                                      
 						</c:if>
 						<c:if test="${ not empty loginMember && loginMember.division == '1' }">
-							<li><a href="#">ADMIN PAGE</a></li>                                        
+							<li><a href="${ path }/admin/home">ADMIN PAGE</a></li>                                        
 						</c:if>              
                     </c:if>
                 </ul>

@@ -11,7 +11,7 @@ public class productOption {
 
 	private int poNo;
 	private int productNo;
-	private String poName;
+	private int poName;
 	private int poPrice;
 	private int poAmount;
 

@@ -12,4 +12,6 @@ public interface MemberMapper {
 	String getMemberByEmail(@Param("userEmail") String email);
 
 	String getPassword(@Param("userName") String userName, @Param("userId") String userId, @Param("userEmail") String userEmail);
+
+	String selectMailStatusById(String id);
 }
