@@ -10,4 +10,6 @@ public interface MemberService {
 	String findMemberByEmail(String userEmail);
 
 	String getPassword(String userName, String userId, String userEmail);
+
+	String getMailStatus(String id);
 }

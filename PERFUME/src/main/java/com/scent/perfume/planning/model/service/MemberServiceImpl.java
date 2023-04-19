@@ -39,4 +39,9 @@ public class MemberServiceImpl implements MemberService {
 	public String getPassword(String userName, String userId, String userEmail) {
 		return mapper.getPassword(userName, userId, userEmail);
 	}
+
+	@Override
+	public String getMailStatus(String id) {
+		return mapper.selectMailStatusById(id);
+	}
 }
