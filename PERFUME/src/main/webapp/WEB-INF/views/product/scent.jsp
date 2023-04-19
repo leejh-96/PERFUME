@@ -716,7 +716,7 @@ max-width: 100%;
                                         <c:if test="${productfile.pfsort eq '1' }">
                                         <a href="${ path }/product/detail?no=${product.pno}">
                                         
-                                         <img src="${ path }/images/product/${ productfile.pfrenamefilename}" class="card-img-top" alt="..." > </a>
+                                         <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="card-img-top" alt="..." > </a>
                                            </c:if>
                                         </c:forEach>
                                         	<div class="etcsymbols"style=" width: 100%; height: 10%; bottom: 0px; padding: 5px;">

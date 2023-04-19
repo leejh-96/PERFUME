@@ -519,7 +519,7 @@
                       
                         <c:if test="${productfile.pfsort eq '1' }">
                      
-                        <img src="${ path }/images/product/${ productfile.pfrenamefilename}" class="big" alt="">
+                        <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="big" alt="">
                         </c:if>
                         </c:forEach>
                         </div>  
@@ -528,14 +528,14 @@
                          <c:forEach var="productfile" items="${ product.productfile }"  begin="0"  end="0">
                          	<c:if test="${productfile.pfsort eq '1' }">
                             <div id="sumbimg1" >
-                                <img src="${ path }/images/product/${ productfile.pfrenamefilename}" class="img1" alt="">
+                                <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="img1" alt="">
                             </div>
                             </c:if>
                             </c:forEach>
                             <c:forEach var="productfile" items="${ product.productfile }" begin="1" end="2">
                             <c:if test="${productfile.pfsort eq '2' }">
                             <div id="sumbimg1" >
-                                <img src="${ path }/images/product/${ productfile.pfrenamefilename}" class="img1" alt="">
+                                <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="img1" alt="">
                             </div>
                             </c:if>
                             
@@ -762,7 +762,7 @@
                  <c:forEach var="productfile" items="${ product.productfile }">
                 	<c:if test="${productfile.pfsort eq '2' }">
                     <div id="detailimg">
-                     <img src="${ path }/images/product/${productfile.pfrenamefilename}" class="img1" alt="">
+                     <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="img1" alt="">
                     </div>
                    </c:if>
                    <br><br><br>
