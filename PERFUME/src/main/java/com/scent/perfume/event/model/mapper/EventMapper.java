@@ -25,4 +25,10 @@ public interface EventMapper {
 // 회원가입 아이디 중복 검사
 	Member selectMemberById(@Param("id") String id);
 	
+// 회원가입 이메일 인증
+	// id를 통해 M_MAILSTATUS 컬럼을 난수로 변경
+	int getKey(@Param("id") String id, @Param("key") String key);
+	// id를 통해 M_MAILSTATUS 컬럼을 N으로 변경
+	int updateMMailStatus(@Param("id") String id, @Param("key") String key);
+	
 }

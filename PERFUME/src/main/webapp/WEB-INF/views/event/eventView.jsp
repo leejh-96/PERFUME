@@ -88,6 +88,7 @@
 </style>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 <section>
     <h2 align="center">EVENT</h2>
     <div id="boardListTable">
@@ -110,7 +111,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td id="contentTable"colspan="4"> <h2>내용입니당</h2> 내용 작성란</td>
+                    <td id="contentTable"colspan="4"><p><h2>내용입니당</h2>내용 작성란</p></td>
                 </tr>
             </tbody>
             <tfoot>
@@ -157,5 +158,4 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
-</body>
-</html>
+<jsp:include page="/WEB-INF/views/planning/footer.jsp"/>

@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>signUp</title>
 
     <style>
@@ -128,6 +129,10 @@
             background-color: rgb(120, 116, 100);
             border-color: rgb(120, 116, 100);
         }
+        #btnSubmit:hover{
+        	background-color: rgb(226, 217, 179);
+            border-color: rgb(226, 217, 179);
+        }
 
 /* 버튼 disabled 일 때 hover 색상 변경 안되게 */
         button[id^="btn"]:disabled {
@@ -141,8 +146,11 @@
     <script src="${path}/js/jquery-3.6.3.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    
 </head>
 <body>
+
+	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 
     <section>
 
@@ -231,7 +239,7 @@
                 <input type="email" name="mail" id="email" class="form-control" placeholder="이메일 입력"
                         pattern="^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$" required>
                 <small id="emailHelpBlock" class="form-text text-muted">
-                    이메일 인증을 위해 필수 입력사항입니다.
+                    이메일 인증을 위한 필수 입력사항입니다.
                 </small>
                 <span id="emailCheck" style="font-size: small;"></span>
             </div>
@@ -249,7 +257,7 @@
                     <button type="button" id="btnPh2" class="btn btn-secondary" disabled>인증번호 확인</button><br>
                 </div>
                 <small id="phoneHelpBlock" class="form-text text-muted">
-                    휴대폰 인증을 위해 필수 입력사항입니다.
+                    휴대폰 인증을 위한 필수 입력사항입니다.
                 </small>
                 <span id="phoneCheck" style="font-size: small;"></span>
             </div>
@@ -266,10 +274,10 @@
                     <input type="text" name="addr1" id="sample6_address" class="form-control" placeholder="주소" >
                 </div>
                 <div class="addressDiv">
-                    <input type="text" name="addr2" id="sample6_detailAddress" class="form-control" placeholder="상세주소">
+                    <input type="text" name="addr2" id="sample6_detailAddress" class="form-control" placeholder="상세주소(선택 입력 가능)">
                 </div>
                 <div class="addressDiv">
-                    <input type="text" name="addr3" id="sample6_extraAddress" class="form-control" placeholder="참고항목">
+                    <input type="text" name="addr3" id="sample6_extraAddress" class="form-control" placeholder="참고항목(선택 입력 가능)">
                 </div>
             </div>
         </div>
@@ -440,7 +448,7 @@
 	        } else if(regExp.test(name)) {
 	            $('#nameCheck').text('').css({color: 'green', fontweight: 'bold'});
 	        } else {
-	            $('#nameCheck').text('띄어쓰기 없이 한글로만 작성해 주십시오.').css({color: 'red', fontweight: 'bold'});
+	            $('#nameCheck').text('띄어쓰기 없이 한글로만 작성해주십시오.').css({color: 'red', fontweight: 'bold'});
 	        }
         });
 
@@ -464,7 +472,7 @@
 	                } else if(regExp.test(year)) {
 	                    $('#birthCheck').text('').css({color: 'green', fontweight: 'bold'});
 	                } else {
-	                    $('#birthCheck').text('태어난 연도를 정확히 입력해 주세요').css({color: 'red', fontweight: 'bold'});
+	                    $('#birthCheck').text('태어난 연도를 정확히 입력해주세요.').css({color: 'red', fontweight: 'bold'});
 	                }
             	}
             }
@@ -485,7 +493,7 @@
                 } else if(regExp.test(date)) {
                     $('#birthCheck').text('').css({color: 'green', fontweight: 'bold'});
                 } else {
-                    $('#birthCheck').text('태어난 일을 정확히 입력해 주세요').css({color: 'red', fontweight: 'bold'});
+                    $('#birthCheck').text('태어난 일을 정확히 입력해주세요.').css({color: 'red', fontweight: 'bold'});
                 }
                 
             } else if(birthMonth == '04' || birthMonth == '06' || birthMonth == '09' || birthMonth == '11') {
@@ -497,7 +505,7 @@
                 } else if(regExp.test(date)) {
                     $('#birthCheck').text('').css({color: 'green', fontweight: 'bold'});
                 } else {
-                    $('#birthCheck').text('태어난 일을 정확히 입력해 주세요').css({color: 'red', fontweight: 'bold'});
+                    $('#birthCheck').text('태어난 일을 정확히 입력해주세요.').css({color: 'red', fontweight: 'bold'});
                 }
 
             } else { // 2월
@@ -514,7 +522,7 @@
                     } else if(regExp.test(date)) {
                         $('#birthCheck').text('').css({color: 'green', fontweight: 'bold'});
                     } else {
-                        $('#birthCheck').text('태어난 일을 정확히 입력해 주세요').css({color: 'red', fontweight: 'bold'});
+                        $('#birthCheck').text('태어난 일을 정확히 입력해주세요.').css({color: 'red', fontweight: 'bold'});
                     }
                     
                 } else {
@@ -525,7 +533,7 @@
                     } else if(regExp.test(date)) {
                         $('#birthCheck').text('').css({color: 'green', fontweight: 'bold'});
                     } else {
-                        $('#birthCheck').text('태어난 일을 정확히 입력해 주세요').css({color: 'red', fontweight: 'bold'});
+                        $('#birthCheck').text('태어난 일을 정확히 입력해주세요.').css({color: 'red', fontweight: 'bold'});
                     }
                 }
             }
@@ -561,7 +569,7 @@
 	            $('#phoneCheck').text('').css({color: 'green', fontweight: 'bold'});
 	            $('#btnPh1').attr("disabled", false);
 	        } else {
-	            $('#phoneCheck').text("휴대폰 번호를 '-'없이 숫자만 입력해주세요").css({color: 'red', fontweight: 'bold'});
+	            $('#phoneCheck').text("휴대폰 번호를 '-'없이 숫자만 입력해주세요.").css({color: 'red', fontweight: 'bold'});
 				$('#btnPh1').attr("disabled", true);
 	        }
         });
@@ -580,7 +588,7 @@
 		            if(data == "error"){	//실패시 
 		                alert("휴대폰 번호가 올바르지 않습니다.")
 		            }else{           		//성공시        
-		                alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호를 확인해주십시오.")
+		                alert("인증 번호가 발송되었습니다. 휴대폰에서 인증번호를 확인해주십시오.")
 		                $('#btnPh2').attr("disabled", false);	
 		            
 		                code2 = data; 		// 성공하면 데이터저장
@@ -691,7 +699,7 @@
        	if(validAll){
        	  return true;
        	} else {
-       	  alert('입력한 정보들을 다시 한 번 확인해 주세요.');
+       	  alert('입력한 정보들을 다시 한 번 확인해주세요.');
        	  return false;
        	}
     }
@@ -788,5 +796,4 @@
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-</body>
-</html>
+<jsp:include page="/WEB-INF/views/planning/footer.jsp"/>

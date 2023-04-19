@@ -104,7 +104,8 @@
 </style>
 </head>
 <body>
-    <section>
+<%-- <jsp:include page="/WEB-INF/views/planning/header.jsp"/>
+ --%>    <section>
         <h2 align="center">EVENT</h2>
         <div id="boardListTable">
             <form action="#" method="POST">
@@ -217,5 +218,6 @@
  	});
 	</script>
 
+<%-- <jsp:include page="/WEB-INF/views/planning/footer.jsp"/> --%>
 </body>
 </html>
