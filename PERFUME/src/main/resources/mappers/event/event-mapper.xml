@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- xml파일이라는 선언 -->
+
+<!-- Mapper 설정 파일임을 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.scent.perfume.event.model.mapper.EventMapper">
+
+<!-- 모든 회원 조회 값을 넣어주는 방법 2)-->
+	<resultMap id="memberResultMap" type="Member">	<!-- type 속성 mybatis-config.xml의 <typeAliases>를 통해 간소화 -->
+	<!-- resultMap태그의 id : resultMap을 식별하기 위한 값. type : 결과값을 담을 자바인스턴스의 클래스 타입 -->
+		<!-- property 필드명 column 컬럼명 -->
+		<!-- id : 조회 결과의 기본 키 컬럼을 매핑한다. -->
+		<id property="no" column="M_NO"/>
+		<!-- result : 조회 결과의 일반 컬럼을 매핑한다. -->
+		<result property="division" column="M_DIVISION"/>
+		<result property="status" column="M_STATUS"/>
+		<result property="path" column="M_PATH"/>
+		<result property="id" column="M_ID"/>
+		<result property="pwd" column="M_PWD"/>
+		<result property="name" column="M_NAME"/>
+		<result property="birth" column="M_BIRTH"/>
+		<result property="gender" column="M_GENDER"/>
+		<result property="mail" column="M_MAIL"/>
+		<result property="phone" column="M_PHONE"/>
+		<result property="addr" column="M_ADDR"/>
+		<result property="point" column="M_POINT"/>
+		<result property="create" column="M_CREATE"/>
+		<result property="update" column="M_UPDATE"/>
+		<result property="mailStatus" column="M_MAILSTATUS"/>
+	</resultMap>
+
+
+<!-- 회원가입 Member insert -->
+	<insert id="insertMember" parameterType="Member"
+			useGeneratedKeys="true" keyColumn="M_NO" keyProperty="no">
+		INSERT INTO MEMBER (
+		    M_NO, M_DIVISION, M_STATUS, M_PATH, M_ID, M_PWD, M_NAME, M_BIRTH, M_GENDER, M_MAIL, M_PHONE, M_ADDR, M_POINT, M_CREATE, M_UPDATE, M_MAILSTATUS
+		) VALUES (
+		    SEQ_MEMBER_M_NO.NEXTVAL, DEFAULT, DEFAULT, DEFAULT, #{id}, #{pwd}, #{name}, #{birth}, #{gender}, #{mail}, #{phone}, #{addr}, DEFAULT, DEFAULT, DEFAULT, 'N'
+		)
+	</insert>
+	
+<!-- 회원가입 아이디 중복 검사 -->
+	<select id="selectMemberById" parameterType="string" resultMap="memberResultMap">
+		SELECT 
+			M_NO, M_DIVISION, M_STATUS, M_PATH, M_ID, M_PWD, M_NAME, M_BIRTH, M_GENDER, M_MAIL, M_PHONE, M_ADDR, M_POINT, M_CREATE, M_UPDATE, M_MAILSTATUS
+		FROM MEMBER
+		WHERE M_ID = #{id} AND M_STATUS = 'Y'
+	</select>
+	
+<!-- 회원가입 ID로 M_No 찾기 -->
+	<select id="selectMnoById" parameterType="string" resultType="_int">
+		SELECT M_NO
+		FROM MEMBER
+		WHERE M_ID = #{id}
+	</select>
+	
+<!-- 회원가입 Terms insert -->
+	<insert id="insertTerms" parameterType="Terms"
+			useGeneratedKeys="true" keyColumn="T_NO" keyProperty="tNo">
+		INSERT INTO TERMS (
+		    T_NO, M_NO, T_CHECK
+		) VALUES (
+		    SEQ_TERMS_T_NO.NEXTVAL, #{mNo}, #{tCheck}
+		)	
+	</insert>
+	
+<!-- 회원가입 이메일 인증
+	id를 통해 M_MAILSTATUS 컬럼 난수로 변경 -->
+	<update id="getKey" parameterType="map">
+		UPDATE MEMBER SET M_MAILSTATUS = #{key} WHERE M_ID = #{id}
+	</update>
+	<!-- M_MAILSTATUS Y로 변경 -->
+	<update id="updateMMailStatus" parameterType="map">
+		UPDATE MEMBER SET M_MAILSTATUS = 'Y' WHERE M_ID = #{id} AND M_MAILSTATUS = #{key}
+	</update>
+	
+	
+</mapper>

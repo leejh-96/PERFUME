@@ -29,4 +29,14 @@ public class MemberServiceImpl implements MemberService {
 			return null;
 		}
 	}
+
+	@Override
+	public String findMemberByEmail(String userEmail) {
+		return mapper.getMemberByEmail(userEmail);
+	}
+
+	@Override
+	public String getPassword(String userName, String userId, String userEmail) {
+		return mapper.getPassword(userName, userId, userEmail);
+	}
 }
