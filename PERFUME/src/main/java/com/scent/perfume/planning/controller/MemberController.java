@@ -1,5 +1,10 @@
 package com.scent.perfume.planning.controller;
 
+import java.util.Properties;
+
+import javax.mail.*;
+import javax.mail.internet.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -108,15 +113,56 @@ public class MemberController {
 	
 	@RequestMapping(value = "/planning/findPwdResult", method = RequestMethod.POST)
 	public String findPassword(Model model, String userName, String userId, String userEmail) {
-	    String password = service.getPassword(userName, userId, userEmail);
-	    
-	    if (password == null) {
-	    	model.addAttribute("msg", "비밀번호 찾기에 실패했습니다. 회원 정보를 다시 확인해주세요.");
-	    	return "planning/findPwdResult";
-	    } else {
-	    	model.addAttribute("msg", userId + "님의 비밀번호는 " + password + "입니다.");
-	    	return "planning/findPwdResult";
-	    }
+		String password = service.getPassword(userName, userId, userEmail);
+
+		if (password == null) {
+		    model.addAttribute("msg", "비밀번호 찾기에 실패했습니다. 회원 정보를 다시 확인해주세요.");
+		    return "planning/findPwdResult";
+		} else {
+		    // 임시 비밀번호 생성 및 업데이트
+		    String tempPassword = service.generateTempPassword();
+		    service.updatePassword(userId, tempPassword);
+
+		    // 이메일 전송
+		    try {
+		        sendEmail(userId, userEmail, tempPassword);
+		        model.addAttribute("msg", "임시 비밀번호가 이메일로 전송되었습니다.");
+		    } catch (Exception e) {
+		        model.addAttribute("msg", "이메일 전송에 실패했습니다. 관리자에게 문의해주세요.");
+		    }
+		    return "planning/findPwdResult";
+		}
+	};
+
+	
+	// 이메일 전송 메소드
+	private void sendEmail(String userId, String userEmail, String password) throws Exception {
+		String host = "smtp.gmail.com";
+		int port = 587;
+		String username = "kong032149@gmail.com";
+		String password2 = "blvarryhfsioeqgn";
+
+		Properties properties = new Properties();
+		properties.put("mail.smtp.starttls.enable", "true");
+		properties.put("mail.smtp.auth", "true");
+		properties.put("mail.smtp.host", host);
+		properties.put("mail.smtp.port", port);
+
+		Authenticator auth = new Authenticator() {
+		    public PasswordAuthentication getPasswordAuthentication() {
+		        return new PasswordAuthentication(username, password2);
+		    }
+		};
+
+		Session session = Session.getInstance(properties, auth);
+
+		Message message = new MimeMessage(session);
+		message.setFrom(new InternetAddress("kong032149@gmail.com"));
+		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail));
+		message.setSubject("임시 비밀번호 발급");
+		message.setText(userId + "님의 임시 비밀번호는 " + password + "입니다.");
+
+		Transport.send(message);
 	}
 	
 	@GetMapping("/planning/special")

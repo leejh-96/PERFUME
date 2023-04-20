@@ -13,8 +13,9 @@
     <title>비밀번호 찾기</title>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 	<h2>비밀번호 찾기</h2>
-	<h3>회원가입 시 등록한 회원정보를 통해 비밀번호를 찾을 수 있습니다.</h3>
+	<h3>회원가입 시 등록한 회원정보를 통해 임시 비밀번호를 발급받을 수 있습니다.</h3>
 	<form action="${ path }/planning/findPwdResult" id="findPwdForm" method="POST">
 		<h4>등록된 회원 정보로 찾기</h4>
 		<p>회원 가입 시 등록한 정보를 정확히 입력해주세요.</p>
