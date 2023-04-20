@@ -30,7 +30,7 @@ public class Board {
 	private String bStatus;
 	// 게시물 구분					활성글 Y, 삭제글 N
 	private String bSort;
-	// 게시글 비밀번호 				게시판 종류가 2(qna)일때 비밀번호 컬럽을 사용한다.
+	// 게시글 비밀번호 				게시판 종류가 2(qna)일때 비밀번호 컬럼을 사용한다.
 	private String bPwd;
 	// 게시판 종류 					1.공지사항게시판, 2.qna게시판, 3.이벤트게시판, 4.기획전게시판
 	private int bType;
