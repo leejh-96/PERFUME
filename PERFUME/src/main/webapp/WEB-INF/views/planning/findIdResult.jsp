@@ -13,10 +13,10 @@
     <title>아이디 찾기</title>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 	<h2>아이디 찾기 결과</h2>
 		<c:if test="${ id != null }">
 			<p>찾으시는 아이디는 ${id} 입니다.</p>
-			<p><a href="${path}/login">로그인 페이지로 이동</a></p>
 		</c:if>
 		
 		<c:if test="${ id == null }">

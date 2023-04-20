@@ -125,7 +125,7 @@ public class MemberController {
 
 		    // 이메일 전송
 		    try {
-		        sendEmail(userEmail, tempPassword);
+		        sendEmail(userId, userEmail, tempPassword);
 		        model.addAttribute("msg", "임시 비밀번호가 이메일로 전송되었습니다.");
 		    } catch (Exception e) {
 		        model.addAttribute("msg", "이메일 전송에 실패했습니다. 관리자에게 문의해주세요.");
@@ -136,7 +136,7 @@ public class MemberController {
 
 	
 	// 이메일 전송 메소드
-	private void sendEmail(String userEmail, String password) throws Exception {
+	private void sendEmail(String userId, String userEmail, String password) throws Exception {
 		String host = "smtp.gmail.com";
 		int port = 587;
 		String username = "kong032149@gmail.com";
@@ -160,7 +160,7 @@ public class MemberController {
 		message.setFrom(new InternetAddress("kong032149@gmail.com"));
 		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail));
 		message.setSubject("임시 비밀번호 발급");
-		message.setText("회원님의 임시 비밀번호는 " + password + "입니다.");
+		message.setText(userId + "님의 임시 비밀번호는 " + password + "입니다.");
 
 		Transport.send(message);
 	}
