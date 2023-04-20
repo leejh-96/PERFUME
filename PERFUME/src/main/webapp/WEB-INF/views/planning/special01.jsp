@@ -10,14 +10,13 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>기획전 1, 봄맞이 플로럴 향수 기획전</title>
+	<title>봄맞이 플로럴 향수 기획전</title>
 	<link rel="stylesheet" href="${ path }/css/planning/special.css">
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
     
 	<div id="title">
-		<h2>기획전 1</h2>
 		<h2>봄맞이 플로럴 향수 기획전</h2>
 		<p style="text-align: center;">4월 30일까지 봄꽃내음을 연상시키는 플로럴 향수를 5% 할인된 특가에 만나보세요.</p>
 	</div>
