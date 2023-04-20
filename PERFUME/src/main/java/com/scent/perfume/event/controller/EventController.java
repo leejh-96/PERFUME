@@ -160,38 +160,87 @@ public class EventController {
 	
 	
 	// 이벤트 게시판 연결
-	@GetMapping("/eventList")
-	public ModelAndView eventList(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
+	@GetMapping("eventList")
+	public ModelAndView eventList(ModelAndView modelAndView, @RequestParam(defaultValue="1") int page) {
 		System.out.println("이벤트 게시판 창 연결 테스트");
 		
 		int listCount = service.getEventCount();
 		
-		log.info("page : {}", page);
-		log.info("listCount : {}", listCount);
+//		log.info("page : {}", page);
+//		log.info("listCount : {}", listCount);
 		
-		PageInfo pageInfo = new PageInfo(page, 10, listCount, 10);
+		PageInfo pageInfo = new PageInfo(page, 5, listCount, 10);
 		List<Board> list = service.getEventList(pageInfo);
+		
+//		log.info("list : {}", list);
 		
 		modelAndView.addObject("pageInfo", pageInfo);
 		modelAndView.addObject("list", list);
-		modelAndView.setViewName("evetn/eventList");
+		modelAndView.setViewName("event/eventList");
 		
 		return modelAndView;
-	}	
+	}
+	
+	// 게시판 검색 기능
+	@GetMapping("eventSearch")
+	public ModelAndView eventSearch(ModelAndView modelAndView,
+					@RequestParam(value="searchType", defaultValue="3") String type,
+					@RequestParam(value="searchKeyword", required=false) String keyword, @RequestParam(defaultValue="1") int page) {
+		System.out.println("이벤트 검색 잘 연결됐나요");
+		
+//		log.info("탕아아아아아ㅏ아ㅏ아아이이이이입ㅂㅂㅂㅂ : {}", type);
+//		log.info("키잉이이이이워드으으으으ㅡ으으으으ㅡㅇㅇ : {}", keyword);
+		
+		int listCount = service.getEventCountByKeyword(type, keyword);
+		
+//		log.info("페에에ㅔ에에에이지지지이이이이ㅣ이ㅣ이ㅣㅇ잉 : {}", page);
+//		log.info("리스트카운트트트트트트ㅡ트트ㅡ트ㅡ트트트 : {}", listCount);
+		
+		PageInfo pageInfo = new PageInfo(page, 5, listCount, 10);
+		List<Board> list = service.getEventListByKeyword(pageInfo, type, keyword);
+		
+//		log.info("list : {}", list);
+		
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("list", list);
+		modelAndView.setViewName("event/eventSearch");
+		
+		return modelAndView;
+	}
+	
 
-	// 이벤트 게시글 연결
-	@GetMapping("/eventView")
-	public String eventView() {
+	// 이벤트 상세 게시글 연결
+	@GetMapping("event/eventView")
+	public ModelAndView eventView(ModelAndView modelAndView, @RequestParam("no") int no) {
 		System.out.println("이벤트 상세 게시글 연결 테스트");
-		return "event/eventView";
+		Board board = null;
+		
+		log.info("no : {}", no);
+		
+		board = service.findBoardByNo(no);
+		
+		modelAndView.addObject("board", board);
+		modelAndView.setViewName("event/eventView");
+		
+		return modelAndView;
 	}
 	
 	// 게시글 작성 연결
-	@RequestMapping("/eventWrite")
+	@GetMapping("eventWrite")
 	public String eventWrite() {
 		System.out.println("이벤트 작성 창 연결 테스트");
 		return "event/eventWrite";
-	}	
+	}
+	// 게시글 작성 버튼 눌렀을 때
+//	@PostMapping("eventWrite")
+//	public ModelAndView modelAndView eventWrite(
+//			ModelAndView modelAndView,
+//			@ModelAttribute Board board,
+//			@RequestParam()) {
+//		
+//	}
+	
+	// 쿠폰 작성 연결
 	
 	// 썸머노트 다중 이미지 업로드
 	@RequestMapping(value="/uploadSummernoteImageFile", method= RequestMethod.POST, produces="application/json; charset=utf8")

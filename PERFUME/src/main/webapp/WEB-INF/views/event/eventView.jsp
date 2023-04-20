@@ -96,7 +96,7 @@
             <thead>
                 <tr>
                     <th class="titleTable" scope="col" colspan="2">제목</th>
-                    <td class="contentTable" scope="col" colspan="2">${ board.bTitle }</td>
+                    <td class="contentTable" scope="col" colspan="2">${ board.BTitle }</td>
                 </tr>
                 <tr>
                     <th class="titleTable" colspan="2">기간</th>
@@ -104,14 +104,16 @@
                 </tr>
                 <tr>
                     <td id="dateTitle">작성일</td>
-                    <td id="dateContent">${ board.bCreateDate }</td>
+                    <td id="dateContent">
+                    	<fmt:formatDate type="date" value="${ board.BCreateDate }" />
+                    </td>
                     <td id="countTitle">조회수</td>
-                    <td id="countContent">${ board.bCount }</td>
+                    <td id="countContent">${ board.BCount }</td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td id="contentTable"colspan="4"><p><h2>내용입니당</h2>내용 작성란</p></td>
+                    <td id="contentTable"colspan="4">${ board.BContent }</td>
                 </tr>
             </tbody>
             <tfoot>

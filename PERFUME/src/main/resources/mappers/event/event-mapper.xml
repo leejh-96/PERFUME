@@ -29,14 +29,14 @@
 		<result property="mailStatus" column="M_MAILSTATUS"/>
 	</resultMap>
 	
-	<resultMap id="eventListResultMap" type="Board">	<!-- type 속성 mybatis-config.xml의 <typeAliases>를 통해 간소화 -->
+	<resultMap id="boardResultMap" type="Board">	<!-- type 속성 mybatis-config.xml의 <typeAliases>를 통해 간소화 -->
 	<!-- resultMap태그의 id : resultMap을 식별하기 위한 값. type : 결과값을 담을 자바인스턴스의 클래스 타입 -->
 		<!-- property 필드명 column 컬럼명 -->
 		<!-- id : 조회 결과의 기본 키 컬럼을 매핑한다. -->
 		<id property="bNo" column="B_NO"/>
 		<!-- result : 조회 결과의 일반 컬럼을 매핑한다. -->
-		<result property="bcNo" column="BC_NO"/>
 		<result property="mNo" column="M_NO"/>
+		<result property="bcType" column="BC_TYPE"/>
 		<result property="bTitle" column="B_TITLE"/>
 		<result property="bContent" column="B_CONTENT"/>
 		<result property="bCreateDate" column="B_CREATEDATE"/>
@@ -45,7 +45,6 @@
 		<result property="bStatus" column="B_STATUS"/>
 		<result property="bSort" column="B_SORT"/>
 		<result property="bPwd" column="B_PWD"/>
-		<result property="bType" column="B_TYPE"/>
 	</resultMap>
 
 
@@ -114,18 +113,61 @@
 	</insert>
 	
 	
-<!-- 						게시판							 -->
+<!-- ////////////////////////////////////////////////////////////	게시판	///////////////////////////////////////////////////// -->
 
 
 	<!-- 게시판 목록 조회 -->
 	<select id="selectEventBoardCount" resultType="_int">
-		SELECT COUNT(*) FROM BOARD WHERE B_STATUS = 'Y' AND B_TYPE = 3
+		SELECT COUNT(*) FROM BOARD WHERE B_STATUS = 'Y' AND BC_TYPE = '이벤트'
 	</select>
-	<select id="selectAll" resultMap="eventListResultMap">
-		SELECT B.B_NO, M.M_NO, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT, B.B_PWD
-		FROM BOARD B JOIN MEMBER M ON (B.BC_NO = M.M_NO)
-		WHERE B.B_STATUS = 'Y' AND B.B_TYPE = 3
+	<select id="selectAll" resultMap="boardResultMap">
+		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT
+		FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
+		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
 		ORDER BY B.B_NO DESC
+	</select>
+	
+	<!-- 게시물 검색 기능 -->
+	<select id="selectEventCountByKeyword" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
+		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
+		<if test="keyword != null">
+			<if test='type.equals("1")'>
+				AND B.B_TITLE LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test='type.equals("2")'>
+				AND B.B_CONTENT LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test='type.equals("3")'>
+				AND ((B.B_TITLE LIKE '%' || #{keyword} || '%' ) OR (B.B_CONTENT LIKE '%' || #{keyword} || '%'))
+			</if>
+		</if>
+		ORDER BY B.B_NO DESC
+	</select>
+	<select id="selectAllByKeyword" resultMap="boardResultMap">
+		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT, B.B_PWD
+		FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
+		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
+		<if test="keyword != null">
+			<if test='type.equals("1")'>
+				AND B.B_TITLE LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test='type.equals("2")'>
+				AND B.B_CONTENT LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test='type.equals("3")'>
+				AND ((B.B_TITLE LIKE '%' || #{keyword} || '%' ) OR (B.B_CONTENT LIKE '%' || #{keyword} || '%'))
+			</if>
+		</if>
+		ORDER BY B.B_NO DESC
+	</select>
+	
+	<!-- 게시물 상세 보기 기능 -->
+	<select id="selectEventViewByNo" parameterType="_int" resultMap="boardResultMap">
+		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT, B.B_PWD
+		FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
+		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트' AND B.B_NO = #{no}
 	</select>
 	
 	

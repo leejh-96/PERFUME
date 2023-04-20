@@ -39,7 +39,7 @@ public interface EventMapper {
 	
 // 회원가입 쿠폰 발급
 	int insertBenefit(Benefit benefit);
-	int insertMemberBenefitInfo(int bnNo, int mNo, MemberBenefitInfo memBenefitInfo);
+	int insertMemberBenefitInfo(@Param("bnNo") int bnNo, @Param("mNo") int mNo, MemberBenefitInfo memBenefitInfo);
 
 	
 /////////////////////////////////////////게시판///////////////////////////////////	
@@ -48,5 +48,12 @@ public interface EventMapper {
 // 게시판 목록 조회
 	int selectEventBoardCount();
 	List<Board> selectAll(RowBounds rowBounds);
+	
+// 게시물 검색 기능
+	int selectEventCountByKeyword(@Param("type") String type, @Param("keyword") String keyword);
+	List<Board> selectAllByKeyword(@Param("rowBounds") RowBounds rowBounds, @Param("type") String type, @Param("keyword") String keyword);
+
+// 게시물 검색 기능	
+	Board selectEventViewByNo(@Param("no") int no);
 	
 }

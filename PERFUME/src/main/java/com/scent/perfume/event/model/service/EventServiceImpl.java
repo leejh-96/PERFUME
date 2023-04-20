@@ -108,7 +108,28 @@ public class EventServiceImpl implements EventService {
 		int limit = pageInfo.getListLimit();
 		int offset = (pageInfo.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset,limit);
+		
 		return mapper.selectAll(rowBounds);
+	}
+
+// 게시물 검색 기능
+	@Override
+	public int getEventCountByKeyword(String type, String keyword) {
+		return mapper.selectEventCountByKeyword(type, keyword);
+	}
+	@Override
+	public List<Board> getEventListByKeyword(PageInfo pageInfo, String type, String keyword) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return mapper.selectAllByKeyword(rowBounds, type, keyword);
+	}
+
+// 상세 게시글 보기
+	@Override
+	public Board findBoardByNo(int no) {
+		return mapper.selectEventViewByNo(no);
 	}
 
 }
