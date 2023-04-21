@@ -1,14 +1,18 @@
 package com.scent.perfume.event.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.scent.perfume.common.util.PageInfo;
 import com.scent.perfume.event.model.mapper.EventMapper;
+import com.scent.perfume.event.model.vo.Board;
 import com.scent.perfume.event.model.vo.Terms;
 import com.scent.perfume.planning.model.vo.Member;
 
@@ -22,6 +26,8 @@ public class EventServiceImpl implements EventService {
 	// 매퍼
 	@Autowired
 	private EventMapper mapper;
+	
+	
 	// 비밀번호 암호화
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -86,6 +92,44 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public Boolean isDuplicateId(String id) {
 		return mapper.selectMemberById(id) != null;
+	}
+
+
+/////////////////////////////////////////////////이벤트게시판//////////////////////////////////////////////////
+	
+
+// 게시판 목록 조회
+	@Override
+	public int getEventCount() {
+		return mapper.selectEventBoardCount();
+	}
+	@Override
+	public List<Board> getEventList(PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return mapper.selectAll(rowBounds);
+	}
+
+// 게시물 검색 기능
+	@Override
+	public int getEventCountByKeyword(String type, String keyword) {
+		return mapper.selectEventCountByKeyword(type, keyword);
+	}
+	@Override
+	public List<Board> getEventListByKeyword(PageInfo pageInfo, String type, String keyword) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return mapper.selectAllByKeyword(rowBounds, type, keyword);
+	}
+
+// 상세 게시글 보기
+	@Override
+	public Board findBoardByNo(int no) {
+		return mapper.selectEventViewByNo(no);
 	}
 
 }

@@ -128,7 +128,7 @@ input[type="submit"] {
 				<tbody>
 					<c:if test="${ empty list }">
 						<tr>
-							<td colspan="3" style="text-align: center; height: 300px; vertical-align: middle;"><h4>검색어와 일치하는 게시글이 없습니다.</h4></td>
+							<td colspan="3" style="text-align: center; height: 300px; vertical-align: middle;"><h4>조회된 게시글이 없습니다.</h4></td>
 						</tr>
 					</c:if>
 					<c:if test="${ not empty list }">
@@ -167,10 +167,10 @@ input[type="submit"] {
 			<div id="pageBar">
 				<!-- 맨 처음으로 -->
 				<button type="button" class="btn btn-outline-secondary"
-					onclick="location.href='${ path }/eventList?page=1'">&laquo;</button>
+					onclick="location.href='${ path }/eventSearch?page=1'">&laquo;</button>
 				<!-- 이전 페이지로 -->
 				<button type="button" class="btn btn-outline-secondary"
-					onclick="location.href='${ path }/eventList?page=${ pageInfo.prevPage }'">&lsaquo;</button>
+					onclick="location.href='${ path }/eventSearch?page=${ pageInfo.prevPage }'">&lsaquo;</button>
 				<!-- 5개 페이지 목록 -->
 				<c:forEach begin="${ pageInfo.startPage }"
 					end="${ pageInfo.endPage }" varStatus="status">
@@ -180,16 +180,16 @@ input[type="submit"] {
 						</c:when>
 						<c:otherwise>
 							<button class="btn btn-outline-secondary"
-								onclick="location.href='${ path }/eventList?page=${ status.current }'">${ status.current }</button>
+								onclick="location.href='${ path }/eventSearch?page=${ status.current }'">${ status.current }</button>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 				<!-- 다음 페이지로 -->
 				<button type="button" class="btn btn-outline-secondary"
-					onclick="location.href='${ path }/eventList?page=${ pageInfo.nextPage }'">&rsaquo;</button>
+					onclick="location.href='${ path }/eventSearch?page=${ pageInfo.nextPage }'">&rsaquo;</button>
 				<!-- 맨 끝으로 -->
 				<button type="button" class="btn btn-outline-secondary"
-					onclick="location.href='${ path }/eventList?page=${ pageInfo.maxPage }'">&raquo;</button>
+					onclick="location.href='${ path }/eventSearch?page=${ pageInfo.maxPage }'">&raquo;</button>
 			</div>
 		</div>
 	</section>

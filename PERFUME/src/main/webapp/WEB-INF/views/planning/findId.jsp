@@ -13,6 +13,7 @@
     <title>아이디 찾기</title>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 	<h2>아이디 찾기</h2>
 	<h3>회원가입 시 등록한 이메일을 통해 아이디를 찾을 수 있습니다.</h3>
 	<form action="${path}/planning/findIdResult" name="findIdInfo" id="findIdInfo" method="POST">

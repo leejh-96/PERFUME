@@ -23,9 +23,9 @@
 		<div id="special-content" class="special01">
 			<div><a href="${ path }/planning/special01"><img src="${ path }/images/planning/special01.png"></a></div>
 			<div class="text">
-				<p>기획전 1</p>
-				<p>기획전 1 디테일 내용</p>
-				<p>2022.11.16 ~ 2023.04.28</p>
+				<p>봄맞이 특별 기획전</p>
+				<p>살랑살랑, 봄맞이 특별 기획전을 진행합니다! 향긋한 플로럴 향수를 5% 할인된 금액에 구매하세요.</p>
+				<p>2023.04.12 ~ 2023.04.28</p>
 			</div>
 		</div>
 		

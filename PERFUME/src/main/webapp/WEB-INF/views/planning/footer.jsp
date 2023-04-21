@@ -17,7 +17,7 @@
                     <li><a href="#">SAMPLE</a>
                         <p>적당량의 SAMPLE을 소개합니다.</p>    
                     </li>
-                    <li><a href="#">EVENT</a>
+                    <li><a href="${ path }/eventList">EVENT</a>
                         <p>다양한 이벤트에 참여해보세요</p>
                     </li>
                     <li><a href="#">ASK</a>

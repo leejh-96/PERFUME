@@ -96,22 +96,24 @@
             <thead>
                 <tr>
                     <th class="titleTable" scope="col" colspan="2">제목</th>
-                    <td class="contentTable" scope="col" colspan="2">제목작성란</td>
+                    <td class="contentTable" scope="col" colspan="2">${ board.BTitle }</td>
                 </tr>
                 <tr>
                     <th class="titleTable" colspan="2">기간</th>
-                    <td class="contentTable" colspan="2">기간 작성란</td>
+                    <td class="contentTable" colspan="2">기간<%-- ${ 베네핏 테이블에서 값 가져오기 } --%></td>
                 </tr>
                 <tr>
                     <td id="dateTitle">작성일</td>
-                    <td id="dateContent">2023.02.15</td>
+                    <td id="dateContent">
+                    	<fmt:formatDate type="date" value="${ board.BCreateDate }" />
+                    </td>
                     <td id="countTitle">조회수</td>
-                    <td id="countContent">252</td>
+                    <td id="countContent">${ board.BCount }</td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td id="contentTable"colspan="4"><p><h2>내용입니당</h2>내용 작성란</p></td>
+                    <td id="contentTable"colspan="4">${ board.BContent }</td>
                 </tr>
             </tbody>
             <tfoot>
