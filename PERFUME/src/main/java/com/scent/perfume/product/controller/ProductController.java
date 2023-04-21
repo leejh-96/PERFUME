@@ -8,22 +8,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scent.perfume.common.util.PageInfo;
+import com.scent.perfume.planning.model.vo.Member;
 import com.scent.perfume.product.model.service.ProductService;
 import com.scent.perfume.product.model.vo.Option;
 import com.scent.perfume.product.model.vo.Product;
 import com.scent.perfume.product.model.vo.ProductBoard;
+import com.scent.perfume.product.model.vo.ProductBoardReply;
 import com.scent.perfume.product.model.vo.TopCate;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
-@RequestMapping("/product")
+//@RequestMapping("/product")
 public class ProductController {
 	
 	@Autowired
@@ -32,10 +41,11 @@ public class ProductController {
 	
 	// 전체 상품 페이지
 	
-	@GetMapping("/list")
+	@GetMapping("/product/list")
 	public ModelAndView list(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page
 			, @RequestParam(required = false) String gender, @RequestParam(required = false) String bn
-			, @RequestParam(required = false) String sort , @RequestParam(required = false) String keyword) {
+			, @RequestParam(required = false) String sort , @RequestParam(required = false) String keyword
+			) {
 
 		
 		// PRODUCT 리스트
@@ -78,8 +88,10 @@ public class ProductController {
 	}
 	
 	// 상품 상세페이지 이동
-	@GetMapping("/detail")
-	public ModelAndView view(ModelAndView modelAndView, @RequestParam int no, @RequestParam(defaultValue = "1") int page) {
+	
+	@GetMapping("/product/detail")
+	public ModelAndView view(ModelAndView modelAndView, @RequestParam int no, @RequestParam(defaultValue = "1") int page
+			) {
 	   
 		
 		List<Product> list= service.findProductByNo(no);
@@ -104,8 +116,9 @@ public class ProductController {
 		
 		List<ProductBoard> grade = service.findGradebyNo(no);
 			
-		System.out.println(qnaboard);
 		
+		System.out.println(board);		
+	
 		modelAndView.addObject("grade", grade);
 		modelAndView.addObject("list", list);
 		modelAndView.addObject("no", no);
@@ -199,13 +212,46 @@ public class ProductController {
 		return modelAndView;
 	}
 	
+//	
+//	@GetMapping("/reviewReply")
+//	public String reviewReply(@RequestParam int no) {
+//		log.info("댓글 작성 페이지 요청");
+//		System.out.println(no);
+//		return "/product/detail?no="+no;
+//	}
 	
+	
+	@ResponseBody
+	@GetMapping("/reviewRe")
+	public List<ProductBoardReply> reply(@RequestParam int pbNo) {
+		
+//		System.out.println(pbNo);
+		List<ProductBoardReply> reply = service.findBypbNo(pbNo);
+		
+//		System.out.println(reply);
+		
+		return reply;
+	}
+	
+	@ResponseBody
+	@PostMapping("/reviewReply")
+	public ProductBoardReply replyenroll( @ModelAttribute ProductBoardReply reply
+			) {
+		int result = 0;
 
-	
-	
-	
-	
-	
+		//모델로만들어서 인설트 하면 댓글에 해당하는프라이러미리 키 조회 
+		// 모델어트리뷰트로 만들기.
+		ProductBoardReply replySet = null;
+		result = service.save(reply);
+		
+		if(result > 0) {
+			replySet = service.findBypbrNo(reply.getPbrNo());    
+		} else {  
+		}	
+		System.out.println(replySet);
+		
+		return replySet;
+	}
 	
 	
 	

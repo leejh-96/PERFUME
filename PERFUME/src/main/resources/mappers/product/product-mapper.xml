@@ -27,17 +27,39 @@
 	</resultMap>
 
             
+            
+            
+      <resultMap id="productboardreplyresultmap"  type="ProductBoardReply" >
+	    <id property="pbrNo" column="PBR_NO"/>
+	    <result property="pbNo" column="PB_NO"/>
+	    <result property="mNo" column="M_NO"/>
+	    <result property="pbrContent" column="PBR_CONTENT"/>
+		<result property="pbrstatus" column="PBR_STATUS"/>
+	    <result property="pbrdate" column="PBR_DATE"/>
+	    <result property="pbrupdate" column="PBR_UPDATE"/>
+	    <result property="mid" column="M_ID"/>
+	    <result property="pbtitle" column="PB_TITLE"/>
+	</resultMap>      
+            
+            
+            
+            
+            
+            
 
     <resultMap id="productboardresultmap"  type="ProductBoard" >
 	    <id property="pbno" column="PB_NO"/>
 	    <result property="pno" column="P_NO"/>
 	    <result property="pbtitle" column="PB_TITLE"/>
+	    <result property="writerno" column="WRITER_NO"/>
 		<result property="pbcontent" column="PB_CONTENT"/>
 	    <result property="pbdate" column="PB_DATE"/>
 	    <result property="pbupdate" column="PB_UPDATE"/>
 	    <result property="pbstatus" column="PB_STATUS"/>
 	    <result property="pbgrade" column="PB_GRADE"/>
 	    <result property="pbpwd" column="PB_PWD"/>
+	    <result property="mid" column="M_ID"/>
+	    <result property="replycount" column="REPLY_COUNT"/>
 	</resultMap>
 
 	<resultMap id="productboardcategoryresultmap"  type="ProductBoardCategory" >
@@ -576,10 +598,14 @@
                PB_TITLE,
                PB_CONTENT,
                PB_DATE,
+               WRITER_NO,
                PB_UPDATE,
                PB_STATUS,
-               PB_GRADE
+               PB_GRADE,
+               M.M_ID,
+               REPLY_COUNT
         FROM PRODUCT_BOARD PBO
+        JOIN MEMBER M ON (M.M_NO = PBO.WRITER_NO)
         JOIN PRODUCT_BOARD_CATEGORY PBC ON (PBO.PBC_NO = PBC.PBC_NO)
         WHERE PBC.PBC_NO = 1
         AND PBO.P_NO = #{no}
@@ -712,6 +738,54 @@
         LEFT OUTER JOIN PRODUCT_FILE PF ON (P.P_NO = PF.P_NO)
         WHERE PM.PM_C_NO = 1
         AND PF.PF_SORT = 1
+
+	</select>
+	
+	<select id="selectBoardReplyBypbNo" parameterType="_int" resultMap="productboardreplyresultmap" >
+		SELECT PB.PB_NO,
+               PBR.PBR_NO,
+               PBR.PBR_CONTENT,
+               PBR.PBR_DATE,
+               M.M_ID,
+               PB.PB_TITLE,
+               PBR.PBR_STATUS
+        FROM PRODUCT_BOARD_REPLY PBR
+        JOIN PRODUCT_BOARD PB ON (PB.PB_NO = PBR.PB_NO)
+        JOIN MEMBER M ON (M.M_NO = PBR.M_NO)
+        WHERE PB.PB_NO = #{no}
+	
+	</select>
+	
+	
+	<insert id="insertReviewReply" parameterType="ProductBoardReply"
+	useGeneratedKeys="true" keyProperty="pbrNo" keyColumn="PBR_NO">
+	 
+		INSERT INTO PRODUCT_BOARD_REPLY (
+			PBR_NO,
+			PB_NO,
+			M_NO,
+			PBR_CONTENT
+		)
+		VALUES(
+			SEQ_PRODUCT_BOARD_REPLY_PBR_NO.NEXTVAL,
+			#{pbNo},
+			#{mNo},
+			#{pbrContent}
+		)
+	
+	</insert>
+	
+	<select id="selectBoardReplyBypbrNo" parameterType="_int" resultMap="productboardreplyresultmap">
+	SELECT PBR_NO,
+	       PB_NO,
+	       PBR.M_NO,
+	       PBR_CONTENT,
+	       PBR_STATUS,
+	       PBR_DATE,
+	       M.M_ID
+	FROM PRODUCT_BOARD_REPLY PBR
+	JOIN MEMBER M ON (M.M_NO = PBR.M_NO)
+	WHERE PBR.PBR_NO = #{pbrNo}
 
 	</select>
 	
