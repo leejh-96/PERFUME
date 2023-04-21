@@ -1,9 +1,14 @@
 package com.scent.perfume.event.model.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import com.scent.perfume.cart.model.vo.Benefit;
+import com.scent.perfume.event.model.vo.Board;
+import com.scent.perfume.event.model.vo.MemberBenefitInfo;
 import com.scent.perfume.event.model.vo.Terms;
 import com.scent.perfume.planning.model.vo.Member;
 
@@ -34,5 +39,21 @@ public interface EventMapper {
 	
 // 회원가입 쿠폰 발급
 	int insertBenefit(Benefit benefit);
+	int insertMemberBenefitInfo(@Param("bnNo") int bnNo, @Param("mNo") int mNo, MemberBenefitInfo memBenefitInfo);
+
+	
+/////////////////////////////////////////게시판///////////////////////////////////	
+	
+	
+// 게시판 목록 조회
+	int selectEventBoardCount();
+	List<Board> selectAll(RowBounds rowBounds);
+	
+// 게시물 검색 기능
+	int selectEventCountByKeyword(@Param("type") String type, @Param("keyword") String keyword);
+	List<Board> selectAllByKeyword(@Param("rowBounds") RowBounds rowBounds, @Param("type") String type, @Param("keyword") String keyword);
+
+// 게시물 검색 기능	
+	Board selectEventViewByNo(@Param("no") int no);
 	
 }

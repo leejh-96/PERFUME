@@ -9,7 +9,11 @@ public interface MemberService {
 
 	String findMemberByEmail(String userEmail);
 
+	String getMailStatus(String id);
+	
 	String getPassword(String userName, String userId, String userEmail);
 
-	String getMailStatus(String id);
+	String generateTempPassword();
+
+	void updatePassword(String userId, String tempPassword);
 }

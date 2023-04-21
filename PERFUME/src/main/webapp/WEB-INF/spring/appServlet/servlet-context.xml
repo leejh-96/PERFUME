@@ -80,6 +80,54 @@
 		transaction-manager="transactionManager"
 		proxy-target-class="true"/>
 	
-	
+	<!-- 인터셉터 설정 -->
+	 <interceptors>
+	 	<interceptor>
+	 		<!--  
+	 		인터셉터를 적용시킬 요청 선택
+	 		
+	 		<mapping path="/member/myPage"/>
+	 		<mapping path="/member/update"/>
+	 		<mapping path="/member/delete"/>
+	 	
+	 		와일드카드 /*, /**의 차이점
+	 		
+	 		/member/*
+	 		  - /member/memberInfo (O)
+	 		  - /member/insert (O)
+	 		  - /member/delete (O)
+	 		  - /member/delete/1 (X)
+	 		  - /member/memberInfo/20 (X)
+	 		  
+	 		/member/**
+	 		  - /member/memberInfo (O)
+	 		  - /member/insert (O)
+	 		  - /member/delete (O)
+	 		  - /member/delete/1 (O)
+	 		  - /member/memberInfo/20 (O)
+	 		-->
+	 		
+	 		<mapping path="/product/**" />
+	 		
+	 	
+	 		
+	 		<mapping path="/board/**" />
+	 		
+	 		<!-- 인터셉터를 제외시킬 요청 선택 -->
+ 				<exclude-mapping path="/product/list" />
+ 				<exclude-mapping path="/product/detail" />
+<!-- 	 		<exclude-mapping path="/member/idCheck" /> -->
+<!-- 	 		<exclude-mapping path="/board/list" /> -->
+<!-- 	 		<exclude-mapping path="/board/view" /> -->
+<!-- 	 		<exclude-mapping path="/board/fileDown" /> -->
+	 		
+	 		
+	 		
+	 		
+	 		
+	 		<beans:bean id="loginCheckInterceptor" class="com.scent.perfume.common.Interceptor.LoginCheckInterceptor" />
+	 	
+	 	</interceptor>
+	 </interceptors>
 	
 </beans:beans>

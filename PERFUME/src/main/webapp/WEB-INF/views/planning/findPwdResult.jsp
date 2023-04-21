@@ -13,6 +13,7 @@
     <title>비밀번호 찾기 결과</title>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 	<h2>비밀번호 찾기 결과</h2>
 	<p>${msg}</p>
 	

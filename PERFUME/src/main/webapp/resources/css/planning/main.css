@@ -15,17 +15,18 @@ body {
     height: 400px;
     background-color: #f8f7f2;
     display: flex; /* flexbox 사용 */
-  	align-items: center; /* 수직 정렬 */
+  	justify-content: center;
+	align-items: center;
 }
 
-.slick-slider {
+.article-slider {
 	display: flex; /* flexbox 사용 */
 	align-items: center; /* 수직 정렬 */
 	overflow: hidden; /* 슬라이더 영역 보이지 않게 처리 */
 	white-space: nowrap; /* 슬라이드 요소를 한 줄로 배치 */
 }
 
-.slick-slider > div {
+.article-slider > div {
 	flex-shrink: 0; /* 크기 조정 금지 */
 	text-align: center; /* 수평 정렬 */
 	margin: 0 5px; /* 요소 간 좌우 간격 설정 */
@@ -33,10 +34,25 @@ body {
 	display: inline-block;
 }
 
-.slick-slider > div img {
+.article-slider > div img {
     width: 100px;
     height: 150px;
     background-color: red;
+}
+
+/* NEW 배치 정렬 */
+.article1 > .article-slider {
+	margin-left: 300px;
+}
+
+/* BRAND 배치 정렬 */
+.article2 {
+	flex-direction: column;
+}
+
+/* BEST 배치 정렬 */
+.article3 > .article-slider {
+	margin-right: 300px;
 }
 
 /* 배너 영역 */

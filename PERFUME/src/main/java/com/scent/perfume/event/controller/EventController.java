@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -29,6 +30,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.scent.perfume.event.model.service.EventService;
 import com.scent.perfume.event.model.service.EventServiceImpl;
 import com.scent.perfume.event.model.service.UserMailSendService;
+import com.scent.perfume.event.model.vo.Board;
+import com.scent.perfume.event.model.vo.MemberBenefitInfo;
 import com.scent.perfume.event.model.vo.Terms;
 import com.scent.perfume.planning.model.vo.Member;
 import com.scent.perfume.cart.model.vo.Benefit;
@@ -145,42 +148,99 @@ public class EventController {
 	
 // 이메일 인증 컨트롤러 전송된 이메일 링크 타면 나오는 페이지 연결
 	@GetMapping("/join/key_update")
-	public String key_alterConfirm(@RequestParam("m_id") String id, @RequestParam("m_mailstatus") String key, Benefit benefit) {
+	public String key_alterConfirm(@RequestParam("m_id") String id, @RequestParam("m_mailstatus") String key, Benefit benefit, MemberBenefitInfo memBenefitInfo) {
 								// UserMailSendService 서비스의 mailSendWithUserKey 메소드 a태그 내 url에서 name 속성 지정한 값을 RequestParam의 속성명으로 주기 
-		mailsender.alter_userKey_service(id, key, benefit);
+		mailsender.alter_userKey_service(id, key, benefit, memBenefitInfo);
 		
 		return "event/userJoinSuccess";
 	}
-	
-
 	
 	
 //////////////////////////////////////////////////////위 회원가입 아래 이벤트 게시판/////////////////////////////////////////////////////////////////////////	
 	
 	
-	
-	
-
 	// 이벤트 게시판 연결
-	@RequestMapping("/eventList")
-	public String eventList() {
+	@GetMapping("eventList")
+	public ModelAndView eventList(ModelAndView modelAndView, @RequestParam(defaultValue="1") int page) {
 		System.out.println("이벤트 게시판 창 연결 테스트");
-		return "event/eventList";
-	}	
+		
+		int listCount = service.getEventCount();
+		
+//		log.info("page : {}", page);
+//		log.info("listCount : {}", listCount);
+		
+		PageInfo pageInfo = new PageInfo(page, 5, listCount, 10);
+		List<Board> list = service.getEventList(pageInfo);
+		
+//		log.info("list : {}", list);
+		
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("list", list);
+		modelAndView.setViewName("event/eventList");
+		
+		return modelAndView;
+	}
+	
+	// 게시판 검색 기능
+	@GetMapping("eventSearch")
+	public ModelAndView eventSearch(ModelAndView modelAndView,
+					@RequestParam(value="searchType", defaultValue="3") String type,
+					@RequestParam(value="searchKeyword", required=false) String keyword, @RequestParam(defaultValue="1") int page) {
+		System.out.println("이벤트 검색 잘 연결됐나요");
+		
+//		log.info("탕아아아아아ㅏ아ㅏ아아이이이이입ㅂㅂㅂㅂ : {}", type);
+//		log.info("키잉이이이이워드으으으으ㅡ으으으으ㅡㅇㅇ : {}", keyword);
+		
+		int listCount = service.getEventCountByKeyword(type, keyword);
+		
+//		log.info("페에에ㅔ에에에이지지지이이이이ㅣ이ㅣ이ㅣㅇ잉 : {}", page);
+//		log.info("리스트카운트트트트트트ㅡ트트ㅡ트ㅡ트트트 : {}", listCount);
+		
+		PageInfo pageInfo = new PageInfo(page, 5, listCount, 10);
+		List<Board> list = service.getEventListByKeyword(pageInfo, type, keyword);
+		
+//		log.info("list : {}", list);
+		
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("list", list);
+		modelAndView.setViewName("event/eventSearch");
+		
+		return modelAndView;
+	}
+	
 
-	// 이벤트 게시글 연결
-	@RequestMapping("/eventView")
-	public String eventView() {
+	// 이벤트 상세 게시글 연결
+	@GetMapping("event/eventView")
+	public ModelAndView eventView(ModelAndView modelAndView, @RequestParam("no") int no) {
 		System.out.println("이벤트 상세 게시글 연결 테스트");
-		return "event/eventView";
+		Board board = null;
+		
+		log.info("no : {}", no);
+		
+		board = service.findBoardByNo(no);
+		
+		modelAndView.addObject("board", board);
+		modelAndView.setViewName("event/eventView");
+		
+		return modelAndView;
 	}
 	
 	// 게시글 작성 연결
-	@RequestMapping("/eventWrite")
+	@GetMapping("eventWrite")
 	public String eventWrite() {
 		System.out.println("이벤트 작성 창 연결 테스트");
 		return "event/eventWrite";
-	}	
+	}
+	// 게시글 작성 버튼 눌렀을 때
+//	@PostMapping("eventWrite")
+//	public ModelAndView modelAndView eventWrite(
+//			ModelAndView modelAndView,
+//			@ModelAttribute Board board,
+//			@RequestParam()) {
+//		
+//	}
+	
+	// 쿠폰 작성 연결
 	
 	// 썸머노트 다중 이미지 업로드
 	@RequestMapping(value="/uploadSummernoteImageFile", method= RequestMethod.POST, produces="application/json; charset=utf8")
