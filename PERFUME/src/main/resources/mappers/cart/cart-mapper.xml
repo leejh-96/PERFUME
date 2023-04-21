@@ -103,9 +103,9 @@
 		<result property="poName" column="po_name"/>
 		<result property="poPrice" column="po_price"/>
 		<result property="poAmount" column="po_amount"/>
-		<association property="product" select="selectNowProduct" column="p_no" javaType="CartProduct"/>
+		<!-- <association property="product" select="selectNowProduct" column="p_no" javaType="CartProduct"/>
 		<association property="file" select="selectNowFile" column="p_no" javaType="AdminProductFile"/>
-		<collection property="benefitList" select="selectProductBenefit" column="p_no" javaType="arraylist"/>
+		<collection property="benefitList" select="selectProductBenefit" column="p_no" javaType="arraylist"/> -->
 	</resultMap>
 	
 	<resultMap id="nowProductResultMap" type="CartProduct">

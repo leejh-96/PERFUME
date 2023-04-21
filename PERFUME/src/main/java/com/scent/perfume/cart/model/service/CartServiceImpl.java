@@ -126,7 +126,18 @@ public class CartServiceImpl implements CartService{
 	@Override
 	public productOption selectNowOrder(productOption option) {
 		
-		return cartMapper.selectNowOrder(option.getProductNo(), option.getPoName());
+		productOption optionInfo = null;
+		
+		optionInfo = cartMapper.selectNowOrder(option.getProductNo(), option.getPoName());
+		
+		optionInfo.setProduct(cartMapper.selectNowProduct(option.getProductNo()));
+		optionInfo.setBenefit(cartMapper.selectProductBenefit(option.getProductNo()));
+		optionInfo.setFile(cartMapper.selectNowFile(option.getProductNo()));
+		
+		log.info("optionInfo : {}",optionInfo);
+		
+		
+		return optionInfo;
 	}
 	
 		

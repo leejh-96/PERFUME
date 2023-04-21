@@ -17,6 +17,7 @@ public class productOption {
 	private int poPrice;
 	private int poAmount;
 	
+	private Benefit benefit;
 	private CartProduct product;
 	private List<Benefit> benefitList;
 	private AdminProductFile file;

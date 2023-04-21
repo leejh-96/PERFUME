@@ -1400,7 +1400,7 @@ function nowOrder(productNo){
 	   console.log(poName)
 	   let poAmount = $('#quantity').val();
 	   console.log(poAmount)
-	   window.location.href='${path}/cart/nowOrder/'+productNo+'/'+poName+'/'+poAmount
+	   window.location.href='${path}/cart/nowOrder/'+productNo+'/'+poName+'/'+poAmount                                                                                                                                                                                                                                                                                               
 	   
 	}
 
