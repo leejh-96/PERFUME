@@ -35,7 +35,7 @@
             <nav class="user-nav">
                 <ul>
                     <li><a href="${ path }/eventList">EVENT</a></li>
-                    <li><a href="#">COMMUNITY</a></li>
+                    <li><a href="${ path }/board/list">COMMUNITY</a></li>
                     <c:if test="${ empty loginMember }">
 	                    <li><a href="#" class="openLogin">LOGIN</a></li>
 	                    <li><a href="${ path }/join">JOIN</a></li>
