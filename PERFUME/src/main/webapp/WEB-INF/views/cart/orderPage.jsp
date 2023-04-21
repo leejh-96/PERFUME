@@ -157,16 +157,20 @@
     	margin-bottom: 10px;
     
     }
+    #myModal2{
+    z-index: 2000;
+    }
+    
     /* 주문서 css 끝 */
     /* 결제 스피너 css 시작 */
-    #myModal{
+    #myModalorder{
         position: absolute;
         top: 50%;
         left: 50%;
     }
     /* 결제 스피너 css 끝 */
     /* 주문페이지 css */
-  
+   
     
     /* 주문페이지 css */
 </style>
@@ -181,11 +185,11 @@
     
 	    <div class="container">
 	    
-	    	<!-- <div class="modal fade" id="myModalorder">
+	    	<div class="modal fade" id="myModalorder">
             	<div class="spinner-border d-flex justify-content-center" style="width: 10rem; height: 10rem;" role="status">
                     <span class="sr-only">결제가 진행 중입니다~~~~~</span>
                 </div>
-          	</div> -->
+          	</div>
 	    
 	      	<div id="cart-sup">
 	          	<span id="cartSequence">01장바구니</span>
@@ -1130,7 +1134,7 @@ $(document).ready(function(){
 				        			contentType: 'application/json; charset=utf-8',
 				        			async : false,
 				        			success : function(obj){
-				        				/* $('#myModalorder').modal('show') */
+				        				 $('#myModalorder').modal('show') 
 				        				
 			        					$('input:checkbox[name=cartCheckBox]').each(function(index){
 			        						if (this.disabled == true) {
@@ -1176,7 +1180,7 @@ $(document).ready(function(){
 				        			}
 				        		})
 				        		payment = '';
-				        		/* $('#myModal').modal('hide') */
+				        		$('#myModalorder').modal('hide') 
 				        		window.location.href='${path}/cart/orderList/'+order.orderNo+'/'+order.memberNo+'/'+plusPoint;
 				        	} else {
 				        		//결제 실패 로직
@@ -1190,6 +1194,9 @@ $(document).ready(function(){
 		  }
    }
     
+ function goback(){
+   	 window.history.back();
+ }
     
     
 

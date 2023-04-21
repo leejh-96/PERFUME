@@ -9,6 +9,7 @@ import org.apache.ibatis.session.RowBounds;
 import com.scent.perfume.product.model.vo.Option;
 import com.scent.perfume.product.model.vo.Product;
 import com.scent.perfume.product.model.vo.ProductBoard;
+import com.scent.perfume.product.model.vo.ProductBoardCategory;
 import com.scent.perfume.product.model.vo.ProductBoardReply;
 import com.scent.perfume.product.model.vo.TopCate;
 
@@ -79,7 +80,11 @@ public interface ProductMapper {
 
 	int insertReviewReply(ProductBoardReply reply);
 
-	ProductBoardReply selectBoardReplyBypbrNo(@Param("pbrNo") int pbrNo);  
+	ProductBoardReply selectBoardReplyBypbrNo(@Param("pbrNo") int pbrNo);
+
+	int insertReviewBoard(ProductBoard review);
+
+	List<ProductBoardCategory> selectBoardCategoryList();  
 
 
 

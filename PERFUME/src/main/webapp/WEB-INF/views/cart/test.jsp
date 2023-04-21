@@ -57,6 +57,7 @@
                         		  <div class="opt-table" id="opt${option.poname}" data-id="${option.poname}">
                                       <div style="width: 55%; font-size: 12px; line-height: 40px;">
                                     		<p>${product.eng } -<span class="sizeval">${option.poname}ml</span></p>
+                                    		
                                       </div>
                                       <div class="quantity" style="width: 25%; text-align: center; line-height: 40px">
                                           <span>
@@ -91,19 +92,22 @@
                         <button id="buy" onclick="nowOrder(1)">BUY NOW</button><!-- product.no -> 상품번호만 함수 매개변수로 onclick="nowOrder(${product.productNo})" -->
                     </div>
 <script type="text/javascript">
+let poName = '';
+$('#optselect').change(function() {
+	 poName = '';
+	 poName = $('#optselect option:selected').val();
+	 console.log("poName" + poName);
+});
 
 function nowOrder(productNo){
-	
-	console.log(productNo)
-	let poName = $('#optselect>option:selected').val();
-	console.log(poName)
-	let poAmount = $('#quantity').val();
-	console.log(poAmount)
-	window.location.href='${path}/cart/nowOrder/'+productNo+'/'+poName+'/'+poAmount
-	
-}
-
-
+	   
+	   console.log(productNo)
+	   console.log(poName)
+	   let poAmount = $('#quantity').val();
+	   console.log(poAmount)
+	   window.location.href='${path}/cart/nowOrder/'+productNo+'/'+poName+'/'+poAmount                                                                                                                                                                                                                                                                                               
+	   
+	}
 </script>	
 	
 </body>

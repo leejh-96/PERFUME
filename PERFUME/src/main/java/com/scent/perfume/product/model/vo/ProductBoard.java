@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductBoard {
 	int pbno;
-	int pbcno;
-	int pno;
-	int writerno;
-	String pbcontent;
+	int pbcNo;
+	int PNo;
+	int writerNo;
+	String pbContent;
 	Date pbdate;
 	Date pbupdate;
 	String pbstatus;
-	int pbgrade;
-	String pbpwd;
-	String pbtitle;
+	int pbGrade;
+	String pbPwd;
+	String pbTitle;
 	String mid;
 	int replycount;
 	

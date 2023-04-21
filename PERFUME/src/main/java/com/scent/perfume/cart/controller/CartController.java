@@ -219,10 +219,12 @@ public class CartController {
 		log.info("loginMember : {}",loginMember);
 		
 		if (loginMember != null) {
+			log.info("loginMember : {}가 null-1",loginMember);
 			//회원일 경우
 			memberInfo = cartService.selectCartMemberInfo(loginMember.getNo());
 			
 			if (memberInfo.getMemberNo()==loginMember.getNo()) {
+				log.info("loginMember : {}가 null-2",loginMember);
 				//로그인정보와 회원정보 검증 성공시
 				directInfo = cartService.selectNowOrder(option);
 				
@@ -232,23 +234,37 @@ public class CartController {
 					model.addAttribute("directInfo", directInfo);
 					return "cart/orderPage";
 				}else {
+					log.info("loginMember : {}가 null-3",loginMember);
 					model.addAttribute("msg", "잘못된 접근입니다.");
 					model.addAttribute("location", "/product/detail?no="+option.getProductNo());
 				}
 			}else {
+				log.info("loginMember : {}가 null-4",loginMember);
 				//로그인정보와 회원정보 검증 실패시
 				model.addAttribute("msg", "잘못된 접근입니다.");
 				model.addAttribute("location", "/product/detail?no="+option.getProductNo());
 			}
-		}else {
+		}else if (loginMember == null) {
+			
+			log.info("loginMember : {}가 null-5",loginMember);
 			//비회원일 경우
+			
+			log.info("option : {}컨트롤러",option);
+			/*
+			 * log.info("cartService.selectNowOrder(option) : {}컨트롤러",cartService.
+			 * selectNowOrder(option));
+			 */
+			
 			directInfo = cartService.selectNowOrder(option);
+			
+			log.info("directInfo : {}",directInfo);
 			if (directInfo != null) {
 				model.addAttribute("option", option);
 				model.addAttribute("memberInfo", memberInfo);
 				model.addAttribute("directInfo", directInfo);
 				return "cart/orderPage";
 			}else {
+				log.info("loginMember : {}가 null-6",loginMember);
 				model.addAttribute("msg", "잘못된 접근입니다.");
 				model.addAttribute("location", "/product/detail?no="+option.getProductNo());
 			}

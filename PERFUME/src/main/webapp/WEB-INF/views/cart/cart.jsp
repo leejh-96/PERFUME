@@ -157,9 +157,12 @@
     	margin-bottom: 10px;
     
     }
+    #myModal2{
+    z-index: 2000;
+    }
     /* 주문서 css 끝 */
     /* 결제 스피너 css 시작 */
-    #myModal{
+    #myModalorder{
         position: absolute;
         top: 50%;
         left: 50%;
@@ -1138,7 +1141,7 @@
 				        			contentType: 'application/json; charset=utf-8',
 				        			async : false,
 				        			success : function(obj){
-				        				/* $('#myModalorder').modal('show') */
+				        				$('#myModalorder').modal('show') 
 				        				
 			        					$('input:checkbox[name=cartCheckBox]').each(function(index){
 			        						if (this.disabled == true) {
@@ -1170,7 +1173,7 @@
 				        								console.log('order-product-complete 결제에 성공하였습니다.')
 				        							},
 				        							error : function(error){
-				        								$('#myModal').modal('hide')
+				        								$('#myModalorder').modal('hide')
 				        								console.log('order-product-error 결제에 실패하였습니다.')
 				        							}
 				        						})
@@ -1178,16 +1181,16 @@
 				        				})
 				        			},
 				        			error : function(error){
-				        				/* $('#myModal').modal('hide') */
+				        				 $('#myModalorder').modal('hide') 
 				        				console.log('order-insert-error')
 				        			}
 				        		})
 				        		payment = '';
-				        		/* $('#myModal').modal('hide') */
+				        		 $('#myModalorder').modal('hide') 
  				        		window.location.href='${path}/cart/orderList/'+order.orderNo+'/'+order.memberNo+'/'+plusPoint;
  				        	} else {
 				        		//결제 실패 로직
-				        		/* $('#myModal').modal('hide') */
+				        		 $('#myModalorder').modal('hide') 
 				        		alert("결제에 실패하였습니다.");
 				        	}
 				        });
@@ -1259,7 +1262,7 @@
   	        }
   	    });
   	}
- 
+  	 
   /* 아임포트 결제연동  끝*/
     </script>
 </head>
@@ -1280,11 +1283,11 @@
     
 	    <div class="container">
 	    
-	    	<!-- <div class="modal fade" id="myModalorder">
+	    	<div class="modal fade" id="myModalorder">
             	<div class="spinner-border d-flex justify-content-center" style="width: 10rem; height: 10rem;" role="status">
                     <span class="sr-only">결제가 진행 중입니다~~~~~</span>
                 </div>
-          	</div> -->
+          	</div>
 	    
 	      	<div id="cart-sup">
 	          	<span id="cartSequence" class="sequence">01장바구니</span>

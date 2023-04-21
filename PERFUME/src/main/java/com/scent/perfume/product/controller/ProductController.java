@@ -25,6 +25,7 @@ import com.scent.perfume.product.model.service.ProductService;
 import com.scent.perfume.product.model.vo.Option;
 import com.scent.perfume.product.model.vo.Product;
 import com.scent.perfume.product.model.vo.ProductBoard;
+import com.scent.perfume.product.model.vo.ProductBoardCategory;
 import com.scent.perfume.product.model.vo.ProductBoardReply;
 import com.scent.perfume.product.model.vo.TopCate;
 
@@ -105,7 +106,9 @@ public class ProductController {
 		int qnalistCount = service.getProductQnaCount(no);
 		
 		
+		List<ProductBoardCategory> boardcate = service.getBoardCategoryList();
 		
+		System.out.println("보드 카테" + boardcate);
 	
 		PageInfo pageInfo = new PageInfo(page, 10, listCount, 5);
 		PageInfo qnapageInfo = new PageInfo(page, 10, qnalistCount, 5);
@@ -119,6 +122,7 @@ public class ProductController {
 		
 		System.out.println(board);		
 	
+		modelAndView.addObject("boardcate", boardcate);
 		modelAndView.addObject("grade", grade);
 		modelAndView.addObject("list", list);
 		modelAndView.addObject("no", no);
@@ -235,8 +239,7 @@ public class ProductController {
 	
 	@ResponseBody
 	@PostMapping("/reviewReply")
-	public ProductBoardReply replyenroll( @ModelAttribute ProductBoardReply reply
-			) {
+	public ProductBoardReply replyenroll( @ModelAttribute ProductBoardReply reply) {
 		int result = 0;
 
 		//모델로만들어서 인설트 하면 댓글에 해당하는프라이러미리 키 조회 
@@ -254,9 +257,27 @@ public class ProductController {
 	}
 	
 	
+	@ResponseBody
+	@PostMapping("/reviewWrite") 
+	public ProductBoard reviewWrite(@ModelAttribute ProductBoard review) {
+		int result = 0;
+
+		System.out.println("리뷰" + review);
+		result = service.save(review);
 	
+		return review;
+	}
 	
 		
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}
 	
 	
