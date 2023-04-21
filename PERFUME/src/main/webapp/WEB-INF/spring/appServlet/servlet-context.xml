@@ -109,6 +109,9 @@
 	 		
 	 		<mapping path="/product/**" />
 	 		
+	 		<mapping path="/event/eventUpdate" />
+	 		<mapping path="/eventWrite" />
+	 		<mapping path="/eventDelete" />
 	 	
 	 		
 	 		<mapping path="/board/**" />
@@ -116,6 +119,7 @@
 	 		<!-- 인터셉터를 제외시킬 요청 선택 -->
  				<exclude-mapping path="/product/list" />
  				<exclude-mapping path="/product/detail" />
+
 <!-- 	 		<exclude-mapping path="/member/idCheck" /> -->
 <!-- 	 		<exclude-mapping path="/board/list" /> -->
 <!-- 	 		<exclude-mapping path="/board/view" /> -->

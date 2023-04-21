@@ -217,8 +217,15 @@ public class EventController {
 		Board board = null;
 		
 		log.info("no : {}", no);
+		log.info("보드 파인드 보드 엔오 서비스 타기 전 : {}", board);
+		
 		
 		board = service.findBoardByNo(no);
+		log.info("보드 파인드 보드 엔오 서비스 탄 후 : {}", board);
+		
+		board.setBnCreateDate(service.selectEventStartByTitle(board.getBTitle()));
+		board.setBnEndDate(service.selectEventEndByTitle(board.getBTitle()));
+		log.info("보드 셋 서비스 탄 후 : {}", board);
 		
 		modelAndView.addObject("board", board);
 		modelAndView.setViewName("event/eventView");
@@ -243,6 +250,7 @@ public class EventController {
 		return modelAndView;
 	}
 
+	// 게시글 등록
 	@PostMapping("/eventWrite")
 	public ModelAndView eventWrite(	
 			ModelAndView modelAndView,
@@ -257,6 +265,7 @@ public class EventController {
 			int result = 0;
 			
 			board.setMNo(loginMember.getNo());
+
 			result = service.saveEventWrite(board);
 			
 			log.info("board : {}", board);
@@ -306,12 +315,6 @@ public class EventController {
 				e.printStackTrace();
 			}
 			
-//			// vo Board board 오브젝트에 값 set 해주기
-//			if(renamedFileName != null) {
-//				board.setOriginalFileName(upfile.getOriginalFilename());
-//				board.setRenamedFileName(renamedFileName);
-//			}
-			
 			if(renamedFileName != null) {
 				map.put("url", request.getContextPath() + "/resources/upload/event/" + renamedFileName);
 				map.put("responseCode", "success");
@@ -327,6 +330,48 @@ public class EventController {
 			return map;	
 	}
 
+	//업데이트용 다중이미지 업로드
+	@RequestMapping(value="/event/uploadSummernoteImageFile", method= RequestMethod.POST, produces="application/json; charset=utf8")
+	@ResponseBody
+	public Object uploadSummernoteImageFileUpdate(@RequestParam("file") MultipartFile upfile,
+			HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<>();
+		
+		// 1. 파일을 업로드 했는지 확인 후 파일을 저장(물리적 위치에)
+		if(upfile != null && !upfile.isEmpty()) {	// !upfile.isEmpty() => false이면. 비었다의 반대니까 false
+			String location = null;
+			String renamedFileName = null;
+			
+			try {
+				location = resourceLoader.getResource("resources/upload/event").getFile().getPath();
+						// resourceLoader를 통해 지정한 폴더에서 파일을 가져와서, 파일의 경로를 가져옴
+				
+				System.out.println("로케이션" + location);
+				
+				renamedFileName = MultipartFileUtil.save(upfile, location);
+				
+				System.out.println("리네임 파일 네임 " + renamedFileName);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			if(renamedFileName != null) {
+				map.put("url", request.getContextPath() + "/resources/upload/event/" + renamedFileName);
+				map.put("responseCode", "success");
+				System.out.println("마지막 로케이션" + location);
+				System.out.println("맵 url : " + map.get("url"));
+				System.out.println("성공했나용");
+			} else {
+				map.put("responseCode", "error");
+				System.out.println("실패했나용");
+				}
+			}
+		
+			return map;	
+	}
+	
+	// 게시글 수정
 	@GetMapping("/event/eventUpdate")
 	public ModelAndView eventUpdate(ModelAndView modelAndView,
 									@RequestParam("no") int no,
@@ -342,8 +387,8 @@ public class EventController {
 			modelAndView.addObject("board", board);
 			modelAndView.setViewName("/event/eventUpdate");
 		} else {
-			modelAndView.addObject("msg", "잘못된 접근입니다.");
-			modelAndView.addObject("location", "/event/eventList");
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");
 			
 			modelAndView.setViewName("common/msg");
 		}
@@ -381,8 +426,8 @@ public class EventController {
 			}
 		
 		} else {
-			modelAndView.addObject("msg", "잘못된 접근입니다.");
-			modelAndView.addObject("location", "/event/eventList");	
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");	
 		}
 		
 		modelAndView.setViewName("common/msg");
@@ -390,7 +435,39 @@ public class EventController {
 		return modelAndView;
 	}
 
-	
+	// 게시글 삭제
+	@GetMapping("/eventDelete")
+	public ModelAndView delete(ModelAndView modelAndView, @RequestParam int no,
+			   @SessionAttribute("loginMember") Member loginMember) {
+		
+		// 본인 게시글 여부 확인
+		int result = 0;
+		Board board = null;
+		
+		board = service.findBoardByNo(no);
+		
+		if(board != null && board.getMNo() == loginMember.getNo()) {
+			// 작성자 본인이 맞으면 삭제작업
+			result = service.deleteEventBoard(no);
+			
+			if(result > 0) {
+				modelAndView.addObject("msg", "게시글이 정상적으로 삭제되었습니다.");
+				modelAndView.addObject("location", "/eventList");
+			} else {
+				modelAndView.addObject("msg", "게시글 삭제를 실패하였습니다.");
+				modelAndView.addObject("location", "/event/eventView?no=" + no);
+			}
+			
+		} else {
+			// 본인이 맞지 않으면 삭제작업 없이 목록으로
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");
+		}
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+		
+	}
 	
 	
 //////////////////////////////////////////////////////위 이벤트 게시판 아래 이벤트 내용 /////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,6 @@
 package com.scent.perfume.event.model.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -131,8 +132,17 @@ public class EventServiceImpl implements EventService {
 	public Board findBoardByNo(int no) {
 		return mapper.selectEventViewByNo(no);
 	}
+	@Override
+	public Date selectEventStartByTitle(String bTitle) {
+		//return mapper.selectEventStartByTitle(bTitle);
+	}
+	@Override
+	public Date selectEventEndByTitle(String bTitle) {
+		//return mapper.selectEventEndByTitle(bTitle);
+		// 매퍼수정하기!!
+	}
 
-// 게시글 작성
+// 게시글 작성 수정
 	@Override
 	@Transactional
 	public int saveEventWrite(Board board) {
@@ -146,5 +156,13 @@ public class EventServiceImpl implements EventService {
 		
 		return result;
 	}
+
+// 게시글 삭제
+	@Override
+	public int deleteEventBoard(int no) {
+		return mapper.updateEventBoardStatus(no, "N");
+	}
+
+
 
 }

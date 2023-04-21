@@ -179,6 +179,21 @@
 		    SEQ_BOARD_B_NO.NEXTVAL, #{mNo}, '이벤트', #{bTitle}, #{bContent}, SYSDATE, SYSDATE, DEFAULT, DEFAULT, NULL, NULL
 		)
 	</insert>
+	
+	<!-- 게시물 보기 -->
+	<select id="selectEventStartByTitle" parameterType="Board" resultType="date">		
+		SELECT BN_CREATEDATE
+		FROM BENEFIT
+		INNER JOIN BOARD ON(BN_TITLE = B_TITLE)
+		WHERE BN_TITLE = #{bTitle};
+	</select>
+	<select id="selectEventEndByTitle" parameterType="Board" resultType="date">
+		SELECT BN_ENDDATE
+		FROM BENEFIT
+		INNER JOIN BOARD ON(BN_TITLE = B_TITLE)
+		WHERE BN_TITLE = #{bTitle};
+	</select>
+	
 	<!-- 게시물 수정 -->
 	<update id="updateEventBoard" parameterType="Board">
 		UPDATE BOARD
@@ -191,6 +206,11 @@
 			</if>			
 		</trim>
 		WHERE B_NO = #{bNo}
+	</update>
+	
+	<!-- 게시물 삭제 -->
+	<update id="updateEventBoardStatus" parameterType="map">
+		UPDATE BOARD SET B_STATUS = #{bStatus} WHERE B_NO = #{no}
 	</update>
 	
 	

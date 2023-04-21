@@ -1,5 +1,6 @@
 package com.scent.perfume.event.model.mapper;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -56,8 +57,15 @@ public interface EventMapper {
 // 게시물 검색
 	Board selectEventViewByNo(@Param("no") int no);
 
+// 게시물 보기	
+	Date selectEventStartByTitle(Board board);
+	Date selectEventEndByTitle(Board board);
+
 // 게시글 등록
 	int insertEventBoard(Board board);
 	int updateEventBoard(Board board);
+	
+// 게시글 삭제
+	int updateEventBoardStatus(@Param("no") int no, @Param("bStatus") String bStatus);
 	
 }

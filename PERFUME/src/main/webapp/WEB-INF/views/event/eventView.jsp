@@ -59,14 +59,6 @@
         width: 8%;
         text-align: center;
     }
-    #boardList #countTitle{
-        width: 8%;
-        text-align: center;
-    }
-    #boakrdList #countContent{
-        width: 8%;
-        text-align: center;
-    }
     #contentTable{
         text-align: center;
         margin: 30%;
@@ -93,7 +85,7 @@
     }
 
 /* 게시물 내 a태그 버튼 형식으로 변경 */
-	 #contentTable a:link, #contentTable a:visited {
+/* 	#contentTable a:link, #contentTable a:visited {
      background-color: rgb(120, 116, 100);
      color: maroon;
      padding: 15px 25px;
@@ -103,6 +95,46 @@
 	}
 	 #contentTable a:hover, #contentTable a:active {
 	     background-color: rgb(90, 98, 104);
+	}
+	 */
+	#contentTable a:link, #contentTable a:visited {
+	  background:#1AAB8A;
+	  color:#fff;
+	  border:none;
+	  position:relative;
+	  height:60px;
+	  font-size:1.6em;
+	  padding:0 2em;
+	  cursor:pointer;
+	  transition:800ms ease all;
+	  outline:none;
+	  text-align: center;
+      text-decoration: none;
+      display: inline-block;
+	}
+	#contentTable a:hover, #contentTable a:active{
+	  background:#fff;
+	  color:#1AAB8A;
+	}
+	#contentTable a:before, #contentTable a:after{
+	  content:'';
+	  position:absolute;
+	  top:0;
+	  right:0;
+	  height:2px;
+	  width:0;
+	  background: #1AAB8A;
+	  transition:400ms ease all;
+	}
+	#contentTable a:after{
+	  right:inherit;
+	  top:inherit;
+	  left:0;
+	  bottom:0;
+	}
+	#contentTable a:hover:before, #contentTable a:hover:after{
+	  width:100%;
+	  transition:800ms ease all;
 	}
 
 </style>
@@ -116,24 +148,29 @@
             <thead>
                 <tr>
                     <th class="titleTable" scope="col" colspan="2">제목</th>
-                    <td class="contentTable" scope="col" colspan="2">${ board.BTitle }</td>
+                    <td class="contentTable" scope="col" colspan="2"><b>${ board.BTitle }</b></td>
                 </tr>
                 <tr>
                     <th class="titleTable" colspan="2">기간</th>
-                    <td class="contentTable" colspan="2">기간<%-- ${ 베네핏 테이블에서 값 가져오기 } --%></td>
+                    <td class="contentTable" colspan="2">
+                    	<c:if test="${ not empty board.bnCreateDate }">
+	                    	<b><fmt:formatDate type="date" value="${ board.BnCreateDate }" /><br>~<br>
+	                    	<fmt:formatDate type="date" value="${ board.BnEndDate }" /></b>                    	
+                    	</c:if>
+                    </td>
                 </tr>
                 <tr>
                     <td id="dateTitle">작성일</td>
                     <td id="dateContent">
                     	<fmt:formatDate type="date" value="${ board.BCreateDate }" />
                     </td>
-                    <td id="countTitle">조회수</td>
-                    <td id="countContent">${ board.BCount }</td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td id="contentTable"colspan="4">${ board.BContent }</td>
+                    <td id="contentTable" colspan="4">${ board.BContent }</td>
                 </tr>
             </tbody>
             <tfoot>
@@ -159,7 +196,16 @@
     </div>
 </section>
 
-
+<script>
+		$(document).ready(() => {
+			$('#btnDelete').on('click', () => {
+				if(confirm('정말로 게시글을 삭제 하시겠습니까?')) {
+					location.replace('${ path }/eventDelete?no=${ board.BNo }');
+				}
+			});
+			
+		});
+</script>
 
 
 

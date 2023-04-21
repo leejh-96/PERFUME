@@ -122,7 +122,7 @@
                         </tr>                       
                         <tr>
                             <td id="contentBody"colspan="4">
-	                            <textarea id="summernote" name="bContent" rows="15" cols="50"></textarea>
+	                            <textarea id="summernote" name="bContent" rows="15" cols="50" required></textarea>
                             </td>
                         </tr>    
                     </thead>
@@ -189,15 +189,7 @@
  	                                for (var i = files.length - 1; i >= 0; i--) {
  	                                    sendFile(files[i],this);
  	                                }
- 	                            },
- 	                           onInit: function() {
- 	                  	        var editor = $(this);
- 	                  	        editor.find('.note-editable').on('click', 'a', function(e) {
- 	                  	          e.preventDefault();
- 	                  	          var url = $(this).attr('href');
- 	                  	          window.open(url, '_blank');
- 	                  	        });
- 	                  	      }
+ 	                            }
  	            }
  	    };
 
