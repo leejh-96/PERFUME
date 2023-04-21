@@ -29,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		member = this.findMemberById(id);
 		
-		if (member != null && member.getPwd().equals(pwd)) {			
+		if (member != null && passwordEncoder.matches(pwd, member.getPwd())) {			
 			return member;
 		} else {
 			return null;
