@@ -7,6 +7,7 @@ import com.scent.perfume.cart.model.vo.CartProduct;
 import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.Order;
 import com.scent.perfume.cart.model.vo.OrderList;
+import com.scent.perfume.cart.model.vo.productOption;
 
 public interface CartService {
 
@@ -33,6 +34,8 @@ public interface CartService {
 	Order orderList(String orderNo);
 
 	int memberPlusPoint(int plusPoint, int memberNo);
+
+	productOption selectNowOrder(productOption option);
 
 	/* CartProduct selectCartProductInfo(int cartNo, int productNo); */
 

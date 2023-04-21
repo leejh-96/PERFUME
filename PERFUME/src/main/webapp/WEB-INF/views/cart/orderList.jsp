@@ -79,11 +79,11 @@
     
 </head>
 <body>
-<h1>주문내역 페이지</h1>
+<%-- <h1>주문내역 페이지</h1>
 <p>${order}</p>
-<p>${plusPoint}</p>
+<p>${plusPoint}</p> --%>
 
-<div class="container" style="height: 100px;"></div>
+<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 
 <div id="cart-wrap" ><!-- 전체 div 시작 -->
     <div class="container"><!-- content div 시작 -->
@@ -229,7 +229,7 @@
 
 </div><!-- 전체 div 끝 -->
 
-    <div class="container" style="height: 100px;"></div>
+<jsp:include page="/WEB-INF/views/planning/footer.jsp"/>
     
 </body>
 </html>

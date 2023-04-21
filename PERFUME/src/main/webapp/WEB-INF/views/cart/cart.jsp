@@ -1138,7 +1138,7 @@
 				        			contentType: 'application/json; charset=utf-8',
 				        			async : false,
 				        			success : function(obj){
-				        				$('#myModal').modal('show')
+				        				/* $('#myModalorder').modal('show') */
 				        				
 			        					$('input:checkbox[name=cartCheckBox]').each(function(index){
 			        						if (this.disabled == true) {
@@ -1178,16 +1178,16 @@
 				        				})
 				        			},
 				        			error : function(error){
-				        				$('#myModal').modal('hide')
+				        				/* $('#myModal').modal('hide') */
 				        				console.log('order-insert-error')
 				        			}
 				        		})
 				        		payment = '';
-				        		$('#myModal').modal('hide')
+				        		/* $('#myModal').modal('hide') */
  				        		window.location.href='${path}/cart/orderList/'+order.orderNo+'/'+order.memberNo+'/'+plusPoint;
  				        	} else {
 				        		//결제 실패 로직
-				        		$('#myModal').modal('hide')
+				        		/* $('#myModal').modal('hide') */
 				        		alert("결제에 실패하였습니다.");
 				        	}
 				        });
@@ -1196,9 +1196,6 @@
 			return false;
 		  }
      }
-  	 
-  	/* buyer_name,buyer_tel 직접입력selfInput 주문자 정보와 동일buyerTrue
-  	recipient,recipienttel */
   	
   	function buyerTrue(){
   		let buyername = $('#buyer_name').val();
@@ -1276,18 +1273,18 @@
 	<span>${clist}</span>
 	<br><br>
 	</c:forEach> 
-	
-<div class="container" style="height: 100px;"></div>
+	 
+<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 
 <div id="cart-wrap"><!-- 전체 div 시작 -->
     
 	    <div class="container">
 	    
-	    	<div class="modal fade" id="myModal">
+	    	<!-- <div class="modal fade" id="myModalorder">
             	<div class="spinner-border d-flex justify-content-center" style="width: 10rem; height: 10rem;" role="status">
                     <span class="sr-only">결제가 진행 중입니다~~~~~</span>
                 </div>
-          	</div>
+          	</div> -->
 	    
 	      	<div id="cart-sup">
 	          	<span id="cartSequence" class="sequence">01장바구니</span>
@@ -1724,7 +1721,7 @@
     	
 </div><!-- 전체 div 끝 -->
 
-
+<jsp:include page="/WEB-INF/views/planning/footer.jsp"/>
 
 	                        
 	                        
@@ -1732,7 +1729,6 @@
 	                        
 
 
-<div class="container" style="height: 100px;"></div>	
     
 </body>
 </html>
