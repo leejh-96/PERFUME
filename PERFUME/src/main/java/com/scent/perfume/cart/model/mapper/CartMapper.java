@@ -11,6 +11,7 @@ import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.CartProduct;
 import com.scent.perfume.cart.model.vo.Order;
 import com.scent.perfume.cart.model.vo.OrderList;
+import com.scent.perfume.cart.model.vo.productOption;
 
 @Mapper
 public interface CartMapper {
@@ -45,5 +46,7 @@ public interface CartMapper {
 	public int plusPoint(@Param("plusPoint") int plusPoint, @Param("memberNo")int memberNo);
 
 	public Order orderList(@Param("orderNo") String orderNo);
+
+	public productOption selectNowOrder(@Param("productNo") int productNo,@Param("poName") int poName);
 	
 }

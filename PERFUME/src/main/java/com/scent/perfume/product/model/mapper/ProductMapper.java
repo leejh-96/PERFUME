@@ -9,6 +9,7 @@ import org.apache.ibatis.session.RowBounds;
 import com.scent.perfume.product.model.vo.Option;
 import com.scent.perfume.product.model.vo.Product;
 import com.scent.perfume.product.model.vo.ProductBoard;
+import com.scent.perfume.product.model.vo.ProductBoardReply;
 import com.scent.perfume.product.model.vo.TopCate;
 
 @Mapper
@@ -72,6 +73,15 @@ public interface ProductMapper {
 	int selectQnaBoardCount(@Param("no") int no);
 
 	List<ProductBoard> selectProductQnaByNo(@Param("no") int no, RowBounds rowBounds);
+
+	List<ProductBoardReply> selectBoardReplyBypbNo(@Param("no") int pbNo);
+
+
+	int insertReviewReply(ProductBoardReply reply);
+
+	ProductBoardReply selectBoardReplyBypbrNo(@Param("pbrNo") int pbrNo);  
+
+
 
 
 

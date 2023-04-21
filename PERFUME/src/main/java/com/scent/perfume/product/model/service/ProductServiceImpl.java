@@ -5,12 +5,14 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.scent.perfume.common.util.PageInfo;
 import com.scent.perfume.product.model.mapper.ProductMapper;
 import com.scent.perfume.product.model.vo.Option;
 import com.scent.perfume.product.model.vo.Product;
 import com.scent.perfume.product.model.vo.ProductBoard;
+import com.scent.perfume.product.model.vo.ProductBoardReply;
 import com.scent.perfume.product.model.vo.TopCate;
 
 @Service
@@ -176,6 +178,39 @@ public class ProductServiceImpl implements ProductService{
 		
 		
 		return mapper.selectProductQnaByNo(no, rowBounds);
+	}
+
+	@Override
+	public List<ProductBoardReply> findBypbNo(int pbNo) {
+	
+		return mapper.selectBoardReplyBypbNo(pbNo);
+	}
+
+
+
+
+	@Override
+	public int save(ProductBoardReply reply) {
+		int result = 0;
+		
+
+		if(reply.getPbrNo() > 0) {
+			// update
+//			result = mapper.updateBoard(board);
+		} else {
+			// insert
+			result = mapper.insertReviewReply(reply);
+		}
+		
+		return result; 
+	}
+
+	@Override
+	public ProductBoardReply findBypbrNo(int pbrNo) {
+		
+		
+		
+		return mapper.selectBoardReplyBypbrNo(pbrNo);
 	}
 
 

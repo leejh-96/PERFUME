@@ -26,9 +26,9 @@
 		<div class="product-info">
 			<div class="product-img"><a><img src="${ path }/images/planning/new001.png"></a></div>
 			<div class="product-text">
-				<p>구찌 플로럴 뭐시기</p>
-				<p>100,000원</p>
-				<p>특가 : 95,000원</p>
+				<p><strong>구찌 플로럴 뭐시기</strong></p>
+				<p style="text-decoration:line-through;">정가 : 100,000원</p>
+				<p style="color:red;"><strong>특가 : 95,000원</strong></p>
 			</div>
 		</div>
 	</div>
@@ -37,9 +37,9 @@
 		<div class="product-info">
 			<div class="product-img"><a><img src="${ path }/images/planning/new002.png"></a></div>
 			<div class="product-text">
-				<p>샤넬 플로럴 뭐시기</p>
-				<p>150,000원</p>
-				<p>특가 : 142,500원</p>
+				<p><strong>샤넬 플로럴 뭐시기</strong></p>
+				<p style="text-decoration:line-through;">정가 : 150,000원</p>
+				<p style="color:red;"><strong>특가 : 142,500원</strong></p>
 			</div>
 		</div>
 	</div>
@@ -48,9 +48,9 @@
 		<div class="product-info">
 			<div class="product-img"><a><img src="${ path }/images/planning/new003.png"></a></div>
 			<div class="product-text">
-				<p>크리드 플로럴 뭐시기</p>
-				<p>130,000원</p>
-				<p>특가 : 123,500원</p>
+				<p><strong>크리드 플로럴 뭐시기</strong></p>
+				<p style="text-decoration:line-through;">정가 : 130,000원</p>
+				<p style="color:red;"><strong>특가 : 123,500원</strong></p>
 			</div>
 		</div>
 	</div>

@@ -13,6 +13,7 @@ public class ProductBoard {
 	int pbno;
 	int pbcno;
 	int pno;
+	int writerno;
 	String pbcontent;
 	Date pbdate;
 	Date pbupdate;
@@ -20,5 +21,7 @@ public class ProductBoard {
 	int pbgrade;
 	String pbpwd;
 	String pbtitle;
+	String mid;
+	int replycount;
 	
 }
