@@ -111,7 +111,7 @@ input[type="submit"] {
 			<div id="writeButton">
 				<c:if test="${ not empty loginMember && loginMember.division == '1' }">
 					<button type="button" class="btn btn-outline-secondary btn-sm"
-						onclick="location.href='${ path }/event/eventWrite'">글쓰기</button>
+						onclick="location.href='${ path }/eventWrite'">글쓰기</button>
 					<button type="button" class="btn btn-outline-secondary btn-sm">쿠폰등록</button>
 				</c:if>
 			</div>

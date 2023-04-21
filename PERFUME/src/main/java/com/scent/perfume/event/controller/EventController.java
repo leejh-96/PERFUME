@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -225,22 +226,59 @@ public class EventController {
 		return modelAndView;
 	}
 	
-	// 게시글 작성 연결
-	@GetMapping("eventWrite")
-	public String eventWrite() {
-		System.out.println("이벤트 작성 창 연결 테스트");
-		return "event/eventWrite";
+	// 게시글 작성 창 연결
+	@GetMapping("/eventWrite")
+	public ModelAndView eventWrite(ModelAndView modelAndView, @SessionAttribute("loginMember") Member loginMember) {
+		
+		if( loginMember.getDivision() != 1) {
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");	
+			
+			modelAndView.setViewName("common/msg");
+		} else {
+			modelAndView.setViewName("/event/eventWrite");
+			System.out.println("이벤트 작성 창 연결 테스트");
+		}
+		
+		return modelAndView;
 	}
-	// 게시글 작성 버튼 눌렀을 때
-//	@PostMapping("eventWrite")
-//	public ModelAndView modelAndView eventWrite(
-//			ModelAndView modelAndView,
-//			@ModelAttribute Board board,
-//			@RequestParam()) {
-//		
-//	}
+
+	@PostMapping("/eventWrite")
+	public ModelAndView eventWrite(	
+			ModelAndView modelAndView,
+			@ModelAttribute Board board,
+			@SessionAttribute("loginMember") Member loginMember) {
+		System.out.println("이벤트 게시글 등록");
+		
+		if( loginMember.getDivision() != 1) {
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");
+		} else {
+			int result = 0;
+			
+			board.setMNo(loginMember.getNo());
+			result = service.saveEventWrite(board);
+			
+			log.info("board : {}", board);
+			
+			if(result > 0) {
+				modelAndView.addObject("msg", "게시글이 정상적으로 등록되었습니다.");
+				modelAndView.addObject("location", "/event/eventView?no=" + board.getBNo());
+				System.out.println("넌 뭐야 : " + board.getBNo());
+			} else {
+				modelAndView.addObject("msg", "게시글이 정상적으로 등록되지 않았습니다.");
+				modelAndView.addObject("location", "/eventList");
+				System.out.println("넌 뭔데 : " + board.getBNo());
+				
+			}		
+		}
+		
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+	}
 	
-	// 쿠폰 작성 연결
+	
 	
 	// 썸머노트 다중 이미지 업로드
 	@RequestMapping(value="/uploadSummernoteImageFile", method= RequestMethod.POST, produces="application/json; charset=utf8")
@@ -289,11 +327,78 @@ public class EventController {
 			return map;	
 	}
 
+	@GetMapping("/event/eventUpdate")
+	public ModelAndView eventUpdate(ModelAndView modelAndView,
+									@RequestParam("no") int no,
+									@SessionAttribute("loginMember") Member loginMember) {
+		Board board = null;
+		
+		log.info(loginMember.toString());
+		log.info("no : {}", no);
+		
+		board = service.findBoardByNo(no);
+		
+		if(board != null && loginMember.getDivision() == 1) {
+			modelAndView.addObject("board", board);
+			modelAndView.setViewName("/event/eventUpdate");
+		} else {
+			modelAndView.addObject("msg", "잘못된 접근입니다.");
+			modelAndView.addObject("location", "/event/eventList");
+			
+			modelAndView.setViewName("common/msg");
+		}
+		
+		return modelAndView;
+	}
+	@PostMapping("/event/eventUpdate")
+	public ModelAndView eventUpdate(ModelAndView modelAndView,
+									@RequestParam("no") int no,
+									@RequestParam("bTitle") String bTitle,
+									@RequestParam("bContent") String bContent,
+									@SessionAttribute("loginMember") Member loginMember) {
+		int result = 0;
+		Board board = null;
+		
+		log.info("{}, {}, {}", new Object[] {no, bTitle, bContent});
+		
+		board = service.findBoardByNo(no);
+		
+		if(board != null && board.getMNo() == loginMember.getNo()) {
+		
+		
+			board.setBTitle(bTitle);
+			board.setBContent(bContent);
+			
+			result = service.saveEventWrite(board);
+			
+			if(result > 0) {
+				modelAndView.addObject("msg", "게시글이 정상적으로 수정되었습니다.");
+				modelAndView.addObject("location", "/event/eventView?no=" + board.getBNo());	
+				
+			} else {
+				modelAndView.addObject("msg", "게시글 수정을 실패하였습니다.");
+				modelAndView.addObject("location", "/event/eventUpdate?no=" + no);	// no라고 해도 되고 board.getNo()라도 해도 됨 둘 다 같은 게시글 번호임
+			}
+		
+		} else {
+			modelAndView.addObject("msg", "잘못된 접근입니다.");
+			modelAndView.addObject("location", "/event/eventList");	
+		}
+		
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+	}
+
 	
 	
 	
 //////////////////////////////////////////////////////위 이벤트 게시판 아래 이벤트 내용 /////////////////////////////////////////////////////////////////////////
 	
 	
-	
+	// 쿠폰 작성 연결
+	@GetMapping("event/addCoupon")
+	public String addCoupon() {
+		return "event/testEvent";
+	}
 }
