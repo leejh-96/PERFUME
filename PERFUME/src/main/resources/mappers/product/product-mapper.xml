@@ -49,16 +49,17 @@
 
     <resultMap id="productboardresultmap"  type="ProductBoard" >
 	    <id property="pbno" column="PB_NO"/>
-	    <result property="pno" column="P_NO"/>
-	    <result property="pbtitle" column="PB_TITLE"/>
-	    <result property="writerno" column="WRITER_NO"/>
-		<result property="pbcontent" column="PB_CONTENT"/>
+	    <result property="PNo" column="P_NO"/>
+	    <result property="pbTitle" column="PB_TITLE"/>
+	    <result property="writerNo" column="WRITER_NO"/>
+		<result property="pbContent" column="PB_CONTENT"/>
 	    <result property="pbdate" column="PB_DATE"/>
 	    <result property="pbupdate" column="PB_UPDATE"/>
 	    <result property="pbstatus" column="PB_STATUS"/>
-	    <result property="pbgrade" column="PB_GRADE"/>
-	    <result property="pbpwd" column="PB_PWD"/>
+	    <result property="pbGrade" column="PB_GRADE"/>
+	    <result property="pbPwd" column="PB_PWD"/>
 	    <result property="mid" column="M_ID"/>
+	    <result property="pbcNo" column="PBC_NO"/>
 	    <result property="replycount" column="REPLY_COUNT"/>
 	</resultMap>
 
@@ -595,6 +596,7 @@
 	<select id="selectProductBoardByNo" parameterType="_int" resultMap="productboardresultmap" >
 		SELECT PB_NO,
                P_NO,
+               PBC.PBC_NO,
                PB_TITLE,
                PB_CONTENT,
                PB_DATE,
@@ -789,6 +791,39 @@
 
 	</select>
 	
+	
+	<insert id="insertReviewBoard" useGeneratedKeys="true" keyProperty="pbno" keyColumn="PB_NO">
+		INSERT INTO PRODUCT_BOARD (
+            PB_NO,
+			PBC_NO,
+			P_NO,
+            PB_CONTENT,
+            PB_GRADE,
+            PB_PWD,
+            PB_TITLE,
+            WRITER_NO
+		)
+		VALUES(
+			SEQ_PRODUCT_BOARD_PB_NO.NEXTVAL,
+			#{pbcNo},
+			#{PNo},
+			#{pbContent},
+            #{pbGrade},
+            #{pbPwd},
+            #{pbTitle},
+            #{writerNo}
+		)
+	
+	
+	
+	</insert>
+	
+	<select id="selectBoardCategoryList" resultMap="productboardcategoryresultmap">
+	
+		SELECT PBC_NO,
+		       PBC_NAME
+		FROM PRODUCT_BOARD_CATEGORY
+	</select>
 	
 	
 	
