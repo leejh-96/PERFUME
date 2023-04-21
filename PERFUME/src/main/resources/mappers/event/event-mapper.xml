@@ -170,5 +170,29 @@
 		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트' AND B.B_NO = #{no}
 	</select>
 	
+	<!-- 게시물 등록 -->
+	<insert id="insertEventBoard" parameterType="Board"
+		useGeneratedKeys="true" keyColumn="B_NO" keyProperty="bNo">
+		INSERT INTO BOARD (
+		    B_NO, M_NO, BC_TYPE, B_TITLE, B_CONTENT, B_CREATEDATE, B_UPDATEDATE, B_COUNT, B_STATUS, B_SORT, B_PWD
+		) VALUES (
+		    SEQ_BOARD_B_NO.NEXTVAL, #{mNo}, '이벤트', #{bTitle}, #{bContent}, SYSDATE, SYSDATE, DEFAULT, DEFAULT, NULL, NULL
+		)
+	</insert>
+	<!-- 게시물 수정 -->
+	<update id="updateEventBoard" parameterType="Board">
+		UPDATE BOARD
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="bTitle != null">
+				B_TITLE = #{bTitle},
+			</if>
+			<if test="bContent != null">
+				B_CONTENT = #{bContent},
+			</if>			
+		</trim>
+		WHERE B_NO = #{bNo}
+	</update>
+	
+	
 	
 </mapper>

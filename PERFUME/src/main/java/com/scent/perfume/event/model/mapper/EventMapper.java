@@ -49,11 +49,15 @@ public interface EventMapper {
 	int selectEventBoardCount();
 	List<Board> selectAll(RowBounds rowBounds);
 	
-// 게시물 검색 기능
+// 게시물 검색
 	int selectEventCountByKeyword(@Param("type") String type, @Param("keyword") String keyword);
 	List<Board> selectAllByKeyword(@Param("rowBounds") RowBounds rowBounds, @Param("type") String type, @Param("keyword") String keyword);
 
-// 게시물 검색 기능	
+// 게시물 검색
 	Board selectEventViewByNo(@Param("no") int no);
+
+// 게시글 등록
+	int insertEventBoard(Board board);
+	int updateEventBoard(Board board);
 	
 }

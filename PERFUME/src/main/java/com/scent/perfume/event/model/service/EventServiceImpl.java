@@ -132,4 +132,19 @@ public class EventServiceImpl implements EventService {
 		return mapper.selectEventViewByNo(no);
 	}
 
+// 게시글 작성
+	@Override
+	@Transactional
+	public int saveEventWrite(Board board) {
+		int result = 0;
+		
+		if(board.getBNo()>0) {
+			result = mapper.updateEventBoard(board);
+		} else {
+			result = mapper.insertEventBoard(board);
+		}
+		
+		return result;
+	}
+
 }

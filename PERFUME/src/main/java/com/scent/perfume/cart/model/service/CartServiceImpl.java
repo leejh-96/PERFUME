@@ -13,6 +13,7 @@ import com.scent.perfume.cart.model.vo.CartProduct;
 import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.Order;
 import com.scent.perfume.cart.model.vo.OrderList;
+import com.scent.perfume.cart.model.vo.productOption;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,14 +49,6 @@ public class CartServiceImpl implements CartService{
 		}
 		return clist;
 	}
-
-	/*
-	 * @Override
-	 * 
-	 * @Transactional public int amountUpdate(int cartNo, int cartProductCount) {
-	 * 
-	 * return cartMapper.amountUpdate(cartNo,cartProductCount); }
-	 */
 
 	@Override
 	@Transactional
@@ -128,6 +121,12 @@ public class CartServiceImpl implements CartService{
 		log.info("memberNo : {}",memberNo);
 		
 		return cartMapper.plusPoint(plusPoint,memberNo);
+	}
+
+	@Override
+	public productOption selectNowOrder(productOption option) {
+		
+		return cartMapper.selectNowOrder(option.getProductNo(), option.getPoName());
 	}
 	
 		

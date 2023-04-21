@@ -109,12 +109,15 @@
     <section>
         <h2 align="center">EVENT</h2>
         <div id="boardListTable">
-            <form action="${ path }/eventWrite" method="POST">
+            <form action="${ path }/event/eventUpdate" method="POST">
+            	<input type="hidden" name="no" value="${ board.BNo }">
                 <table id="boardList" class="table table-hover">
                     <thead>
                         <tr>
                             <th class="titleTable" scope="col" colspan="2">제목</th>
-                            <td class="contentTable" scope="col" colspan="2"><input name="bTitle" class="input" type="text" placeholder="제목을 입력하세요" required></td>
+                            <td class="contentTable" scope="col" colspan="2">
+                            	<input name="bTitle" class="input" type="text" placeholder="제목을 입력하세요" value="${ board.BTitle }" required>
+                            </td>
                         </tr>
                         <tr>
                             <th class="titleTable" colspan="2">작성자</th>
@@ -122,7 +125,7 @@
                         </tr>                       
                         <tr>
                             <td id="contentBody"colspan="4">
-	                            <textarea id="summernote" name="bContent" rows="15" cols="50"></textarea>
+	                            <textarea id="summernote" name="bContent" rows="15" cols="50">${ board.BContent }</textarea>
                             </td>
                         </tr>    
                     </thead>
@@ -130,8 +133,9 @@
                         <tr>
                             <td class="btnTd" colspan="4" align="center">
                                 <div id="btnDiv" class="btn-group" role="group" aria-label="Basic example">
-                                    <button id="btnList" type="button" class="btn btn-secondary" onclick="location.href='${ path }/eventList'">목록</button>
-                                    <input id="btnSubmit" type="submit" class="btn btn-secondary" value="등록">
+                                    <button id="btnList" type="button" class="btn btn-secondary"
+                                    		onclick="location.replace('${path}/eventList')" >목록</button>
+                                    <input id="btnSubmit" type="submit" class="btn btn-secondary" value="수정">
                                     <input id="btnReset" type="reset" class="btn btn-secondary" value="취소">
                                 </div>
                             </td>

@@ -35,7 +35,7 @@
             <nav class="user-nav">
                 <ul>
                     <li><a href="${ path }/eventList">EVENT</a></li>
-                    <li><a href="#">COMMUNITY</a></li>
+                    <li><a href="${ path }/board/list">COMMUNITY</a></li>
                     <c:if test="${ empty loginMember }">
 	                    <li><a href="#" class="openLogin">LOGIN</a></li>
 	                    <li><a href="${ path }/join">JOIN</a></li>
@@ -44,7 +44,7 @@
 						<li><a href="${ path }/logout">LOGOUT</a></li>
 						<c:if test="${ not empty loginMember && loginMember.division == '2' }">
 							<li><a href="${ path }/mypage">MY PAGE</a></li>                                      
-							<li><a href="${ path }/cart?memberNo=3">CART</a></li>                                      
+							<li><a href="${ path }/cart">CART</a></li>                                      
 						</c:if>
 						<c:if test="${ not empty loginMember && loginMember.division == '1' }">
 							<li><a href="${ path }/admin/home">ADMIN PAGE</a></li>                                        
