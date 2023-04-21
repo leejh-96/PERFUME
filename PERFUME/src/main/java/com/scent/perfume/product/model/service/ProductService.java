@@ -7,6 +7,7 @@ import com.scent.perfume.common.util.PageInfo;
 import com.scent.perfume.product.model.vo.Option;
 import com.scent.perfume.product.model.vo.Product;
 import com.scent.perfume.product.model.vo.ProductBoard;
+import com.scent.perfume.product.model.vo.ProductBoardReply;
 import com.scent.perfume.product.model.vo.TopCate;
 
 public interface ProductService {
@@ -55,6 +56,15 @@ public interface ProductService {
 	int getProductQnaCount(int no);
 
 	List<ProductBoard> findProductQnaByNo(PageInfo qnapageInfo, int no);
+
+	List<ProductBoardReply> findBypbNo(int pbNo);
+
+
+	int save(ProductBoardReply reply);
+
+	ProductBoardReply findBypbrNo(int pbrno);
+
+
 
 
 

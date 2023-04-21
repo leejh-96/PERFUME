@@ -142,7 +142,14 @@
         #product-qna-wrap {height: 91%;}
         #product-image>div {height: 100%; float: left;}
 
+.modal-dialog {
+    overflow-y: initial !important
+}
 
+.modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
 
         #image {height: 80%;}
         #imageetc {height: 20%;}
@@ -395,7 +402,19 @@
     
     	#qnaname>div {height: 100%; float:left;}
     
-    
+    	.reply {
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 10px;
+}
+
+.reply:focus {outline:none;}
+
+.replyenroll>div {
+    height: 100%;
+    float: left;
+}
 </style>
 </head>
 <body>
@@ -437,30 +456,101 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="staticBackdropLabel">댓글 작성</h5>
+                  <h5 class="modal-title" id="staticBackdropLabel">어떤가요?</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
-                    <table class="">
-                        <tr>
-                            <td>아이디</td>
-                            <td>ismoon</td>
-                        </tr>
-                        <tr>
-                            <td>내용</td>
-                            <td><textarea name="" id="" cols="30" rows="10"></textarea></td>
-                        </tr>
-                    </table>
+                <div class="modal-body" style="">
+
+                    <div style="border: 1px solid #ccc; background-color: rgb(239, 236, 236);">
+                        <div style="border: 1px solid #ccc;" class="review-reply-form">
+                            <div class="replyenroll">
+                            
+                            <c:if test="${not empty loginMember }">
+                            <div class="mno" style="width: 10%;" data-id="${loginMember.no }">
+                                <p style="font-size: 12px; padding: 5px; line-height: 60px;">${ loginMember.id }</p>
+                            </div>
+                            <div style=" width: 90%; height: 100%;">
+                                <div style="border: 1px solid #ccc; margin: 15px;  height: 50%; background-color: white;">
+                                <textarea name="" id="replycontent" cols="30" rows="3" class="reply"></textarea>
+                                </div>
+                            </div>
+                            </c:if>
+                            
+                            <c:if test="${empty loginMember }">
+                            <div class="mno" style="width: 10%;" data-id="${loginMember.no }">
+                                <p style="font-size: 12px; padding: 5px; line-height: 60px;">비회원</p>
+                            </div>
+                            <div style=" width: 90%; height: 100%;">
+                                <div style="border: 1px solid #ccc; margin: 15px;  height: 50%; background-color: white;">
+                                <textarea name="" id="" cols="30" rows="3" class="reply" placeholder="로그인 후 이용해주세요." disabled="disabled"></textarea>
+                                </div>
+                            </div>
+                            </c:if>
+                            
+                            </div>  
+                         </div>
+                         
+                         <c:if test="${not empty loginMember }">
+                        <div style="text-align: right; padding: 10px;">
+                            <button style="width: 70px; height: 20px; font-size: 10px;" value="" id="replyenter">작성하기</button>
+                        </div>
+                        </c:if>
+                        
+                        <c:if test="${empty loginMember }">
+                        <div style="text-align: right; padding: 10px;">
+                            <button style="width: 70px; height: 20px; font-size: 10px;" value="" id="loginenter">로그인 하기</button>
+                        </div>
+                        </c:if>
+                        
+                    </div>
+				   
+
+<!-- 						<div id="reply-list-area"> -->
+<!--                         <div class="reply-detail" id="reply-content-area"> -->
+<!--                             <table style="width: 250px;"> -->
+<!--                                 <tbody > -->
+	
+                    
+<!--                                 </tbody> -->
+                    
+<!--                             </table> -->
+<!--                         </div> -->
+<!--                     	</div> -->
+                     <div class="review-reply-list" style="">
+                     
+                    <div style="height: 40px;" id="replyname">
+                    <p style="font-size: 13px; padding: 15px; font-weight: bold;"> </p>
+                    </div>
+                    <div style="height: 150px ;" id="reviewcontent"> 
+                    
+                    <div style="height: 60%;" id="replycontent">
+                    <p style="font-size: 13px; padding: 10px; font-weight: bold;"> </p>
+                    </div>
+                    
+                    <div style="height: 20%;">
+                    <p style="font-size: 11px; padding: 5px;">1681912287000<span>신고</span></p>
+                    </div>
+                    
+               
+                    <div style="height: 20%; border-top: 1px solid #ccc;">
+                    <p style="font-size: 13px; padding: 5px;"></p>
+                    </div>
+                   </div>
+                   </div> 
+                  
+                
+                 
                 </div>
+                
                 <div class="modal-footer">
                   <button type="button"  >작성하기</button>
                   <button type="button"  data-dismiss="modal">취소</button>
                 </div>
-              </div>
             </div>
-          </div>
+      </div>
+</div>
 
 
 
@@ -708,7 +798,7 @@
                     <div id="product-button">
                         <button id="like">LIKE</button>
                         <button id="cart">CART</button>
-                        <button id="buy">BUY NOW</button>
+                        <button id="buy" onclick="nowOrder(${product.pno})">BUY NOW</button>
 
                     </div>
 
@@ -910,9 +1000,9 @@
 									 <a class="link" type="button" data-toggle="collapse" data-target="#collapseOne${productboard.pbno}" aria-expanded="false" aria-controls="collapseOne${productboard.pbno}">
                                             ${productboard.pbtitle}</a>
 <!--                                             </a> -->
-                                            <span>[1]</span>
+                                            <span>[${productboard.replycount }]</span>
                                         </td>
-                                        <td>ismoon</td>
+                                        <td>${productboard.mid}</td>
                                         <td align="center">${productboard.pbdate}</td>
                                  
                                         <td align="center"><c:choose>
@@ -935,7 +1025,7 @@
 
                 </div>
                 <div style="height: 30px; border: 1px solid #ccc; padding: 5px;" >
-                	<button type="button" data-toggle="modal" data-target="#staticBackdrop" id="reviewreply">댓글 작성</button> <button>신고 하기</button>
+                	<button type="button" data-toggle="modal" data-target="#staticBackdrop" id="reviewreply" type="button" onclick="reviewNo(${productboard.pbno})">댓글 작성</button> <button>신고 하기</button>
                 </div>
                 
                 <br><br>
@@ -1052,7 +1142,7 @@ lock
 <!--                                             </a> -->
                                             <span>[1]</span>
                                         </td>
-                                        <td>ismoon</td>
+                                        <td></td>
                                         <td align="center">${productboard.pbdate}</td>
                                  
                                         <td align="center"><c:choose>
@@ -1092,7 +1182,7 @@ lock
 
                 </div>
                 <div style="height: 30px; border: 1px solid #ccc; padding: 5px;" >
-                	<button type="button" data-toggle="modal" data-target="#staticBackdrop" id="reviewreply">댓글 작성</button> <button>신고 하기</button>
+                	<button type="button"  data-toggle="modal" data-target="#staticBackdrop" id="reviewreply">댓글 작성</button> <button>신고 하기</button>
                 </div>
                 
                 <br><br>
@@ -1303,6 +1393,22 @@ lock
 </body>
 <script>
 
+function nowOrder(productNo){
+	   
+	   console.log(productNo)
+	   let poName = $('#optselect>option:selected').val();
+	   console.log(poName)
+	   let poAmount = $('#quantity').val();
+	   console.log(poAmount)
+	   window.location.href='${path}/cart/nowOrder/'+productNo+'/'+poName+'/'+poAmount
+	   
+	}
+
+
+
+
+
+
 function qnaStatus(no, password) {
 	console.log(no,password);
 		
@@ -1322,7 +1428,171 @@ function qnaStatus(no, password) {
 
 
 
+function reviewNo(no) {
+		let pbNo = no;
+		var result1 = pbNo;
+	$.ajax({
+		type: 'GET',
+		url: '${path}/reviewRe',
+		dataType: 'json',
+		data: {	
+			pbNo
+		},
+		success: (obj) => {
+				let result = '';
+				let result2 = '';
+				if(obj !== null) {
+					
+				 for (let i = 0; i < obj.length; i++) {
+// 						console.log(obj[i].pbrNo);
+// 						console.log(obj[i].mid);
+// 						console.log(obj[i].pbrcontent);
+// 						console.log(obj[i].pbrdate);
+						console.log(obj[0].pbtitle)
+// 						result1 = obj[i].pbno
+						
+						
+// 						result += 
+// 							'<br>'   + 
+// 							'<td >'   +
+// 							'<div>'  +
+// 							'<span class="material-symbols-outlined"> account_circle </span>'  +
+// 							'</div>'  +
+// 							'</td>'   +
+// 							'<td style="font-size: 13px; padding: 10px; text-align : left;">' + '<b>' + obj[i].mid + '</b>' + '</td>'  +
+// 							'<td style="font-size: 10px; padding: 10px;  width: 80px;">'  + 
+// 							obj[i].pbrdate + '</td>'  +
+// 							'<td style="font-size: 8px; padding: 5px; color: gray;"><span>신고하기</span>' + '</td>'  +
+// 							'<tr class="reply-detail-content">'  +
+// 							'<td colspan="3" style="font-size: 14px; padding: 10px;">'  +
+// 							obj[i].pbrContent  +
+// 							'</td>'  +
+// 							'</tr>'  +
+// 							'<br>'
+// 							'<div style="border-bottom: 1px solid #ccc;">'  +
+// 							'<p>'  + '</p>'
+// 							'</div>'
+							
+					result += '<div class="review-reply-list">' +  
+					'<div style=" height: 40px;" id="replyname">' + 
+					'<p style="font-size: 13px; padding: 15px; font-weight: bold;">' +
+					obj[i].mid + 
+					'</p>' +
+					'</div>' + 
+					'<div style="height: 150px ;" id="reviewcontent">' +
+					' <div style="height: 60%;" id="replycontent" >' + '<p style="font-size: 13px; padding: 10px; font-weight: bold;">' +
+					obj[i].pbrContent + '</p>' +
+					'</div>' + 
+					'<div style="height: 20%;" >' + 
+					'<p style="font-size: 11px; padding: 5px;">' + 
+					obj[i].pbrdate +
+					'<span>신고</span></p>' + 
+					'</div>' + 
+					'<div style="height: 20%; border-top: 1px solid #ccc;" >' + 
+					'<p style="font-size: 13px; padding: 5px;">' +'</p>' +
+					'</div>' + 
+					'</div>' + 
+					'</div>'
+					
+					result2 = '<h5 class="modal-title" id="staticBackdropLabel">' + obj[i].pbtitle + '</h5>'
+				}	
+				 
+				 $('.review-reply-list').html(result);
+				 $('#replyenter').attr('value',pbNo);
+				 $('#staticBackdropLabel').html(result2);
+				 
+				}
+				
+		} 
+		
+		
+	});
+	
+	
+}
+$('#replyenter').click(function () {
+	   let pbNo = $('#replyenter').val();
+		console.log("게시판 번호 : " + pbNo);
+	
+		let mNo = $('.mno').attr('data-id');
+		console.log('회원번호 : ' + mNo);
+		
+		let pbrContent = $('#replycontent').val();
+		console.log('댓글 내용 : ' + pbrContent);
+		
+	
+		
+		if (confirm('댓글을 작성하시겠습니까?'))  {
+		$.ajax({
+			type: 'POST',
+			url: '${path}/reviewReply',
+			dataType: 'json',
+			data: {	
+				pbNo, pbrContent , mNo
+			},
+		
+			success: (obj) => {
+				console.log(obj);
+				let result = '';
+				
+					
+				if(obj !== null) {
+				result =
+// 					'<br>'   + 
+// 					'<td >'   +
+// 					'<div>'  +
+// 					'<span class="material-symbols-outlined"> account_circle </span>'  +
+// 					'</div>'  +
+// 					'</td>'   +
+// 					'<td style="font-size: 13px; padding: 10px; text-align : left;">' + '<b>' + obj.mid + '</b>' + '</td>'  +
+// 					'<td style="font-size: 10px; padding: 10px;  width: 80px;">'  + 
+// 					obj.pbrdate + '</td>'  +
+// 					'<td style="font-size: 8px; padding: 5px; color: gray;"><span>신고하기</span>' + '</td>'  +
+// 					'<tr class="reply-detail-content">'  +
+// 					'<td colspan="3" style="font-size: 14px; padding: 10px;">'  +
+// 					obj.pbrContent  +
+// 					'</td>'  +
+// 					'</tr>'  +
+// 					'<br>' +
+// 					'<div style="border-bottom: 1px solid #ccc;">'  +
+// 					'<p>'  + '</p>' +
+// 					'</div>'
+					
+					result = '<div class="review-reply-append">' +  
+					'<div style=" height: 40px;" id="replyname">' + 
+					'<p style="font-size: 13px; padding: 15px; font-weight: bold;">' +
+					obj.mid + 
+					'</p>' +
+					'</div>' + 
+					'<div style="height: 150px ;" id="reviewcontent">' +
+					' <div style="height: 60%;" id="replycontent" >' + '<p style="font-size: 13px; padding: 10px; font-weight: bold;">' +
+					obj.pbrContent + '</p>' +
+					'</div>' + 
+					'<div style="height: 20%;" >' + 
+					'<p style="font-size: 11px; padding: 5px;">' + 
+					obj.pbrdate +
+					'<span>신고</span></p>' + 
+					'</div>' + 
+					'<div style="height: 20%; border-top: 1px solid #ccc;" >' + 
+					'<p style="font-size: 13px; padding: 5px;">' +'</p>' +
+					'</div>' + 
+					'</div>'	
+					
+			    }
+				$('.review-reply-list').append(result);
+			}
+			
+	});
+		}else {
+			alert('다시 시도해주세요.');
+		}
 
+});
+
+// $('#reviewreply').click(function() {
+//        let value = $(this).val();
+// 			console.log(value);
+// });
 
 
 
@@ -1437,13 +1707,13 @@ $(document).ready( function() {
       
       
       
-    $('#reviewreply').on('click', () => {
-				if(${ empty loginMember}) {
-					alert('로그인 후 이용해 주세요.')	;
+//     $('#reviewreply').on('click', () => {
+// 				if(${empty loginMember}) {
+// 					alert('로그인 후 이용해 주세요.')	;
 					
-					$('.mainlogin').focus();
-				}
-			});
+// 					$('.mainlogin').focus();
+// 				}
+// 			});
       
 	
 

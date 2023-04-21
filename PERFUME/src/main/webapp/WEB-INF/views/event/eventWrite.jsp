@@ -7,6 +7,7 @@
 <c:set var="path" value="${ pageContext.request.contextPath }" />
 
 <!DOCTYPE html>
+<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -104,11 +105,11 @@
 </style>
 </head>
 <body>
-<%-- <jsp:include page="/WEB-INF/views/planning/header.jsp"/>
- --%>    <section>
+
+    <section>
         <h2 align="center">EVENT</h2>
         <div id="boardListTable">
-            <form action="#" method="POST">
+            <form action="${ path }/eventWrite" method="POST">
                 <table id="boardList" class="table table-hover">
                     <thead>
                         <tr>
@@ -218,6 +219,6 @@
  	});
 	</script>
 
-<%-- <jsp:include page="/WEB-INF/views/planning/footer.jsp"/> --%>
+<jsp:include page="/WEB-INF/views/planning/footer.jsp"/>
 </body>
 </html>
