@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board {
+public class Notice {
 	private int BNo;			// 게시물 번호
 	
 	private int BMno;			//회원번호(외래키)

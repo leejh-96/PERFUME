@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.scent.perfume.board.model.service.BoardService;
-import com.scent.perfume.board.model.vo.Board;
+import com.scent.perfume.board.model.vo.Notice;
 import com.scent.perfume.common.util.MultipartFileUtil;
 import com.scent.perfume.common.util.PageInfo;
 import com.scent.perfume.planning.model.vo.Member;
@@ -59,7 +59,7 @@ public class BoardController {
 
 		PageInfo pageInfo = new PageInfo(page, 10, listCount, 10);
 		// pageInfo를 통해서 게시글목록을 가져온다.
-		List<Board> list = service.getBoardList(pageInfo);
+		List<Notice> list = service.getBoardList(pageInfo);
 
 		modelAndView.addObject("pageInfo", pageInfo);
 		modelAndView.addObject("list", list); // service로부터 얻어온 list를 modelAndView를 통해서 view한테(jsp페이지로) 포워딩시켜준다.
@@ -71,7 +71,7 @@ public class BoardController {
 
 	@GetMapping("/board/view")
 	public ModelAndView view(ModelAndView modelAndView, @RequestParam int no) {
-		Board board = null;
+		Notice board = null;
 		
 		
 		log.info("no : {}", no);
@@ -141,7 +141,7 @@ public class BoardController {
 	 * logiMember를 매개변수로 가져와 INSERT해준다.
 	 */
 	@PostMapping("/board/write")
-	public ModelAndView write(ModelAndView modelAndView, @ModelAttribute Board board,
+	public ModelAndView write(ModelAndView modelAndView, @ModelAttribute Notice board,
 			@SessionAttribute("loginMember") Member loginMember) {
 		int result = 0;
 
@@ -168,7 +168,7 @@ public class BoardController {
 	public ModelAndView delete(ModelAndView modelAndView, @RequestParam int no,
 				@SessionAttribute("loginMember") Member loginMember) {
 		int result = 0;
-		Board board = null;
+		Notice board = null;
 		
 		board = service.findBoardByNo(no);
 		
@@ -199,13 +199,13 @@ public class BoardController {
 	@GetMapping("/board/update")
 	public ModelAndView update(ModelAndView modelAndView, @RequestParam int no,
 			@SessionAttribute("loginMember") Member loginMember) {
-		Board board = null;
+		Notice board = null;
 		
 		log.info("no : {}", no);
 		log.info(loginMember.toString());
 		
 		board = service.findBoardByNo(no);
-		
+		System.out.println("업데이트 : " + board);
 		if(board != null && board.getWriterId().equals(loginMember.getId())) {
 			modelAndView.addObject("board", board);
 			modelAndView.setViewName("board/update");
@@ -224,7 +224,7 @@ public class BoardController {
 								@SessionAttribute("loginMember") Member loginMember) {
 		int result = 0;
 		
-		Board board = null;
+		Notice board = null;
 		log.info("{}, {}, {]", new Object[] {no, title, content});
 		board = service.findBoardByNo(no);
 		

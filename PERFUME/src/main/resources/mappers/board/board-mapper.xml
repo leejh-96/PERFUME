@@ -18,7 +18,7 @@
 	</sql>
 
 	<!-- DB 의 조회 결과와 자바의 객체를 명시적으로 mapping해줄 때 사용한다. -->
-	<resultMap id="boardListResultMap" type="Board">
+	<resultMap id="boardListResultMap" type="Notice">
 		<id property="BNo" column="B_NO"/>
 		<result property="BMno" column="M_NO"/>
 		<result property="BTitle" column="B_TITLE"/>

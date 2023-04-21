@@ -2,21 +2,21 @@ package com.scent.perfume.board.model.service;
 
 import java.util.List;
 
-import com.scent.perfume.board.model.vo.Board;
+import com.scent.perfume.board.model.vo.Notice;
 import com.scent.perfume.common.util.PageInfo;
 
 public interface BoardService {
 
 	int getBoardCount();
 
-	List<Board> getBoardList(PageInfo pageInfo);
+	List<Notice> getBoardList(PageInfo pageInfo);
 
-	Board findBoardByNo(int no);
+	Notice findBoardByNo(int no);
 
-	int save(Board board);
+	int save(Notice notice);
 
 	int delete(int no);
 
-	int updateReadCount(Board board);
+	int updateReadCount(Notice notice);
 
 }
