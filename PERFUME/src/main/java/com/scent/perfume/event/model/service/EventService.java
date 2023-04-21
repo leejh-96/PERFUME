@@ -26,5 +26,8 @@ public interface EventService {
 // 상세 게시글 보기
 	Board findBoardByNo(int no);
 
+// 게시글 작성 수정
+	int saveEventWrite(Board board);
+
 	
 }

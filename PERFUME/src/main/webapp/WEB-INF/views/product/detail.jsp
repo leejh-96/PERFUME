@@ -125,21 +125,32 @@
 
         #product-l-meaning {height: 4%; font-size: 12px;}
         #product-detail-area>div { height: 100%; float: left;}
+        
         #product-detail {width: 80%;}
+        
         #product-title {height: 4%;}
+        
         #product-sizeinfo { height: 5%; }
+        
         #product-caution {height: 10%; font-size: 12px; margin-bottom: 20px;}
         #product-meaning{ height: 13%; font-size: 12px;}
         #product-price{height: 4%; border-bottom: 1px solid #ccc; }
+        
         #product-option{height: 10%; border-bottom: 1px solid #ccc;}
         .option-count { height: 15%;}
         #product-benefits{height: 6%; border-bottom: 1px solid #ccc;}
+        
         #product-total {height: 3%; font-size: 13px; text-align: right;}
         #product-button { text-align: right;  }
+        
         #product-menu {text-align: center; height: 5%; }
+        
         #product{text-align: center;}
+        
         #product-review-wrap {height: 91%;}
+        
         #product-qna-wrap {height: 91%;}
+        
         #product-image>div {height: 100%; float: left;}
 
 .modal-dialog {
@@ -505,7 +516,6 @@
                         </c:if>
                         
                     </div>
-				   
 
 <!-- 						<div id="reply-list-area"> -->
 <!--                         <div class="reply-detail" id="reply-content-area"> -->
@@ -518,26 +528,28 @@
 <!--                             </table> -->
 <!--                         </div> -->
 <!--                     	</div> -->
-                     <div class="review-reply-list" style="">
-                     
-                    <div style="height: 40px;" id="replyname">
-                    <p style="font-size: 13px; padding: 15px; font-weight: bold;"> </p>
-                    </div>
-                    <div style="height: 150px ;" id="reviewcontent"> 
-                    
-                    <div style="height: 60%;" id="replycontent">
-                    <p style="font-size: 13px; padding: 10px; font-weight: bold;"> </p>
-                    </div>
-                    
-                    <div style="height: 20%;">
-                    <p style="font-size: 11px; padding: 5px;">1681912287000<span>신고</span></p>
-                    </div>
-                    
-               
-                    <div style="height: 20%; border-top: 1px solid #ccc;">
-                    <p style="font-size: 13px; padding: 5px;"></p>
-                    </div>
-                   </div>
+					 <div id="review-area" >
+                     	<div class="review-reply-list" style="">
+	                     
+		                    <div style="height: 40px;" id="replyname">
+		                    <p style="font-size: 13px; padding: 15px; font-weight: bold;"> </p>
+		                    </div>
+		                    <div style="height: 150px ;" id="reviewcontent"> 
+		                    
+		                    <div style="height: 60%;" id="replycontent">
+		                    <p style="font-size: 13px; padding: 10px; font-weight: bold;"> </p>
+		                    </div>
+		                    
+		                    <div style="height: 20%;">
+		                    <p style="font-size: 11px; padding: 5px;">1681912287000<span>신고</span></p>
+		                    </div>
+		                    
+		               
+		                    <div style="height: 20%; border-top: 1px solid #ccc;">
+		                    <p style="font-size: 13px; padding: 5px;"></p>
+		                    </div>
+                   		</div>
+					 </div>
                    </div> 
                   
                 
@@ -545,7 +557,7 @@
                 </div>
                 
                 <div class="modal-footer">
-                  <button type="button"  >작성하기</button>
+                  <button type="button" >작성하기</button>
                   <button type="button"  data-dismiss="modal">취소</button>
                 </div>
             </div>
@@ -815,7 +827,7 @@
                             <div id="fcwrap" >
                                
                                 <div id="cart2">
-                                   gd
+                                   
                                 </div>
                                 <div id="share"> 
                                  
@@ -957,7 +969,7 @@
                                 <c:set var = "total" value = "0" />
                                  <c:set value="${fn:length(grade)}" var="gradeCount"/>
                                 <c:forEach var="productboard" items="${grade}" varStatus="status">
-                               <c:set var= "total" value="${total + productboard.pbgrade}"/>
+                               <c:set var= "total" value="${total + productboard.pbGrade}"/>
                                </c:forEach>
                                 <h1>
                                 <span> 
@@ -970,12 +982,11 @@
                         </div>
                         <div id="review-wrap">
                             <div id="review-filter">
-                                <div style="width: 20%;" class="rfilter"><p>REVIEW</p></div>
+                                <div style="width: 20%;" class="rfilter"><p>REVIEW</p></div>    
                                 <div style="width: 80%; text-align: right;"  class="rfilter" >
-                                    <button>write</button>
+                                    <button type="button" data-toggle="modal" data-target="#staticBackdrop1${productboard.pbcNo}" id="writeloginck">write</button>
                                     <button>list</button>
                                 </div>
-
                             </div>
                             <div id="review-content">
                            
@@ -991,14 +1002,20 @@
                                             <td align="center">평점</td>
                                         </tr>
                                     </thead>
+                                    <tr class="review-board-list">
+                                    
+                                    
+                                    
+                                    
+                                    </tr>
                                   <c:forEach var="productboard" items="${board}" varStatus="status">
-                                  <tbody style="height: 60px;">
+                                  <tbody style="height: 60px;" >
                                     <tr class="xans-record-" id="reviewline">
                                         <td  align="center">${productboard.pbno}</td>
                                         <td width="600px" >
 <!--                                             <a data-toggle="collapse" href=#collapseExample${productboard.pbno} role="button" aria-expanded="false" aria-controls="collapseExample"> -->
 									 <a class="link" type="button" data-toggle="collapse" data-target="#collapseOne${productboard.pbno}" aria-expanded="false" aria-controls="collapseOne${productboard.pbno}">
-                                            ${productboard.pbtitle}</a>
+                                            ${productboard.pbTitle}</a>
 <!--                                             </a> -->
                                             <span>[${productboard.replycount }]</span>
                                         </td>
@@ -1006,11 +1023,11 @@
                                         <td align="center">${productboard.pbdate}</td>
                                  
                                         <td align="center"><c:choose>
-                                            <c:when test="${productboard.pbgrade <= 4.5 && productboard.pbgrade > 3.5}">★★★★☆</c:when>
-											<c:when test="${productboard.pbgrade <= 3.5 && productboard.pbgrade > 2.5}">★★★☆☆</c:when>
-											<c:when test="${productboard.pbgrade <= 2.5 && productboard.pbgrade > 1.5}">★★☆☆☆</c:when>
-											<c:when test="${productboard.pbgrade <= 1.5 && productboard.pbgrade > 0}">★☆☆☆☆</c:when>
-											<c:when test="${productboard.pbgrade == 0}"></c:when>
+                                            <c:when test="${productboard.pbGrade <= 4.5 && productboard.pbGrade > 3.5}">★★★★☆</c:when>
+											<c:when test="${productboard.pbGrade <= 3.5 && productboard.pbGrade > 2.5}">★★★☆☆</c:when>
+											<c:when test="${productboard.pbGrade <= 2.5 && productboard.pbGrade > 1.5}">★★☆☆☆</c:when>
+											<c:when test="${productboard.pbGrade <= 1.5 && productboard.pbGrade > 0}">★☆☆☆☆</c:when>
+											<c:when test="${productboard.pbGrade == 0}"></c:when>
 										
 											</c:choose></td>
                                     </tr>
@@ -1021,7 +1038,7 @@
                 <div id="collapseOne${productboard.pbno}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                <div>
                 <div style="height: 80px; border: 1px solid #ccc; " id="reviewcontent" >
-                     ${productboard.pbcontent}
+                     ${productboard.pbContent}
 
                 </div>
                 <div style="height: 30px; border: 1px solid #ccc; padding: 5px;" >
@@ -1132,30 +1149,31 @@
                                         <td  align="center">${productboard.pbno}</td>
                                         <td width="600px" >
 <!--                                             <a data-toggle="collapse" href=#collapseExample${productboard.pbno} role="button" aria-expanded="false" aria-controls="collapseExample"> -->
-										<c:if test="${not empty productboard.pbpwd }">
+										<c:if test="${not empty productboard.pbPwd }">
 										<span class="material-symbols-sharp">
 lock
 </span>
 										</c:if>
 									 <a class="link" type="button" data-toggle="collapse" data-target="#collapseOne${productboard.pbno}" aria-expanded="false" aria-controls="collapseOne${productboard.pbno}">
-                                            ${productboard.pbtitle}</a>
+                                            ${productboard.pbTitle}</a>
 <!--                                             </a> -->
                                             <span>[1]</span>
                                         </td>
                                         <td></td>
                                         <td align="center">${productboard.pbdate}</td>
                                  
-                                        <td align="center"><c:choose>
-                                            <c:when test="${productboard.pbgrade <= 4.5 && productboard.pbgrade > 3.5}">★★★★☆</c:when>
-											<c:when test="${productboard.pbgrade <= 3.5 && productboard.pbgrade > 2.5}">★★★☆☆</c:when>
-											<c:when test="${productboard.pbgrade <= 2.5 && productboard.pbgrade > 1.5}">★★☆☆☆</c:when>
-											<c:when test="${productboard.pbgrade <= 1.5 && productboard.pbgrade > 0}">★☆☆☆☆</c:when>
-											<c:when test="${productboard.pbgrade == 0}"></c:when>
+                                        <td align="center">
+                                        <c:choose>
+                                            <c:when test="${productboard.pbGrade <= 4.5 && productboard.pbGrade > 3.5}">★★★★☆</c:when>
+											<c:when test="${productboard.pbGrade <= 3.5 && productboard.pbGrade > 2.5}">★★★☆☆</c:when>
+											<c:when test="${productboard.pbGrade <= 2.5 && productboard.pbGrade > 1.5}">★★☆☆☆</c:when>
+											<c:when test="${productboard.pbGrade <= 1.5 && productboard.pbGrade > 0}">★☆☆☆☆</c:when>
+											<c:when test="${productboard.pbGrade == 0}"></c:when>
 										
 											</c:choose></td>
                                     </tr>
                                     
-                                    <c:if test="${not empty productboard.pbpwd }">
+                                    <c:if test="${not empty productboard.pbPwd }">
                                   <tr id="secretwrap${productboard.pbno}">
                                       
                 <td colspan="5">
@@ -1165,7 +1183,7 @@ lock
                 <div class="secret">
                 		<label for="password">비밀번호 : </label>
                      <input type="password" name="password" id="pwd1${productboard.pbno}" >
-                     <button id="btnno" value="${productboard.pbno}" onclick="qnaStatus(${productboard.pbno}, '${productboard.pbpwd}')" > 확인 </button>
+                     <button id="btnno" value="${productboard.pbno}" onclick="qnaStatus(${productboard.pbno}, '${productboard.pbPwd}')" > 확인 </button>
                 </div>     
                <br><br>  
                </div>
@@ -1178,7 +1196,7 @@ lock
                 <div id="collapseOne${productboard.pbno}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
                <div>
                 <div style="height: 80px; border: 1px solid #ccc; " id="reviewcontent" >
-                     ${productboard.pbcontent}
+                     ${productboard.pbContent}
 
                 </div>
                 <div style="height: 30px; border: 1px solid #ccc; padding: 5px;" >
@@ -1204,7 +1222,7 @@ lock
             
             
             </c:if>
-             <c:if test="${empty productboard.pbpwd }">
+             <c:if test="${empty productboard.pbPwd }">
                               <tr>
                                       
                 <td colspan="5">
@@ -1212,7 +1230,7 @@ lock
                 <div id="collapseOne${productboard.pbno}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
                <div>
                 <div style="height: 80px; border: 1px solid #ccc; " id="reviewcontent" >
-                     ${productboard.pbcontent}
+                     ${productboard.pbContent}
 
                 </div>
                 <div style="height: 30px; border: 1px solid #ccc; padding: 5px;" >
@@ -1387,22 +1405,99 @@ lock
         </pre>
     </footer>
         </div>
+        
+        <div class="modal fade" id="staticBackdrop1${productboard.pbcNo}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel" >새 글 작성</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+					<tr>
+						<td>
+                            <span class="material-symbols-outlined">
+                                account_circle
+                                </span>
+                           
+                        </td>
+                        <td id="writerNo" data-id="${loginMember.no}">
+                            ${loginMember.id}
+                        </td>
+	
+					</tr>
+					<tr>
+					<c:forEach var="product" items="${ list }">
+                        <td><p style="font-size: 12px; font-weight: bold;" id="PNo" data-id="${product.pno}">상품 명</p></td>
+                        <td>${product.eng }</td>
+                        </c:forEach>
+                    </tr>
+                    <tr>
+                        <td><p style="font-size: 12px; font-weight: bold;">글 제목</p></td>
+						<td><input class="form-control"  id="pbTitle" type="text"></td>
+
+                    </tr>
+                    <tr>
+						<td><p style="font-size: 12px; font-weight: bold;">평점</p></td>
+						<td> <select name="grade" id="pbGrade" style="color: rgba(65, 56, 2, 0.815);">
+							<option value="*">--</option>
+                            <option value="5" selected>★★★★★</option>
+                            <option value="4">★★★★☆</option>
+                            <option value="3">★★★☆☆</option>
+                            <option value="2">★★☆☆☆</option>
+                            <option value="1">★☆☆☆☆</option>
+                        </select></td>
+					</tr>
+					<tr>
+						<td><p style="font-size: 12px; font-weight: bold;">내용</p></td>
+						<td><textarea class="form-control" id="pbContent" rows="10"></textarea></td>
+					</tr>
+					<tr>
+                        <td><p style="font-size: 12px; font-weight: bold;">비밀번호</p></td>
+                        <td><input type="password" width="10px;" id="pbPwd"></td>
+                    </tr>					
+				</table>
+            </div>
+            
+            <div class="modal-footer">
+            	<c:forEach var="productboardCategory" items="${boardcate}" begin="0" end="0" >
+                <button id="modalSubmit" type="button" class="reviewWrite" value="${productboardCategory.pbcno}">등록하기</button>
+                </c:forEach>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+        
     </div>
+    
+    
+    
     
     
 </body>
 <script>
 
+let poName = '';
+$('#optselect').change(function() {
+    poName = '';
+    poName = $('#optselect option:selected').val();
+    console.log("poName" + poName);
+});
+
 function nowOrder(productNo){
-	   
-	   console.log(productNo)
-	   let poName = $('#optselect>option:selected').val();
-	   console.log(poName)
-	   let poAmount = $('#quantity').val();
-	   console.log(poAmount)
-	   window.location.href='${path}/cart/nowOrder/'+productNo+'/'+poName+'/'+poAmount                                                                                                                                                                                                                                                                                               
-	   
-	}
+      
+      console.log(productNo)
+      console.log(poName)
+      let poAmount = $('#quantity').val();
+      console.log(poAmount)
+      window.location.href='${path}/cart/nowOrder/'+productNo+'/'+poName+'/'+poAmount                                                                                                                                                                                                                                                                                                
+      
+   }
 
 
 
@@ -1444,35 +1539,9 @@ function reviewNo(no) {
 				if(obj !== null) {
 					
 				 for (let i = 0; i < obj.length; i++) {
-// 						console.log(obj[i].pbrNo);
-// 						console.log(obj[i].mid);
-// 						console.log(obj[i].pbrcontent);
-// 						console.log(obj[i].pbrdate);
-						console.log(obj[0].pbtitle)
+
 // 						result1 = obj[i].pbno
-						
-						
-// 						result += 
-// 							'<br>'   + 
-// 							'<td >'   +
-// 							'<div>'  +
-// 							'<span class="material-symbols-outlined"> account_circle </span>'  +
-// 							'</div>'  +
-// 							'</td>'   +
-// 							'<td style="font-size: 13px; padding: 10px; text-align : left;">' + '<b>' + obj[i].mid + '</b>' + '</td>'  +
-// 							'<td style="font-size: 10px; padding: 10px;  width: 80px;">'  + 
-// 							obj[i].pbrdate + '</td>'  +
-// 							'<td style="font-size: 8px; padding: 5px; color: gray;"><span>신고하기</span>' + '</td>'  +
-// 							'<tr class="reply-detail-content">'  +
-// 							'<td colspan="3" style="font-size: 14px; padding: 10px;">'  +
-// 							obj[i].pbrContent  +
-// 							'</td>'  +
-// 							'</tr>'  +
-// 							'<br>'
-// 							'<div style="border-bottom: 1px solid #ccc;">'  +
-// 							'<p>'  + '</p>'
-// 							'</div>'
-							
+	
 					result += '<div class="review-reply-list">' +  
 					'<div style=" height: 40px;" id="replyname">' + 
 					'<p style="font-size: 13px; padding: 15px; font-weight: bold;">' +
@@ -1494,10 +1563,11 @@ function reviewNo(no) {
 					'</div>' + 
 					'</div>'
 					
-					result2 = '<h5 class="modal-title" id="staticBackdropLabel">' + obj[i].pbtitle + '</h5>'
+					result2 = '<h5 class="modal-title" id="staticBackdropLabel">' + obj[i].pbTitle + '</h5>'
 				}	
 				 
-				 $('.review-reply-list').html(result);
+				 $('#review-area').empty();
+				 $('#review-area').html(result);
 				 $('#replyenter').attr('value',pbNo);
 				 $('#staticBackdropLabel').html(result2);
 				 
@@ -1510,6 +1580,88 @@ function reviewNo(no) {
 	
 	
 }
+
+
+
+$('.reviewWrite').click(function () {
+	    let pbcNo = $('.reviewWrite').val();
+		console.log("카테고리 번호 : " + pbcNo);
+		
+		let pbTitle = $('#pbTitle').val();
+		console.log("게시글 제목 : " + pbTitle);
+		
+		let pbGrade = $('#pbGrade option:selected').val();
+		console.log("평점  : " + pbGrade);
+		
+		let pbContent = $('#pbContent').val();
+		console.log("내용  : " +  pbContent);
+		
+		let PNo = $('#PNo').attr('data-id');
+		console.log('상품번호 : ' +  PNo);
+		
+		let writerNo = $('#writerNo').attr('data-id');
+		console.log('작성자 번호 : ' +  writerNo);
+		
+		
+		if($('#pbPwd').val() === '') {
+			var pbPwd = null;
+			$('#pbPwd').attr('value',pbPwd);
+		} else {
+			var	pbPwd =	$('#pbPwd').val();
+		}
+		console.log("비밀번호  : " +  pbPwd);
+		
+		
+			$.ajax({
+				type: 'POST',
+				url: '${path}/reviewWrite',
+				dataType: 'json',
+				data: {	
+					pbcNo, pbTitle, pbGrade, pbContent, pbPwd, PNo, writerNo
+				},
+				success: (obj) => {
+					let result = '';
+					console.log(obj);
+					
+					
+					if(obj !== null) {
+					
+						result = '<tr class="xans-record-" id="reviewline">' +
+				         '<td  align="center">' +  obj.pbno  + '</td>'  +
+				         '<td  width="600px" >' +  '<a class="link" type="button" data-toggle="collapse" data-target="#collapseOne' + obj.pbno + 
+				         '" aria-expanded="false" aria-controls="collapseOne' + obj.pbno + '">' +
+				         obj.pbTitle  + '</a>'  + '<span>' + obj.replycount  + '</span>'  +
+				         '</td>'  + '<td>' + obj.mid  + '</td>' 
+				       
+				  
+				      
+				         
+				         
+				         
+
+
+					
+					
+					
+					
+					
+					
+					
+				}
+				
+					$('.review-board-list').append(result);
+				}
+				
+		
+		});
+			
+			
+});
+
+
+
+
+
 $('#replyenter').click(function () {
 	   let pbNo = $('#replyenter').val();
 		console.log("게시판 번호 : " + pbNo);
@@ -1537,28 +1689,8 @@ $('#replyenter').click(function () {
 				
 					
 				if(obj !== null) {
-				result =
-// 					'<br>'   + 
-// 					'<td >'   +
-// 					'<div>'  +
-// 					'<span class="material-symbols-outlined"> account_circle </span>'  +
-// 					'</div>'  +
-// 					'</td>'   +
-// 					'<td style="font-size: 13px; padding: 10px; text-align : left;">' + '<b>' + obj.mid + '</b>' + '</td>'  +
-// 					'<td style="font-size: 10px; padding: 10px;  width: 80px;">'  + 
-// 					obj.pbrdate + '</td>'  +
-// 					'<td style="font-size: 8px; padding: 5px; color: gray;"><span>신고하기</span>' + '</td>'  +
-// 					'<tr class="reply-detail-content">'  +
-// 					'<td colspan="3" style="font-size: 14px; padding: 10px;">'  +
-// 					obj.pbrContent  +
-// 					'</td>'  +
-// 					'</tr>'  +
-// 					'<br>' +
-// 					'<div style="border-bottom: 1px solid #ccc;">'  +
-// 					'<p>'  + '</p>' +
-// 					'</div>'
 					
-					result = '<div class="review-reply-append">' +  
+					result = '<div class="review-reply-list">' +  
 					'<div style=" height: 40px;" id="replyname">' + 
 					'<p style="font-size: 13px; padding: 15px; font-weight: bold;">' +
 					obj.mid + 
@@ -1579,7 +1711,7 @@ $('#replyenter').click(function () {
 					'</div>'	
 					
 			    }
-				$('.review-reply-list').append(result);
+				$('#review-area').append(result);
 			}
 			
 	});
@@ -1589,10 +1721,9 @@ $('#replyenter').click(function () {
 
 });
 
-// $('#reviewreply').click(function() {
-//        let value = $(this).val();
-// 			console.log(value);
-// });
+
+
+
 
 
 
@@ -1707,13 +1838,13 @@ $(document).ready( function() {
       
       
       
-//     $('#reviewreply').on('click', () => {
-// 				if(${empty loginMember}) {
-// 					alert('로그인 후 이용해 주세요.')	;
+//      $('#writeloginck').on('click', () => {
+//  				if(${empty loginMember}) {
+//  					alert('로그인 후 이용해 주세요.')	;
 					
-// 					$('.mainlogin').focus();
+//  					$('#myModal').modal('toggle')
 // 				}
-// 			});
+//  			});
       
 	
 

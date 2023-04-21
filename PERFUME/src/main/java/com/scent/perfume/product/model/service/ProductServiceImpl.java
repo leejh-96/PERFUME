@@ -12,6 +12,7 @@ import com.scent.perfume.product.model.mapper.ProductMapper;
 import com.scent.perfume.product.model.vo.Option;
 import com.scent.perfume.product.model.vo.Product;
 import com.scent.perfume.product.model.vo.ProductBoard;
+import com.scent.perfume.product.model.vo.ProductBoardCategory;
 import com.scent.perfume.product.model.vo.ProductBoardReply;
 import com.scent.perfume.product.model.vo.TopCate;
 
@@ -211,6 +212,28 @@ public class ProductServiceImpl implements ProductService{
 		
 		
 		return mapper.selectBoardReplyBypbrNo(pbrNo);
+	}
+
+	@Override
+	public int save(ProductBoard review) {
+        int result = 0;
+		
+
+		if(review.getPbno() > 0) {
+			// update
+//			result = mapper.updateBoard(board);
+		} else {
+			// insert
+			result = mapper.insertReviewBoard(review);
+		}
+		
+		return result; 
+	}
+
+	@Override
+	public List<ProductBoardCategory> getBoardCategoryList() {
+		
+		return mapper.selectBoardCategoryList();
 	}
 
 

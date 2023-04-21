@@ -1,23 +1,37 @@
 package com.scent.perfume.planning.controller;
 
+import java.util.Map;
 import java.util.Properties;
 
-import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.scent.perfume.planning.model.service.MemberService;
+import com.scent.perfume.planning.model.service.MemberServiceImpl;
 import com.scent.perfume.planning.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +43,10 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 	// 로그인 처리
 	@PostMapping("/login")
 	public ModelAndView login(ModelAndView modelAndView, @RequestParam String id, @RequestParam String pwd) {
@@ -120,7 +138,7 @@ public class MemberController {
 		    return "planning/findPwdResult";
 		} else {
 		    // 임시 비밀번호 생성 및 업데이트
-		    String tempPassword = service.generateTempPassword();
+		    String tempPassword = service.generateTempPassword(userId);
 		    service.updatePassword(userId, tempPassword);
 
 		    // 이메일 전송
@@ -133,14 +151,13 @@ public class MemberController {
 		    return "planning/findPwdResult";
 		}
 	};
-
 	
 	// 이메일 전송 메소드
 	private void sendEmail(String userId, String userEmail, String password) throws Exception {
 		String host = "smtp.gmail.com";
 		int port = 587;
-		String username = "kong032149@gmail.com";
-		String password2 = "blvarryhfsioeqgn";
+		String username = "perfume.find.pwd@gmail.com";
+		String password2 = "zvipezqfbaaztjii";
 
 		Properties properties = new Properties();
 		properties.put("mail.smtp.starttls.enable", "true");
@@ -157,7 +174,7 @@ public class MemberController {
 		Session session = Session.getInstance(properties, auth);
 
 		Message message = new MimeMessage(session);
-		message.setFrom(new InternetAddress("kong032149@gmail.com"));
+		message.setFrom(new InternetAddress("perfume.find.pwd@gmail.com"));
 		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail));
 		message.setSubject("임시 비밀번호 발급");
 		message.setText(userId + "님의 임시 비밀번호는 " + password + "입니다.");

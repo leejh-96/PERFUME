@@ -16,8 +16,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    
-    <style>
+	<style>
     h2{
         margin-top: 50px;
         margin-bottom: 60px;
@@ -80,10 +79,31 @@
         border-color: rgb(120, 116, 100);
         margin-left: 10%;
     }
-    #btnList:hover{
+    #btnList:hover {
         background-color: rgb(90, 98, 104);
         border-color: rgb(90, 98, 104);
     }
+    #btnUpdate, #btnDelete {
+        background-color: rgb(120, 116, 100);
+        border-color: rgb(120, 116, 100);
+    }
+    #btnUpdate:hover, #btnDelete:hover {
+        background-color: rgb(90, 98, 104);
+        border-color: rgb(90, 98, 104);
+    }
+
+/* 게시물 내 a태그 버튼 형식으로 변경 */
+	 #contentTable a:link, #contentTable a:visited {
+     background-color: rgb(120, 116, 100);
+     color: maroon;
+     padding: 15px 25px;
+     text-align: center;
+     text-decoration: none;
+     display: inline-block;
+	}
+	 #contentTable a:hover, #contentTable a:active {
+	     background-color: rgb(90, 98, 104);
+	}
 
 </style>
 </head>
@@ -127,20 +147,17 @@
                 </tr>
             </tfoot>
         </table>
-        <button id="btnList" type="button" class="btn btn-secondary">목록</button>
+        <button id="btnList" type="button" class="btn btn-secondary"
+        		onclick="location.href='${ path }/eventList'">목록</button>
+		<c:if test="${ not empty loginMember && loginMember.division == '1' }">
+			<button id="btnUpdate" type="button" class="btn btn-secondary"
+				onclick="location.href='${ path }/event/eventUpdate?no=${ board.BNo }'">수정</button>
+			<button id="btnDelete" type="button" class="btn btn-secondary">삭제</button>
+		</c:if>
+
         
     </div>
 </section>
-    
-
-
-
-
-
-
-
-
-
 
 
 

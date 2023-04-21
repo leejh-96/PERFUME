@@ -66,9 +66,9 @@
 	</select>
 	
 	<update id="updatePassword" parameterType="map">
-		UPDATE MEMBER
-		SET M_PWD = #{tempPassword}
-		WHERE M_ID = #{userId}
+	    UPDATE MEMBER
+	    SET M_PWD = #{tempPassword}
+	    WHERE M_ID = #{userId}
 	</update>
 </mapper>
 

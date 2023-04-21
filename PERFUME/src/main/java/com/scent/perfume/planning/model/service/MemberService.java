@@ -13,7 +13,7 @@ public interface MemberService {
 	
 	String getPassword(String userName, String userId, String userEmail);
 
-	String generateTempPassword();
+	String generateTempPassword(String userId);
 
 	void updatePassword(String userId, String tempPassword);
 }
