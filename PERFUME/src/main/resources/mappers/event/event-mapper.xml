@@ -29,12 +29,8 @@
 		<result property="mailStatus" column="M_MAILSTATUS"/>
 	</resultMap>
 	
-	<resultMap id="boardListResultMap" type="Board">	<!-- type 속성 mybatis-config.xml의 <typeAliases>를 통해 간소화 -->
-	<!-- resultMap태그의 id : resultMap을 식별하기 위한 값. type : 결과값을 담을 자바인스턴스의 클래스 타입 -->
-		<!-- property 필드명 column 컬럼명 -->
-		<!-- id : 조회 결과의 기본 키 컬럼을 매핑한다. -->
+	<resultMap id="boardListResultMap" type="Board">
 		<id property="bNo" column="B_NO"/>
-		<!-- result : 조회 결과의 일반 컬럼을 매핑한다. -->
 		<result property="mNo" column="M_NO"/>
 		<result property="bcType" column="BC_TYPE"/>
 		<result property="bTitle" column="B_TITLE"/>
@@ -52,6 +48,12 @@
 		<result property="bnEndDate" column="BN_ENDDATE"/>
 		<result property="preTitle" column="PRE_TITLE"/>
 		<result property="nextTitle" column="NEXT_TITLE"/>
+	</resultMap>
+	
+	<resultMap id="eventMemberResultMap" type="EventMember">
+		<id property="emNo" column="EM_NO"/>
+		<result property="bnNo" column="BN_NO"/>
+		<result property="emMNo" column="EM_MNO"/>
 	</resultMap>
 
 
@@ -251,6 +253,32 @@
 	<update id="updateEventBoardStatus" parameterType="map">
 		UPDATE BOARD SET B_STATUS = #{bStatus} WHERE B_NO = #{no}
 	</update>
+	
+	
+<!-- ////////////////////////////////////////////////////////////	이벤트	///////////////////////////////////////////////////// -->
+
+
+	<!-- 선택약관 동의 여부 확인 -->	
+	<select id="findOptionAgreeByMNo" parameterType="_int" resultType="string">
+		SELECT T_CHECK FROM TERMS WHERE M_NO = #{mNo}
+	</select>
+	<!-- 선택약관 동의('Y')로 변경 TERMS 테이블의 T_CHECK 컬럼 -->
+	<update id="updateOptionAgr" parameterType="_int">
+		UPDATE TERMS SET T_CHECK = 'Y' WHERE M_NO = #{mNo}
+	</update>
+	<!-- 이미 참여한 회원인지 확인 -->
+	<select id="getParticipateEventMNo" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM EVENT_MEMBER WHERE EM_MNO = #{mNo}
+	</select>
+	<!-- BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기 -->
+	<select id="getBnNoByBTitle" parameterType="string" resultType="_int">
+		SELECT BN_NO FROM BENEFIT WHERE BN_TITLE = #{bTitle}
+	</select>
+	<!-- 이벤트 참여 회원 DB에 저장 -->
+	<insert id="insertMnoMemberEvent" parameterType="_int">
+		INSERT INTO EVENT_MEMBER ( EM_NO, BN_NO, EM_MNO ) VALUES ( SEQ_EVENT_MEMBER_EM_NO.NEXTVAL, #{bnNo}, #{mNo} )
+	</insert>
+	
 	
 	
 	

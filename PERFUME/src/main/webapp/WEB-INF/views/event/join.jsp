@@ -289,7 +289,7 @@
                         쇼핑정보 수신(선택)에 모두 동의합니다.
                     </div>
                     </label><br>
-                    <label class="form-check-label"><input type="checkbox" name="option1" id="essential-agreement" class="form-check-input" required> <b>[필수]</b> 이용 약관에 동의합니다.</label>
+                    <label class="form-check-label"><input type="checkbox" name="option1" id="essential-agreement" class="form-check-input" required> <b>[필수]</b> 필수 이용 약관에 동의합니다.</label>
                     <!-- 버튼 아코디언 챗 gpt 참고 -->
                     <button type="button" id="btnAgr1" class="btn btn-secondary btn-sm" onclick="showEssentialAgreement()">+</button>    
                     <div id="essential-agreement-content" class="divAgr">
