@@ -24,6 +24,10 @@ public interface EventService {
 	Board findBoardByNo(int no);
 	Date selectEventStartByTitle(String bTitle);
 	Date selectEventEndByTitle(String bTitle);
+	String findPreTitleByNo(int no);
+	String findNextTitleByNo(int no);
+	int findPreNoByPreTitle(String preTitle);
+	int findNextNoByNextTitle(String nextTitle);
 // 게시글 작성 수정
 	int saveEventWrite(Board board);
 // 게시글 삭제

@@ -38,4 +38,12 @@ public class Board {
 	private Date bnCreateDate;
 	// 이벤트 등록 날짜
 	private Date bnEndDate;
+	// 이전글 제목
+	private String preTitle;
+	// 다음글 제목
+	private String nextTitle;
+	// 이전글 글번호
+	private int preNo;
+	// 다음글 글번호
+	private int nextNo;
 }

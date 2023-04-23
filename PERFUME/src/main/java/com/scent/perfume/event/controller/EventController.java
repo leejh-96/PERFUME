@@ -223,9 +223,37 @@ public class EventController {
 		board = service.findBoardByNo(no);
 		log.info("보드 파인드 보드 엔오 서비스 탄 후 : {}", board);
 		
-		board.setBnCreateDate(service.selectEventStartByTitle(board.getBTitle()));
-		board.setBnEndDate(service.selectEventEndByTitle(board.getBTitle()));
+		String bTitle = board.getBTitle();
+		
+		board.setBnCreateDate(service.selectEventStartByTitle(bTitle));
+		board.setBnEndDate(service.selectEventEndByTitle(bTitle));
 		log.info("보드 셋 서비스 탄 후 : {}", board);
+		
+//		String preTitle = service.findPreTitleByNo(no);
+//		String nextTitle = service.findNextTitleByNo(no);
+//		
+//		board.setPreTitle(preTitle);
+//		board.setNextTitle(nextTitle);
+//		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
+//		board.setPreNo(service.findPreNoByPreTitle(preTitle));
+//		board.setNextNo(service.findNextNoByNextTitle(nextTitle));
+		
+		String preTitle = service.findPreTitleByNo(no);
+		String nextTitle = service.findNextTitleByNo(no);
+
+		board.setPreTitle(preTitle != null ? preTitle : null);
+		board.setNextTitle(nextTitle != null ? nextTitle : null);
+		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
+
+		if (preTitle != null) {
+		    board.setPreNo(service.findPreNoByPreTitle(preTitle));
+		}
+		if (nextTitle != null) {
+		    board.setNextNo(service.findNextNoByNextTitle(nextTitle));
+		}
+
+		
+		log.info("이전글 다음글 번호 찾는서비스 탄 후 : {}", board);
 		
 		modelAndView.addObject("board", board);
 		modelAndView.setViewName("event/eventView");

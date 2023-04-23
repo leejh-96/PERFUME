@@ -58,9 +58,13 @@ public interface EventMapper {
 	Board selectEventViewByNo(@Param("no") int no);
 
 // 게시물 보기	
-	Date selectEventStartByTitle(Board board);
-	Date selectEventEndByTitle(Board board);
-
+	Date selectEventStartByTitle(String bTitle);
+	Date selectEventEndByTitle(String bTitle);
+	String selectPreTitleByNo(int no);
+	String selectNextTitleByNo(int no);
+	int selectPreNoByPreTitle(String preTitle);
+	int selectNextNoByNextTitle(String nextTitle);
+	
 // 게시글 등록
 	int insertEventBoard(Board board);
 	int updateEventBoard(Board board);

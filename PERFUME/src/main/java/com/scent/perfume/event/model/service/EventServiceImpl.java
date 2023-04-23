@@ -134,12 +134,27 @@ public class EventServiceImpl implements EventService {
 	}
 	@Override
 	public Date selectEventStartByTitle(String bTitle) {
-		//return mapper.selectEventStartByTitle(bTitle);
+		return mapper.selectEventStartByTitle(bTitle);
 	}
 	@Override
 	public Date selectEventEndByTitle(String bTitle) {
-		//return mapper.selectEventEndByTitle(bTitle);
-		// 매퍼수정하기!!
+		return mapper.selectEventEndByTitle(bTitle);
+	}
+	@Override
+	public String findPreTitleByNo(int no) {
+		return mapper.selectPreTitleByNo(no);
+	}
+	@Override
+	public String findNextTitleByNo(int no) {
+		return mapper.selectNextTitleByNo(no);
+	}
+	@Override
+	public int findPreNoByPreTitle(String preTitle) {
+		return mapper.selectPreNoByPreTitle(preTitle);
+	}
+	@Override
+	public int findNextNoByNextTitle(String nextTitle) {
+		return mapper.selectNextNoByNextTitle(nextTitle);
 	}
 
 // 게시글 작성 수정
@@ -162,6 +177,8 @@ public class EventServiceImpl implements EventService {
 	public int deleteEventBoard(int no) {
 		return mapper.updateEventBoardStatus(no, "N");
 	}
+
+
 
 
 

@@ -256,9 +256,7 @@
                     <input type="text" id="verification-code" name="verification-code" class="form-control" placeholder="인증번호를 입력해주세요" required>
                     <button type="button" id="btnPh2" class="btn btn-secondary" disabled>인증번호 확인</button><br>
                 </div>
-                <small id="phoneHelpBlock" class="form-text text-muted">
-                    휴대폰 인증을 위한 필수 입력사항입니다.
-                </small>
+                <small id="phoneHelpBlock" class="form-text text-muted">휴대폰 인증을 위한 필수 입력사항입니다.</small>
                 <span id="phoneCheck" style="font-size: small;"></span>
             </div>
         </div>

@@ -29,7 +29,7 @@
 		<result property="mailStatus" column="M_MAILSTATUS"/>
 	</resultMap>
 	
-	<resultMap id="boardResultMap" type="Board">	<!-- type 속성 mybatis-config.xml의 <typeAliases>를 통해 간소화 -->
+	<resultMap id="boardListResultMap" type="Board">	<!-- type 속성 mybatis-config.xml의 <typeAliases>를 통해 간소화 -->
 	<!-- resultMap태그의 id : resultMap을 식별하기 위한 값. type : 결과값을 담을 자바인스턴스의 클래스 타입 -->
 		<!-- property 필드명 column 컬럼명 -->
 		<!-- id : 조회 결과의 기본 키 컬럼을 매핑한다. -->
@@ -45,6 +45,13 @@
 		<result property="bStatus" column="B_STATUS"/>
 		<result property="bSort" column="B_SORT"/>
 		<result property="bPwd" column="B_PWD"/>
+	</resultMap>
+	
+	<resultMap id="boardDetailResultMap" type="Board" extends="boardListResultMap"> <!-- type : 쿼리를 수행하고 결과값으로 받는 데이터의 타입 -->
+		<result property="bnCreateDate" column="BN_CREATEDATE"/>
+		<result property="bnEndDate" column="BN_ENDDATE"/>
+		<result property="preTitle" column="PRE_TITLE"/>
+		<result property="nextTitle" column="NEXT_TITLE"/>
 	</resultMap>
 
 
@@ -120,7 +127,7 @@
 	<select id="selectEventBoardCount" resultType="_int">
 		SELECT COUNT(*) FROM BOARD WHERE B_STATUS = 'Y' AND BC_TYPE = '이벤트'
 	</select>
-	<select id="selectAll" resultMap="boardResultMap">
+	<select id="selectAll" resultMap="boardListResultMap">
 		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT
 		FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
 		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
@@ -145,7 +152,7 @@
 		</if>
 		ORDER BY B.B_NO DESC
 	</select>
-	<select id="selectAllByKeyword" resultMap="boardResultMap">
+	<select id="selectAllByKeyword" resultMap="boardListResultMap">
 		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT, B.B_PWD
 		FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
 		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
@@ -164,7 +171,7 @@
 	</select>
 	
 	<!-- 게시물 상세 보기 기능 -->
-	<select id="selectEventViewByNo" parameterType="_int" resultMap="boardResultMap">
+	<select id="selectEventViewByNo" parameterType="_int" resultMap="boardListResultMap">
 		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT, B.B_PWD
 		FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
 		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트' AND B.B_NO = #{no}
@@ -181,17 +188,49 @@
 	</insert>
 	
 	<!-- 게시물 보기 -->
-	<select id="selectEventStartByTitle" parameterType="Board" resultType="date">		
+	<select id="selectEventStartByTitle" parameterType="string" resultType="date">		
 		SELECT BN_CREATEDATE
 		FROM BENEFIT
 		INNER JOIN BOARD ON(BN_TITLE = B_TITLE)
-		WHERE BN_TITLE = #{bTitle};
+		WHERE BN_TITLE = #{bTitle}
 	</select>
-	<select id="selectEventEndByTitle" parameterType="Board" resultType="date">
+	<select id="selectEventEndByTitle" parameterType="string" resultType="date">
 		SELECT BN_ENDDATE
 		FROM BENEFIT
 		INNER JOIN BOARD ON(BN_TITLE = B_TITLE)
-		WHERE BN_TITLE = #{bTitle};
+		WHERE BN_TITLE = #{bTitle}
+	</select>
+	<select id="selectPreTitleByNo" parameterType="_int" resultType="string">
+		SELECT PRE_TITLE
+		FROM (SELECT B_NO, M_NO, BC_TYPE, B_TITLE,
+		             LEAD(B_TITLE, 1) OVER(ORDER BY B_NO DESC) AS NEXT_TITLE,
+		             LAG(B_TITLE, 1) OVER(ORDER BY B_NO DESC) AS PRE_TITLE
+		      FROM (SELECT B.B_NO AS B_NO, M.M_NO AS M_NO, B.BC_TYPE AS BC_TYPE, B.B_TITLE AS B_TITLE,
+		                   B.B_CONTENT AS B_CONTENT, B.B_CREATEDATE AS B_CREATEDATE, B.B_UPDATEDATE AS B_UPDATEDATE,
+		                   B.B_COUNT AS B_COUNT, B.B_STATUS AS B_STATUS, B.B_SORT AS B_SORT
+		            FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
+		            WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
+		            ORDER BY B.B_NO DESC))
+		WHERE B_NO = #{no}
+	</select>
+	<select id="selectNextTitleByNo" parameterType="_int" resultType="string">
+		SELECT NEXT_TITLE
+		FROM (SELECT B_NO, M_NO, BC_TYPE, B_TITLE,
+		             LEAD(B_TITLE, 1) OVER(ORDER BY B_NO DESC) AS NEXT_TITLE,
+		             LAG(B_TITLE, 1) OVER(ORDER BY B_NO DESC) AS PRE_TITLE
+		      FROM (SELECT B.B_NO AS B_NO, M.M_NO AS M_NO, B.BC_TYPE AS BC_TYPE, B.B_TITLE AS B_TITLE,
+		                   B.B_CONTENT AS B_CONTENT, B.B_CREATEDATE AS B_CREATEDATE, B.B_UPDATEDATE AS B_UPDATEDATE,
+		                   B.B_COUNT AS B_COUNT, B.B_STATUS AS B_STATUS, B.B_SORT AS B_SORT
+		            FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
+		            WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
+		            ORDER BY B.B_NO DESC))
+		WHERE B_NO = #{no}
+	</select>
+	<select id="selectPreNoByPreTitle" parameterType="string" resultType="_int">
+		SELECT B_NO FROM BOARD WHERE B_TITLE = #{preTitle}
+	</select>
+	<select id="selectNextNoByNextTitle" parameterType="string" resultType="_int">
+		SELECT B_NO FROM BOARD WHERE B_TITLE = #{nextTitle}
 	</select>
 	
 	<!-- 게시물 수정 -->
