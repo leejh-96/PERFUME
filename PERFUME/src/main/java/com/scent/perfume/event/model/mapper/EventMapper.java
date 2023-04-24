@@ -76,15 +76,40 @@ public interface EventMapper {
 /////////////////////////////////////////게시판///////////////////////////////////	
 
 
-// 선택약관 동의 여부 확인
+// 이벤트 참여
+	// 선택약관 동의 여부 확인
 	String findOptionAgreeByMNo(int mNo);
-// 선택약관 동의('Y')로 변경 TERMS 테이블의 T_CHECK 컬럼
+	// 선택약관 동의('Y')로 변경 TERMS 테이블의 T_CHECK 컬럼
 	int updateOptionAgr(int mNo);
-// 이미 참여한 회원인지 확인
+	// 이미 참여한 회원인지 확인
 	int getParticipateEventMNo(int mNo);
-//	BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
+	//	BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
 	int getBnNoByBTitle(String bTitle);
-// 이벤트 참여 회원 DB에 저장
+	// 이벤트 참여 회원 DB에 저장
 	int insertMnoMemberEvent(@Param("mNo") int mNo, @Param("bnNo") int bnNo);
+	
+// 당첨자 추첨
+	// 랜덤으로 당첨자 추첨 (참여번호 가져오기)
+	int getEmNoByBnNo(int bnNo);
+	// 당첨자 회원번호 가져오기
+	int getEpMNoByEmNo(int emNo);
+	// 당첨자 정보 EVENT_PRIZE 테이블인서트
+	int insertEventPrize(@Param("emNo") int emNo, @Param("epMNo") int epMNo);
+	// 이벤트 당첨자 쿠폰 발급 BENEFIT에 INSERT
+	int insertBenefitForWinner(String benefitTitle);
+	// benefitTitle로 bnNo 얻어오기
+	int getBnNoByBenefitTitle(String benefitTitle);
+	// MEMBER_BENEFIT_INFO에 INSERT
+	int insertMemberBenefitInfoForWinner(@Param("bnNo") int bnNo, @Param("epMNo") int epMNo);
+	// BTitle에서 향수 이름 알아오기 (PRODUCT 테이블에서 상품 번호 불러오기위해)
+	String selectNamePrizeByBTitle(String bTitle);
+	// 상품 이름으로 상품번호 알아오기
+	int seletPNoByNamePrize(String namePrize);
+	// PRODUCT_BENEFIT에 혜택번호, 상품번호 INSERT
+	int insertProductBenefit(@Param("bnNo") int bnNo, @Param("pNo") int pNo);
+	// 당첨자 전화번호
+	String selectPhoneNoForWinner(int epMNo);
+	// 당첨 뽑기 중복 금지
+	String getBnTitleByBTitleForWinner(String bnTitle);
 	
 }

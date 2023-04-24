@@ -114,6 +114,7 @@
 	 		<mapping path="/eventDelete" />
 	 		<mapping path="/participatePresentPerfume" />
 	 		<mapping path="/optionAgree" />
+	 		<mapping path="/pickWinner" />
 	 	
 	 		
 	 		<mapping path="/board/**" />

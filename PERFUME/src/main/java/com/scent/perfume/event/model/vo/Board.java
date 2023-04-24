@@ -32,7 +32,8 @@ public class Board {
 	private String bSort;
 	// 게시글 비밀번호 				게시판 종류가 2(qna)일때 비밀번호 컬럼을 사용한다.
 	private String bPwd;
-	
+	// 공지사항 상단 고정용			공지사항 글쓰기 Y, 일반 글쓰기 N
+	private String noticeYn;
 	
 	// 이벤트 시작 날짜
 	private Date bnCreateDate;

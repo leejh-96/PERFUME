@@ -32,16 +32,30 @@ public interface EventService {
 	int saveEventWrite(Board board);
 // 게시글 삭제
 	int deleteEventBoard(int no);
-// 선택약관 동의 여부 확인
+// 추첨 이벤트 참여
+	// 선택약관 동의 여부 확인
 	String findOptionAgreeByMNo(int mNo);
-// 선택약관 동의('Y')로 변경 TERMS 테이블의 T_CHECK 컬럼
+	// 선택약관 동의('Y')로 변경 TERMS 테이블의 T_CHECK 컬럼
 	int updateOptionAgr(int mNo);
-// 이미 참여한 회원인지 확인
+	// 이미 참여한 회원인지 확인
 	int getParticipateEventMNo(int mNo);
-// BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
+	// BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
 	int getBnNoByBTitle(String bTitle);
-// 이벤트 참여 회원 DB에 저장
+	// 이벤트 참여 회원 DB에 저장
 	int participateEvent(int mNo, int bnNo);
+// 이벤트 당첨자 추첨
+	// 당첨자 선정 (참여번호 가져오기)
+	int pickEventWinner(int bnNo);
+	// 당첨자 회원 번호 가져오기
+	int getEpMNo(int emNo);
+	// EVENT_PRIZE INSERT
+	int insertEventPrize(int emNo, int epMNo);
+	// 당첨자에게 쿠폰 발급 BENEFIT, MEMBER_BENEFIT_INFO, PRODUCT_BENEFIT 테이블 INSERT
+	int insertBenefit(int epMNo, String BTitle);
+	// epMNo로 당첨자 전화번호 알아오기
+	String findPhoneNoForWinner(int epMNo);
+	// 당첨 뽑기 중복 금지
+	String getBnTitleByBTitleForWinner(String bnTitle);
 
 	
 }

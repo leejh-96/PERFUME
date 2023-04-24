@@ -411,6 +411,9 @@ public class EventController {
 		
 		board = service.findBoardByNo(no);
 		
+		log.info("파인드 보드 바이 엔오 하고 : {}", board);
+		log.info("로그인 멤버 : {}", loginMember);
+		
 		if(board != null && loginMember.getDivision() == 1) {
 			modelAndView.addObject("board", board);
 			modelAndView.setViewName("/event/eventUpdate");
@@ -436,7 +439,7 @@ public class EventController {
 		
 		board = service.findBoardByNo(no);
 		
-		if(board != null && board.getMNo() == loginMember.getNo()) {
+		if(board != null && loginMember.getDivision() == 1) {
 		
 		
 			board.setBTitle(bTitle);
@@ -473,8 +476,8 @@ public class EventController {
 		Board board = null;
 		
 		board = service.findBoardByNo(no);
-		
-		if(board != null && board.getMNo() == loginMember.getNo()) {
+				
+		if(board != null && loginMember.getDivision() == 1) {
 			// 작성자 본인이 맞으면 삭제작업
 			result = service.deleteEventBoard(no);
 			
@@ -596,10 +599,80 @@ public class EventController {
 	
 	// 당첨자 추첨 컨트롤러
 	@GetMapping("/pickWinner")
-	public String pickWinner() {
-		return "/event/testEvent";
+	public ModelAndView pickWinner(ModelAndView modelAndView, @SessionAttribute("loginMember") Member loginMember,
+								@RequestParam("bNo") int BNo, @RequestParam("bTitle") String BTitle) {
+		System.out.println("당첨자 추첨 컨트롤러 잘 탔는지 시소");
+		
+		int bnNo = 0;
+		int emNo = 0;
+		int epMNo = 0;
+		int setEventPrize = 0;
+		int setBenefit = 0;
+		
+		if( loginMember.getDivision() != 1) {
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");	
+		} else {
+			
+			String pickEventWinner = null;
+			String bnTitle = BTitle + " 당첨자 쿠폰";
+			// 이미 당첨자 뽑은 이벤트인지 확인
+			pickEventWinner = service.getBnTitleByBTitleForWinner(bnTitle);
+			
+			if(pickEventWinner != null) {
+				// 이미 당첨자 뽑은 이벤트
+				modelAndView.addObject("msg", "이미 당첨자를 뽑은 이벤트입니다.");
+				modelAndView.addObject("location", "/event/eventView?no=" + BNo);	
+			} else {
+			
+				// BTitle로 BENEFIT 테이블에서 혜택번호(BN_NO) 알아오기
+				bnNo = service.getBnNoByBTitle(BTitle);
+//				log.info("비이이이이엔엔오오오오오옹 bnNo : {}", bnNo);
+				
+				// bnNo(혜택번호)를 가져가 이벤트를 조건으로 지정한 후 해당 이벤트 당첨자(EM_NO 참여번호, EP_MNO 회원번호) 뽑기
+				// EM_NO(참여 번호 뽑기) 랜덤 추출
+				emNo = service.pickEventWinner(bnNo);
+//				log.info("이엠엔오오오오오옹 emNo : {}", emNo);
+				// emNo로 epMNo 가져오기
+				epMNo = service.getEpMNo(emNo);
+//				log.info("이피피피피피피피엠엔오 epMNo : {}", epMNo);
+				// 당첨자 정보 DB 저장
+				setEventPrize = service.insertEventPrize(emNo, epMNo);
+//				log.info("셋이벤트 프라이즈 저장 잘됐으면 1 : {}", setEventPrize);
+				
+				if(setEventPrize > 0) { // 제대로 저장 완료
+					// 당첨자에게 쿠폰 발급 benefit 에 인서트 작업 setBenefit 추출
+					setBenefit = service.insertBenefit(epMNo, BTitle);
+//					log.info("베네핏 잘들어갔으면 1 : {}", setBenefit);
+					
+					if(setBenefit > 0 ) { // 제대로 저장 완료
+//						// epMNo로 당첨자 전화번호 알아오기
+//						String winnerPhone = service.findPhoneNoForWinner(epMNo);
+//						log.info("당첨자 폰번호 : {}", winnerPhone);
+//						
+//						// 폰번호 받아와 문자 전송 coolsms api로					
+//						if (eventServiceImpl.sendSMSToWinner(winnerPhone, BTitle)) {
+							modelAndView.addObject("msg", "당첨자 추첨이 완료되었습니다. 관리자 페이지에서 발급된 쿠폰을 확인해주세요.");
+							modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+//					    } else {
+//					    	modelAndView.addObject("msg", "메세지 전송에 실패하였습니다.");
+//							modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+//					    }
+					} else { // 베네핏 저장 실패
+						modelAndView.addObject("msg", "당첨자 추첨이 제대로 완료되지 않았습니다. BENEFIT INSERT ERROR");
+						modelAndView.addObject("location", "/event/eventView?no=" + BNo);	
+					}
+					
+				} else { // 이벤트 프라이스 테이블에 제대로 저장 미완료
+					modelAndView.addObject("msg", "당첨자 추첨이 제대로 완료되지 않았습니다. EVENT_PRIZE INSERT ERROR");
+					modelAndView.addObject("location", "/event/eventView?no=" + BNo);		
+				}
+			}
+		}
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
 	}
-	
 	
 	
 	

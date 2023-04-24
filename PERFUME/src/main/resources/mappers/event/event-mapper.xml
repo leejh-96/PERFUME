@@ -41,6 +41,7 @@
 		<result property="bStatus" column="B_STATUS"/>
 		<result property="bSort" column="B_SORT"/>
 		<result property="bPwd" column="B_PWD"/>
+		<result property="noticeYn" column="NOTICE_YN"/>
 	</resultMap>
 	
 	<resultMap id="boardDetailResultMap" type="Board" extends="boardListResultMap"> <!-- type : 쿼리를 수행하고 결과값으로 받는 데이터의 타입 -->
@@ -125,18 +126,18 @@
 <!-- ////////////////////////////////////////////////////////////	게시판	///////////////////////////////////////////////////// -->
 
 
-	<!-- 게시판 목록 조회 -->
+<!-- 게시판 목록 조회 -->
 	<select id="selectEventBoardCount" resultType="_int">
 		SELECT COUNT(*) FROM BOARD WHERE B_STATUS = 'Y' AND BC_TYPE = '이벤트'
 	</select>
 	<select id="selectAll" resultMap="boardListResultMap">
-		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT
+		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT, NOTICE_YN
 		FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
 		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
 		ORDER BY B.B_NO DESC
 	</select>
 	
-	<!-- 게시물 검색 기능 -->
+<!-- 게시물 검색 기능 -->
 	<select id="selectEventCountByKeyword" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
 		FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
@@ -155,7 +156,7 @@
 		ORDER BY B.B_NO DESC
 	</select>
 	<select id="selectAllByKeyword" resultMap="boardListResultMap">
-		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT, B.B_PWD
+		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT, B.B_PWD, NOTICE_YN
 		FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
 		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
 		<if test="keyword != null">
@@ -172,35 +173,29 @@
 		ORDER BY B.B_NO DESC
 	</select>
 	
-	<!-- 게시물 상세 보기 기능 -->
+<!-- 게시물 상세 보기 기능 -->
 	<select id="selectEventViewByNo" parameterType="_int" resultMap="boardListResultMap">
-		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT, B.B_PWD
+		SELECT B.B_NO, M.M_NO, B.BC_TYPE, B.B_TITLE, B.B_CONTENT, B.B_CREATEDATE, B.B_UPDATEDATE, B.B_COUNT, B.B_STATUS, B.B_SORT, B.B_PWD, NOTICE_YN
 		FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
 		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트' AND B.B_NO = #{no}
 	</select>
 	
-	<!-- 게시물 등록 -->
+<!-- 게시물 등록 -->
 	<insert id="insertEventBoard" parameterType="Board"
 		useGeneratedKeys="true" keyColumn="B_NO" keyProperty="bNo">
 		INSERT INTO BOARD (
-		    B_NO, M_NO, BC_TYPE, B_TITLE, B_CONTENT, B_CREATEDATE, B_UPDATEDATE, B_COUNT, B_STATUS, B_SORT, B_PWD
+		    B_NO, M_NO, BC_TYPE, B_TITLE, B_CONTENT, B_CREATEDATE, B_UPDATEDATE, B_COUNT, B_STATUS, B_SORT, B_PWD, NOTICE_YN
 		) VALUES (
-		    SEQ_BOARD_B_NO.NEXTVAL, #{mNo}, '이벤트', #{bTitle}, #{bContent}, SYSDATE, SYSDATE, DEFAULT, DEFAULT, NULL, NULL
+		    SEQ_BOARD_B_NO.NEXTVAL, #{mNo}, '이벤트', #{bTitle}, #{bContent}, SYSDATE, SYSDATE, DEFAULT, DEFAULT, NULL, NULL, NULL
 		)
 	</insert>
 	
-	<!-- 게시물 보기 -->
+<!-- 게시물 보기 -->
 	<select id="selectEventStartByTitle" parameterType="string" resultType="date">		
-		SELECT BN_CREATEDATE
-		FROM BENEFIT
-		INNER JOIN BOARD ON(BN_TITLE = B_TITLE)
-		WHERE BN_TITLE = #{bTitle}
+		SELECT BN_CREATEDATE FROM BENEFIT WHERE BN_TITLE = #{bTitle}
 	</select>
 	<select id="selectEventEndByTitle" parameterType="string" resultType="date">
-		SELECT BN_ENDDATE
-		FROM BENEFIT
-		INNER JOIN BOARD ON(BN_TITLE = B_TITLE)
-		WHERE BN_TITLE = #{bTitle}
+		SELECT BN_ENDDATE FROM BENEFIT WHERE BN_TITLE = #{bTitle}
 	</select>
 	<select id="selectPreTitleByNo" parameterType="_int" resultType="string">
 		SELECT PRE_TITLE
@@ -209,7 +204,7 @@
 		             LAG(B_TITLE, 1) OVER(ORDER BY B_NO DESC) AS PRE_TITLE
 		      FROM (SELECT B.B_NO AS B_NO, M.M_NO AS M_NO, B.BC_TYPE AS BC_TYPE, B.B_TITLE AS B_TITLE,
 		                   B.B_CONTENT AS B_CONTENT, B.B_CREATEDATE AS B_CREATEDATE, B.B_UPDATEDATE AS B_UPDATEDATE,
-		                   B.B_COUNT AS B_COUNT, B.B_STATUS AS B_STATUS, B.B_SORT AS B_SORT
+		                   B.B_COUNT AS B_COUNT, B.B_STATUS AS B_STATUS, B.B_SORT AS B_SORT, B.NOTICE_YN AS NOTICE_YN
 		            FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
 		            WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
 		            ORDER BY B.B_NO DESC))
@@ -222,20 +217,20 @@
 		             LAG(B_TITLE, 1) OVER(ORDER BY B_NO DESC) AS PRE_TITLE
 		      FROM (SELECT B.B_NO AS B_NO, M.M_NO AS M_NO, B.BC_TYPE AS BC_TYPE, B.B_TITLE AS B_TITLE,
 		                   B.B_CONTENT AS B_CONTENT, B.B_CREATEDATE AS B_CREATEDATE, B.B_UPDATEDATE AS B_UPDATEDATE,
-		                   B.B_COUNT AS B_COUNT, B.B_STATUS AS B_STATUS, B.B_SORT AS B_SORT
+		                   B.B_COUNT AS B_COUNT, B.B_STATUS AS B_STATUS, B.B_SORT AS B_SORT, B.NOTICE_YN AS NOTICE_YN
 		            FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
 		            WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
 		            ORDER BY B.B_NO DESC))
 		WHERE B_NO = #{no}
 	</select>
 	<select id="selectPreNoByPreTitle" parameterType="string" resultType="_int">
-		SELECT B_NO FROM BOARD WHERE B_TITLE = #{preTitle}
+		SELECT B_NO FROM BOARD WHERE B_TITLE = #{preTitle} AND B_STATUS='Y'
 	</select>
 	<select id="selectNextNoByNextTitle" parameterType="string" resultType="_int">
-		SELECT B_NO FROM BOARD WHERE B_TITLE = #{nextTitle}
+		SELECT B_NO FROM BOARD WHERE B_TITLE = #{nextTitle} AND B_STATUS='Y'
 	</select>
 	
-	<!-- 게시물 수정 -->
+<!-- 게시물 수정 -->
 	<update id="updateEventBoard" parameterType="Board">
 		UPDATE BOARD
 		<trim prefix="SET" suffixOverrides=",">
@@ -249,7 +244,7 @@
 		WHERE B_NO = #{bNo}
 	</update>
 	
-	<!-- 게시물 삭제 -->
+<!-- 게시물 삭제 -->
 	<update id="updateEventBoardStatus" parameterType="map">
 		UPDATE BOARD SET B_STATUS = #{bStatus} WHERE B_NO = #{no}
 	</update>
@@ -258,6 +253,7 @@
 <!-- ////////////////////////////////////////////////////////////	이벤트	///////////////////////////////////////////////////// -->
 
 
+<!-- 이벤트 참여 -->
 	<!-- 선택약관 동의 여부 확인 -->	
 	<select id="findOptionAgreeByMNo" parameterType="_int" resultType="string">
 		SELECT T_CHECK FROM TERMS WHERE M_NO = #{mNo}
@@ -279,7 +275,64 @@
 		INSERT INTO EVENT_MEMBER ( EM_NO, BN_NO, EM_MNO ) VALUES ( SEQ_EVENT_MEMBER_EM_NO.NEXTVAL, #{bnNo}, #{mNo} )
 	</insert>
 	
-	
+<!-- 당첨자 추첨 -->
+	<!-- 랜덤으로 추첨회원 emNo 뽑기 -->
+	<select id="getEmNoByBnNo" parameterType="_int" resultType="_int">
+		SELECT EM_NO
+		FROM (SELECT * FROM EVENT_MEMBER WHERE BN_NO = #{bnNo} ORDER BY DBMS_RANDOM.VALUE)
+		<![CDATA[WHERE ROWNUM <= 1]]>
+	</select>
+	<!-- 당첨자 참여번호 epMNo 가져오기 -->
+	<select id="getEpMNoByEmNo" parameterType="_int" resultType="_int">
+		SELECT EM_MNO FROM EVENT_MEMBER WHERE EM_NO=#{emNo}
+	</select>
+	<!-- 당첨자 정보 EVENT_PRIZE 테이블 인서트 -->
+	<insert id="insertEventPrize" parameterType="_int">
+		INSERT INTO EVENT_PRIZE ( EP_NO, EM_NO, EP_MNO ) VALUES ( SEQ_EVENT_PRIZE_EP_NO.NEXTVAL, #{emNo}, #{epMNo} )		
+	</insert>
+	<!-- 당첨자 쿠폰 증정 BENEFIT 테이블 인서트 -->		
+	<insert id="insertBenefitForWinner" parameterType="string">
+		INSERT INTO BENEFIT (
+		    BN_NO, BN_NAME, BN_TITLE, BN_CONTENT, BN_CREATEDATE, BN_ENDDATE, BN_RATIO, BN_STATUS, BN_HIT
+		) VALUES (
+		    SEQ_BENEFIT_BN_NO.NEXTVAL, '쿠폰', #{benefitTitle}, #{benefitTitle}, DEFAULT, SYSDATE + 30, 100, 'Y', DEFAULT
+		)
+	</insert>
+	<!-- benefitTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기 -->
+	<select id="getBnNoByBenefitTitle" parameterType="string" resultType="_int">
+		SELECT BN_NO FROM BENEFIT WHERE BN_TITLE = #{benefitTitle}
+	</select>
+	<!-- MEMBER_BENEFIT_INFO에 INSERT -->
+	<insert id="insertMemberBenefitInfoForWinner" parameterType="_int">
+		INSERT INTO MEMBER_BENEFIT_INFO (
+		    MBI_NO, M_NO, BN_NO, MBI_STATUS
+		) VALUES (
+		    SEQ_MEMBER_BENEFIT_INFO_MBI_NO.NEXTVAL, #{epMNo}, #{bnNo}, DEFAULT
+		)
+	</insert>
+	<!-- BTitle에서 향수 이름 알아오기 (PRODUCT 테이블에서 상품 번호 불러오기위해) -->
+	<select id="selectNamePrizeByBTitle" parameterType="string" resultType="string">
+		SELECT 
+			SUBSTR(BN_TITLE, INSTR(BN_TITLE, ' ', 1, 2) + 1, INSTR(BN_TITLE, ' ', 1, 3) - INSTR(BN_TITLE, ' ', 1, 2) - 1) AS NAME
+		FROM BENEFIT
+		WHERE BN_TITLE = #{bTitle}
+	</select>
+	<!-- 상품명으로 상품 번호 알아오기 -->
+	<select id="seletPNoByNamePrize" parameterType="string" resultType="_int">
+		SELECT P_NO FROM PRODUCT WHERE MOD(PM_NO, 2) = 1 AND P_NAME = #{namePrize}
+	</select>
+	<!-- PRODUCT_BENEFIT INSERT -->
+	<insert id="insertProductBenefit" parameterType="_int">
+		INSERT INTO PRODUCT_BENEFIT ( PBF_NO, BN_NO, P_NO ) VALUES ( SEQ_PRODUCT_BENEFIT_PBF_NO.NEXTVAL, #{bnNo}, #{pNo} )	
+	</insert>
+	<!-- epMNo 당첨자 전화번호 알아오기 -->
+	<select id="selectPhoneNoForWinner" parameterType="_int" resultType="string">
+		SELECT M_PHONE, M_NO FROM MEMBER WHERE M_NO = #{epMNo} AND M_STATUS = 'Y'
+	</select>
+	<!-- 당첨 뽑기 중복 금지 BENEFIT 테이블에 특정 값이 있는지 확인 -->
+	<select id="getBnTitleByBTitleForWinner" parameterType="string" resultType="string">
+		SELECT BN_TITLE FROM BENEFIT WHERE BN_TITLE = #{bnTitle}
+	</select>
 	
 	
 </mapper>
