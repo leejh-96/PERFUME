@@ -9,99 +9,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>eventList</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
-	crossorigin="anonymous">
-<style>
-h2 {
-	margin-top: 50px;
-}
-
-section {
-	width: 1200px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-thead {
-	background-color: rgb(228, 228, 228);
-}
-
-body {
-	background-color: #f6f6f2;
-}
-.noTable{
-	width: 15%;
-	text-align: center;
-}
-.titleTable{
-	width: 60%;
-}
-.dateTable{
-	width: 25%;
-	text-align: center;	
-}
-#titleAtag{
-	color: inherit;
- 	text-decoration: none;
-}
-#boardList {
-	color: dimgray;
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-#writeButton {
-	float: right;
-	margin-right: 5%;
-}
-
-#writeButton button:hover {
-	background-color: rgb(120, 116, 100);
-	border-color: rgb(120, 116, 100);
-}
-
-#searchNpage {
-	margin-bottom : 5%;
-}
-
-#searchBar {
-	width: 30%;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-input[type="submit"] {
-	background-color: rgb(120, 116, 100);
-	border-color: rgb(120, 116, 100);
-}
-
-#pageBar {
-	width: 30%;
-	margin-top: 10px;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-}
-
-#pageBar button:hover {
-	background-color: rgb(120, 116, 100);
-	border-color: rgb(120, 116, 100);
-}
-#pageBar button:disabled{
-	background-color: rgb(120, 116, 100);
-	border-color: rgb(120, 116, 100);
-	color: white;
-}
-
-</style>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>eventList</title>
+	
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<!-- CSS -->
+	<link rel="stylesheet" href="${ path }/css/event/eventList.css">
+	<!-- jQuery -->
+	<script src="${ path }/js/jquery-3.6.3.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/planning/header.jsp" />
@@ -129,7 +47,9 @@ input[type="submit"] {
 				<tbody>
 					<c:if test="${ empty list }">
 						<tr>
-							<td colspan="3" style="text-align: center; height: 300px; vertical-align: middle;"><h4>검색어와 일치하는 게시글이 없습니다.</h4></td>
+							<td colspan="3" style="text-align: center; height: 300px; vertical-align: middle;">
+								<h4>검색어와 일치하는 게시글이 없습니다.</h4>
+							</td>
 						</tr>
 					</c:if>
 					<c:if test="${ not empty list }">
@@ -195,29 +115,10 @@ input[type="submit"] {
 		</div>
 	</section>
 
-
-
-
 	<!-- Bootstrap jQuery, JS -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-		integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
-		crossorigin="anonymous"></script>
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	
 	<jsp:include page="/WEB-INF/views/planning/footer.jsp" />
