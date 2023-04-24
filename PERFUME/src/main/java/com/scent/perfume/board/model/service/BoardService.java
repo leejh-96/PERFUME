@@ -9,7 +9,7 @@ public interface BoardService {
 
 	int getBoardCount();
 
-	List<Notice> getBoardList(PageInfo pageInfo);
+	List<Notice> getBoardList(PageInfo pageInfo, String string);
 
 	Notice findBoardByNo(int no);
 
