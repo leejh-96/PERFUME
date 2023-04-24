@@ -1,5 +1,6 @@
 package com.scent.perfume.event.model.mapper;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -49,11 +50,41 @@ public interface EventMapper {
 	int selectEventBoardCount();
 	List<Board> selectAll(RowBounds rowBounds);
 	
-// 게시물 검색 기능
+// 게시물 검색
 	int selectEventCountByKeyword(@Param("type") String type, @Param("keyword") String keyword);
 	List<Board> selectAllByKeyword(@Param("rowBounds") RowBounds rowBounds, @Param("type") String type, @Param("keyword") String keyword);
 
-// 게시물 검색 기능	
+// 게시물 검색
 	Board selectEventViewByNo(@Param("no") int no);
+
+// 게시물 보기	
+	Date selectEventStartByTitle(String bTitle);
+	Date selectEventEndByTitle(String bTitle);
+	String selectPreTitleByNo(int no);
+	String selectNextTitleByNo(int no);
+	int selectPreNoByPreTitle(String preTitle);
+	int selectNextNoByNextTitle(String nextTitle);
+	
+// 게시글 등록
+	int insertEventBoard(Board board);
+	int updateEventBoard(Board board);
+	
+// 게시글 삭제
+	int updateEventBoardStatus(@Param("no") int no, @Param("bStatus") String bStatus);
+
+	
+/////////////////////////////////////////게시판///////////////////////////////////	
+
+
+// 선택약관 동의 여부 확인
+	String findOptionAgreeByMNo(int mNo);
+// 선택약관 동의('Y')로 변경 TERMS 테이블의 T_CHECK 컬럼
+	int updateOptionAgr(int mNo);
+// 이미 참여한 회원인지 확인
+	int getParticipateEventMNo(int mNo);
+//	BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
+	int getBnNoByBTitle(String bTitle);
+// 이벤트 참여 회원 DB에 저장
+	int insertMnoMemberEvent(@Param("mNo") int mNo, @Param("bnNo") int bnNo);
 	
 }

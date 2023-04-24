@@ -1,5 +1,6 @@
 package com.scent.perfume.event.model.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class EventServiceImpl implements EventService {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	// 회원가입 전화번호인증 문자전송
+	@Transactional
 	public void certifiedPhoneNumber(String phoneNumber, String numStr) {
 		String api_key = "테스트시홈피에서키받아서하기";
 		String api_secret = "테스트할때홈피에서키받아서하기";
@@ -90,6 +92,7 @@ public class EventServiceImpl implements EventService {
 
 // 회원가입 아이디 중복 검사
 	@Override
+	@Transactional
 	public Boolean isDuplicateId(String id) {
 		return mapper.selectMemberById(id) != null;
 	}
@@ -100,10 +103,12 @@ public class EventServiceImpl implements EventService {
 
 // 게시판 목록 조회
 	@Override
+	@Transactional
 	public int getEventCount() {
 		return mapper.selectEventBoardCount();
 	}
 	@Override
+	@Transactional
 	public List<Board> getEventList(PageInfo pageInfo) {
 		int limit = pageInfo.getListLimit();
 		int offset = (pageInfo.getCurrentPage() - 1) * limit;
@@ -114,10 +119,12 @@ public class EventServiceImpl implements EventService {
 
 // 게시물 검색 기능
 	@Override
+	@Transactional
 	public int getEventCountByKeyword(String type, String keyword) {
 		return mapper.selectEventCountByKeyword(type, keyword);
 	}
 	@Override
+	@Transactional
 	public List<Board> getEventListByKeyword(PageInfo pageInfo, String type, String keyword) {
 		int limit = pageInfo.getListLimit();
 		int offset = (pageInfo.getCurrentPage() - 1) * limit;
@@ -128,8 +135,99 @@ public class EventServiceImpl implements EventService {
 
 // 상세 게시글 보기
 	@Override
+	@Transactional
 	public Board findBoardByNo(int no) {
 		return mapper.selectEventViewByNo(no);
 	}
+	@Override
+	@Transactional
+	public Date selectEventStartByTitle(String bTitle) {
+		return mapper.selectEventStartByTitle(bTitle);
+	}
+	@Override
+	@Transactional
+	public Date selectEventEndByTitle(String bTitle) {
+		return mapper.selectEventEndByTitle(bTitle);
+	}
+	@Override
+	@Transactional
+	public String findPreTitleByNo(int no) {
+		return mapper.selectPreTitleByNo(no);
+	}
+	@Override
+	@Transactional
+	public String findNextTitleByNo(int no) {
+		return mapper.selectNextTitleByNo(no);
+	}
+	@Override
+	@Transactional
+	public int findPreNoByPreTitle(String preTitle) {
+		return mapper.selectPreNoByPreTitle(preTitle);
+	}
+	@Override
+	@Transactional
+	public int findNextNoByNextTitle(String nextTitle) {
+		return mapper.selectNextNoByNextTitle(nextTitle);
+	}
+
+// 게시글 작성 수정
+	@Override
+	@Transactional
+	public int saveEventWrite(Board board) {
+		int result = 0;
+		
+		if(board.getBNo()>0) {
+			result = mapper.updateEventBoard(board);
+		} else {
+			result = mapper.insertEventBoard(board);
+		}
+		
+		return result;
+	}
+
+// 게시글 삭제
+	@Override
+	@Transactional
+	public int deleteEventBoard(int no) {
+		return mapper.updateEventBoardStatus(no, "N");
+	}
+
+
+/////////////////////////////////////////////////이벤트//////////////////////////////////////////////////
+
+	
+// 선택약관 동의 여부 확인
+	@Override
+	@Transactional
+	public String findOptionAgreeByMNo(int mNo) {
+		return mapper.findOptionAgreeByMNo(mNo);
+	}
+// 선택약관 동의('Y')로 변경 TERMS 테이블의 T_CHECK 컬럼
+	@Override
+	@Transactional
+	public int updateOptionAgr(int mNo) {
+		return mapper.updateOptionAgr(mNo);
+	}
+// 이미 참여한 회원인지 확인
+	@Override
+	@Transactional
+	public int getParticipateEventMNo(int mNo) {
+		return mapper.getParticipateEventMNo(mNo);
+	}
+// BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
+	@Override
+	@Transactional
+	public int getBnNoByBTitle(String bTitle) {
+		return mapper.getBnNoByBTitle(bTitle);
+	}
+// 이벤트 참여 회원 DB에 저장
+	@Override
+	@Transactional
+	public int participateEvent(int mNo, int bnNo) {
+		return mapper.insertMnoMemberEvent(mNo, bnNo);
+	}
+
+
+
 
 }

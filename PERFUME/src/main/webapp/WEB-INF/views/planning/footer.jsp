@@ -20,7 +20,7 @@
                     <li><a href="${ path }/eventList">EVENT</a>
                         <p>다양한 이벤트에 참여해보세요</p>
                     </li>
-                    <li><a href="#">ASK</a>
+                    <li><a href="${ path }/board/list">ASK</a>
                         <p>언제나 고객과 함께하겠습니다.</p>
                     </li>
                 </ul>

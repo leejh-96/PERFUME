@@ -7,6 +7,7 @@ import com.scent.perfume.common.util.PageInfo;
 import com.scent.perfume.product.model.vo.Option;
 import com.scent.perfume.product.model.vo.Product;
 import com.scent.perfume.product.model.vo.ProductBoard;
+import com.scent.perfume.product.model.vo.ProductBoardCategory;
 import com.scent.perfume.product.model.vo.ProductBoardReply;
 import com.scent.perfume.product.model.vo.TopCate;
 
@@ -63,6 +64,10 @@ public interface ProductService {
 	int save(ProductBoardReply reply);
 
 	ProductBoardReply findBypbrNo(int pbrno);
+
+	int save(ProductBoard review);
+
+	List<ProductBoardCategory> getBoardCategoryList();
 
 
 

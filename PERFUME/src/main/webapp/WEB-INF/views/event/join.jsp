@@ -256,9 +256,7 @@
                     <input type="text" id="verification-code" name="verification-code" class="form-control" placeholder="인증번호를 입력해주세요" required>
                     <button type="button" id="btnPh2" class="btn btn-secondary" disabled>인증번호 확인</button><br>
                 </div>
-                <small id="phoneHelpBlock" class="form-text text-muted">
-                    휴대폰 인증을 위한 필수 입력사항입니다.
-                </small>
+                <small id="phoneHelpBlock" class="form-text text-muted">휴대폰 인증을 위한 필수 입력사항입니다.</small>
                 <span id="phoneCheck" style="font-size: small;"></span>
             </div>
         </div>
@@ -291,7 +289,7 @@
                         쇼핑정보 수신(선택)에 모두 동의합니다.
                     </div>
                     </label><br>
-                    <label class="form-check-label"><input type="checkbox" name="option1" id="essential-agreement" class="form-check-input" required> <b>[필수]</b> 이용 약관에 동의합니다.</label>
+                    <label class="form-check-label"><input type="checkbox" name="option1" id="essential-agreement" class="form-check-input" required> <b>[필수]</b> 필수 이용 약관에 동의합니다.</label>
                     <!-- 버튼 아코디언 챗 gpt 참고 -->
                     <button type="button" id="btnAgr1" class="btn btn-secondary btn-sm" onclick="showEssentialAgreement()">+</button>    
                     <div id="essential-agreement-content" class="divAgr">

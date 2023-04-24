@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,9 @@ public class AdminController {
 	
 	@Autowired
 	private ResourceLoader resourceLoader;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@RequestMapping("/home")
 	public String adminHome() {
@@ -281,6 +285,8 @@ public class AdminController {
 		
 		int result = 0;
 		
+		member.setMemberPwd(passwordEncoder.encode(member.getMemberPwd()));
+		
 		result = adminService.memberUpdate(member);
 		
 		if (result > 0) {
@@ -318,12 +324,11 @@ public class AdminController {
 		
 		log.info("adminPassWord : {}",adminPassWord);
 		
-		if (adminPassWord.equals(pwd)) {
+		if (passwordEncoder.matches(pwd, adminPassWord)) {
 			adminPwd = true;
 		}else {
 			adminPwd = false;
 		}
-		
 		return adminPwd;
 	}
 	
@@ -467,7 +472,7 @@ public class AdminController {
 	@ResponseBody
 	@PostMapping("delete")
 	public int delete(@RequestParam("productNo") int productNo,
-						Model model) {
+					  Model model) {
 		
 		int result = 0;
 		log.info("productNo : {}",productNo);

@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Board {
 	// 게시물 번호
 	private int bNo;
@@ -32,4 +32,18 @@ public class Board {
 	private String bSort;
 	// 게시글 비밀번호 				게시판 종류가 2(qna)일때 비밀번호 컬럼을 사용한다.
 	private String bPwd;
+	
+	
+	// 이벤트 시작 날짜
+	private Date bnCreateDate;
+	// 이벤트 등록 날짜
+	private Date bnEndDate;
+	// 이전글 제목
+	private String preTitle;
+	// 다음글 제목
+	private String nextTitle;
+	// 이전글 글번호
+	private int preNo;
+	// 다음글 글번호
+	private int nextNo;
 }

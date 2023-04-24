@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -216,8 +217,43 @@ public class EventController {
 		Board board = null;
 		
 		log.info("no : {}", no);
+		log.info("보드 파인드 보드 엔오 서비스 타기 전 : {}", board);
+		
 		
 		board = service.findBoardByNo(no);
+		log.info("보드 파인드 보드 엔오 서비스 탄 후 : {}", board);
+		
+		String bTitle = board.getBTitle();
+		
+		board.setBnCreateDate(service.selectEventStartByTitle(bTitle));
+		board.setBnEndDate(service.selectEventEndByTitle(bTitle));
+		log.info("보드 셋 서비스 탄 후 : {}", board);
+		
+//		String preTitle = service.findPreTitleByNo(no);
+//		String nextTitle = service.findNextTitleByNo(no);
+//		
+//		board.setPreTitle(preTitle);
+//		board.setNextTitle(nextTitle);
+//		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
+//		board.setPreNo(service.findPreNoByPreTitle(preTitle));
+//		board.setNextNo(service.findNextNoByNextTitle(nextTitle));
+		
+		String preTitle = service.findPreTitleByNo(no);
+		String nextTitle = service.findNextTitleByNo(no);
+
+		board.setPreTitle(preTitle != null ? preTitle : null);
+		board.setNextTitle(nextTitle != null ? nextTitle : null);
+		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
+
+		if (preTitle != null) {
+		    board.setPreNo(service.findPreNoByPreTitle(preTitle));
+		}
+		if (nextTitle != null) {
+		    board.setNextNo(service.findNextNoByNextTitle(nextTitle));
+		}
+
+		
+		log.info("이전글 다음글 번호 찾는서비스 탄 후 : {}", board);
 		
 		modelAndView.addObject("board", board);
 		modelAndView.setViewName("event/eventView");
@@ -225,22 +261,61 @@ public class EventController {
 		return modelAndView;
 	}
 	
-	// 게시글 작성 연결
-	@GetMapping("eventWrite")
-	public String eventWrite() {
-		System.out.println("이벤트 작성 창 연결 테스트");
-		return "event/eventWrite";
+	// 게시글 작성 창 연결
+	@GetMapping("/eventWrite")
+	public ModelAndView eventWrite(ModelAndView modelAndView, @SessionAttribute("loginMember") Member loginMember) {
+		
+		if( loginMember.getDivision() != 1) {
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");	
+			
+			modelAndView.setViewName("common/msg");
+		} else {
+			modelAndView.setViewName("/event/eventWrite");
+			System.out.println("이벤트 작성 창 연결 테스트");
+		}
+		
+		return modelAndView;
 	}
-	// 게시글 작성 버튼 눌렀을 때
-//	@PostMapping("eventWrite")
-//	public ModelAndView modelAndView eventWrite(
-//			ModelAndView modelAndView,
-//			@ModelAttribute Board board,
-//			@RequestParam()) {
-//		
-//	}
+
+	// 게시글 등록
+	@PostMapping("/eventWrite")
+	public ModelAndView eventWrite(	
+			ModelAndView modelAndView,
+			@ModelAttribute Board board,
+			@SessionAttribute("loginMember") Member loginMember) {
+		System.out.println("이벤트 게시글 등록");
+		
+		if( loginMember.getDivision() != 1) {
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");
+		} else {
+			int result = 0;
+			
+			board.setMNo(loginMember.getNo());
+
+			result = service.saveEventWrite(board);
+			
+			log.info("board : {}", board);
+			
+			if(result > 0) {
+				modelAndView.addObject("msg", "게시글이 정상적으로 등록되었습니다.");
+				modelAndView.addObject("location", "/event/eventView?no=" + board.getBNo());
+				System.out.println("넌 뭐야 : " + board.getBNo());
+			} else {
+				modelAndView.addObject("msg", "게시글이 정상적으로 등록되지 않았습니다.");
+				modelAndView.addObject("location", "/eventList");
+				System.out.println("넌 뭔데 : " + board.getBNo());
+				
+			}		
+		}
+		
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+	}
 	
-	// 쿠폰 작성 연결
+	
 	
 	// 썸머노트 다중 이미지 업로드
 	@RequestMapping(value="/uploadSummernoteImageFile", method= RequestMethod.POST, produces="application/json; charset=utf8")
@@ -268,12 +343,6 @@ public class EventController {
 				e.printStackTrace();
 			}
 			
-//			// vo Board board 오브젝트에 값 set 해주기
-//			if(renamedFileName != null) {
-//				board.setOriginalFileName(upfile.getOriginalFilename());
-//				board.setRenamedFileName(renamedFileName);
-//			}
-			
 			if(renamedFileName != null) {
 				map.put("url", request.getContextPath() + "/resources/upload/event/" + renamedFileName);
 				map.put("responseCode", "success");
@@ -289,10 +358,248 @@ public class EventController {
 			return map;	
 	}
 
+	//업데이트용 다중이미지 업로드
+	@RequestMapping(value="/event/uploadSummernoteImageFile", method= RequestMethod.POST, produces="application/json; charset=utf8")
+	@ResponseBody
+	public Object uploadSummernoteImageFileUpdate(@RequestParam("file") MultipartFile upfile,
+			HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<>();
+		
+		// 1. 파일을 업로드 했는지 확인 후 파일을 저장(물리적 위치에)
+		if(upfile != null && !upfile.isEmpty()) {	// !upfile.isEmpty() => false이면. 비었다의 반대니까 false
+			String location = null;
+			String renamedFileName = null;
+			
+			try {
+				location = resourceLoader.getResource("resources/upload/event").getFile().getPath();
+						// resourceLoader를 통해 지정한 폴더에서 파일을 가져와서, 파일의 경로를 가져옴
+				
+				System.out.println("로케이션" + location);
+				
+				renamedFileName = MultipartFileUtil.save(upfile, location);
+				
+				System.out.println("리네임 파일 네임 " + renamedFileName);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			if(renamedFileName != null) {
+				map.put("url", request.getContextPath() + "/resources/upload/event/" + renamedFileName);
+				map.put("responseCode", "success");
+				System.out.println("마지막 로케이션" + location);
+				System.out.println("맵 url : " + map.get("url"));
+				System.out.println("성공했나용");
+			} else {
+				map.put("responseCode", "error");
+				System.out.println("실패했나용");
+				}
+			}
+		
+			return map;	
+	}
 	
+	// 게시글 수정
+	@GetMapping("/event/eventUpdate")
+	public ModelAndView eventUpdate(ModelAndView modelAndView,
+									@RequestParam("no") int no,
+									@SessionAttribute("loginMember") Member loginMember) {
+		Board board = null;
+		
+		log.info(loginMember.toString());
+		log.info("no : {}", no);
+		
+		board = service.findBoardByNo(no);
+		
+		if(board != null && loginMember.getDivision() == 1) {
+			modelAndView.addObject("board", board);
+			modelAndView.setViewName("/event/eventUpdate");
+		} else {
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");
+			
+			modelAndView.setViewName("common/msg");
+		}
+		
+		return modelAndView;
+	}
+	@PostMapping("/event/eventUpdate")
+	public ModelAndView eventUpdate(ModelAndView modelAndView,
+									@RequestParam("no") int no,
+									@RequestParam("bTitle") String bTitle,
+									@RequestParam("bContent") String bContent,
+									@SessionAttribute("loginMember") Member loginMember) {
+		int result = 0;
+		Board board = null;
+		
+		log.info("{}, {}, {}", new Object[] {no, bTitle, bContent});
+		
+		board = service.findBoardByNo(no);
+		
+		if(board != null && board.getMNo() == loginMember.getNo()) {
+		
+		
+			board.setBTitle(bTitle);
+			board.setBContent(bContent);
+			
+			result = service.saveEventWrite(board);
+			
+			if(result > 0) {
+				modelAndView.addObject("msg", "게시글이 정상적으로 수정되었습니다.");
+				modelAndView.addObject("location", "/event/eventView?no=" + board.getBNo());	
+				
+			} else {
+				modelAndView.addObject("msg", "게시글 수정을 실패하였습니다.");
+				modelAndView.addObject("location", "/event/eventUpdate?no=" + no);	// no라고 해도 되고 board.getNo()라도 해도 됨 둘 다 같은 게시글 번호임
+			}
+		
+		} else {
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");	
+		}
+		
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+	}
+
+	// 게시글 삭제
+	@GetMapping("/eventDelete")
+	public ModelAndView delete(ModelAndView modelAndView, @RequestParam int no,
+			   @SessionAttribute("loginMember") Member loginMember) {
+		
+		// 본인 게시글 여부 확인
+		int result = 0;
+		Board board = null;
+		
+		board = service.findBoardByNo(no);
+		
+		if(board != null && board.getMNo() == loginMember.getNo()) {
+			// 작성자 본인이 맞으면 삭제작업
+			result = service.deleteEventBoard(no);
+			
+			if(result > 0) {
+				modelAndView.addObject("msg", "게시글이 정상적으로 삭제되었습니다.");
+				modelAndView.addObject("location", "/eventList");
+			} else {
+				modelAndView.addObject("msg", "게시글 삭제를 실패하였습니다.");
+				modelAndView.addObject("location", "/event/eventView?no=" + no);
+			}
+			
+		} else {
+			// 본인이 맞지 않으면 삭제작업 없이 목록으로
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");
+		}
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+		
+	}
 	
 	
 //////////////////////////////////////////////////////위 이벤트 게시판 아래 이벤트 내용 /////////////////////////////////////////////////////////////////////////
+	
+	
+	// 향수 증정 이벤트 참여
+	@GetMapping("/participatePresentPerfume")
+	public ModelAndView participatePresentPerfume(ModelAndView modelAndView, @SessionAttribute("loginMember") Member loginMember,
+												@RequestParam("bNo") int BNo, @RequestParam("bTitle") String BTitle) {
+		System.out.println("향수 증정 이벤트 폼 참여!");
+		
+		int mNo = loginMember.getNo();
+		
+//		log.info("비엔오오오오오옹ㅇ  : {}", BNo);
+//		log.info("엠엔오오오옹 : {}", mNo);
+//		log.info("비타이이이이이트으으으으을 : {}", BTitle);
+		
+		// mNo(회원번호)를 통해 TERMS 테이블에서 선택약관 동의 여부 알아오기
+		String optionAgr = service.findOptionAgreeByMNo(mNo);
+		char ch = 'Y';
+//		log.info("동의 여부 확인 : {}",optionAgr);
+		
+		if(!optionAgr.contains(Character.toString(ch))) { // String 과 char 타입이 자바에서는 다르기 때문에 직접 optionAgr != 'Y'이런 식으로 비교하면 에러 발생.
+		// 선택 약관에 동의하지 않았을 때 (optionAgr에 'Y'가 포함되어 있지 않을 때)	약관 동의 선택 여부 묻기
+
+			modelAndView.addObject("msg", "선택 약관에 동의하지 않으시면 참여가 불가능합니다. 동의 후 이벤트에 참여하시겠습니까?");
+			modelAndView.addObject("locationAgr", "/optionAgree?bNo=" + BNo + "&mNo=" + mNo + "&bTitle=" + BTitle);	// 확인 후 작동 잘 하면 수신 동의 참여 컨트롤러로 변경!
+			modelAndView.addObject("locationNotAgr", "/event/eventView?no=" + BNo);	// 수신 동의하지 않을시 해당 페이지에 머무르기		
+			modelAndView.setViewName("event/confirm");
+		} else {
+		// 선택 약관에 동의했을 때 이벤트 참여
+			
+			int participate = 0;
+			// 이미 참여한 회원인지 확인
+			participate = service.getParticipateEventMNo(mNo);
+			
+			if(participate > 0) {
+				// 이미 참여한 회원
+				modelAndView.addObject("msg", "이미 이벤트에 참여하셨습니다.");
+				modelAndView.addObject("location", "/event/eventView?no=" + BNo);	
+			} else {
+				// EVENT_MEMBER에 회원 mNo INSERT
+				
+				// BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
+				int bnNo = 0;
+				bnNo = service.getBnNoByBTitle(BTitle);
+				
+				// 이벤트 참여 회원 DB에 저장
+				int successParticipate = 0;
+				successParticipate = service.participateEvent(mNo, bnNo);
+				
+				if(successParticipate > 0) {
+					modelAndView.addObject("msg", "이벤트 참여가 완료되었습니다. 당첨자에게는 문자를 전송해 드리니 당첨일(이벤트 종료날로부터 일주일 후) 이후 확인부탁드립니다.");
+					modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+				} else {
+					modelAndView.addObject("msg", "이벤트 참여가 정상적으로 완료되지 않았습니다.");
+					modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+				}
+				
+			}
+
+			modelAndView.setViewName("common/msg");		
+		}
+		
+		return modelAndView;
+	}
+	
+	// 선택약관 Y로 변경
+	@GetMapping("/optionAgree")
+	public ModelAndView updateOptionAgree(ModelAndView modelAndView, @RequestParam("mNo") int mNo,
+										  @RequestParam("bNo") int BNo, @RequestParam("bTitle") String BTitle) {
+		System.out.println("선택약관 변경 컨트롤러 잘 탔는지 확인 시소");
+		
+		int result = 0;
+		
+//		log.info("비엔오오오오오옹ㅇ  : {}", BNo);
+//		log.info("엠엔오오오옹 : {}", mNo);
+//		log.info("비타이이이이이트으으으으을 : {}", BTitle);
+		
+		// 선택약관 Y로 변경
+		result = service.updateOptionAgr(mNo);
+		
+		if(result > 0 ) {
+			// 동의 변경 성공
+			modelAndView.addObject("msg", "선택 약관 동의 여부를 '동의'로 바꾸었습니다.");
+			modelAndView.addObject("location", "/participatePresentPerfume?bNo=" + BNo + "&bTitle=" + BTitle);
+					// ㄴ 다시 쿠폰 이벤트 컨트롤러 탈 수 있도록 보내기 
+		} else {
+			// 동의 변경 실패
+			modelAndView.addObject("msg", "선택 약관 동의 여부를 '동의'로 변경하는 데 실패하였습니다.");
+			modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+		}
+		
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
+	}
+	
+	// 당첨자 추첨 컨트롤러
+	@GetMapping("/pickWinner")
+	public String pickWinner() {
+		return "/event/testEvent";
+	}
+	
 	
 	
 	

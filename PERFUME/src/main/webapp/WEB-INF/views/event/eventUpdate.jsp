@@ -23,10 +23,12 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     include summernote css/js
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
    -->
    <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" >
@@ -120,12 +122,15 @@
     <section>
         <h2 align="center">EVENT</h2>
         <div id="boardListTable">
-            <form action="${ path }/eventWrite" method="POST">
+            <form action="${ path }/event/eventUpdate" method="POST">
+            	<input type="hidden" name="no" value="${ board.BNo }">
                 <table id="boardList" class="table table-hover">
                     <thead>
                         <tr>
                             <th class="titleTable" scope="col" colspan="2">제목</th>
-                            <td class="contentTable" scope="col" colspan="2"><input name="bTitle" class="input" type="text" placeholder="제목을 입력하세요" required></td>
+                            <td class="contentTable" scope="col" colspan="2">
+                            	<input name="bTitle" class="input" type="text" placeholder="제목을 입력하세요" value="${ board.BTitle }" required>
+                            </td>
                         </tr>
                         <tr>
                             <th class="titleTable" colspan="2">작성자</th>
@@ -133,7 +138,7 @@
                         </tr>                       
                         <tr>
                             <td id="contentBody"colspan="4">
-	                            <textarea id="summernote" name="bContent" required></textarea>
+	                            <textarea id="summernote" name="bContent" rows="15" cols="50" required>${ board.BContent }</textarea>
                             </td>
                         </tr>    
                     </thead>
@@ -141,9 +146,10 @@
                         <tr>
                             <td class="btnTd" colspan="4" align="center">
                                 <div id="btnDiv" class="btn-group" role="group" aria-label="Basic example">
-                                    <button id="btnList" type="button" class="btn btn-secondary" onclick="location.href='${ path }/eventList'">목록</button>
-                                    <input id="btnSubmit" type="submit" class="btn btn-secondary" value="등록">
-                                    <input id="btnReset" type="reset" class="btn btn-secondary" value="초기화">
+                                    <button id="btnList" type="button" class="btn btn-secondary"
+                                    		onclick="location.replace('${path}/eventList')" >목록</button>
+                                    <input id="btnSubmit" type="submit" class="btn btn-secondary" value="수정">
+                                    <input id="btnReset" type="reset" class="btn btn-secondary" value="취소">
                                 </div>
                             </td>
                         </tr>
@@ -204,6 +210,8 @@
  	            }
  	    };
 
+ 	    $('#summernote').summernote(setting);
+
  	    // 자바스크립트 함수를 통해 ajax로 서버에서 파일 업로드 진행. 서버에서 기대하는 값 : 파일 업로드 성공 후 파일 경로를 return
  	    function sendFile(file, el){			// 함수의 인수 file, summernote의 엘리먼트(el)
  	    alert('작동!');        
@@ -225,10 +233,6 @@
 
  	            });
  	    }
- 	    
- 	   // 썸머노트css충돌 
- 	   $('#summernote').val('${fn:replace(productDetail.product_content,"\'","\\'")}'); 
- 	   $('#summernote').summernote(setting);
  	    
  	});
 	</script>
