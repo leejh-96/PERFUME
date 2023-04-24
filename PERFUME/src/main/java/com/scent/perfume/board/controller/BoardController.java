@@ -59,11 +59,14 @@ public class BoardController {
 
 		PageInfo pageInfo = new PageInfo(page, 10, listCount, 10);
 		// pageInfo를 통해서 게시글목록을 가져온다.
-		List<Notice> list = service.getBoardList(pageInfo);
 
-		modelAndView.addObject("pageInfo", pageInfo);
-		modelAndView.addObject("list", list); // service로부터 얻어온 list를 modelAndView를 통해서 view한테(jsp페이지로) 포워딩시켜준다.
 		
+		List<Notice> generalList = service.getBoardList(pageInfo, "N");
+		List<Notice> noticeList = service.getBoardList(pageInfo, "Y");
+		
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("generalList", generalList); // service로부터 얻어온 list를 modelAndView를 통해서 view한테(jsp페이지로) 포워딩시켜준다.
+		modelAndView.addObject("noticeList", noticeList); // service로부터 얻어온 list를 modelAndView를 통해서 view한테(jsp페이지로) 포워딩시켜준다.
 		modelAndView.setViewName("/board/list"); // setViewName 메서드를 통해서 뷰의 경로를 설정한다.
 
 		return modelAndView;
@@ -205,7 +208,7 @@ public class BoardController {
 		log.info(loginMember.toString());
 		
 		board = service.findBoardByNo(no);
-		System.out.println("업데이트 : " + board);
+		
 		if(board != null && board.getWriterId().equals(loginMember.getId())) {
 			modelAndView.addObject("board", board);
 			modelAndView.setViewName("board/update");
@@ -220,18 +223,18 @@ public class BoardController {
 	
 	@PostMapping("/board/update")
 	public ModelAndView update(ModelAndView modelAndView,
-								@RequestParam int no, @RequestParam String title, @RequestParam String content,
+								@RequestParam int no, @RequestParam String title, @RequestParam String content, @RequestParam String notice_yn,
 								@SessionAttribute("loginMember") Member loginMember) {
 		int result = 0;
-		
 		Notice board = null;
+		
 		log.info("{}, {}, {]", new Object[] {no, title, content});
 		board = service.findBoardByNo(no);
-		
 // loginMember아이디랑 게시글 작성자랑 같은지 검사한다.	
 		if(board != null && board.getWriterId().equals(loginMember.getId())) {
 			board.setBTitle(title);
 			board.setBContent(content);
+			board.setNotice_yn(notice_yn);
 			
 			result = service.save(board);
 			

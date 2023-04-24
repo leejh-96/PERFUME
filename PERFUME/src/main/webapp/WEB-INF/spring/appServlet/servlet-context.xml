@@ -117,8 +117,8 @@
  				<exclude-mapping path="/product/list" />
  				<exclude-mapping path="/product/detail" />
 <!-- 	 		<exclude-mapping path="/member/idCheck" /> -->
-<!-- 	 		<exclude-mapping path="/board/list" /> -->
-<!-- 	 		<exclude-mapping path="/board/view" /> -->
+	 			<exclude-mapping path="/board/list" />
+	 			<exclude-mapping path="/board/view" />
 <!-- 	 		<exclude-mapping path="/board/fileDown" /> -->
 	 		
 	 		
