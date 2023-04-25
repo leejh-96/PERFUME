@@ -41,7 +41,7 @@
                     <c:if test="${ not empty loginMember }">
 						<li><a href="${ path }/logout">LOGOUT</a></li>
 						<c:if test="${ not empty loginMember && loginMember.division == '2' }">
-							<li><a href="#">MY PAGE</a></li>                                        
+							<li><a href="mypage/home">MY PAGE</a></li>                                        
 						</c:if>
 						<c:if test="${ not empty loginMember && loginMember.division == '1' }">
 							<li><a href="#">ADMIN PAGE</a></li>                                        
