@@ -132,7 +132,7 @@ public class EventController {
 		result = service.save(member, terms, tCheck);	// tCheck 선택약관동의
 		
 		// 인증 메일 보내는 메소드
-		mailsender.mailSendWithUserKey(member.getMail(),member.getId(), request);
+		// mailsender.mailSendWithUserKey(member.getMail(),member.getId(), request);
 		
 		if(result > 0) {
 			modelAndView.addObject("msg", "회원가입 인증 이메일이 발송되었습니다. 등록한 이메일을 확인해주시고 인증 절차를 거쳐주시기 바랍니다.");
@@ -471,14 +471,14 @@ public class EventController {
 	public ModelAndView delete(ModelAndView modelAndView, @RequestParam int no,
 			   @SessionAttribute("loginMember") Member loginMember) {
 		
-		// 본인 게시글 여부 확인
+		// 어드민 확인
 		int result = 0;
 		Board board = null;
 		
 		board = service.findBoardByNo(no);
 				
 		if(board != null && loginMember.getDivision() == 1) {
-			// 작성자 본인이 맞으면 삭제작업
+			// 어드민 계정이 확인되면 삭제 작업
 			result = service.deleteEventBoard(no);
 			
 			if(result > 0) {
