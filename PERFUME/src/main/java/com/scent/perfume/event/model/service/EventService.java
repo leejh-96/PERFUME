@@ -24,10 +24,11 @@ public interface EventService {
 	Board findBoardByNo(int no);
 	Date selectEventStartByTitle(String bTitle);
 	Date selectEventEndByTitle(String bTitle);
-	String findPreTitleByNo(int no);
-	String findNextTitleByNo(int no);
-	int findPreNoByPreTitle(String preTitle);
-	int findNextNoByNextTitle(String nextTitle);
+	int findPreNoByBNo(int no);
+	int findNextNoByBNo(int no);
+	String findPreTitleByPreNo(int preNo);
+	String findNextTitleByNextNo(int nextNo);
+	
 // 게시글 작성 수정
 	int saveEventWrite(Board board);
 // 게시글 삭제
@@ -56,6 +57,8 @@ public interface EventService {
 	String findPhoneNoForWinner(int epMNo);
 	// 당첨 뽑기 중복 금지
 	String getBnTitleByBTitleForWinner(String bnTitle);
+
+
 
 	
 }

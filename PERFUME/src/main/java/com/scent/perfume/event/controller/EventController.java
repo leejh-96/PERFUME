@@ -204,6 +204,8 @@ public class EventController {
 		
 		modelAndView.addObject("pageInfo", pageInfo);
 		modelAndView.addObject("list", list);
+		modelAndView.addObject("searchType", type);
+		modelAndView.addObject("searchKeyword", keyword);
 		modelAndView.setViewName("event/eventSearch");
 		
 		return modelAndView;
@@ -229,31 +231,24 @@ public class EventController {
 		board.setBnEndDate(service.selectEventEndByTitle(bTitle));
 		log.info("보드 셋 서비스 탄 후 : {}", board);
 		
-//		String preTitle = service.findPreTitleByNo(no);
-//		String nextTitle = service.findNextTitleByNo(no);
-//		
-//		board.setPreTitle(preTitle);
-//		board.setNextTitle(nextTitle);
-//		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
-//		board.setPreNo(service.findPreNoByPreTitle(preTitle));
-//		board.setNextNo(service.findNextNoByNextTitle(nextTitle));
+		// 이전글 다음글 번호 알아오기
+		int preNo = service.findPreNoByBNo(no);
+		int nextNo = service.findNextNoByBNo(no);
 		
-		String preTitle = service.findPreTitleByNo(no);
-		String nextTitle = service.findNextTitleByNo(no);
+		board.setPreNo(preNo);
+		board.setNextNo(nextNo);
 
-		board.setPreTitle(preTitle != null ? preTitle : null);
-		board.setNextTitle(nextTitle != null ? nextTitle : null);
-		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
-
-		if (preTitle != null) {
-		    board.setPreNo(service.findPreNoByPreTitle(preTitle));
-		}
-		if (nextTitle != null) {
-		    board.setNextNo(service.findNextNoByNextTitle(nextTitle));
-		}
-
-		
 		log.info("이전글 다음글 번호 찾는서비스 탄 후 : {}", board);
+		
+		if(preNo != 0) {
+			board.setPreTitle(service.findPreTitleByPreNo(preNo));
+		}
+		
+		if(nextNo != 0) {
+			board.setNextTitle(service.findNextTitleByNextNo(nextNo));
+		}
+
+		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
 		
 		modelAndView.addObject("board", board);
 		modelAndView.setViewName("event/eventView");
