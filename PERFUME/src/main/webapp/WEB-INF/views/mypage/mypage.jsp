@@ -10,7 +10,12 @@
 <head>
 	<meta charset="utf-8">
 	<title>마이페이지</title>
-		
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+	<!-- bootstrap css -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	<!-- bootstrap js -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+	<script src="${ path }/js/jquery-3.6.3.js"></script>	
 	<style>
 	    a {
 	        text-decoration: none;
@@ -47,12 +52,12 @@
                     	<c:forEach var="productDTO" items="${productList}">
                     		<div class="col-3">
 	                            <div class="border border-2 mb-1 p-3">
-	                            	<a href="${contextPath}/category/1/${productDTO.categoryID}/detail/${productDTO.productID}">
+	                            	<a href="${path}/category/1/${productDTO.categoryID}/detail/${productDTO.productID}">
 	                                	<img src="${productDTO.prodimgurl}" style="width: 100%; height: 100%">
                                 	</a>
 	                            </div>
 	                            <div class="text-truncate" align="center">
-	                            	<a href="${contextPath}/category/1/${productDTO.categoryID}/detail/${productDTO.productID}">
+	                            	<a href="${path}/category/1/${productDTO.categoryID}/detail/${productDTO.productID}">
 	                            		${productDTO.productName}
 	                            	</a>
 	                            </div>
@@ -63,7 +68,7 @@
                 <ul class="pagination justify-content-center">
                 	<c:if test="${startPage ne 1}">
                 		<li class="page-item">
-                			<a class="page-link" href="${contextPath}/mypage?page=${startPage-1}" aria-label="Previous">
+                			<a class="page-link" href="${path}/mypage?page=${startPage-1}" aria-label="Previous">
 	                			<span aria-hidden="true">&laquo;</span>
 	                		</a>
                 		</li>
@@ -77,7 +82,7 @@
                 			</c:when>
                 			<c:otherwise>
                 				<li class="page-item">
-                					<a class="page-link" href="${contextPath}/mypage?page=${pageNum}">
+                					<a class="page-link" href="${path}/mypage?page=${pageNum}">
                 						${pageNum}
                 					</a>
                 				</li>
@@ -86,7 +91,7 @@
                 	</c:forEach>
                 	<c:if test="${endPage ne pageCount}">
                 		<li class="page-item">
-                			<a class="page-link" href="${contextPath}/mypage?page=${endPage+1}" aria-label="Next">
+                			<a class="page-link" href="${path}/mypage?page=${endPage+1}" aria-label="Next">
 					    		<span aria-hidden="true">&raquo;</span>
 					    	</a>
                 		</li>

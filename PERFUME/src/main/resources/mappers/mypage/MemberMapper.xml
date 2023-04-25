@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="com.scent.perfume.mypage.model.mapper.MemberMapper">
+	
+	<resultMap type="MemberDTO" id="MemberResult">
+		<id property="number" column="M_NO" />
+		<result property="division" column="M_DIVISION"/>
+		<result property="status" column="M_STATUS"/>
+		<result property="path" column="M_PATH"/>
+		<result property="memberId" column="M_ID"/>
+		<result property="password" column="M_PWD"/>
+		<result property="name" column="M_NAME"/>
+		<result property="birthDate" column="M_BIRTH"/>
+		<result property="gender" column="M_GENDER"/>
+		<result property="email" column="M_MAIL"/>
+		<result property="phone" column="M_PHONE"/>
+		<result property="address" column="M_ADDR"/>
+		<result property="point" column="M_POINT"/>
+		<result property="createDate" column="M_CREATE"/>
+		<result property="updateDate" column="M_UPDATE"/>
+		<result property="mailStatus" column="M_MAILSTATUS"/>
+	</resultMap>
+
+	<select id="findMemberByNameAndPhone" resultMap="MemberResult">
+		SELECT 
+			*
+		FROM 
+			MEMBER
+		WHERE 
+			M_NAME = #{name} AND M_PHONE = #{phone}
+	</select>
+
+	<select id="findMemberByEmail" resultMap="MemberResult">
+		SELECT 
+			*
+		FROM 
+			MEMBER
+		WHERE 
+			M_MAIL = #{email}
+	</select>
+	
+	<select id="findMemberById" resultMap="MemberResult">
+		SELECT 
+			*
+		FROM 
+			MEMBER
+		WHERE 
+			M_ID = #{memberId}
+	</select>
+	
+	<insert id="createMember" useGeneratedKeys="true" keyProperty="id" keyColumn="memberId" parameterType="MemberDTO">
+		INSERT INTO 
+			MEMBER (M_MAIL,M_PWD,M_NAME,M_PHONE,M_BIRTH,M_GENDER) 
+		VALUES(#{email},#{password},#{name},#{phone},#{birthDate},#{gender})	
+	</insert>
+	
+	<update id="updateMemberPwd" parameterType="MemberDTO">
+		UPDATE 
+			MEMBER
+		SET
+			M_PWD = #{password}
+		WHERE
+			memberid = #{memberId}
+	</update>
+
+
+	<select id="findResignMember" parameterType="long" resultType="ResignMemberDTO">
+		SELECT 
+			*
+		FROM
+			resignMember
+		WHERE memberId = #{memberId}
+	</select>
+</mapper>
