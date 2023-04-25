@@ -50,8 +50,8 @@ public class MyPageController {
 	@Autowired
 	private MyPageService service;
 	
-	@Autowired
-	private MemberService memberService;
+//	@Autowired
+//	private MemberService memberService;
 	
 //	@Autowired 리뷰 미구현 ;
 //	private ReviewService reviewService;
@@ -139,7 +139,7 @@ public class MyPageController {
 	public String getOrderHistory(@RequestParam(value="page", defaultValue="1") long page,
 		Principal principal, Model model) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			model.addAttribute("memberDTO", memberDTO);
 			
 //			List<CategoryDTO> parentCategory = categoryService.showCategoryMenu();
@@ -189,7 +189,7 @@ public class MyPageController {
 	@RequestMapping(value="/orderHistory/{receiptId}", method=RequestMethod.GET)
 	public String getOrderDetail(@PathVariable("receiptId") long receiptId, Principal principal, Model model) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			model.addAttribute("memberDTO", memberDTO);
 			
 //			List<CategoryDTO> parentCategory = categoryService.showCategoryMenu();
@@ -270,7 +270,7 @@ public class MyPageController {
 	public String getCouponHistory(@RequestParam(value="page", defaultValue="1") long page,
 		@PathVariable("type") String type, Principal principal, Model model) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			model.addAttribute("memberDTO", memberDTO);
 			
 //			List<CategoryDTO> parentCategory = categoryService.showCategoryMenu();
@@ -312,7 +312,7 @@ public class MyPageController {
 	@RequestMapping(value="/manageAddress", method=RequestMethod.GET)
 	public String getAddressList(Principal principal, Model model) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			model.addAttribute("memberDTO", memberDTO);
 			
 //			List<CategoryDTO> parentCategory = categoryService.showCategoryMenu();
@@ -334,7 +334,7 @@ public class MyPageController {
 	@RequestMapping(value="/manageAddress/addAddress", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String addAddress(@RequestBody DeliveryAddressDTO dto, Principal principal) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			dto.setMemberId(memberDTO.getMemberId());
 			service.addAddress(dto);
 		} catch(Exception e) {
@@ -348,7 +348,7 @@ public class MyPageController {
 	@RequestMapping(value="/manageAddress/updateAddress", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String updateAddress(@RequestBody DeliveryAddressDTO dto, Principal principal) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			dto.setMemberId(memberDTO.getMemberId());
 			service.updateAddress(dto);
 		} catch (Exception e) {
@@ -361,7 +361,7 @@ public class MyPageController {
 	@RequestMapping(value="/manageAddress/deleteAddress", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String deleteAddress(@RequestBody List<Integer> list, Principal principal) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			for(long addressId : list) {
 				service.deleteAddress(memberDTO.getMemberId(), addressId);
 			}
@@ -376,7 +376,7 @@ public class MyPageController {
 	@RequestMapping(value="/manageAddress/setDefault", method=RequestMethod.POST)
 	public String setDefault(@RequestParam long addressId, Principal principal) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			service.setDefault(memberDTO.getMemberId(), addressId);
 		} catch(Exception e) {
 			log.info(e.getMessage());
@@ -389,7 +389,7 @@ public class MyPageController {
 	@RequestMapping(value="/manageAddress/cancelDefault", method=RequestMethod.POST)
 	public String cancelDefault(@RequestParam long addressId, Principal principal) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			service.cancelDefault(memberDTO.getMemberId());			
 		} catch(Exception e) {
 			log.info(e.getMessage());
@@ -402,7 +402,7 @@ public class MyPageController {
 	@RequestMapping(value="/confirmPassword/{type}", method=RequestMethod.GET)
 	public String getConfirmForm(@PathVariable("type") String type, Principal principal, Model model) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			model.addAttribute("memberDTO", memberDTO);
 			
 //			List<CategoryDTO> parentCategory = categoryService.showCategoryMenu();
@@ -422,7 +422,7 @@ public class MyPageController {
 	public String confirmPassword(@PathVariable("type") String type,
 		@RequestParam("userPassword") String userPassword, Principal principal, Model model) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			String phoneNum = memberDTO.getPhone().substring(0, 3) + "-"
 				+ memberDTO.getPhone().substring(3, 7) + "-" + memberDTO.getPhone().substring(7);
 			
@@ -447,7 +447,7 @@ public class MyPageController {
 	public String changePassword(@RequestParam("curPassword") String curPassword,
 		@RequestParam("newPassword") String newPassword, Principal principal, Model model) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			if(service.changePassword(curPassword, newPassword, memberDTO)) {
 				model.addAttribute("memberDTO", memberDTO);
 				return "1";
@@ -463,7 +463,7 @@ public class MyPageController {
 	@RequestMapping(value="/changeInfo", method=RequestMethod.POST)
 	public String changeInfo(@ModelAttribute UpdateMemberDTO updateDTO, BindingResult result, Principal principal, Model model) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			if(service.changeInfo(updateDTO, memberDTO)) {
 				model.addAttribute("memberDTO", memberDTO);
 				return "1";
@@ -478,7 +478,7 @@ public class MyPageController {
 	@RequestMapping(value="/resignMember", method=RequestMethod.GET)
 	public String getResignForm(Principal principal, Model model) throws Exception {
 		try {
-			MemberDTO memberDTO = memberService.getMember(principal.getName());
+			MemberDTO memberDTO = service.getMember(principal.getName());
 			model.addAttribute("memberDTO", memberDTO);
 			
 //			List<CategoryDTO> parentCategory = CategoryService.showCategoryMenu();

@@ -72,4 +72,6 @@ public interface MyPageService {
 	
 	OrderPerformanceDTO getOrderPerformance(long memberId) throws Exception;
 
+	MemberDTO getMember(String name);
+
 }

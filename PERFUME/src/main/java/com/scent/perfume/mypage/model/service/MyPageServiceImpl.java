@@ -265,4 +265,10 @@ public class MyPageServiceImpl implements MyPageService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public MemberDTO getMember(String name) {
+		
+		return null;
+	}
 }
