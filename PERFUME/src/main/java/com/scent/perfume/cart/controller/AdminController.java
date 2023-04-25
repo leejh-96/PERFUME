@@ -28,6 +28,7 @@ import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.CartProduct;
 import com.scent.perfume.cart.model.vo.Order;
+import com.scent.perfume.cart.model.vo.OrderList;
 import com.scent.perfume.cart.model.vo.AdminProductFile;
 
 import lombok.extern.slf4j.Slf4j;
@@ -505,14 +506,14 @@ public class AdminController {
 	
 	@ResponseBody
 	@PostMapping("/deleteOrder")//삭제하기 해결하기
-	public int deleteOrder(@RequestParam("orderNo") String orderNo) {
+	public int deleteOrder(@ModelAttribute OrderList order) {
 		
-		log.info("orderNo : {}",orderNo);
+		log.info("orderNo : {}",order);
 		
-		int result = adminService.deleteOrderList(orderNo);
+		int result = adminService.deleteOrderList(order);
 		
 		if (result > 0) {
-			adminService.deleteOrder(orderNo);
+			adminService.deleteOrder(order);
 		
 		return result;
 		}

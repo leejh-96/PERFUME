@@ -68,9 +68,9 @@ public interface AdminService {
 
 	int statusUpdate(String orderNo, String status);
 
-	int deleteOrderList(String orderNo);//삭제하기 해결하기
+	int deleteOrderList(OrderList order);//삭제하기 해결하기
 
-	int deleteOrder(String orderNo);//삭제하기 해결하기
+	int deleteOrder(OrderList order);//삭제하기 해결하기
 
 
 }

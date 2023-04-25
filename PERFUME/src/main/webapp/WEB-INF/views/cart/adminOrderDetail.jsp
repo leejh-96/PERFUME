@@ -46,7 +46,10 @@ function statusUpdate(orderNo){
 		status = '배송준비중';
 	}else if (status === 'dc') {
 		status = '배송완료';
+	}else if (status === 'oc') {
+		status = '결제취소';
 	}
+     
 	
      if (confirm(status+'(으)로 배송상태를 변경하시겠습니까?')) {
 		
@@ -86,6 +89,12 @@ function statusUpdate(orderNo){
     					$('#statusth').text(statusth).css('color','blue');
     					$('#orderdelModal').modal('hide');
 						
+					}else if (status === '결제취소') {
+						
+						statusth = status;
+    					$('#statusth').text(statusth).css('color','green');
+    					$('#orderdelModal').modal('hide');
+						
 					}
 				}
     		}
@@ -110,6 +119,8 @@ function deleteOrder(orderNo){
 				if (result > 0) {
 					console.log('성공')
 					window.location.href='${path}/admin/orderList';
+				}else {
+					console.log('실패')
 				}
 			},
 			error : function(error){
@@ -152,6 +163,9 @@ ${order}
 			       					</c:if>
 			       					<c:if test="${order.status eq '배송완료'}">
 			       						<span style="color: blue">${order.status}</span>
+			       					</c:if>
+			       					<c:if test="${order.status eq '결제취소'}">
+			       						<span style="color: hotpink">${order.status}</span>
 			       					</c:if>
 		       					</th>
 		       					<th>
@@ -335,13 +349,14 @@ ${order}
 					        
 					        <!-- Modal body -->
 					        <div class="modal-body">
-					          
+					          <sub>배송상태를 선택해주세요.</sub>
 					          <select name="status" id="status" required>
                                    <option selected>------선택------</option>
                                    <option value="rd">1.출고준비중..</option>
                                    <option value="rc">2.출고완료..</option>
                                    <option value="dr">3.배송준비중..</option>
                                    <option value="dc">4.배송완료..</option>
+                                   <option value="oc">5.결제취소..</option>
                               </select>
 					          
 					        </div>

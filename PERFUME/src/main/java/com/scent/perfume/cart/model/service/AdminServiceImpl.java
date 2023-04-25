@@ -417,16 +417,16 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	@Transactional//삭제하기 해결하기
-	public int deleteOrderList(String orderNo) {
+	public int deleteOrderList(OrderList order) {
 		
-		return adminMapper.deleteOrderList(orderNo);
+		return adminMapper.deleteOrderList(order.getOrderNo());
 	}
 
 	@Override
 	@Transactional//삭제하기 해결하기
-	public int deleteOrder(String orderNo) {
+	public int deleteOrder(OrderList order) {
 		
-		return adminMapper.deleteOrder(orderNo);
+		return adminMapper.deleteOrder(order.getOrderNo());
 	}
 
 }

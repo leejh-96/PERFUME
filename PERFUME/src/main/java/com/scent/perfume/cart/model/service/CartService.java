@@ -33,4 +33,6 @@ public interface CartService {
 
 	productOption selectNowOrder(productOption option);
 
+	int insert(int no, Cart cart);
+
 }

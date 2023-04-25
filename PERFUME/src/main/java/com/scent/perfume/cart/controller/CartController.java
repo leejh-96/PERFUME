@@ -247,7 +247,27 @@ public class CartController {
 		return "common/msg";
 	}
 	
-	
+	@ResponseBody
+	@GetMapping("/cart/insert")
+	public int insert(HttpServletRequest request,
+					  @ModelAttribute Cart cart) {
+		
+		int result = 0;
+		
+		HttpSession member = request.getSession();
+		
+		Member loginMember = (Member)member.getAttribute("loginMember");
+		
+		log.info("cart : {}",cart);
+		log.info("loginMember : {}",loginMember);
+		
+		if (loginMember != null) {
+			
+			result = cartService.insert(loginMember.getNo(),cart);
+			
+		}
+		return result;
+	}
 	
 	
 	

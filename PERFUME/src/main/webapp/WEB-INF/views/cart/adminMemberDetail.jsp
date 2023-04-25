@@ -213,12 +213,12 @@ function check(){
                             </tr>
                             <tr class="table-warning">
                                 <th>회원성별</th>
-                                <c:if test="${member.gender == 'M' || member.gender == '남성' || member.gender == '남자'}">
+                                <c:if test="${member.gender == 'M' || member.gender == '남성' || member.gender == '남자'|| member.gender == '남'}">
 	                                <td>
 	                                	남성
 	                                </td>
                                 </c:if>
-                                <c:if test="${member.gender == 'F' || member.gender == '여성' || member.gender == '여자'}}">
+                                <c:if test="${member.gender == 'F' || member.gender == '여성' || member.gender == '여자'|| member.gender == '여'}}">
 	                                <td>
 	                                	여성
 	                                </td>
@@ -339,12 +339,12 @@ function check(){
 			                            </tr>
 			                            <tr>
 			                                <th class="tableback_color">회원성별</th>
-			                                <c:if test="${member.gender == 'M' || member.gender == '남성' || member.gender == '남자'}">
+			                                <c:if test="${member.gender == 'M' || member.gender == '남성' || member.gender == '남자'|| member.gender == '남'}">
 				                                <td colspan="2">
 				                                	남성
 				                                </td>
 			                                </c:if>
-			                                <c:if test="${member.gender == 'F' || member.gender == '여성' || member.gender == '여자'}}">
+			                                <c:if test="${member.gender == 'F' || member.gender == '여성' || member.gender == '여자'|| member.gender == '여'}}">
 				                                <td colspan="2">
 				                                	여성
 				                                </td>

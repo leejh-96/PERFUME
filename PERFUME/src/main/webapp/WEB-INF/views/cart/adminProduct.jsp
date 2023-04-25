@@ -219,7 +219,7 @@ function check(){
 	}else if (!$.isNumeric(midcategory)) {
 		alert('상품구분을 선택해주세요!')
 		return false;
-	}else if (!(productGender === '남성'|| productGender === '여성')) {
+	}else if (!(productGender === 'M'|| productGender === 'F')) {
 		alert('추천성별을 선택해주세요!')
 		return false;
 	}

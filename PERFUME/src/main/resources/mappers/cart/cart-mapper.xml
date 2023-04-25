@@ -319,8 +319,27 @@
 		WHERE  c_no = #{cartNo}
 	</update>
 	
+	<insert id="insert" parameterType="Cart">
+		INSERT INTO cart (  c_no,
+						    p_no,
+						    m_no,
+						    c_count,
+						    c_size,
+						    c_status,
+						    c_date,
+						    c_update
+						) VALUES (
+						    SEQ_CART_C_NO.NEXTVAL,
+						    #{cart.productNo},
+						    #{cart.memberNo},
+						    #{cart.cartProductCount},
+						    #{cart.cartOptionSize},
+						    DEFAULT,
+						    DEFAULT,
+						    DEFAULT
+						)
+	</insert>
 	
-
 
 
 
