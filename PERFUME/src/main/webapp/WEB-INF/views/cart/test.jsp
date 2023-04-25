@@ -13,6 +13,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 	<%-- 장바구니 test
 	
 	<button onclick="location.href='${path}/cart?memberNo=3'" name="cart" id="cart" >장바구니테스트</button>
@@ -86,7 +87,7 @@
                     </div>
                     <div id="product-button">
                         <button id="like">LIKE</button>
-                        <button id="cart">CART</button>
+                        <button id="cart" onclick="cartInsert(1)">CART</button>
                         <%-- <button id="buy" onclick="location.href='${path}/cart/nowOrder/2/1/50/80000/100'">BUY NOW</button>
                         <button id="buy" onclick="location.href='${path}/cart/nowOrder/2/1/50/80000/100'">BUY NOW</button> --%>
                         <button id="buy" onclick="nowOrder(1)">BUY NOW</button><!-- product.no -> 상품번호만 함수 매개변수로 onclick="nowOrder(${product.productNo})" -->
@@ -107,7 +108,49 @@ function nowOrder(productNo){
 	   console.log(poAmount)
 	   window.location.href='${path}/cart/nowOrder/'+productNo+'/'+poName+'/'+poAmount                                                                                                                                                                                                                                                                                               
 	   
-	}
+}
+
+/* onclick="nowOrder(${product.pno})" */
+	
+function cartInsert(productNo){
+	console.log(productNo)
+	console.log(poName)
+	let cartProductCount = $('#quantity').val();
+	console.log(cartProductCount)
+	cartOptionSize = poName;
+	
+	$.ajax({
+		url : '${path}/cart/insert',
+		type : 'get',
+		data : {productNo,cartOptionSize,cartProductCount},
+		dataType : 'json',
+		success : function(result){
+			console.log(result)
+			
+			if (result === 0) {
+				//비로그인시 체크
+				if (confirm('장바구니는 로그인 후 이용가능합니다.\n\n로그인 하시겠습니까?')) {
+					$('.openLogin').trigger('click');
+				}else {
+					return false;
+				}
+			}else if (result === 1) {
+				if (confirm('상품이 정상적으로 장바구니에 담겼습니다.\n\n장바구니에서 확인하시겠습니까?')) {
+					window.location.href='${path}/cart';
+				}else {
+					return false;
+				}
+			}
+		},
+		error : function(error){
+			console.log(error)
+		}
+	})
+}
+
+
+
+
 </script>	
 	
 </body>

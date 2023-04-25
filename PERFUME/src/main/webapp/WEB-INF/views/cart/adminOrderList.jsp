@@ -107,6 +107,9 @@
 				                    	<c:if test="${order.status eq '배송완료'}">
 				                    		<span class="statusdc">${order.status}</span>
 				                    	</c:if>
+				                    	<c:if test="${order.status eq '결제취소'}">
+			       							<span style="color: hotpink">${order.status}</span>
+			       						</c:if>
 				                    </td>
 			        			</tr>
 		        			</c:forEach>

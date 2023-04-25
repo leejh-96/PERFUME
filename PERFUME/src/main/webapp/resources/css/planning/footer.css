@@ -10,40 +10,8 @@ body {
 }
 
 /* 푸터 영역 */
-.footer-nav {
-    display: flex;
-    justify-content: space-between;
-    height:200px;
-    align-items: center;
-    background-color: #f8f7f2;
-}
-
-.footer-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.footer-nav li {
-    width: calc(100%/4);
-    text-align: center;
-    margin-top: 30px;
-}
-
-.footer-nav li p {
-    margin-top: 30px;
-}
-
-.footer-nav li a {
-    font-size: 30px;
-}
-
 .footer-text {
     height: auto;
     font-size: medium;
     text-align: center;
-    margin-top: 30px;
 }

@@ -101,11 +101,11 @@ public interface AdminMapper {
 
 	Order selectOrderList(@Param("orderNo") String orderNo);
 
-	int statusUpdate(@Param("orderNo") String orderNo,@Param("status") String status);
+	int statusUpdate(@Param("orderNo") String orderNo, @Param("status") String status);
 
-	int deleteOrder(@Param("orderNo") String orderNo);//삭제하기 해결하기
+	int deleteOrder(@Param("order") String order);//삭제하기 해결하기
 
-	int deleteOrderList(@Param("orderNo") String orderNo);//삭제하기 해결하기
+	int deleteOrderList(@Param("order") String order);//삭제하기 해결하기
 
 	
 
