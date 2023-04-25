@@ -12,6 +12,7 @@ h2 {
 #special-content {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	margin-bottom: 20px;
 }
 
@@ -34,5 +35,5 @@ h2 {
 }
 
 .product-img a img {
-	width: 20%;
+	width: 30%;
 }

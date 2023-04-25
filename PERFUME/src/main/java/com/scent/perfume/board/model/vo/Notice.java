@@ -32,4 +32,6 @@ public class Notice {
 	private String BPwd;		//게시글 비밀번호(Q&A게시판일때 한정)
 	
 	private String BType;		//게시판종류('공지사항' | 'Q&A' | '이벤트' | '기획전')
+	
+	private String Notice_yn;	//공지사항, 일반게시글 택1
 }
