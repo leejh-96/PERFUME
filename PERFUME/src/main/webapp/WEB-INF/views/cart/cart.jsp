@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
 <c:set var="path" value="${ pageContext.request.contextPath }"/>
 
 <!DOCTYPE html>
@@ -17,6 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/ecdfb9b41a.js"></script>
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
     *{
         /* border: 1px solid red; */
@@ -47,9 +47,14 @@
         height: 20px;
     }
     .coupon-p{
-        font-size: smaller;
-        border: 1px solid black;
+        font-size: large;
         margin: 5px;
+    }
+    .coupondiv{
+    	border: 2px; 
+    	color: green;
+    	font-weight:bolder;
+    	background-color: rgb(246, 247, 242);
     }
     .coupon-wrap{
         height: 80px;
@@ -81,6 +86,35 @@
     .ordercomplete-page{
         height: 3px;
         background-color: orangered;
+    }
+    #pointInputPtag{
+    	display: flex;
+    	justify-content: center;
+    	
+    }
+    #memberpoint{
+    	color: orange;
+    	font-weight: bolder;
+    }
+    #coupon_point-wrap{
+    	margin: 10px;
+    	padding: 10px;
+    	color: orange;
+    	font-weight: bolder;
+    	font-size: large;
+    }
+    .zerostock{
+    	color: red;
+    	font-weight: bolder;
+    	font-size: medium;
+    }
+    .zeroInfodiv{
+    	margin: 10px;
+    	padding: 10px;
+    	color: orange;
+    	font-size: large;
+    	font-weight: bolder;
+    	
     }
     /* 장바구니 css 끝 */
     /* 주문서 css */
@@ -117,7 +151,23 @@
         height: 3px;
         background-color: orangered;
     }
+    .agreedivwrap{
+    	text-align: center;
+    	margin-top: 10px;
+    	margin-bottom: 10px;
+    
+    }
+    #myModal2{
+    z-index: 2000;
+    }
     /* 주문서 css 끝 */
+    /* 결제 스피너 css 시작 */
+    #myModalorder{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
+    /* 결제 스피너 css 끝 */
     </style>
     <script type="text/javascript">
     
@@ -137,13 +187,26 @@
     	if (ratio == "" || ratio == null || ratio == undefined || ( ratio != null && typeof ratio == "object" && !Object.keys(ratio).length ) ) {
 			
     		/* 혜택이 없고 체크된 상태 체크 */
-   			console.log('비어있음')
+    		if (productAmount > result) {
+    			console.log('비어있음')
+       			++result
+       			console.log(result)
+       			$('#result'+cartNo).val(result);
+       			let won = result * parprice;
+       			let formmat = won.toLocaleString();
+       			$('#finalprice'+cartNo).text(formmat);
+			}else if (productAmount < result) {
+				alert('현재 주문할 수 있는 수량은 '+productAmount+'개 입니다.')
+			}else {
+				alert('현재 주문할 수 있는 수량은 '+productAmount+'개 입니다.')
+			} 
+   			/* console.log('비어있음')
    			++result
    			console.log(result)
    			$('#result'+cartNo).val(result);
    			let won = result * parprice;
    			let formmat = won.toLocaleString();
-   			$('#finalprice'+cartNo).text(formmat);
+   			$('#finalprice'+cartNo).text(formmat); */
 			
     	}else {
 			console.log('안비어있음')
@@ -158,8 +221,10 @@
     		
     		 $('#finalprice'+cartNo).text(formmat); 
     		
+			}else if (productAmount < result) {
+				alert('현재 주문할 수 있는 수량은 '+productAmount+'개 입니다.')
 			}else {
-				alert('현재 주문할 수 있는 물량이 부족합니다.')
+				alert('현재 주문할 수 있는 수량은 '+productAmount+'개 입니다.')
 			}
 		}
     }
@@ -241,7 +306,6 @@
    	    	      $('#ratio').text('');
    	       	 	})
    			}
-    	
     }
     
     /* 초기화 변수들 */
@@ -271,6 +335,9 @@
 		
     	/* 같은 체크박스를 체크했을때 처리로직 */
     	if ($('#cartCheck'+cartNo).prop('checked')) {
+    		
+    		$('.caldiv').css('display','block')////계산 div
+    		
     		$('#cartCheck'+cartNo).attr('checked',true)
     		$('#del'+cartNo).attr('disabled',true);
     		$('#add'+cartNo).attr('disabled',true);
@@ -330,6 +397,16 @@
 			} 
 			
 		}else {
+			
+			let checkCount = $('input:checkbox[name=cartCheckBox]:checked').length;
+			console.log('checked : '+checkCount);
+			
+			if (checkCount == 0) {
+				$('.caldiv').css('display','none')////계산 div
+			}else {
+				$('.caldiv').css('display','block')////계산 div
+			}
+			 
 			$('#cartCheck'+cartNo).attr('checked',false)
 			$('#del'+cartNo).attr('disabled',false);
     		$('#add'+cartNo).attr('disabled',false);
@@ -402,7 +479,7 @@
     	let parseformatfinaltotal = parseInt(formatfinaltotal);
     	$('#finaltotal').text(new Intl.NumberFormat('ko-kr').format(parseformatfinaltotal+parseformatsavesale));
     	$('#save-sale2').text(pointremember-parseformatsavesale);
-    	
+    	$('#pointInput').val('');
     	console.log('pointremember : '+pointremember)
     	pointremember = 0;
     	
@@ -582,6 +659,11 @@
     		 return false;
     	 }else {
     		 
+    		 if ($('input:checkbox[name=cartCheckBox]').is(':checked')==false) {
+    			 alert('장바구니 목록을 선택해주세요!')
+					return false;
+			 }
+    		 
     		 $('input:checkbox[name=cartCheckBox]').each(function (index) {
  				if($(this).is(":checked")==true){
  			    	console.log('cartNo : '+$(this).val());
@@ -721,6 +803,12 @@
 			
     		return false; 
     	 }else { 
+    		 
+    		 if ($('input:checkbox[name=cartCheckBox]').is(':checked')==false) {
+    			 alert('장바구니 목록을 선택해주세요!')
+					return false;
+			 }
+    		 
     		 $('input:checkbox[name=cartCheckBox]').each(function (index) {
   				if($(this).is(":checked")==false){
   			    	console.log('cartNo : '+$(this).val());
@@ -737,6 +825,8 @@
   					$('.coupontry').css('display','inline-block')
   					$('#pointtry').css('display','inline-block')
   					$('#reset').css('display','inline-block')
+  					$('#pointmsg').css('display','none')
+  					$('#pointInput').css('display','block')
   					let delivery = $('#pcspan2').text();
   					let formatdelivery = delivery.split(',').join("");
  			    	let parseformatdelivery = parseInt(formatdelivery);
@@ -775,20 +865,18 @@
     			 $('#orderSequence').addClass('sequence') 
     			 $('.hiddenOrder').css('display','block')
     			 $('input:checkbox[name=cartCheckBox]').each(function (index){
-    				 
     				 if (this.checked == false) {
 	   					  this.checked = true;
 	   					  let value = this.value;
-	   					  
 	   					  let value2 = parseInt(value);
-	 	       			 
 	 	         	      cartCheck(value2);
 	   			     }
-    				 
     				 $('.hiddenbtn').css('display','none')
     	    	     $('.coupontry').css('display','inline-block')
     				 $('#pointtry').css('display','inline-block')
     				 $('#reset').css('display','inline-block')
+    				 $('#pointmsg').css('display','none')
+    				 $('#pointInput').css('display','block')//
     				 let delivery = $('#pcspan2').text();
     				 let formatdelivery = delivery.split(',').join("");
     		    	 let parseformatdelivery = parseInt(formatdelivery);
@@ -818,11 +906,13 @@
 	    		 $('#cartSequence').removeClass('sequence')
 				 $('#orderSequence').addClass('sequence')  
 				 $('.hiddenOrder').css('display','block')
+				 $('#pointInput').css('display','block')//
 	    		 $('input:checkbox[name=cartCheckBox]').each(function (index){
 			    	     $('.hiddenbtn').css('display','none')
 			    	     $('.coupontry').css('display','inline-block')
 						 $('#pointtry').css('display','inline-block')
 						 $('#reset').css('display','inline-block')
+						 $('#pointmsg').css('display','none')
 						 let delivery = $('#pcspan2').text();
 						 let formatdelivery = delivery.split(',').join("");
 				    	 let parseformatdelivery = parseInt(formatdelivery);
@@ -858,16 +948,98 @@
   	   IMP.init('imp42427144'); // 예: imp00000000 
   	   let payment = '';
        
-     function kakaopay(){
-   		 if (confirm('카카오페이로 결제를 진행하시겠습니까?')) {
-   	  			$('#kakaopay').css('disabled',true)
-   	  		 	payment = $('#kakaopay').val();//카카오페이 value가 들어잇음
-   	  		 	console.log('payment : '+payment)
-   			}
+     function payselect(number){
+    	 
+    	 if ($('#pay'+number).val() === 'html5_inicis') {
+    		 if (confirm('카드로 결제를 진행하시겠습니까?')) {
+    			 payment = '';
+    			 payment = $('#pay'+number).val();
+    	  		 console.log('payment : '+payment)
+			} 
+		 }else if (confirm($('#pay'+number).val()+'로 결제를 진행하시겠습니까?')) {
+			 payment = '';
+			 payment = $('#pay'+number).val();
+	  		 console.log('payment : '+payment)
+		}
      }
   	
   	 function pay() {
+  		
+  		let buyernameinput = $('#buyer_name').val();
+  		let buyertelinput = $('#buyer_tel').val();
+  		let addr1input = $('#addr1').val();
+  		let addr2input = $('#addr2').val();
+  		let buyeremailinput = $('#buyer_email').val();
+  		
+  		let recipientinput = $('#recipient').val();
+  		let buyeraddr1input = $('#buyer_addr1').val();
+  		let buyeraddr2input = $('#buyer_addr2').val();
+  		let recipienttelinput = $('#recipienttel').val();
+  		
+  		let telpattern = /[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}/;
+  		let emailpattern =  /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/; 
+  		
+  		if (true) {
+  			if (buyernameinput == '' || buyernameinput == null) {
+  				alert('주문자님 성함을 입력해주세요!')
+  				return false;
+  			}else if (buyertelinput == '' || buyertelinput == null) {
+  				alert('주문자님 전화번호를 입력해주세요!')
+  				return false;
+  			}else if (buyeremailinput == '' || buyeremailinput == null) {
+  				alert('이메일을 입력해주세요!')
+  				return false;
+  			}else if (addr1input == '' || addr1input == null) {
+  				alert('도로명주소를 입력해주세요!')
+  				return false;
+  			}else if (addr2input == '' || addr2input == null) {
+  				alert('상세주소를 입력해주세요!')
+  				return false;
+  			}else if (recipientinput == '' || recipientinput == null) {
+  				alert('받으시는분 성함을 입력해주세요!')
+  				return false;
+  			}else if (buyeraddr1input == '' || buyeraddr1input == null) {
+  				alert('받으시는분 도로명주소를 입력해주세요!')
+  				return false;
+  			}else if (buyeraddr2input == '' || buyeraddr2input == null) {
+  				alert('받으시는분 상세주소를 입력해주세요!')
+  				return false;
+  			}else if (recipienttelinput == '' || recipienttelinput == null) {
+  				alert('받으시는분 전화번호를 입력해주세요!')
+  				return false;
+  			}
+  			if (buyertelinput != '' || buyertelinput != null) {
+				if (!telpattern.test(buyertelinput)) {
+					alert('주문자님 전화번호를 올바르게 입력해주세요.')
+					return false;
+				}else if (recipienttelinput != '' || recipienttelinput != null) {
+					if (!telpattern.test(recipienttelinput)) {
+						alert('받으시는분 전화번호를 올바르게 입력해주세요.')
+						return false;
+					}
+				}
+			}else if (buyeremailinput != '' || buyeremailinput != null) {
+				if (!emailpattern.test(buyeremailinput)) {
+					alert('이메일을 올바르게 입력해주세요.')
+					return false;
+				}
+			}
+		}
+  		if ($('#agree1').prop('checked')==false) {
+  			alert('개인정보 수집이용에 대한 내용을 체크해주세요!')
+			return false;
+		}else if ($('#agree2').prop('checked')==false) {
+			alert('이용약관에 대한 내용을 체크해주세요!!')
+			return false;
+		}
+  		 
   		   if (confirm('결제를 진행하시겠습니까?')) {
+  			 
+  			 if (payment == null || payment == '') {
+  				 alert('결제 방식을 선택해주세요!')
+				return false;
+			 }
+  			   
   			 let memberNo = $('#payment').val();//멤버 번호가 담겨있음
   			 let orderNo = 'PERFUME-' + new Date().getTime();//현재시간으로 주문번호를 생성해서 보내기
   			 
@@ -879,7 +1051,10 @@
 				   let orderName = $('#buyer_name').val();//주문자 이름
 				   let orderEmail = $('#buyer_email').val();//주문자 이메일
 				   let orderPhone = $('#buyer_tel').val();//주문자 전화번호
-				   let recipientAddr = $('#buyer_addr').val();//주문자 주소
+				   let recipientAddr1 = $('#buyer_addr1').val();//주문자 주소
+				   let recipientAddr2 = $('#buyer_addr2').val();//주문자 주소
+				   let recipientAddr = recipientAddr1+" "+recipientAddr2;//주문자 주소
+				   
 				   let finaltotal = $('#finaltotal').text();//최종결제금액.
 	        	   let formattotal = finaltotal.split(',').join("");//최종결제금액.
 			       let finalPrice = parseInt(formattotal);//최종결제금액.
@@ -896,38 +1071,6 @@
 			    	   point = 0;
 				   }
 			       let plusPoint = finalPrice*(5/100);
-			       if (memberNo != 0) {//회원검증
-			    	   if (point != 0) {//회원포인트차감
-			    		   $.ajax({
-			            		url : '${path}/order/pointUpdate/'+point+'/'+memberNo+'/',
-			            		type : 'GET',
-			            		data : {point,memberNo},
-			            		/* contentType: 'application/json; charset=utf-8', */
-			            		success : function(result){
-			            			if (result > 0) {
-				            			console.log('적립금 업데이트 완료')
-				            			$.ajax({
-											url : '${path}/order/plusPoint/'+plusPoint+'/'+memberNo+'/',
-											type : 'GET',
-											/* contentType: 'application/json; charset=utf-8', */
-											data : {plusPoint,memberNo},
-											success : function(result){
-												if (result > 0) {
-													console.log('적립금 적립 업데이트 완료')
-												}
-											},
-							        		error : function(){
-							        			console.log('적립금 업데이트 오류')
-							        		}
-										})
-									}
-			            		},
-			            		error : function(){
-			            			console.log('적립금 업데이트 오류')
-			            		}
-			               })
-					   }
-				   }
 			       let coupon2 = $('#coupon-sale2').text();//쿠폰할인금액.
 	        	   let formatcoupon = coupon2.split(',').join("");//쿠폰할인금액.
 			       let coupon = parseInt(formatcoupon);//쿠폰할인금액.
@@ -944,6 +1087,11 @@
 			       let recipientName = $('#recipient').val();//받는분 이름
 			       let recipientPhone = $('#recipienttel').val();//받는분전화번호
 			       let memo = $('#memo').val();//배송메모
+			       
+			       if (payment === 'html5_inicis') {
+					
+				   }
+			       
 			       let orderMethod = payment;//결제수단
 				   
 				   IMP.request_pay({
@@ -964,9 +1112,46 @@
 				        }).done(function(data) {
 				        	let orderDate = new Date().getTime();//결제날짜 생성
 				        	if(rsp.paid_amount == data.response.amount){
-				        		//결제 성공 로직
+				        		if (memberNo != 0) {//회원검증
+							    	   if (point != 0) {//회원포인트차감
+							    		   $.ajax({
+							            		url : '${path}/order/pointUpdate/'+point+'/'+memberNo+'/',
+							            		type : 'GET',
+							            		data : {point,memberNo},
+							            		/* contentType: 'application/json; charset=utf-8', */
+							            		dataType : 'json',
+							            		success : function(result){
+							            			if (result > 0) {
+								            			console.log('적립금 업데이트 완료')
+								            			$.ajax({
+															url : '${path}/order/plusPoint/'+plusPoint+'/'+memberNo+'/',
+															type : 'GET',
+															/* contentType: 'application/json; charset=utf-8', */
+															data : {plusPoint,memberNo},
+															dataType : 'json',
+															success : function(result){
+																if (result > 0) {
+																	console.log('적립금 적립 업데이트 완료')
+																}
+															},
+											        		error : function(){
+											        			/* $('#myModal').modal('hide') */
+											        			console.log('적립금 업데이트 오류')
+											        		}
+														})
+													}
+							            		},
+							            		error : function(){
+							            			/* $('#myModal').modal('hide') */
+							            			console.log('적립금 업데이트 오류')
+							            		}
+							               })
+									   }
+								   }
+				        		//결제 성공 로직 시작
 				        		let order = {orderNo,memberNo,orderMethod,orderDate,finalPrice,orderName,orderEmail,orderPhone,recipientAddr,
 				        					discount,point,coupon,delivery,recipientName,recipientPhone,memo};
+				        		
 				        		$.ajax({
 				        			url : '${path}/cart/orderDetail',
 				        			type : 'post',
@@ -975,25 +1160,27 @@
 				        			contentType: 'application/json; charset=utf-8',
 				        			async : false,
 				        			success : function(obj){
+				        				/* $('#myModalorder').modal('show')  */
+				        				
 			        					$('input:checkbox[name=cartCheckBox]').each(function(index){
 			        						if (this.disabled == true) {
 		        		   					    let value = this.value;
-		        		   					    let value2 = parseInt(value);//카트번호
-		        		 	         	        let hiddenProductNo = $('#hiddenProductNo'+value2).val();//상품번호
+		        		   					    let cartNo = parseInt(value);//카트번호
+		        		 	         	        let hiddenProductNo = $('#hiddenProductNo'+cartNo).val();//상품번호
 			        		 	         	    console.log('hiddenProductNo : '+hiddenProductNo)
-						        				console.log('cartNo : '+value2)//카트번호
+						        				console.log('cartNo : '+cartNo)//카트번호
 						        				orderNo;//주문번호
 						        				console.log('orderNo : '+orderNo)
-						        				let productNo = $('#hiddenProductNo'+value2).val();//상품번호
+						        				let productNo = $('#hiddenProductNo'+cartNo).val();//상품번호
 						        				console.log('productNo : '+productNo)
-						        				let result = $('#result'+value2).val();
+						        				let result = $('#result'+cartNo).val();
 						        				let orderCount = parseInt(result);//상품수량
-						        				let option = $('#optionsize'+value2).text();
+						        				let option = $('#optionsize'+cartNo).text();
 						        				let orderSize = parseInt(option);//옵션사이즈
-						        				let finalPrice = $('#finalprice'+value2).text();
+						        				let finalPrice = $('#finalprice'+cartNo).text();
 						        				let formatfinalPrice = finalPrice.split(',').join("");
 						     			        let orderPrice = parseInt(formatfinalPrice);//상품가격
-						     			        let orderList = {orderNo,productNo,orderCount,orderSize,orderPrice};//하나의 주문상품 객체
+						     			        let orderList = {orderNo,productNo,orderCount,orderSize,orderPrice,cartNo};//하나의 주문상품 객체
 				        						$.ajax({
 				        							url : '${path}/cart/order',
 				        							type : 'post',
@@ -1005,6 +1192,7 @@
 				        								console.log('order-product-complete 결제에 성공하였습니다.')
 				        							},
 				        							error : function(error){
+				        								/* $('#myModalorder').modal('hide') */
 				        								console.log('order-product-error 결제에 실패하였습니다.')
 				        							}
 				        						})
@@ -1012,13 +1200,16 @@
 				        				})
 				        			},
 				        			error : function(error){
+				        				 /* $('#myModalorder').modal('hide')  */
 				        				console.log('order-insert-error')
 				        			}
 				        		})
 				        		payment = '';
+				        		/*  $('#myModalorder').modal('hide')  */
  				        		window.location.href='${path}/cart/orderList/'+order.orderNo+'/'+order.memberNo+'/'+plusPoint;
  				        	} else {
 				        		//결제 실패 로직
+				        		/*  $('#myModalorder').modal('hide')  */
 				        		alert("결제에 실패하였습니다.");
 				        	}
 				        });
@@ -1027,10 +1218,75 @@
 			return false;
 		  }
      }
+  	
+  	function buyerTrue(){
+  		let buyername = $('#buyer_name').val();
+  		let buyertel = $('#buyer_tel').val();
+  		let addr1 = $('#addr1').val();
+  		let addr2 = $('#addr2').val();
+  		
+  		$('#recipient').val(buyername);
+  		$('#recipienttel').val(buyertel);
+  		$('#buyer_addr1').val(addr1);
+  		$('#buyer_addr2').val(addr2);
+  	}
+  	
+  	function selfInput(){
+  		let recipient = $('#recipient').val();
+  		let recipienttel = $('#recipienttel').val();
+  		let buyer_addr1 = $('#buyer_addr1').val();
+  		let buyer_addr2 = $('#buyer_addr2').val();
+  		
+  		recipient = '';
+  		recipienttel = '';
+  		buyer_addr1 = '';
+  		buyer_addr2 = '';
+  		
+  		$('#recipient').val(recipient);
+  		$('#recipienttel').val(recipienttel);
+  		$('#buyer_addr1').val(buyer_addr1);
+  		$('#buyer_addr2').val(buyer_addr2);
+  	}
+  	
+  	function Postcode1(){
+  		new daum.Postcode({
+  	         oncomplete: function(data) {
+  	             
+  	        	let address = data.address;
+  	            $('#addr1').val(address);
+  	             
+  	         }
+  	     }).open();
+  	 }
+  	
+  	 function Postcode2(){
+  		new daum.Postcode({
+  	         oncomplete: function(data) {
+  	             
+  	        	let address = data.address;
+  	            $('#buyer_addr1').val(address);
+  	             
+  	         }
+  	     }).open();
+  	 }
+  	 
+  	 function agreeAllCheck(){
+  		$("#agreeAll").change(function(){
+  	        if($("#agreeAll").is(":checked")){
+  	        	 $('#agree1').attr('checked',true)
+  	      		 $('#agree2').attr('checked',true)
+  	        }else{
+  	        	 $('#agree1').attr('checked',false)
+  	     		 $('#agree2').attr('checked',false)
+  	        }
+  	    });
+  	}
+  	 
   /* 아임포트 결제연동  끝*/
     </script>
 </head>
 <body>
+<%-- 
 
 <span>${memberInfo}</span>
 	<br><br><br><br><br>
@@ -1039,12 +1295,19 @@
 	<span>${clist}</span>
 	<br><br>
 	</c:forEach> 
-	
-<div class="container" style="height: 100px;"></div>
+	  --%>
+<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 
 <div id="cart-wrap"><!-- 전체 div 시작 -->
     
 	    <div class="container">
+	    
+	    	<!-- <div class="modal fade" id="myModalorder">
+            	<div class="spinner-border d-flex justify-content-center" style="width: 10rem; height: 10rem;" role="status">
+                    <span class="sr-only">결제가 진행 중입니다~~~~~</span>
+                </div>
+          	</div> -->
+	    
 	      	<div id="cart-sup">
 	          	<span id="cartSequence" class="sequence">01장바구니</span>
 	          	<i class="fa-solid fa-angle-right"></i>
@@ -1056,9 +1319,11 @@
 	    </div>
 
 	    <div class="container cart-tr"><!-- content div 시작 -->
-	        <form action="" method="" class="form-inline">
 	        <input id="memberInfo" type="hidden" value="${memberInfo}">
 	        <input id="clist" type="hidden" value="${clist}">
+	        <input class="cartNo" type="hidden" value="${cart.cartNo}">
+	        <input class="hiddenproductAmount${cart.cartNo}" type="hidden" value="${cart.cartProduct.productAmount}">
+	        <input id="hiddenPoint" type="hidden" value="${memberInfo.memberPoint}">
 	        
 	            <table class="table-hover table cart-table" >
 	                <tr>
@@ -1071,81 +1336,61 @@
 	                    <th class="align-middle">상품금액</th>
 	                    <th class="align-middle" colspan="2">혜택</th>
 	                    <th class="align-middle">최종상품금액</th>
-	                    <!-- <th class="align-middle">배송비</th> -->
 	                </tr>
 	                
 	                <c:forEach var="cart" items="${clist}" varStatus="status">
-	                
 	                <c:set var="finalPrice" value="${(cart.cartProduct.productPrice-((cart.benefitList.benefitRatio/100)*cart.cartProduct.productPrice))*cart.cartProductCount}"/>
 	                
 	                <tr id="cartRow${cart.cartNo}">
-	                    <th class="align-middle">                             
-							<input id="hiddenProductNo${cart.cartNo}" type="hidden" value="${cart.productNo}">   
-	                        <input type="checkbox" name="cartCheckBox" class="th-input" id="cartCheck${cart.cartNo}" onclick="cartCheck(${cart.cartNo})" value="${cart.cartNo}">
+	                    <th class="align-middle">  
+	                    
+	                    	<c:if test="${cart.cartProduct.productAmount != 0}">
+								<input id="hiddenProductNo${cart.cartNo}" type="hidden" value="${cart.productNo}">   
+		                        <input type="checkbox" name="cartCheckBox" class="th-input" id="cartCheck${cart.cartNo}" onclick="cartCheck(${cart.cartNo})" value="${cart.cartNo}">
+	                  		</c:if>
+	                  		<c:if test="${cart.cartProduct.productAmount == 0}">
+	                  			<span class="zerostock">품절</span> 
+	                  		</c:if>
+	                  
 	                    </th>
 	                    <th class="align-middle">
-	                        <img src="https://cdn.pixabay.com/photo/2023/02/23/17/56/turtle-7809341_640.jpg" width="80px">
+	                        <img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="150px">
 	                    </th>
-	
 	                    <th class="align-middle">
 	                        <sub>
-	                            <a href="">
+	                            <a href="${path}/product/detail?no=${cart.cartProduct.productNo}">
 	                            	<span>[${cart.cartProduct.productBrand}]</span>
 	                            	<span>${cart.cartProduct.productEngName}</span><br>
 	                                <span>${cart.cartProduct.productTitle}</span><br>
 	                                [옵션사이즈 <span id="optionsize${cart.cartNo}">${cart.cartProduct.productOptionSize}</span>ml]<br>
+	                                <span>[현재 재고 ${cart.cartProduct.productAmount}개]</span>
 	                            </a>
 	                        </sub>
 	                    </th>
 	                    <th class="align-middle" width="150px">
-	                        <input class="cartNo" type="hidden" value="${cart.cartNo}">
-	                        <input class="hiddenproductAmount${cart.cartNo}" type="hidden" value="${cart.cartProduct.productAmount}">
-	                        <button name="btngroup" id="del${cart.cartNo}" type="button" onclick="del(${cart.cartNo})" style="width: 30px;">-</button>
-	                        <input name="readresult" id="result${cart.cartNo}" type="text" value="${cart.cartProductCount}" style="width: 35px; text-align: center;" readonly >
-	                        <button name="btngroup" id="add${cart.cartNo}" type="button" onclick="add(${cart.cartProduct.productAmount},${cart.cartProductCount},${cart.cartNo})" style="width: 30px;">+</button><br>
-	                        
-	                        
-	                        
-	                        <%-- <button type="button" id="amountUpdatebtn${cart.cartNo}" class="btn btn-primary btn-sm" style="margin-top: 10px" data-toggle="modal" data-target="#myModal${cart.cartNo}">>수량변경하기</button><br> --%>
-	                         <%-- <div class="modal fade" id="myModal${cart.cartNo}" >
-							    <div class="modal-dialog modal-sm modal-dialog-centered">
-							      <div class="modal-content">
-							        <div class="modal-body">
-							          <img src="https://cdn.pixabay.com/photo/2019/04/06/19/22/glass-4108085__480.jpg" class="img-thumbnail mx-auto d-block" alt="Cinque Terre" width="304" height="236">
-							          <p class="po_Option">[${cart.cartProduct.productOptionSize}]</p>
-							          <span>현재 재고 : </span> 
-							          <span class="po_Amount${cart.cartNo}">${cart.cartProduct.productAmount}</span>개<br>
-							           <button class="del" type="button" onclick="del(${cart.cartNo})" style="width: 30px;">-</button> 
-							          	   <input class="cartProductCount${cart.cartNo}" type="hidden" value="${cart.cartProductCount}">
-	                        			   <input class="result${cart.cartNo}" type="text" value="${cart.cartProductCount}" style="width: 35px; text-align: center;" readonly >
-							           <button class="add" type="button" onclick="add(${cart.cartProduct.productAmount},${cart.cartProductCount},${cart.cartNo})" style="width: 30px;">+</button> 
-							        </div>
-							        <div class="modal-footer">
-							          <button type="button" onclick="cancell(${cart.cartNo})"class="btn btn-secondary">취소하기</button>
-							          <button type="button" onclick="changeAmount(${cart.cartNo})" class="btn btn-secondary" >변경하기</button>
-							        </div>
-							        
-							      </div>
-							    </div>
-							  </div>  --%>
-	                        
-	                        
+	                    	<!-- 상품 수량이 있을때 보여주기 -->
+		                    <c:if test="${cart.cartProduct.productAmount != 0}">
+		                        <button class="btngroup" name="btngroup" id="del${cart.cartNo}" type="button" onclick="del(${cart.cartNo})" style="width: 30px;">-</button>
+		                        <input name="readresult" id="result${cart.cartNo}" type="text" value="${cart.cartProductCount}" style="width: 35px; text-align: center;" readonly >
+		                        <button class="btngroup" name="btngroup" id="add${cart.cartNo}" type="button" onclick="add(${cart.cartProduct.productAmount},${cart.cartProductCount},${cart.cartNo})" style="width: 30px;">+</button>
+		                    </c:if>  
 	                        <!-- 상품이 품절되었을때 보여주기 -->
-	                        <sub style="color: red">품절상품입니다.</sub>
-	                    
+	                        <c:if test="${cart.cartProduct.productAmount == 0}">
+		                        <input name="readresult" id="result${cart.cartNo}" type="text" value="${cart.cartProductCount}" style="width: 35px; text-align: center;" readonly >
+		                        <br>
+	                        	<sub class="zerostock">품절상품입니다.</sub>
+	                    	</c:if>
 	                    </th>
 	                    <th class="align-middle" width="150px">
 	                        <span id="price${cart.cartNo}">
-	                        	<fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-		                        value="${cart.cartProduct.productPrice}"
-		                        />
+	                        	<fmt:formatNumber type="number" pattern="###,###,###,###,###,###" value="${cart.cartProduct.productPrice}"/>
 		                    </span>원
 	                    </th>
-	                    <th class="align-middle" width="150px" colspan="2" >
+	                    <th class="align-middle" width="150px" colspan="2">
 	                    	<c:if test="${not empty cart.benefitList}">
-	                   			<span>[${cart.benefitList.benefitName}]</span><br>
-		                        <span>${cart.benefitList.benefitTitle}</span><br>
-		                        <span id="ratio${cart.cartNo}">${cart.benefitList.benefitRatio}</span>%할인
+	                    		<p>[${cart.benefitList.benefitName}]</p>
+	                    		<p><mark>${cart.benefitList.benefitTitle}</mark></p>
+	                    		<span id="ratio${cart.cartNo}">${cart.benefitList.benefitRatio}</span>% 할인이벤트!!
 		                    </c:if>
 		                    <c:if test="${cart.benefitList == null || empty cart.benefitList}">
 		                    	<span>-</span>
@@ -1154,105 +1399,85 @@
 	                    <th class="align-middle">
 		                     <c:if test="${empty cart.benefitList}">
 		                        <span id="finalprice${cart.cartNo}">
-		                        <fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-		                        value="${cart.cartProductCount*cart.cartProduct.productPrice}"
-		                        />
+		                        	<fmt:formatNumber type="number" pattern="###,###,###,###,###,###" value="${cart.cartProductCount*cart.cartProduct.productPrice}"/>
 		                        </span>원
 		                     </c:if>
 		                     <c:if test="${not empty cart.benefitList}">
 		                     	<span id="finalprice${cart.cartNo}">
-		                     	<fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-								value="${(cart.cartProduct.productPrice-((cart.benefitList.benefitRatio/100)
-								*cart.cartProduct.productPrice))*cart.cartProductCount}" />
+		                     		<fmt:formatNumber type="number" pattern="###,###,###,###,###,###" value="${(cart.cartProduct.productPrice-((cart.benefitList.benefitRatio/100)*cart.cartProduct.productPrice))*cart.cartProductCount}"/>
 		                     	</span>원
 	                     	 </c:if>
 	                    </th>
 	                </tr>
 	                </c:forEach>
 	            </table>
-	            
 	    </div><!-- content div 끝 -->
 
         <!-- 보유적립금,쿠폰 시작 -->
         <div class="container">
-        <%-- <c:set var="member" value="${memberInfo}"/> --%>
+             <div class="row cartcenter"><!-- 모달 DIV 시작 -->
+             	<div id="coupon_point-wrap">
+	             	<span>나의 포인트-쿠폰
+	         			<button type="button" id="amountUpdatebtn${cart.cartNo}" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#myModal2" >자세히보기</button>
+		            </span> 	
+	            </div>
+	             	<div class="modal fade" id="myModal2" >
+				    	<div class="modal-dialog modal-lg modal-dialog-centered">
+				      		<div class="modal-content">
+			      				<div class="modal-body">
+				      				<div class="row">
+					      				<div class="col-6">
+					      					<hr></hr>
+							      	  		<h4><span>${memberInfo.memberName} 님의 보유적립금</span></h4>
+							      	  		<h3><span id="memberpoint">${memberInfo.memberPoint}</span> point</h3>
+					      	  			</div>
+					      	  			<div class="col-6">
+					      	  				<hr>
+					      	  				<p id="pointmsg">적립금사용과 쿠폰사용은<br>주문페이지에서 사용이 가능합니다.</p>
+						      	  			<p id="pointInputPtag">
+						      	    			<input id="pointInput" type="text" placeholder="${memberInfo.memberPoint}point" name="memberPoint" style="display: none; text-align: center;">
+	                              			</p>
+		                              		<button id="pointtry" type="button" class="btn btn-success btn-sm" onclick="pointCheck()" style="display: none;">적립금 사용하기</button>
+		                              		<button id="reset" type="reset" class="btn btn-primary btn-sm" onclick="pointReset()" style="display: none;">취소하기</button>
+	     								</div>
+	    							</div>
+	    							<div class="col">
+	    								<hr></hr>
+    									<h4>${memberInfo.memberName}님의 보유쿠폰</h4>
+    									<c:if test="${not empty memberInfo.memberBenefitList}">
+		                        			<c:forEach var="memberCoupon" items="${memberInfo.memberBenefitList}">
+					                            <div class="col">
+					                            	<div class="coupondiv" id="coupon${memberCoupon.benefitNo}">
+														<p class="coupon-p">${memberCoupon.benefitTitle}:${memberCoupon.benefitRatio}%</p>
+														<p class="coupon-p">기간 : <fmt:formatDate value="${memberCoupon.benefitCreateDate}" pattern="yyyy-MM-dd" />~<fmt:formatDate value="${memberCoupon.benefitEndDate}" pattern="yyyy-MM-dd" /></p>
+						 								<button type="button" class="btn btn-sm btn-success coupontry" onclick="couponCheck(${memberInfo.memberNo},${memberCoupon.benefitNo},${memberCoupon.benefitRatio})" style="display: none;">적용하기</button>
+					                                </div>
+					                                <div class="coupondiv" id="couponreset${memberCoupon.benefitNo}" style="display: none;">
+					                                	<p class="coupon-p" >${memberCoupon.benefitTitle}:${memberCoupon.benefitRatio}%</p>
+					                                	<p class="coupon-p">기간 : <fmt:formatDate value="${memberCoupon.benefitCreateDate}" pattern="yyyy-MM-dd" />~<fmt:formatDate value="${memberCoupon.benefitEndDate}" pattern="yyyy-MM-dd" /></p>
+					                                	<span style="color: red">적용중</span><button type="button" class="btn btn-sm btn-warning" onclick="couponReset(${memberInfo.memberNo},${memberCoupon.benefitNo},${memberCoupon.benefitRatio})">취소하기</button>
+					                                </div>
+					                            </div>
+		                        			</c:forEach>
+                     					</c:if>
+                     					<c:if test="${empty memberInfo.memberBenefitList}">
+                     						<p>현재 보유하신 쿠폰이 없습니다.</p>
+                     					</c:if>
+	    							</div>
+	    						</div>
+				      		<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+				    	</div>
+				  	</div>
+				</div> 
+            </div><!-- 모달 DIV 끝 -->
+            
             <div class="row cartcenter">
-                <div class="col sale-wrap">
-                    <div class="col">
-                        <h4><span>${memberInfo.memberName} 님의 보유적립금 : </span><span id="memberpoint">${memberInfo.memberPoint}</span> point</h4>
-                    </div>
-                    <div class="col coupon-wrap">
-                        <div class="row">
-                            <div class="col">
-                            	<input id="hiddenPoint" type="hidden" value="${memberInfo.memberPoint}">
-                                <input id="pointInput" type="text" placeholder="${memberInfo.memberPoint}point" name="memberPoint">
-                                <button id="pointtry" type="button" class="btn btn-success btn-sm" onclick="pointCheck()" style="display: none;">적립금 사용하기</button>
-                                <button id="reset" type="reset" class="btn btn-primary btn-sm" onclick="pointReset()" style="display: none;">취소</button><br>
-                                <span id="msgSpan"></span>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-                <div class="col sale-wrap">
-                    <div class="col">
-                        <h4>${memberInfo.memberName}님의 보유쿠폰</h4>
-                    </div>
-                    <div class="col coupon-wrap">
-                        <div class="row">
-                        
-                        <c:if test="${not empty memberInfo.memberBenefitList}">
-                        <c:forEach var="memberCoupon" items="${memberInfo.memberBenefitList}">
-                            <div class="col-6">
-                                <p class="coupon-p " id="coupon${memberCoupon.benefitNo}">${memberCoupon.benefitTitle}:${memberCoupon.benefitRatio}% <br>
-                                기간 <fmt:formatDate value="${memberCoupon.benefitCreateDate}" pattern="yyyy-MM-dd" />
-                                ~<fmt:formatDate value="${memberCoupon.benefitEndDate}" pattern="yyyy-MM-dd" />
- 								<button type="button" class="btn btn-sm btn-success coupontry" onclick="couponCheck(${memberInfo.memberNo},${memberCoupon.benefitNo},${memberCoupon.benefitRatio})" style="display: none;">적용하기</button>
-                                </p>
-                                <p class="coupon-p" id="couponreset${memberCoupon.benefitNo}" style="display: none;">${memberCoupon.benefitTitle}:${memberCoupon.benefitRatio}% <br>
-                                기간 <fmt:formatDate value="${memberCoupon.benefitCreateDate}" pattern="yyyy-MM-dd" />
-                                ~<fmt:formatDate value="${memberCoupon.benefitEndDate}" pattern="yyyy-MM-dd" />
-								<span style="color: red">적용중</span><button type="button" class="btn btn-sm btn-warning" onclick="couponReset(${memberInfo.memberNo},${memberCoupon.benefitNo},${memberCoupon.benefitRatio})">취소하기</button>
-                                </p>
-                            </div>
-                        </c:forEach>
-                        </c:if>    
-                            
-                            <!-- <div class="col-6">
-                                <p class="coupon-p">이벤트10%
-                                    <button type="button" class="btn btn-sm btn-success">적용하기</button>
-                                </p>
-                                <p class="coupon-p">이벤트10%
-                                    <button type="button" class="btn btn-sm btn-warning">취소하기</button>
-                                </p>
-                            </div>
-                            <div class="col-6">
-                                <p class="coupon-p">이벤트10%
-                                    <button type="button" class="btn btn-sm btn-success">적용하기</button>
-                                </p>
-                                <p class="coupon-p">이벤트10%
-                                    <button type="button" class="btn btn-sm btn-warning">취소하기</button>
-                                </p>
-                            </div>
-                            <div class="col-6">
-                                <p class="coupon-p">이벤트10%
-                                    <button type="button" class="btn btn-sm btn-success">적용하기</button>
-                                </p>
-                                <p class="coupon-p">이벤트10%
-                                    <button type="button" class="btn btn-sm btn-warning">취소하기</button>
-                                </p>
-                            </div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row cartcenter">
-                <div class="col caldiv">
+                <div class="col caldiv" style="display: none">
+                	<div class="row zeroInfodiv">*품절상품을 제외한 가격입니다*</div>
                     <div class="row">
                         <div class="col" id="productCount">
-                            총<span id="pcspan1"></span>개의 상품금액<span id="pcspan2"></span>원
+                            총<span id="pcspan1"></span>개의 <br> 상품금액<span id="pcspan2"></span>원
                         </div>
-                        
                         <span class="badge">+</span>
 
                         <div class="col">
@@ -1262,21 +1487,8 @@
                         <span class="badge">-</span>
 
                         <div class="col">
-                            <span>기획전 할인금액</span><span id="ratio"></span>원
+                            <span>기획전 할인금액</span><br><span id="ratio"></span>원
                         </div>
-
-                        <!-- <span class="badge">-</span> -->
-
-                        <!-- <div class="col">
-                            <span>적립금 할인</span><br><span id="point"></span>point
-                        </div> -->
-
-                       <!-- <span class="badge">-</span>
-
-                        <div class="col">
-                            쿠폰할인<span id="coupon"></span>원
-                        </div> --> 
-
                         <span class="badge">=</span>
 
                         <div class="col">
@@ -1287,7 +1499,6 @@
             </div>
             <div class="row">
                 <div class="col cart-delete hiddenbtn">
-                	<%-- <input id="hiddenlocation" type="hidden" onclick="location.href='${path}/cart?memberNo=${memberInfo.memberNo}'"> --%>
                     <button type="button" class="btn btn-primary hiddenbtn" onclick="selectDelete(${memberInfo.memberNo})">
                         선택 상품 삭제
                     </button>
@@ -1312,7 +1523,6 @@
             </div>
         </div>
         <!-- 보유적립금,쿠폰 끝 -->
-        	</form>
         
         <!-- 주문자정보,배송정보 시작 table -->
         <div class="container hiddenOrder" style="display: none;">
@@ -1328,7 +1538,7 @@
                         주문하시는 분 성함
                     </th>
                     <td colspan="4">
-                        <input type="text" required id="buyer_name">
+                        <input type="text" required id="buyer_name" placeholder="이름을 입력해주세요.">
                     </td>
                 </tr>
                 <tr>
@@ -1337,7 +1547,7 @@
                         휴대폰번호
                     </th>
                     <td colspan="4">
-                        <input type="text" required id="buyer_tel">
+                        <input type="text" required id="buyer_tel" placeholder="형식 010-0000-0000">
                     </td>
                 </tr>
                 <tr>
@@ -1346,7 +1556,24 @@
                         이메일
                     </th>
                     <td colspan="4">
-                        <input type="text" required id="buyer_email">
+                        <input type="text" required id="buyer_email" placeholder="형식 kildong@kh.com">
+                    </td>
+                </tr>
+                <tr>
+                    <th rowspan="2">
+                        <span>*</span>
+                        받는곳 주소
+                    </th>
+                    <td colspan="3">
+                    	<input id="addr1" type="text" placeholder="도로명 주소를 입력해주세요." class="container" required>
+                    </td>
+                    <td>
+                    	<input type="button" onclick="Postcode1()" value="우편번호 찾기">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <input id="addr2" type="text" placeholder="상세 주소를 입력해주세요." class="container" required>
                     </td>
                 </tr>
                 <tr>
@@ -1362,12 +1589,12 @@
                     <td colspan="4">
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="addressCheck" checked>직접 입력
+                                <input id="selfInput" type="radio" class="form-check-input" name="addressCheck" checked onclick="selfInput()">직접 입력
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="addressCheck" >주문자 정보와 동일
+                                <input id="buyerTrue" type="radio" class="form-check-input" name="addressCheck" onclick="buyerTrue()">주문자 정보와 동일
                             </label>
                         </div>
                     </td>
@@ -1378,7 +1605,7 @@
                         받으실분 성함
                     </th>
                     <td colspan="4">
-                        <input type="text" required id="recipient">
+                        <input type="text" required id="recipient" placeholder="이름을 입력해주세요.">
                     </td>
                 </tr>
                 <tr>
@@ -1386,17 +1613,16 @@
                         <span>*</span>
                         받는곳 주소
                     </th>
-                    <td colspan="4">
-                        <input type="text" required id="buyer_addr">
-                        <button type="button">우편번호검색</button>
+                    <td colspan="3">
+                    	<input id="buyer_addr1" type="text" placeholder="도로명 주소를 입력해주세요." class="container" required>
+                    </td>
+                    <td>
+                    	<input type="button" onclick="Postcode2()" value="우편번호 찾기">
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3">
-                        <input type="text" class="container" required>
-                    </td>
-                    <td>
-                        <input type="text" required>
+                    <td colspan="5">
+                        <input id="buyer_addr2" type="text" placeholder="상세 주소를 입력해주세요." class="container" required>
                     </td>
                 </tr>
                 <tr>
@@ -1405,7 +1631,7 @@
                         휴대폰번호
                     </th>
                     <td colspan="4">
-                        <input type="text" required id="recipienttel">
+                        <input type="text" required id="recipienttel" placeholder="형식 010-0000-0000">
                     </td>
                 </tr>
                 <tr>
@@ -1423,10 +1649,7 @@
                 </tr>
                 <tr>
                     <th>배송비</th>
-                    <!-- 9만원이상 구매시 -->
                     <th colspan="4"><span id="orderDspan"></span></th>
-                    <!-- 9만원미만 구매시 -->
-                    <!-- <th colspan="4">6000원-9만원 미만 구매</th> -->
                 </tr>
                 <tr>
                     <th>할인/적립/쿠폰 사용내역</th>
@@ -1440,6 +1663,7 @@
                     <th>최종 상품 결제 금액</th>
                     <th colspan="4"><span id="finaltotal"></span>원</th>
                 </tr>
+            
             </table>
     	</div>
     	<!-- 주문자정보,배송정보 시작 table 끝 -->
@@ -1450,130 +1674,75 @@
 	              <h4>결제방법</h4>
 	              <div class="row">
 	                  <div class="col-8 pay-list">
-	                      
 	                      <input id="payment" type="hidden" name="pay" value="${memberInfo.memberNo}"><!-- 회원테스트 -->
-	                      <input id="payment2" type="hidden" name="pay" value=""><!-- 비회원테스트 -->
-	                      
-	                      
-	                      
-	                      <button class="btn btn-outline-secondary"data-toggle="collapse"  data-target="#mubank">무통장입금
-	                     <!--  <input id="mubank" type="hidden" name="pay"> -->
-	                      </button>
-	<%-- value="${memberInfo.memberNo}"  onclick="kakaoPay()" --%>
-	                      <button id="kakaopay" class="btn btn-outline-secondary" type="button" onclick="kakaopay()" value="kakaopay">카카오페이
-	                          <!-- <input id="kakao" type="hidden" name="pay"> -->
-	                          </button>
-<!-- 	                      <span class="btn btn-outline-secondary"data-toggle="collapse"  data-target="#kakao">카카오페이
-	                          <input id="kakao" type="hidden" name="pay">
-	                          </span> -->
-	
-	                      <button type="button" class="btn btn-outline-secondary" data-toggle="collapse" data-target="#naver">네이버페이</button>
-	                      <button type="button" class="btn btn-outline-secondary" data-toggle="collapse" data-target="#samsung">삼성페이</button>
-	                      <button type="button" class="btn btn-outline-secondary" data-toggle="collapse" data-target="#payco">페이코</button>
-	                      <button type="button" class="btn btn-outline-secondary" data-toggle="collapse" data-target="#toss">토스페이</button>
-	                  </div>
-	                  <div class="container">
-	                      <div id="mubank" class="collapse">
-	                          <p>(무통장 입금의 경우 입금화면 후부터 배송단계가 진행됩니다.)</p>
-	                          <table class="table table-border">
-	                              <tr>
-	                                  <th>입금자명정보</th>
-	                                  <th>
-	                                      PERFUME
-	                                  </th>
-	                              </tr>
-	                              <tr>
-	                                  <th>입금은행정보</th>
-	                                  <th>
-	                                      kh은행 : R123456789
-	                                  </th>
-	                              </tr>
-	                          </table>
-	                      </div>
-	                      <div id="naver" class="collapse">
-	                          -네이버페이는 비밀번호로 결제할 수 있는 간편결제 서비스입니다.<br>
-	                          -결제 가능한 신용카드: 신한, 삼성, 현대, BC, 국민, 하나, 롯데, NH농협, 씨티, 카카오뱅크
-	                          결제 가능한 은행: NH농협, 국민, 신한, 우리, 기업, SC제일, 부산, 경남, 수협, 우체국, 미래에셋대우, 광주, 대구, 전북, 새마을금고, 제주은행, 신협, 하나은행, 케이뱅크, 카카오뱅크, 삼성증권
-	                      </div>
-	                      <div id="samsung" class="collapse">
-	                          -삼성페이 안내<br>
-	                          -지원카드 : 모든 국내 신용/체크카드
-	                      </div>
-	                      <div id="payco" class="collapse">
-	                          -PAYCO는 온/오프라인 쇼핑은 물론 송금, 멤버십 적립까지 가능한 통합 서비스입니다.<br>
-	                          -휴대폰과 카드 명의자가 동일해야 결제 가능하며, 결제금액 제한은 없습니다.<br>
-	                          -지원카드 : 모든 국내 신용/체크카드
-	                      </div>
-	                      <div id="toss" class="collapse">
-	                          -토스는 간편하게 비밀번호만으로 결제 할 수 있는 빠르고 편리한 계좌 간편 결제 서비스 입니다.<br>
-	                          -지원 은행: 모든 은행 계좌 등록/결제 가능<br>
-	                          -결제 비밀번호 분실 시 재설정 후 이용 가능합니다.
-	                      </div>
-	                      <div id="kakao" class="collapse">
-	                          -카카오페이는 카카오톡에서 카드를 등록, 간단하게 비밀번호만으로 결제할 수 있는 빠르고 편리한 모바일 결제 서비스입니다.<br>
-	                          -지원 카드 : 모든 카드 등록/결제 가능
-	                      </div>
+	                      <!-- <input id="payment2" type="hidden" name="pay" value="">비회원테스트 -->
+	                      <button id="pay6" class="btn btn-outline-secondary pay" onclick="payselect(6)" value="html5_inicis">카드결제</button>
+	                      <button id="pay1" class="btn btn-outline-secondary pay" type="button" onclick="payselect(1)" value="kakaopay">카카오페이</button>
+	                      <button id="pay4"  type="button" class="btn btn-outline-secondary pay" onclick="payselect(4)" value="payco">페이코</button>
+	                      <button id="pay5"  type="button" class="btn btn-outline-secondary pay" onclick="payselect(5)" value="tosspay">토스페이</button>
 	                  </div>
 	              </div>
 	        </div>
-        <!-- 결제방법 collapse 끝 -->
-    	
+	        <!-- 이용약관 -->
+	       	<div class="container hiddenOrder agreedivwrap">
+	       		<div class="row">
+	       			<div class="col-2"></div>
+	       				<div class="col-8">
+					        <label for="agreeAll">
+					            <input id="agreeAll" type="checkbox" onclick="agreeAllCheck()">
+					            <span>*</span>
+					            <span>
+					                PERFUME의 모든 약관을 확인하고 전체 동의 합니다.
+					               <!--  (전체 동의에 선택항목도 포함됩니다.) -->
+					            </span>
+					        </label>
+					        <div>
+					            <P><span>*</span>개인정보 수집 이용 동의</P>
+					            <label for="agree1">
+					                <input id="agree1" type="checkbox" required >
+					                    <span>
+					                        (필수)
+					                    </span>
+					                    <span>
+					                        개인정보 수집 이용에 대한 내용을 확인 하였으며 이에 동의 합니다.
+					                    </span>
+					                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#demo1">자세히보기</button>
+					                    <div id="demo1" class="collapse agree-div">
+					           
+					                    </div>
+					            </label>
+					        </div>
+				
+				        	<div>
+				               <P><span>*</span>이용약관 동의</P>
+				               <label for="agree2">
+				                   <input id="agree2" type="checkbox" required >
+				                       <span>
+				                           (필수)
+				                       </span>
+				                       <span>
+				                           이용약관에 대한 내용을 확인 하였으며 이에 동의 합니다.
+				                       </span>
+				                       <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#demo2">자세히보기</button>
+				                       <div id="demo2" class="collapse agree-div">
+				                           
+				                       </div>
+				               </label>
+				           	</div>
+			           	</div>
+		           	<div class="col-2"></div>
+	           	</div>
+	           	
+			</div>
+			<!-- 이용약관 끝 -->
 	    	<div class="container cart-shopping payway">
 	             <button id="orderbtn" type="button" class="btn btn-outline-secondary" onclick="pay()" value="${memberInfo.memberNo}">결제하기</button>
 	        </div>
         </div>
-        
-       	<!-- 이용약관 -->
-       	<div class="container hiddenOrder" style="display: none;">
-	        <label for="agreeAll">
-	            <input id="agreeAll" type="checkbox">
-	            <span>*</span>
-	            <span>
-	                PERFUME의 모든 약관을 확인하고 전체 동의 합니다.
-	                (전체 동의에 선택항목도 포함됩니다.)
-	            </span>
-	        </label>
-    
-	        <div>
-	            <P><span>*</span>개인정보 수집 이용 동의</P>
-	            <label for="agree1">
-	                <input id="agree1" type="checkbox" required>
-	                    <span>
-	                        (필수)
-	                    </span>
-	                    <span>
-	                        개인정보 수집 이용에 대한 내용을 확인 하였으며 이에 동의 합니다.
-	                    </span>
-	                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#demo1">자세히보기</button>
-	                    <div id="demo1" class="collapse agree-div">
-	           
-	                    </div>
-	            </label>
-	        </div>
-
-        	<div>
-               <P><span>*</span>이용약관 동의</P>
-               <label for="agree2">
-                   <input id="agree2" type="checkbox" required>
-                       <span>
-                           (필수)
-                       </span>
-                       <span>
-                           이용약관에 대한 내용을 확인 하였으며 이에 동의 합니다.
-                       </span>
-                       <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#demo2">자세히보기</button>
-                       <div id="demo2" class="collapse agree-div">
-                           
-                       </div>
-               </label>
-           	</div>
-		</div>
-		<!-- 이용약관 끝 -->
-    	
+        <!-- 결제방법 collapse 끝 -->
     	
 </div><!-- 전체 div 끝 -->
 
-<div class="container" style="height: 100px;"></div>	
-    
+<jsp:include page="/WEB-INF/views/planning/footer.jsp"/>
 </body>
 </html>

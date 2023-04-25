@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductFile {
+public class AdminProductFile {
 
 	private int fileNo;
 	private int productNo;
@@ -20,5 +20,6 @@ public class ProductFile {
 	private Date createDate;
 	private Date updateDate;
 	private String fileStatus;
+	private	int fileSort;
 	
 }

@@ -1,6 +1,5 @@
 package com.scent.perfume.planning.model.service;
 
-import com.scent.perfume.mypage.model.vo.MemberDTO;
 import com.scent.perfume.planning.model.vo.Member;
 
 public interface MemberService {
@@ -8,6 +7,13 @@ public interface MemberService {
 
 	Member login(String id, String pwd);
 
-	MemberDTO getMember(String name);
+	String findMemberByEmail(String userEmail);
 
+	String getMailStatus(String id);
+	
+	String getPassword(String userName, String userId, String userEmail);
+
+	String generateTempPassword(String userId);
+
+	void updatePassword(String userId, String tempPassword);
 }

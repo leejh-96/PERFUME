@@ -7,14 +7,13 @@ import com.scent.perfume.cart.model.vo.CartProduct;
 import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.Order;
 import com.scent.perfume.cart.model.vo.OrderList;
+import com.scent.perfume.cart.model.vo.productOption;
 
 public interface CartService {
 
 	List<Cart> selectCartInfo(int memberNo);
 
 	CartMember selectCartMemberInfo(int memberNo);
-
-	/* int amountUpdate(int cartNo, int cartProductCount); */
 
 	int couponUpdate(int memberNo, int benefitNo);
 
@@ -26,14 +25,12 @@ public interface CartService {
 
 	int orderListInsert(OrderList orderList);
 
-	/* String selectOrderPrimaryKey(String orderNo); */
-
 	int memberPointUpdate(int point, int memberNo); 
 
 	Order orderList(String orderNo);
 
 	int memberPlusPoint(int plusPoint, int memberNo);
 
-	/* CartProduct selectCartProductInfo(int cartNo, int productNo); */
+	productOption selectNowOrder(productOption option);
 
 }

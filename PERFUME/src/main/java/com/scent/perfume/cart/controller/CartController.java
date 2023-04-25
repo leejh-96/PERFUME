@@ -1,9 +1,11 @@
 package com.scent.perfume.cart.controller;
 
 import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -33,6 +36,8 @@ import com.scent.perfume.cart.model.vo.CartProduct;
 import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.Order;
 import com.scent.perfume.cart.model.vo.OrderList;
+import com.scent.perfume.cart.model.vo.productOption;
+import com.scent.perfume.planning.model.vo.Member;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -42,6 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@SessionAttributes("loginMember")
 public class CartController {
 
 	@Autowired
@@ -54,47 +60,24 @@ public class CartController {
 	}
 	
 	@RequestMapping("/cart")
-	public String cartAll(@RequestParam("memberNo") int memberNo,
-											Model model) {
+	public String cartAll(@ModelAttribute("loginMember") Member member,
+						  Model model) {
 	
 		CartMember memberInfo = null;
 		List<Cart> clist = null;
 		
 		//로그인체크로직작성
-		
-		//회원의 장바구니 상품과 혜택정보를 불러온다.	
-		clist = cartService.selectCartInfo(memberNo);
-		
-		//검증로직작성
-		
-		//회원의 혜택정보를 불러온다.
-		memberInfo = cartService.selectCartMemberInfo(memberNo);
-		
-		//검증로직작성
-		
-		model.addAttribute("memberInfo", memberInfo);
-		model.addAttribute("clist", clist);
-		
+		if (member != null) {
+			//회원의 장바구니 상품과 혜택정보를 불러온다.	
+			clist = cartService.selectCartInfo(member.getNo());
+			//회원의 혜택정보를 불러온다.
+			memberInfo = cartService.selectCartMemberInfo(member.getNo());
+			
+			model.addAttribute("memberInfo", memberInfo);
+			model.addAttribute("clist", clist);
+		}
 		return "cart/cart";
 	}
-
-	/*
-	 * @ResponseBody
-	 * 
-	 * @GetMapping("/amountUpdate") public int amountUpdate(@RequestParam("cartNo")
-	 * int cartNo,@RequestParam("result") int cartProductCount) {
-	 * 
-	 * System.out.println(cartNo); System.out.println(cartProductCount);
-	 * 
-	 * int result = 0;
-	 * 
-	 * result = cartService.amountUpdate(cartNo,cartProductCount);
-	 * 
-	 * if (result > 0) { System.out.println("성공"); }else { System.out.println("실패");
-	 * } return result;
-	 * 
-	 * };
-	 */
 	
 	@ResponseBody
 	@PostMapping("cart/couponUpdate")
@@ -126,10 +109,10 @@ public class CartController {
 		int result = cartService.cartDelete(memberNo,cartNo);
 		
 		if (result > 0) {
-			System.out.println("성공");
+			log.info("성공");
 			return result;
 		}else {
-			System.out.println("실패");
+			log.info("실패");
 			return result;
 		}
 	}
@@ -147,9 +130,9 @@ public class CartController {
 		System.out.println(order);
 		
 		if (result > 0) {
-			System.out.println("성공");
+			log.info("성공");
 		}else {
-			System.out.println("실패");
+			log.info("실패");
 		}
 		return order;
 	}
@@ -163,10 +146,8 @@ public class CartController {
 		int result = cartService.orderListInsert(orderList);
 		
 		if (result > 0) {
-			System.out.println("성공");
 			return result;
 		}else {
-			System.out.println("실패");
 			return result;
 		}
 	}
@@ -183,19 +164,6 @@ public class CartController {
 			return iamport.paymentByImpUid(imp_uid);
 	}
 	
-	/*
-	 * @GetMapping("/cart/orderList") public String
-	 * orderList(@RequestParam("memberNo") int memberNo) {
-	 * 
-	 * System.out.println("memberNo : "+memberNo);
-	 * 
-	 * return "cart/orderList"; }
-	 */
-	/*
-	 * /cart/orderList/'+order.point+'/'+order.orderNo+'/'+order.finalPrice+'/'/{n}/
-	 * {gender}/{email}
-	 * 
-	 */	
 	@RequestMapping("/cart/orderList/{orderNo}/{memberNo}/{plusPoint}")
 	public String orderList(@PathVariable("orderNo") String orderNo,
 							@PathVariable("memberNo") int memberNo,
@@ -211,16 +179,15 @@ public class CartController {
 		return "cart/orderList";
 	}
 	
+	@ResponseBody
 	@RequestMapping("/order/pointUpdate/{point}/{memberNo}")
 	public int pointUpdate(@PathVariable("point") int point,
 						   @PathVariable("memberNo") int memberNo) {
 		
-		log.info("point : {}",point);
-		log.info("memberNo : {}",memberNo);
-		
 		return cartService.memberPointUpdate(point,memberNo);
 	}
 	
+	@ResponseBody
 	@RequestMapping("/order/plusPoint/{plusPoint}/{memberNo}")
 	public int plusPoint(@PathVariable("plusPoint") int plusPoint,
 						 @PathVariable("memberNo") int memberNo) {
@@ -230,5 +197,60 @@ public class CartController {
 		
 		return cartService.memberPlusPoint(plusPoint,memberNo);
 	}
+	
+	@GetMapping("/cart/nowOrder/{productNo}/{poName}/{poAmount}")
+	public String nowOrder(HttpServletRequest request,
+						   @ModelAttribute productOption option,
+						   Model model) {
+		
+		CartMember memberInfo = null;
+		productOption directInfo = null;
+		//로그인 정보 가져오기
+		HttpSession member = request.getSession();
+		Member loginMember = (Member)member.getAttribute("loginMember");
+		
+		if (loginMember != null) {
+			//회원일 경우
+			memberInfo = cartService.selectCartMemberInfo(loginMember.getNo());
+			
+			if (memberInfo.getMemberNo()==loginMember.getNo()) {
+				//로그인정보와 회원정보 검증 성공시
+				directInfo = cartService.selectNowOrder(option);
+				
+				if (directInfo != null) {
+					model.addAttribute("option", option);
+					model.addAttribute("memberInfo", memberInfo);
+					model.addAttribute("directInfo", directInfo);
+					return "cart/orderPage";
+				}else {
+					model.addAttribute("msg", "잘못된 접근입니다.");
+					model.addAttribute("location", "/product/detail?no="+option.getProductNo());
+				}
+			}else {
+				//로그인정보와 회원정보 검증 실패시
+				model.addAttribute("msg", "잘못된 접근입니다.");
+				model.addAttribute("location", "/product/detail?no="+option.getProductNo());
+			}
+		}else if (loginMember == null) {
+			//비회원일 경우
+			directInfo = cartService.selectNowOrder(option);
+			if (directInfo != null) {
+				model.addAttribute("option", option);
+				model.addAttribute("memberInfo", memberInfo);
+				model.addAttribute("directInfo", directInfo);
+				return "cart/orderPage";
+			}else {
+				model.addAttribute("msg", "잘못된 접근입니다.");
+				model.addAttribute("location", "/product/detail?no="+option.getProductNo());
+			}
+		}
+		return "common/msg";
+	}
+	
+	
+	
+	
+	
+	
 	
 }

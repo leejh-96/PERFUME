@@ -97,6 +97,29 @@
 		<result property="orderCount" column="O_COUNT"/>	
 	</resultMap>
 	
+	<resultMap id="nowOrderResultMap" type="productOption">
+		<id property="poNo" column="po_no"/>
+		<result property="productNo" column="p_no"/>
+		<result property="poName" column="po_name"/>
+		<result property="poPrice" column="po_price"/>
+		<result property="poAmount" column="po_amount"/>
+		<!-- <association property="product" select="selectNowProduct" column="p_no" javaType="CartProduct"/>
+		<association property="file" select="selectNowFile" column="p_no" javaType="AdminProductFile"/>
+		<collection property="benefitList" select="selectProductBenefit" column="p_no" javaType="arraylist"/> -->
+	</resultMap>
+	
+	<resultMap id="nowProductResultMap" type="CartProduct">
+		<result property="productName" column="p_name"/>
+		<result property="productEngName" column="p_eng"/>
+		<result property="productBrand" column="p_brand"/>
+		<result property="productTitle" column="p_title"/>
+	</resultMap>
+	
+	<resultMap id="nowFileResultMap" type="AdminProductFile">
+		<result property="originalFileName" column="PF_ORIGINALFILENAME"/>
+		<result property="renameFileName" column="PF_RENAMEFILENAME"/>
+	</resultMap>
+	
 	<!-- 0 -->
 	<select id="selectMemberBenefitList" parameterType="_int" resultMap="memberBenefitResultMap">
 	SELECT 
@@ -185,12 +208,6 @@
 	    AND P.P_STATUS = 'Y'
 	    AND PF.PF_STATUS = 'Y'
 	</select>
-
-	<!-- <update id="amountUpdate" parameterType="_int">
-		UPDATE CART
-		SET C_COUNT = #{cartProductCount}
-		WHERE C_STATUS = 'Y' AND C_NO = #{cartNo}
-	</update> -->
 	
 	<update id="couponUpdate" parameterType="_int">
 	    UPDATE member_benefit_info
@@ -270,13 +287,37 @@
 	    where od_no = #{orderNo} AND PF.PF_SORT = 1 
 	</select>
 	
+	<select id="selectNowOrder" parameterType="_int" resultMap="nowOrderResultMap">
+		SELECT  po_no,
+			    p_no,
+			    po_name,
+			    po_price,
+			    po_amount
+		FROM  product_option
+		WHERE P_NO = #{productNo} AND PO_NAME = #{poName}
+	</select>
 	
+	<select id="selectNowProduct" parameterType="_int" resultMap="nowProductResultMap">
+		SELECT  p_name,
+			    p_eng,  
+			    p_brand,
+			    p_title
+		FROM  product
+		where p_no = #{productNo} and p_status = 'Y'
+	</select>
 	
+	<select id="selectNowFile" parameterType="_int" resultMap="nowFileResultMap">
+		SELECT  PF_ORIGINALFILENAME,
+			    PF_RENAMEFILENAME
+		FROM  product_file
+		WHERE P_NO = #{productNo} AND PF_STATUS = 'Y' AND PF_SORT = 1
+	</select>
 	
-	
-	
-	
-	
+	<update id="updateCart" parameterType="_int">
+		UPDATE cart
+		SET  c_status = 'N'
+		WHERE  c_no = #{cartNo}
+	</update>
 	
 	
 

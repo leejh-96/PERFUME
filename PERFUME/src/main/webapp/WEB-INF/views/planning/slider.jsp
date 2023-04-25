@@ -32,17 +32,30 @@
 	    <!-- 슬라이드 이미지 -->
 	    <div class="carousel-inner">
 	      <div class="carousel-item active">
-	        <a href="#">
-	          <img src="${ path }/images/planning/slider001.png" class="d-block w-100" alt="Slider Image 1">
-	        </a>
+	        <c:if test="${ empty loginMember }">
+				<a href="${ path }/join">
+					<img src="${ path }/images/planning/slider001.png" class="d-block w-100" alt="Slider Image 1">
+				</a>
+			</c:if>
+
+			<c:if test="${not empty loginMember}">
+    			<img src="${path}/images/planning/slider001.png" class="d-block w-100" alt="Slider Image 1" onclick="showCouponMessage()">
+			</c:if>
+
+			<script>
+				function showCouponMessage() {
+				    alert("이미 5% 할인 쿠폰을 발급받으셨습니다. 마이페이지에서 쿠폰 내역을 확인해보세요.");
+				    window.location.href = "${path}/mypage";
+				}
+			</script>
 	      </div>
 	      <div class="carousel-item">
-	        <a href="#">
+	        <a href="${ path }/planning/special01">
 	          <img src="${ path }/images/planning/slider002.png" class="d-block w-100" alt="Slider Image 2">
 	        </a>
 	      </div>
 	      <div class="carousel-item">
-	        <a href="#">
+	        <a href="${ path }/planning/special02">
 	          <img src="${ path }/images/planning/slider003.png" class="d-block w-100" alt="Slider Image 3">
 	        </a>
 	      </div>
