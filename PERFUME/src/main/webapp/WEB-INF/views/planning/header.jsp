@@ -10,7 +10,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name ="google-signin-client_id" content="318833698417-h20cespd308ss7ek6imsu6f4fndbkih2.apps.googleusercontent.com">
+    <meta name ="google-signin-client_id" content="176536335938-dmlgnn72m6p2pia44gdoarb4iejs7u3t.apps.googleusercontent.com">
     <title>Perfume</title>
     <!-- CSS 불러오기 -->
     <link rel="stylesheet" href="${ path }/css/planning/header.css">
@@ -43,7 +43,7 @@
                     <c:if test="${ not empty loginMember }">
 						<li><a href="${ path }/logout">LOGOUT</a></li>
 						<c:if test="${ not empty loginMember && loginMember.division == '2' }">
-							<li><a href="${ path }/mypage">MY PAGE</a></li>                                      
+							<li><a href="${ path }/mypage/mypage">MY PAGE</a></li>                                      
 							<li><a href="${ path }/cart">CART</a></li>                                      
 						</c:if>
 						<c:if test="${ not empty loginMember && loginMember.division == '1' }">
@@ -69,9 +69,8 @@
                     </div>
                 </form>
                     <div>
-                        <a href="${ path }/planning/findId"><button type="button" id="findId">아이디 찾기</button></a>
-                        <a href="${ path }/planning/findPwd"><button type="button" id="findPwd">비밀번호 찾기</button></a><br><br>
-                        <button type="button" onclick="location.href='${ path }/join';">회원가입</button><br><br>
+                        <a href="${ path }/planning/findId"><button type="button" id="findId" class="close" onclick="closeModal()">아이디 찾기</button></a>
+      					<a href="${ path }/planning/findPwd"><button type="button" id="findPwd" class="close" onclick="closeModal()">비밀번호 찾기</button></a><br><br>
                     </div>
                     <ul style="list-style: none;">
                         <li onclick="kakaoLogin();"><button type="button">카카오로 로그인</button></li>
@@ -106,6 +105,10 @@
 	        if (event.target == modal) {
 	            modal.style.display = 'none';
 	        }
+	    }
+	    
+	    function closeModal() {
+	    	modal.style.display = 'none';
 	    }
 	
 	    // 카카오로 로그인 구현
@@ -152,7 +155,7 @@
 		    	// people api를 이용하여 프로필 및 생년월일에 대한 선택동의후 가져온다.
 				url: 'https://people.googleapis.com/v1/people/me'
 		        // key에 자신의 API 키를 넣습니다.
-				, data: {personFields:'birthdays', key:'AIzaSyBPuAVAQJJeBlZeH0KzBZ_13fBi1wLrHz4', 'access_token': access_token}
+				, data: {personFields:'birthdays', key:'AIzaSyAsg64zU00dzB-UbgI-Zyp7cXvr6qphxQc', 'access_token': access_token}
 				, method:'GET'
 			})
 			.done(function(e){

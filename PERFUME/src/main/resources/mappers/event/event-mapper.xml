@@ -224,10 +224,10 @@
 		WHERE B_NO = #{no}
 	</select>
 	<select id="selectPreNoByPreTitle" parameterType="string" resultType="_int">
-		SELECT B_NO FROM BOARD WHERE B_TITLE = #{preTitle} AND B_STATUS='Y'
+		SELECT B_NO FROM BOARD WHERE B_TITLE = #{preTitle} AND B_STATUS='Y' AND BC_TYPE = '이벤트'
 	</select>
 	<select id="selectNextNoByNextTitle" parameterType="string" resultType="_int">
-		SELECT B_NO FROM BOARD WHERE B_TITLE = #{nextTitle} AND B_STATUS='Y'
+		SELECT B_NO FROM BOARD WHERE B_TITLE = #{nextTitle} AND B_STATUS='Y' AND BC_TYPE = '이벤트'
 	</select>
 	
 <!-- 게시물 수정 -->
