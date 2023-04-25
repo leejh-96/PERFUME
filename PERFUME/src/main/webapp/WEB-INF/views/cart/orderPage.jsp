@@ -176,20 +176,17 @@
 </style>
 </head>
 <body>
-<span>${memberInfo}</span><br><br><br><br><br>
-<span>${directInfo}</span><br><br><br><br><br>
-<span>${option}</span>
-<%-- <jsp:include page="/WEB-INF/views/planning/header.jsp"/> --%>
+<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 
 <div id="cart-wrap"><!-- 전체 div 시작 -->
     
 	    <div class="container">
 	    
-	    	<div class="modal fade" id="myModalorder">
+	    	<!-- <div class="fade" id="myModalorder">
             	<div class="spinner-border d-flex justify-content-center" style="width: 10rem; height: 10rem;" role="status">
                     <span class="sr-only">결제가 진행 중입니다~~~~~</span>
                 </div>
-          	</div>
+          	</div> -->
 	    
 	      	<div id="cart-sup">
 	          	<span id="cartSequence">01장바구니</span>
@@ -202,14 +199,6 @@
 	    </div>
 
 	    <div class="container cart-tr"><!-- content div 시작 -->
-	       <%--  <input id="memberInfo" type="hidden" value="${memberInfo}">
-	        <input id="clist" type="hidden" value="${clist}">
-	        <input class="cartNo" type="hidden" value="${cart.cartNo}">
-	        <input class="hiddenproductAmount${cart.cartNo}" type="hidden" value="${cart.cartProduct.productAmount}">
-	        <input id="hiddenPoint" type="hidden" value="${memberInfo.memberPoint}"> --%>
-	        <%-- <c:set var="benefitfinalprice" value="${(option.poAmount*directInfo.poPrice)-(((directInfo.benefitList[0].benefitRatio/100)*directInfo.poPrice)*option.poAmount)}"/>
-	        <c:set var="finalprice" value="${option.poAmount*directInfo.poPrice}"/>
-	        <c:set var="discountprice" value="${(((directInfo.benefitList[0].benefitRatio/100)*directInfo.poPrice)*option.poAmount)}"/> --%>
 	            <input id="productNo" type="hidden" value="${option.productNo}">
 	            <table class="table-hover table cart-table" >
 	                <tr>
@@ -237,7 +226,7 @@
 	                    </th>
 	                    <th class="align-middle">
 	                        <sub>
-	                            <a href="">
+	                            <a href="${path}/product/detail?no=${directInfo.productNo}">
 	                            	<span>[${directInfo.product.productBrand}]</span>
 	                            	<span>${directInfo.product.productEngName}</span><br>
 	                                <span>${directInfo.product.productTitle}</span><br>
@@ -345,6 +334,9 @@
 					                            </div>
 		                        			</c:forEach>
                      					</c:if>
+                     					<c:if test="${empty memberInfo.memberBenefitList}">
+                     						<p>현재 보유하신 쿠폰이 없습니다.</p>
+                     					</c:if>
 	    							</div>
 	    						</div>
 				      		<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
@@ -359,7 +351,7 @@
                 	<div class="row zeroInfodiv">*품절상품을 제외한 가격입니다*</div>
                     <div class="row">
                         <div class="col" id="productCount">
-                            총<span id="pcspan1"></span>개의 <br> 상품금액<span id="pcspan2"></span>원
+                            총<span id="pcspan1"></span>개의 <br> 상품금액 <span id="pcspan2"></span>원
                         </div>
                         <span class="badge">+</span>
 
@@ -375,34 +367,18 @@
                         <span class="badge">=</span>
 
                         <div class="col">
-                            합계<span id="final"></span>원
+                            합계 <span id="final"></span>원
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <%-- <div class="col cart-delete hiddenbtn">
-                    <button type="button" class="btn btn-primary hiddenbtn" onclick="selectDelete(${memberInfo.memberNo})">
-                        선택 상품 삭제
-                    </button>
-                    <button type="button" class="btn btn-primary hiddenbtn" onclick="allDelete(${memberInfo.memberNo})">
-                        전체 상품 삭제
-                    </button>
-                </div> --%>
                 <div class="col cart-shopping">
                     <button type="button" class="btn btn-primary" onclick="goback()">
                         <i class="fa-solid fa-less-than"></i>
                             쇼핑 계속하기
                     </button>
                 </div>
-                <%-- <div class="col cart-order hiddenbtn">
-                    <button type="button" class="btn btn-primary hiddenbtn" onclick="selectOrder(${memberInfo.memberNo})">
-                        선택 상품 주문
-                    </button>
-                    <button type="button" class="btn btn-primary hiddenbtn" onclick="allOrder(${memberInfo.memberNo})">
-                        전체 상품 주문
-                    </button>
-                </div> --%>
             </div>
         </div>
         <!-- 보유적립금,쿠폰 끝 -->
@@ -538,8 +514,10 @@
                     <th>할인/적립/쿠폰 사용내역</th>
                     <th colspan="4">
                         <span id="plan-sale">기획전 할인금액 : <span id="plan-sale2"></span>원</span>
-                        <span id="save-sale">적립금 사용 : <span id="save-sale2"></span>point</span>
-                        <span id="coupon-sale">쿠폰 사용 할인 : <span id="coupon-sale2"></span>원</span>
+                        <c:if test="${not empty memberInfo || memberInfo != null}">
+	                        <span id="save-sale">적립금 사용 : <span id="save-sale2"></span>point</span>
+	                        <span id="coupon-sale">쿠폰 사용 할인 : <span id="coupon-sale2"></span>원</span>
+                        </c:if>
                     </th>
                 </tr>
                 <tr>
@@ -623,17 +601,10 @@
 	        </div>
         </div>
         <!-- 결제방법 collapse 끝 -->
-        
-       	
-    	
     	
 </div><!-- 전체 div 끝 -->
 
-
-
-
-
-<%-- <jsp:include page="/WEB-INF/views/planning/footer.jsp"/> --%>
+<jsp:include page="/WEB-INF/views/planning/footer.jsp"/>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -674,7 +645,7 @@ $(document).ready(function(){
     	let parseformatfinaltotal = parseInt(formatfinaltotal);
     	$('#finaltotal').text(new Intl.NumberFormat('ko-kr').format(parseformatfinaltotal+parseformatsavesale));
     	$('#save-sale2').text(pointremember-parseformatsavesale);
-    	
+    	$('#pointInput').val('');
     	pointremember = 0;
     	console.log('pointremember : '+pointremember)
     	
@@ -904,19 +875,19 @@ $(document).ready(function(){
   	         }
   	     }).open();
   	 }
-  	 
+  	
   	 function agreeAllCheck(){
-  		$("#agreeAll").change(function(){
-  	        if($("#agreeAll").is(":checked")){
-  	        	 $('#agree1').attr('checked',true)
-  	      		 $('#agree2').attr('checked',true)
-  	        }else{
-  	        	 $('#agree1').attr('checked',false)
-  	     		 $('#agree2').attr('checked',false)
-  	        }
-  	    });
+  		 $('#agreeAll').change(function(){
+  	  		if($("#agreeAll").is(":checked")){
+  	  			$('#agree1').attr('checked',true)
+  	      		$('#agree2').attr('checked',true)
+  	  		}else {
+  	  			$('#agree1').attr('checked',false)
+  		     	$('#agree2').attr('checked',false)
+  			}
+  	  	 })
   	}
-    
+  	
   	/* 아임포트 결제연동 */
      var IMP = window.IMP;   // 생략 가능
 	   IMP.init('imp42427144'); // 예: imp00000000 
@@ -1092,7 +1063,6 @@ $(document).ready(function(){
 							            		url : '${path}/order/pointUpdate/'+point+'/'+memberNo+'/',
 							            		type : 'GET',
 							            		data : {point,memberNo},
-							            		/* contentType: 'application/json; charset=utf-8', */
 							            		dataType : 'json',
 							            		success : function(result){
 							            			if (result > 0) {
@@ -1100,7 +1070,6 @@ $(document).ready(function(){
 								            			$.ajax({
 															url : '${path}/order/plusPoint/'+plusPoint+'/'+memberNo+'/',
 															type : 'GET',
-															/* contentType: 'application/json; charset=utf-8', */
 															data : {plusPoint,memberNo},
 															dataType : 'json',
 															success : function(result){
@@ -1109,14 +1078,12 @@ $(document).ready(function(){
 																}
 															},
 											        		error : function(){
-											        			/* $('#myModal').modal('hide') */
 											        			console.log('적립금 업데이트 오류')
 											        		}
 														})
 													}
 							            		},
 							            		error : function(){
-							            			/* $('#myModal').modal('hide') */
 							            			console.log('적립금 업데이트 오류')
 							            		}
 							               })
@@ -1134,7 +1101,7 @@ $(document).ready(function(){
 				        			contentType: 'application/json; charset=utf-8',
 				        			async : false,
 				        			success : function(obj){
-				        				 $('#myModalorder').modal('show') 
+				        				/*  $('#myModalorder').modal('show') */
 				        				
 			        					$('input:checkbox[name=cartCheckBox]').each(function(index){
 			        						if (this.disabled == true) {
@@ -1167,7 +1134,7 @@ $(document).ready(function(){
 				        								console.log('order-product-complete 결제에 성공하였습니다.')
 				        							},
 				        							error : function(error){
-				        								$('#myModal').modal('hide')
+				        								/* $('#myModal').modal('hide') */
 				        								console.log('order-product-error 결제에 실패하였습니다.')
 				        							}
 				        						})
@@ -1175,16 +1142,14 @@ $(document).ready(function(){
 				        				})
 				        			},
 				        			error : function(error){
-				        				/* $('#myModal').modal('hide') */
 				        				console.log('order-insert-error')
 				        			}
 				        		})
 				        		payment = '';
-				        		$('#myModalorder').modal('hide') 
+				        		/* $('#myModalorder').modal('hide') */
 				        		window.location.href='${path}/cart/orderList/'+order.orderNo+'/'+order.memberNo+'/'+plusPoint;
 				        	} else {
 				        		//결제 실패 로직
-				        		/* $('#myModal').modal('hide') */
 				        		alert("결제에 실패하였습니다.");
 				        	}
 				        });

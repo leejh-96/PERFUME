@@ -14,7 +14,12 @@
 <style type="text/css">
 /* 관리자페이지-home */
 
-
+*{
+	border: 1px solid red;
+}
+.adminhomediv{
+	height: calc(100%/6);
+}
 
 
 
@@ -25,7 +30,34 @@
 
 <jsp:include page="/WEB-INF/views/cart/common/adminSidebar.jsp"/>
 	
-	<h1>관리자페이지 HOME</h1>
+	
+		<div class="row adminhomediv">1
+		
+		
+		</div>
+		<div class="row adminhomediv">
+			<p>총 회원수 : <span></span> </p>
+			<p>회원가입 경로 <span>perfume : </span> <span>kakao : </span> <span>naver : </span> </p>
+			<p>비율 : <span>남성 : </span> <span>여성 : </span> </p>		
+		</div>
+		<div class="row adminhomediv">3
+		
+		
+		</div>
+		<div class="row adminhomediv">4
+		
+		
+		</div>
+		<div class="row adminhomediv">5
+		
+		
+		</div>
+		<div class="row adminhomediv">6
+		
+		
+		</div>
+		
+		
 	
 <jsp:include page="/WEB-INF/views/cart/common/adminFootDiv.jsp"/>
 

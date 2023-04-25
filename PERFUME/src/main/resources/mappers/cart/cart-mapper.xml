@@ -313,7 +313,11 @@
 		WHERE P_NO = #{productNo} AND PF_STATUS = 'Y' AND PF_SORT = 1
 	</select>
 	
-	
+	<update id="updateCart" parameterType="_int">
+		UPDATE cart
+		SET  c_status = 'N'
+		WHERE  c_no = #{cartNo}
+	</update>
 	
 	
 

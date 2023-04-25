@@ -109,7 +109,8 @@
 	 		
 	 		<mapping path="/product/**" />
 	 		
-	 	
+	 		<mapping path="/cart/" />
+	 		<mapping path="/cart" />
 	 		
 	 		<mapping path="/board/**" />
 	 		
@@ -127,6 +128,13 @@
 	 		
 	 		<beans:bean id="loginCheckInterceptor" class="com.scent.perfume.common.Interceptor.LoginCheckInterceptor" />
 	 	
+	 	</interceptor>
+	 </interceptors>
+	 
+	 <interceptors>
+	 	<interceptor>
+	 		<mapping path="/admin/**" />
+	 		<beans:bean id="AdminCheckInterceptor" class="com.scent.perfume.common.Interceptor.AdminCheckInterceptor" />
 	 	</interceptor>
 	 </interceptors>
 	

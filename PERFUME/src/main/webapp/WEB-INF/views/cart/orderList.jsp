@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>주문리스트</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -73,6 +73,9 @@
     .media-components{
         padding-left: 10px;
     }
+    .cart-shopping{
+        text-align: center;
+    }
     
     /* 주문완료페이지 css 끝 */
     </style>
@@ -111,6 +114,15 @@
                 	<tr>
                         <th>주문번호</th>
                         <td>${order.orderNo}</td>
+                    </tr>
+                    <tr>
+                    	<th>주문구분</th>
+	                    <c:if test="${order.memberNo eq 0}">
+	                    	<td>비회원결제</td>
+	                    </c:if>
+	                    <c:if test="${order.memberNo != 0}">
+	                    	<td>[회원결제]</td>
+	                    </c:if>
                     </tr>
                     <tr>
                         <th rowspan="4">배송정보</th>
@@ -180,7 +192,7 @@
                     <div class="media">
                         <img src="https://cdn.pixabay.com/photo/2019/04/06/19/22/glass-4108085__480.jpg" class="align-self-center rounded-circle" width="110px" height="110px">
                         <div class="media-body">
-                            <a href="#">
+                            <a href="${path}/product/detail?no=${oList.productNo}">
                                 <h4 class="media-components"><span>${oList.productBrand}-</span>${oList.productName}</h4>
                                 <p class="media-components">${oList.productEng}</p>
                                 <p class="media-components"><span>[${oList.orderSize}ml]</span> 주문수량 : <span>${oList.orderCount}</span>개</p>
@@ -196,10 +208,6 @@
                 <div class="col ordercomplete-table">
                     <!-- 주문상품정보 -->
                     <table class="table table-borderless table-sm">
-                        <!-- <tr>
-                            <td>상품금액</td>
-                            <td><span></span>원</td>
-                        </tr> -->
                         <tr>
                             <td>배송비</td>
                             <td>+${order.delivery}원</td>
@@ -226,7 +234,16 @@
             </div><!-- 오른쪽 content 끝 -->
         </div><!-- 구역 나누는 div 끝 -->
     </div><!-- content div 끝 -->
-
+	<div class="container">
+	   	<div class="row">
+	   		<div class="col cart-shopping">
+	               <button type="button" class="btn btn-primary" onclick="location.href='${path}/product/list'">
+	                   <i class="fa-solid fa-less-than"></i>
+	                       쇼핑 계속하기
+	               </button>
+	           </div>
+	   	</div>
+   	</div>
 </div><!-- 전체 div 끝 -->
 
 <jsp:include page="/WEB-INF/views/planning/footer.jsp"/>

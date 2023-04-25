@@ -11,6 +11,8 @@ import com.scent.perfume.cart.model.vo.AdminProductFile;
 import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.CartProduct;
+import com.scent.perfume.cart.model.vo.Order;
+import com.scent.perfume.cart.model.vo.OrderList;
 import com.scent.perfume.cart.model.vo.AdminProductFile;
 import com.scent.perfume.cart.model.vo.productOption;
 
@@ -92,6 +94,18 @@ public interface AdminMapper {
 	int benefitFileAllDelete(@Param("benefitNo") int benefitNo);
 
 	int benefitDelete(@Param("benefitNo") int benefitNo);
+
+	int getAdminOrderList();
+
+	List<Order> getAdminOrderDetailList(RowBounds rowBound);
+
+	Order selectOrderList(@Param("orderNo") String orderNo);
+
+	int statusUpdate(@Param("orderNo") String orderNo,@Param("status") String status);
+
+	int deleteOrder(@Param("orderNo") String orderNo);//삭제하기 해결하기
+
+	int deleteOrderList(@Param("orderNo") String orderNo);//삭제하기 해결하기
 
 	
 

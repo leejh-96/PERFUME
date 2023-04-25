@@ -15,6 +15,8 @@ import com.scent.perfume.cart.model.vo.AdminProductFile;
 import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.CartProduct;
+import com.scent.perfume.cart.model.vo.Order;
+import com.scent.perfume.cart.model.vo.OrderList;
 import com.scent.perfume.cart.model.vo.AdminProductFile;
 
 import lombok.extern.slf4j.Slf4j;
@@ -65,9 +67,6 @@ public class AdminServiceImpl implements AdminService {
 			if (result > 0) {
 				//option update
 				for (int i = 0; i < cartProduct.getPoList().size(); i++) {
-					
-					
-					log.info("cartProduct.getPoList().get(i) : {}",cartProduct.getPoList().get(i));
 					adminMapper.updateProductOption(cartProduct.getProductNo(),cartProduct.getPoList().get(i));
 				}
 				//file update
@@ -172,7 +171,6 @@ public class AdminServiceImpl implements AdminService {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		List<CartProduct> list = adminMapper.selectProductAll(rowBounds);
-		log.info("adminMapper.selectProductAll(rowBounds) : {}",list);
 		return list;
 	}
 
@@ -182,7 +180,6 @@ public class AdminServiceImpl implements AdminService {
 		CartProduct product = null;
 		
 		product = adminMapper.selectproductDetail(productNo);
-		
 		
 		return product;
 	}
@@ -225,7 +222,6 @@ public class AdminServiceImpl implements AdminService {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		List<CartMember> list = adminMapper.getAdminMemberList(rowBounds);
-		log.info("adminMapper.getAdminMemberList(rowBounds) : {}",list);
 		
 		return list;
 	}
@@ -241,8 +237,6 @@ public class AdminServiceImpl implements AdminService {
 		int result = 0;
 		
 		result = adminMapper.idCheck(id);
-		
-		log.info("서비스 result : {}", result);
 		
 		return result;
 	}
@@ -386,6 +380,53 @@ public class AdminServiceImpl implements AdminService {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public int getAdminOrderList() {
+		
+		return adminMapper.getAdminOrderList();
+	}
+
+	@Override
+	public List<Order> getAdminOrderDetailList(AdminPageInfo pageInfo) {
+		
+		List<Order> list = null;
+		
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBound = new RowBounds(offset, limit);
+		
+		list = adminMapper.getAdminOrderDetailList(rowBound);
+		
+		return list;
+	}
+
+	@Override
+	public Order selectOrderList(String orderNo) {
+		
+		return adminMapper.selectOrderList(orderNo);
+	}
+
+	@Override
+	@Transactional
+	public int statusUpdate(String orderNo, String status) {
+		
+		return adminMapper.statusUpdate(orderNo,status);
+	}
+
+	@Override
+	@Transactional//삭제하기 해결하기
+	public int deleteOrderList(String orderNo) {
+		
+		return adminMapper.deleteOrderList(orderNo);
+	}
+
+	@Override
+	@Transactional//삭제하기 해결하기
+	public int deleteOrder(String orderNo) {
+		
+		return adminMapper.deleteOrder(orderNo);
 	}
 
 }

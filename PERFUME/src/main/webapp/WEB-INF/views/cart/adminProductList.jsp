@@ -16,10 +16,10 @@
 #searchdiv2,#searchdiv1{
 	margin: 10px;
 }
-#listbtngroup *{
-	 background-color: rgb(255, 244, 164);
+.listbtngroup {
      font-weight: bolder;
      border: none;
+     text-align: center;
 }
 .listdiv,.listmenu{
 	margin: 10px;
@@ -28,16 +28,21 @@
 	border: 1px solid navy;
 
 }
+.thead{
+	background-color: rgb(118, 174, 135);
+}
+#myInput{
+	margin-top: 50px;
+	margin-bottom: 10px;
+}
 /* 상품등록 css */
 
 </style>
 </head>
 <body>
-<div class="container" style="height: 100px;"></div>
-
 <jsp:include page="/WEB-INF/views/cart/common/adminSidebar.jsp"/>
 
-	                <div id="searchdiv1">
+	                <!-- <div id="searchdiv1">
 	                	<span>향선택</span>
 	        			<select name="ptNo" id="" required>
 	                        <option selected>------선택------</option>
@@ -71,9 +76,9 @@
 	        			<input type="text" placeholder="상품이름을 입력해주세요.">
 	        			<button>검색</button>
         			</div>
-        			<div class="row"></div><!-- 검색결과 상품보여주기 -->
+        			<div class="row"></div> --><!-- 검색결과 상품보여주기 -->
         			
-        			<div class="row listmenu">
+        			<%-- <div class="row listmenu">
         				<div class="col-2">썸네일</div>
         				<div class="col">상품번호</div>
 	                    <div class="col-2">향구분</div>
@@ -95,7 +100,7 @@
 	        					</c:if>
 	        					<c:if test="${not empty product.renameFileName && product.renameFileName != null}">
 	        						<div class="col-2">
-	        							<%-- <img src="${path}/upload/product/${product.renameFileName}" width="100px"> --%>
+	        							<img src="${path}/upload/product/${product.renameFileName}" width="100px">
 	        							<img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" class="rounded img-fluid">
 	        						</div>
 	        					</c:if>
@@ -107,8 +112,53 @@
 			                    <div class="col-2"><fmt:formatDate type="date" value="${product.productDate}"/></div>
 		        			</div>
 	        			</c:forEach>
-        			</c:if>
-        			<div id="listbtngroup">
+        			</c:if> --%>
+        			
+        		<input class="form-control" id="myInput" type="text" placeholder="검색을 통해 빠르게 찾을 수 있어요!">
+       			<table class="table table-striped table-hover">
+	        		<thead class="listmenu thead">
+	        			<tr>
+	        				<th>썸네일</th>
+	        				<th>상품번호</th>
+		                    <th>향구분</th>
+		                    <th>상품구분</th>
+		                    <th>상품명</th>
+		                    <th>기준금액</th>
+		                    <th>등록일자</th>
+	        			</tr>
+	        		</thead>
+	        		<tbody id="myTable">
+	        			<c:if test="${empty list}">
+		        			<tr>
+		        				 <td>등록된 상품이 없습니다.</td>
+		        			</tr>
+	        			</c:if>
+	        			
+	        			<c:if test="${not empty list}">
+	        				<c:forEach var="product" items="${ list }">
+			        			<tr class="listdiv">
+		        					<c:if test="${ empty product.renameFileName && product.renameFileName eq null}">
+		        						<td>-</td>
+		        					</c:if>
+		        					<c:if test="${not empty product.renameFileName && product.renameFileName != null}">
+		        						<td>
+		        							<%-- <img src="${path}/upload/product/${product.renameFileName}" width="100px"> --%>
+		        							<img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="100px" class="rounded img-fluid">
+		        						</td>
+		        					</c:if>
+		        					<td>${product.productNo}</td>
+				                    <td>${product.topCategoryName}</td>
+				                    <td>${product.midCategoryName}</td>
+				                    <td><a href="${path}/admin/productDetail?productNo=${product.productNo}">${product.productName}</a></td>
+				                    <td>${product.productPrice}</td>
+				                    <td><fmt:formatDate type="date" value="${product.productDate}"/></td>
+			        			</tr>
+		        			</c:forEach>
+	        			</c:if>
+        			</tbody>
+        		</table>
+        			
+        			<div class="container listbtngroup">
         				
 	        			<button type="button" class="btn btn-warning" onclick="location.href='${path}/admin/productList?page=1'"><<</button>
 					    <button type="button" class="btn btn-warning" onclick="location.href='${path}/admin/productList?page=${pageInfo.prevPage}'"><</button>
@@ -116,10 +166,10 @@
 					    <c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
 							<c:choose>
 								<c:when test="${ status.current == pageInfo.currentPage}">
-									<button disabled>${ status.current }</button>
+									<button class="btn btn-warning" disabled>${ status.current }</button>
 								</c:when>
 								<c:otherwise>						
-									<button onclick="location.href='${ path }/admin/productList?page=${ status.current }'">${ status.current }</button>
+									<button class="btn btn-warning" onclick="location.href='${ path }/admin/productList?page=${ status.current }'">${ status.current }</button>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -131,7 +181,14 @@
         			
 <jsp:include page="/WEB-INF/views/cart/common/adminFootDiv.jsp"/>
 
-<div class="container" style="height: 100px;"></div>
+<script type="text/javascript">
+$("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+});
+</script> 
 
 </body>
 </html>

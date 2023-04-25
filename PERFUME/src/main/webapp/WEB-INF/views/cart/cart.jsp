@@ -398,6 +398,15 @@
 			
 		}else {
 			
+			let checkCount = $('input:checkbox[name=cartCheckBox]:checked').length;
+			console.log('checked : '+checkCount);
+			
+			if (checkCount == 0) {
+				$('.caldiv').css('display','none')////계산 div
+			}else {
+				$('.caldiv').css('display','block')////계산 div
+			}
+			 
 			$('#cartCheck'+cartNo).attr('checked',false)
 			$('#del'+cartNo).attr('disabled',false);
     		$('#add'+cartNo).attr('disabled',false);
@@ -470,7 +479,7 @@
     	let parseformatfinaltotal = parseInt(formatfinaltotal);
     	$('#finaltotal').text(new Intl.NumberFormat('ko-kr').format(parseformatfinaltotal+parseformatsavesale));
     	$('#save-sale2').text(pointremember-parseformatsavesale);
-    	
+    	$('#pointInput').val('');
     	console.log('pointremember : '+pointremember)
     	pointremember = 0;
     	
@@ -650,6 +659,11 @@
     		 return false;
     	 }else {
     		 
+    		 if ($('input:checkbox[name=cartCheckBox]').is(':checked')==false) {
+    			 alert('장바구니 목록을 선택해주세요!')
+					return false;
+			 }
+    		 
     		 $('input:checkbox[name=cartCheckBox]').each(function (index) {
  				if($(this).is(":checked")==true){
  			    	console.log('cartNo : '+$(this).val());
@@ -789,6 +803,11 @@
 			
     		return false; 
     	 }else { 
+    		 
+    		 if ($('input:checkbox[name=cartCheckBox]').is(':checked')==false) {
+    			 alert('장바구니 목록을 선택해주세요!')
+					return false;
+			 }
     		 
     		 $('input:checkbox[name=cartCheckBox]').each(function (index) {
   				if($(this).is(":checked")==false){
@@ -1116,14 +1135,14 @@
 																}
 															},
 											        		error : function(){
-											        			$('#myModal').modal('hide')
+											        			/* $('#myModal').modal('hide') */
 											        			console.log('적립금 업데이트 오류')
 											        		}
 														})
 													}
 							            		},
 							            		error : function(){
-							            			$('#myModal').modal('hide')
+							            			/* $('#myModal').modal('hide') */
 							            			console.log('적립금 업데이트 오류')
 							            		}
 							               })
@@ -1141,27 +1160,27 @@
 				        			contentType: 'application/json; charset=utf-8',
 				        			async : false,
 				        			success : function(obj){
-				        				$('#myModalorder').modal('show') 
+				        				/* $('#myModalorder').modal('show')  */
 				        				
 			        					$('input:checkbox[name=cartCheckBox]').each(function(index){
 			        						if (this.disabled == true) {
 		        		   					    let value = this.value;
-		        		   					    let value2 = parseInt(value);//카트번호
-		        		 	         	        let hiddenProductNo = $('#hiddenProductNo'+value2).val();//상품번호
+		        		   					    let cartNo = parseInt(value);//카트번호
+		        		 	         	        let hiddenProductNo = $('#hiddenProductNo'+cartNo).val();//상품번호
 			        		 	         	    console.log('hiddenProductNo : '+hiddenProductNo)
-						        				console.log('cartNo : '+value2)//카트번호
+						        				console.log('cartNo : '+cartNo)//카트번호
 						        				orderNo;//주문번호
 						        				console.log('orderNo : '+orderNo)
-						        				let productNo = $('#hiddenProductNo'+value2).val();//상품번호
+						        				let productNo = $('#hiddenProductNo'+cartNo).val();//상품번호
 						        				console.log('productNo : '+productNo)
-						        				let result = $('#result'+value2).val();
+						        				let result = $('#result'+cartNo).val();
 						        				let orderCount = parseInt(result);//상품수량
-						        				let option = $('#optionsize'+value2).text();
+						        				let option = $('#optionsize'+cartNo).text();
 						        				let orderSize = parseInt(option);//옵션사이즈
-						        				let finalPrice = $('#finalprice'+value2).text();
+						        				let finalPrice = $('#finalprice'+cartNo).text();
 						        				let formatfinalPrice = finalPrice.split(',').join("");
 						     			        let orderPrice = parseInt(formatfinalPrice);//상품가격
-						     			        let orderList = {orderNo,productNo,orderCount,orderSize,orderPrice};//하나의 주문상품 객체
+						     			        let orderList = {orderNo,productNo,orderCount,orderSize,orderPrice,cartNo};//하나의 주문상품 객체
 				        						$.ajax({
 				        							url : '${path}/cart/order',
 				        							type : 'post',
@@ -1173,7 +1192,7 @@
 				        								console.log('order-product-complete 결제에 성공하였습니다.')
 				        							},
 				        							error : function(error){
-				        								$('#myModalorder').modal('hide')
+				        								/* $('#myModalorder').modal('hide') */
 				        								console.log('order-product-error 결제에 실패하였습니다.')
 				        							}
 				        						})
@@ -1181,16 +1200,16 @@
 				        				})
 				        			},
 				        			error : function(error){
-				        				 $('#myModalorder').modal('hide') 
+				        				 /* $('#myModalorder').modal('hide')  */
 				        				console.log('order-insert-error')
 				        			}
 				        		})
 				        		payment = '';
-				        		 $('#myModalorder').modal('hide') 
+				        		/*  $('#myModalorder').modal('hide')  */
  				        		window.location.href='${path}/cart/orderList/'+order.orderNo+'/'+order.memberNo+'/'+plusPoint;
  				        	} else {
 				        		//결제 실패 로직
-				        		 $('#myModalorder').modal('hide') 
+				        		/*  $('#myModalorder').modal('hide')  */
 				        		alert("결제에 실패하였습니다.");
 				        	}
 				        });
@@ -1267,7 +1286,7 @@
     </script>
 </head>
 <body>
-
+<%-- 
 
 <span>${memberInfo}</span>
 	<br><br><br><br><br>
@@ -1276,18 +1295,18 @@
 	<span>${clist}</span>
 	<br><br>
 	</c:forEach> 
-	 
+	  --%>
 <jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 
 <div id="cart-wrap"><!-- 전체 div 시작 -->
     
 	    <div class="container">
 	    
-	    	<div class="modal fade" id="myModalorder">
+	    	<!-- <div class="modal fade" id="myModalorder">
             	<div class="spinner-border d-flex justify-content-center" style="width: 10rem; height: 10rem;" role="status">
                     <span class="sr-only">결제가 진행 중입니다~~~~~</span>
                 </div>
-          	</div>
+          	</div> -->
 	    
 	      	<div id="cart-sup">
 	          	<span id="cartSequence" class="sequence">01장바구니</span>
@@ -1339,7 +1358,7 @@
 	                    </th>
 	                    <th class="align-middle">
 	                        <sub>
-	                            <a href="">
+	                            <a href="${path}/product/detail?no=${cart.cartProduct.productNo}">
 	                            	<span>[${cart.cartProduct.productBrand}]</span>
 	                            	<span>${cart.cartProduct.productEngName}</span><br>
 	                                <span>${cart.cartProduct.productTitle}</span><br>
@@ -1441,6 +1460,9 @@
 					                            </div>
 		                        			</c:forEach>
                      					</c:if>
+                     					<c:if test="${empty memberInfo.memberBenefitList}">
+                     						<p>현재 보유하신 쿠폰이 없습니다.</p>
+                     					</c:if>
 	    							</div>
 	    						</div>
 				      		<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
@@ -1454,7 +1476,7 @@
                 	<div class="row zeroInfodiv">*품절상품을 제외한 가격입니다*</div>
                     <div class="row">
                         <div class="col" id="productCount">
-                            총<span id="pcspan1"></span>개의 상품금액<span id="pcspan2"></span>원
+                            총<span id="pcspan1"></span>개의 <br> 상품금액<span id="pcspan2"></span>원
                         </div>
                         <span class="badge">+</span>
 
@@ -1465,7 +1487,7 @@
                         <span class="badge">-</span>
 
                         <div class="col">
-                            <span>기획전 할인금액</span><span id="ratio"></span>원
+                            <span>기획전 할인금액</span><br><span id="ratio"></span>원
                         </div>
                         <span class="badge">=</span>
 
@@ -1653,7 +1675,7 @@
 	              <div class="row">
 	                  <div class="col-8 pay-list">
 	                      <input id="payment" type="hidden" name="pay" value="${memberInfo.memberNo}"><!-- 회원테스트 -->
-	                      <input id="payment2" type="hidden" name="pay" value=""><!-- 비회원테스트 -->
+	                      <!-- <input id="payment2" type="hidden" name="pay" value="">비회원테스트 -->
 	                      <button id="pay6" class="btn btn-outline-secondary pay" onclick="payselect(6)" value="html5_inicis">카드결제</button>
 	                      <button id="pay1" class="btn btn-outline-secondary pay" type="button" onclick="payselect(1)" value="kakaopay">카카오페이</button>
 	                      <button id="pay4"  type="button" class="btn btn-outline-secondary pay" onclick="payselect(4)" value="payco">페이코</button>
@@ -1718,20 +1740,9 @@
 	        </div>
         </div>
         <!-- 결제방법 collapse 끝 -->
-        
-       	
-    	
     	
 </div><!-- 전체 div 끝 -->
 
 <jsp:include page="/WEB-INF/views/planning/footer.jsp"/>
-
-	                        
-	                        
-	                        
-	                        
-
-
-    
 </body>
 </html>
