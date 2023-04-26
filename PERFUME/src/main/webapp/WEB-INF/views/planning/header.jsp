@@ -28,7 +28,7 @@
                     <li><a href="${ path }/aboutSite">ABOUT US</a></li>
                     <li><a href="${ path }/planning/special">SPECIAL</a></li>
                     <li><a href="${ path }/product/list">SCENT</a></li>
-                    <li><a href="#">MOUILLETTE</a></li>
+                    <li><a href="${ path }/product/paper">MOUILLETTE</a></li>
                 </ul>
             </nav>
             <h1 class="logo"><a href="${ path }/">NAEUM</a></h1>

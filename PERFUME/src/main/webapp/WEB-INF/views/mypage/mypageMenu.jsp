@@ -42,7 +42,7 @@
     <div class="col">
         <h5><b>MY 정보</b></h5>
         <div>
-            <a href="${path}/mypage/confirmPassword/changeInfo">회원정보변경</a>
+            <a href="${path}/mypage/confirmPassword">회원정보변경</a>
         </div>
         <div>
             <a href="${path}/mypage/confirmPassword/changePassword">비밀번호변경</a>
