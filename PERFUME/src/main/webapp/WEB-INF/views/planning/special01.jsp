@@ -11,6 +11,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>2023 봄 맞이 Floral 향수 특별 기획전</title>
+	<link href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="${ path }/css/planning/special.css">
 </head>
 <body>
@@ -24,7 +25,7 @@
 	<div id="product">
 	<div class="pd1">
 		<div class="product-info">
-			<div class="product-img"><a><img src="${ path }/images/planning/floral01.jpg"></a></div>
+			<div class="product-img"><a href="#"><img src="${ path }/images/planning/floral01.jpg"></a></div>
 			<div class="product-text">
 				<p><strong>메종마르지엘라 플라워마켓</strong></p>
 				<p style="text-decoration:line-through;">정가 : 147,800원</p>
@@ -35,7 +36,7 @@
 	
 	<div class="pd2">
 		<div class="product-info">
-			<div class="product-img"><a><img src="${ path }/images/planning/floral02.jpg"></a></div>
+			<div class="product-img"><a href="#"><img src="${ path }/images/planning/floral02.jpg"></a></div>
 			<div class="product-text">
 				<p><strong>구찌 블룸 오 드 퍼퓸</strong></p>
 				<p style="text-decoration:line-through;">정가 : 80,000원</p>
@@ -46,7 +47,7 @@
 	
 	<div class="pd3">
 		<div class="product-info">
-			<div class="product-img"><a><img src="${ path }/images/planning/floral03.jpg"></a></div>
+			<div class="product-img"><a href="#"><img src="${ path }/images/planning/floral03.jpg"></a></div>
 			<div class="product-text">
 				<p><strong>디올 포에버 앤 에버 오 드 뚜왈렛</strong></p>
 				<p style="text-decoration:line-through;">정가 : 123,000원</p>

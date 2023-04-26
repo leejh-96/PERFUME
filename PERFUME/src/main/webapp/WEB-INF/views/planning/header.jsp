@@ -13,6 +13,7 @@
     <meta name ="google-signin-client_id" content="176536335938-dmlgnn72m6p2pia44gdoarb4iejs7u3t.apps.googleusercontent.com">
     <title>NAEUM</title>
     <!-- CSS 불러오기 -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${ path }/css/planning/header.css">
     <!-- jQuery 불러오기 -->
     <script src="${ path }/js/jquery-3.6.3.js"></script>

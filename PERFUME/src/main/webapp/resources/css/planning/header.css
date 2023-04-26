@@ -6,7 +6,8 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Nanum Myeongjo', serif;
+    text-decoration: none;
 }
 
 .header-container {
@@ -44,6 +45,16 @@ nav a {
     color: #333;
     font-size: 18px;
     font-weight: bold;
+}
+
+/* a태그 속성 제거좀 먹어라.. */
+.header-container nav ul li a {
+	text-decoration: none;
+}
+
+.header-container h1 a {
+	color: black;
+	text-decoration: none;
 }
 
 /* 모달창 CSS */
