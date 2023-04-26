@@ -45,7 +45,7 @@ public class EventServiceImpl implements EventService {
 		params.put("to", phoneNumber);    
 		params.put("from", "010-6743-3373");   
 		params.put("type", "SMS");
-		params.put("text", "퍼퓸 회원가입 인증 번호는 [" + numStr + "]입니다.");
+		params.put("text", "향수 쇼핑몰 [내음] 회원가입 인증 번호는 [" + numStr + "]입니다.");
 		params.put("app_version", "test app 1.2"); // application name and version
 		
 		try {
@@ -324,7 +324,7 @@ public class EventServiceImpl implements EventService {
 		params.put("to", winnerPhone);    
 		params.put("from", "010-6743-3373");   
 		params.put("type", "SMS");
-		params.put("text", "[퍼퓸] 축하드립니다. 퍼퓸 [" + BTitle + "]에 당첨되셨습니다.");
+		params.put("text", "축하드립니다. 향수 쇼핑몰 내음의 [" + BTitle + "]에 당첨되셨습니다.");
 		params.put("app_version", "test app 1.2"); // application name and version
 		
 		// 메시지 전송 성공 여부 반환
