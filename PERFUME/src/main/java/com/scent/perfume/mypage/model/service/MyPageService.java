@@ -72,6 +72,18 @@ public interface MyPageService {
 	
 	OrderPerformanceDTO getOrderPerformance(long memberId) throws Exception;
 
+	MemberDTO getMember(int no);
+
 	MemberDTO getMember(String name);
+
+	static boolean confirmPassword(Long memberId, String password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	static MemberDTO getMemberId(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

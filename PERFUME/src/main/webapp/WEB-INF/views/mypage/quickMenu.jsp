@@ -20,7 +20,7 @@
     </div>
     <a href="${path}/mypage/pointHistory/all?page=1" class="d-flex flex-column align-items-center align-self-center lh-sm">
     	<span>포인트</span>
-       	<span><fmt:formatNumber value="${memberPoint}" />P</span>
+       	<span><fmt:formatNumber value="${point}" />P</span>
     </a>
     <a href="${path}/mypage/couponHistory/available?page=1" class="d-flex flex-column align-items-center align-self-center lh-sm">
     	<span>쿠폰</span>

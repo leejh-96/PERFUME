@@ -267,8 +267,13 @@ public class MyPageServiceImpl implements MyPageService {
 	}
 
 	@Override
-	public MemberDTO getMember(String name) {
+	public MemberDTO getMember(int no) {
 		
+		return mapper.getMemberInfo(no);
+	}
+
+	@Override
+	public MemberDTO getMember(String name) {
 		return null;
 	}
 }

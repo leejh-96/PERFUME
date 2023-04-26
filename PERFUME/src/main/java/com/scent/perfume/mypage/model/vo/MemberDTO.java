@@ -31,6 +31,7 @@ public class MemberDTO {
 	private Date createDate;
 	private Date updateDate;
 	private String mailStatus;
+	private String userId;
 
 }
 
