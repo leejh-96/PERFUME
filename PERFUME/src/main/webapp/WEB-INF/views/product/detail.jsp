@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="${path }/slick/slick.css">
   
   <link rel="stylesheet" href="${ path }/css/planning/footer.css">
-<%--   <link rel="stylesheet" href="${ path }/css/planning/header.css"> --%>
+  <link rel="stylesheet" href="${ path }/css/planning/header.css">
 <style>
 		.gradestars {
 			max-height: 100%;
@@ -590,35 +590,147 @@
         <div class="header-container">
             <nav class="main-nav">
                 <ul>
-                    <li><a href="#">ABOUT US</a></li>
+                    <li><a href="${ path }/aboutSite">ABOUT US</a></li>
                     <li><a href="${ path }/planning/special">SPECIAL</a></li>
-                    <li><a href="#">SCENT</a></li>
-                    <li><a href="#">SACHET</a></li>
+                    <li><a href="${ path }/product/list">SCENT</a></li>
+                    <li><a href="${ path }/product/paper">MOUILLETTE</a></li>
                 </ul>
             </nav>
-            <h1 class="logo"><a href="${ path }/">Perfume</a></h1>
+            <h1 class="logo"><a href="${ path }/">NAEUM</a></h1>
             <nav class="user-nav">
                 <ul>
-                    <li><a href="#">EVENT</a></li>
-                    <li><a href="#">COMMUNITY</a></li>
+                    <li><a href="${ path }/eventList">EVENT</a></li>
+                    <li><a href="${ path }/board/list">COMMUNITY</a></li>
                     <c:if test="${ empty loginMember }">
 	                    <li><a href="#" class="openLogin">LOGIN</a></li>
-	                    <li><a href="#">JOIN</a></li>
+	                    <li><a href="${ path }/join">JOIN</a></li>
                     </c:if>
                     <c:if test="${ not empty loginMember }">
 						<li><a href="${ path }/logout">LOGOUT</a></li>
 						<c:if test="${ not empty loginMember && loginMember.division == '2' }">
-							<li><a href="#">MY PAGE</a></li>                                      
-							<li><a href="${ path }/cart?memberNo=3">CART</a></li>                                      
+							<li><a href="${ path }/mypage/mypage">MY PAGE</a></li>                                      
+							<li><a href="${ path }/cart">CART</a></li>                                      
 						</c:if>
 						<c:if test="${ not empty loginMember && loginMember.division == '1' }">
-							<li><a href="#">ADMIN PAGE</a></li>                                        
+							<li><a href="${ path }/admin/home">ADMIN PAGE</a></li>                                        
 						</c:if>              
                     </c:if>
                 </ul>
             </nav>
         </div>
 
+        <!-- 로그인 모달창 구현 -->
+        <div id="loginmodal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 style="text-align: center;">LOGIN</h2>
+                <form id="loginForm" action="${ path }/login" method="POST">
+                    <div>
+                        <label for="id" style="font-weight: bold;">아이디</label><br>
+                        <input type="text" id="id" name="id" required placeholder="아이디를 입력하세요."><br>
+                        <label for="pwd" style="font-weight: bold;">비밀번호</label><br>
+                        <input type="password" id="pwd" name="pwd" required placeholder="비밀번호를 입력하세요."><br><br>
+                        <button type="submit">Login</button><br><br>
+                    </div>
+                </form>
+                    <div>
+                        <a href="${ path }/planning/findId"><button type="button" id="findId">아이디 찾기</button></a>
+      					<a href="${ path }/planning/findPwd"><button type="button" id="findPwd">비밀번호 찾기</button></a><br><br>
+                    </div>
+                    <ul style="list-style: none;">
+                        <li onclick="kakaoLogin();"><button type="button">카카오로 로그인</button></li>
+                        <li id="googleLogin" onclick="googleLogin();"><button type="button">구글로 로그인</button></li>
+                    </ul>
+            </div>
+        </div>
+    
+    <script>
+		 // 모달창 가져오기
+		 $(document).ready(function() {
+	    // 로그인 버튼 클릭 시 모달창 보이기
+	    $('.openLogin').click(function(e) {
+	        e.preventDefault();
+	        $('#loginmodal').show();
+	    });
+	
+	    // 모달창 바깥 클릭 시 모달창 닫기
+	    $('#loginmodal').click(function(event) {
+	        if (event.target == this) {
+	            $(this).hide();
+	        }
+	    });
+	
+	    // X버튼 클릭 시 모달창 닫기
+	    $('#loginmodal .close').click(function() {
+	        $('#loginmodal').hide();
+	    });
+	});
+	    
+	
+	    // 카카오로 로그인 구현
+	    Kakao.init('838aa760211421e8483192e159afd189'); //발급받은 키 중 javascript키를 사용해준다.
+	    console.log(Kakao.isInitialized()); // sdk초기화여부판단
+	
+	    function kakaoLogin() {
+	        Kakao.Auth.login({
+	        success: function (response) {
+	            Kakao.API.request({
+	            url: '/',
+	            success: function (response) {
+	                console.log(response)
+	            },
+	            fail: function (error) {
+	                console.log(error)
+	            },
+	            })
+	        },
+	        fail: function (error) {
+	            console.log(error)
+	        },
+	        })
+	    }
+        
+        // 구글로 로그인 구현
+        // 처음 실행하는 함수
+		function init() {
+			gapi.load('auth2', function() {
+				gapi.auth2.init();
+				options = new gapi.auth2.SigninOptionsBuilder();
+				options.setPrompt('select_account');
+		        // 추가는 Oauth 승인 권한 추가 후 띄어쓰기 기준으로 추가
+				options.setScope('email profile openid https://www.googleapis.com/auth/user.birthday.read');
+		        // 인스턴스의 함수 호출 - element에 로그인 기능 추가
+		        // GgCustomLogin은 li태그안에 있는 ID, 위에 설정한 options와 아래 성공,실패시 실행하는 함수들
+				gapi.auth2.getAuthInstance().attachClickHandler('googleLogin', options, onSignIn, onSignInFailure);
+			})
+		}
+		
+		function onSignIn(googleUser) {
+			var access_token = googleUser.getAuthResponse().access_token
+			$.ajax({
+		    	// people api를 이용하여 프로필 및 생년월일에 대한 선택동의후 가져온다.
+				url: 'https://people.googleapis.com/v1/people/me'
+		        // key에 자신의 API 키를 넣습니다.
+				, data: {personFields:'birthdays', key:'AIzaSyAsg64zU00dzB-UbgI-Zyp7cXvr6qphxQc', 'access_token': access_token}
+				, method:'GET'
+			})
+			.done(function(e){
+		        //프로필을 가져온다.
+				var profile = googleUser.getBasicProfile();
+				console.log(profile)
+			})
+			.fail(function(e){
+				console.log(e);
+			})
+		}
+		function onSignInFailure(t){		
+			console.log(t);
+		}
+    </script>
+        
+    </header>
+         
+         
  <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -770,40 +882,13 @@
               </div>
             </div>
         </div>
-    </div>
-
-
-
-        <!-- 로그인 모달창 구현 -->
-        <div class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2 style="text-align: center;">LOGIN</h2>
-                <form id="loginForm" action="${ path }/login" method="POST">
-                    <div>
-                        <label for="id" style="font-weight: bold;">아이디</label><br>
-                        <input type="text" id="id" name="id" required placeholder="아이디를 입력하세요."><br>
-                        <label for="pwd" style="font-weight: bold;">비밀번호</label><br>
-                        <input type="password" id="pwd" name="pwd" required placeholder="비밀번호를 입력하세요."><br><br>
-                        <button type="submit">Login</button><br><br>
-                    </div>
-                </form>
-                    <div>
-                        <a href="${ path }/planning/findId"><button type="button" id="findId">아이디 찾기</button></a>
-                        <a href="${ path }/planning/findPwd"><button type="button" id="findPwd">비밀번호 찾기</button></a><br><br>
-                        <button type="submit">회원가입</button><br><br>
-                    </div>
-                    <ul style="list-style: none;">
-                        <li onclick="naverLogin();"><button type="button">네이버로 로그인</button></li>
-                        <li onclick="kakaoLogin();"><button type="button">카카오로 로그인</button></li>
-                        <li onclick="googleLogin();"><button type="button">구글로 로그인</button></li>
-                        <li onclick="appleLogin();"><button type="button">애플로 로그인</button></li>
-                    </ul>
-            </div>
-        </div>
-    
-        
-         </header>
+    </div>        
+         
+         
+         
+         
+         
+         
         <div id="section">
             <div id="s1" >
                  <div id="s1_1">
@@ -987,32 +1072,52 @@
                     </div>
                               <c:forEach var="option" items="${option}">
                         <div class="opt-table" id="opt${option.poname}" data-id="${option.poname}"style="border: 1px solid #ccc; padding: 10px; display: none;">
-                                    <div style="width: 55%; font-size: 12px; line-height: 40px;">
-                                    <p>${product.eng } -<span class="sizeval">${option.poname}ml</span></p></div>
-                                                    <div class="quantity" style="width: 25%; text-align: center; line-height: 40px">
-                                                        <span>
-                                                            <a class="opt-cnt-minus disabled" href="javascript:void(0)" onclick="prepareOrder.changeQty('1','2060719','0','minus',$(this),'55200');return false;">-</a>
-                                                            <input id="quantity" name="quantity_name" style="border: none;" value="1" type="text"  />
-                                                            <a class="opt-cnt-plus" href="javascript:void(0)" onclick="prepareOrder.changeQty('1','2060719','0','plus',$(this),'55200');return false;">+</a>
-                                                        </span>
-                                                    </div>
+                                    <div style="width: 55%; font-size: 16px; font-weight: bold; line-height: 40px;">
+                                    <p>${product.eng } -<span class="sizeval">${option.poname}ml</span></p>
+                                    </div>
+                                    
+                                    				
+                                    				<c:forEach var="benefit" items="${product.benefit}" begin="0" end="0">
+								                        <c:if test="${not empty product.benefit }">
+									                        <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
+									                        <fmt:parseNumber var="saleprice" value="${option.poprice*salepricerate}"/>
+									                        <fmt:parseNumber var="productsaleprice" value="${option.poprice-saleprice}"/>
+		                                            			   <div class="quantity" style="width: 25%; text-align: center; line-height: 40px; ">
+			                                                        <span>
+			                                                            <a class="opt-minus"  onclick="optminus(${productsaleprice})">-</a>
+			                                                            <input id="quantity" name="quantity_name" style="border: none; " value="1" type="text"  />
+			                                                            <a class="opt-plus" onclick="optplus(${productsaleprice})">+</a>
+			                                                        </span>
+			                                                    </div>
+						                                </c:if>
+					                                </c:forEach>
+					                                
+                                    			    <c:if test="${empty product.benefit }">
+                                     							<div class="quantity" style="width: 25%; text-align: center; line-height: 40px">
+			                                                        <span>
+			                                                            <a class="opt-minus"  onclick="optminus(${option.poprice})">-</a>
+			                                                            <input id="quantity" name="quantity_name" style="border: none;" value="1" type="text"  />
+			                                                            <a class="opt-plus" onclick="optplus(${option.poprice})">+</a>
+			                                                        </span>
+			                                                    </div>
+                                    				     </c:if>
+                               
                                                     <div class="price" style="width: 20%; line-height: 40px; font-size: 12px;">
                                                     
                                                     <c:forEach var="benefit" items="${product.benefit}" begin="0" end="0">
-							                        <c:if test="${not empty product.benefit }">
-							                        <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
-							                        <fmt:parseNumber var="saleprice" value="${option.poprice*salepricerate}"/>
-							                        <fmt:parseNumber var="productsaleprice" value="${option.poprice-saleprice}"/>
-                                    <span id="selected-price">${productsaleprice}</span>&nbsp;<span>원<span>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="prepareOrder.delBuyGoods($(this),1,0);prepareOrder.getSizeRecommend('product_size_recommend','2060719','0',false,'');return false;">x</a></span>
-                                    
-					                                </c:if>
+								                        <c:if test="${not empty product.benefit }">
+									                        <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
+									                        <fmt:parseNumber var="saleprice" value="${option.poprice*salepricerate}"/>
+									                        <fmt:parseNumber var="productsaleprice" value="${option.poprice-saleprice}"/>
+		                                                    <span id="selected-price">${productsaleprice}</span>&nbsp;<span>원<span>&nbsp;&nbsp;<a href="" onclick="">x</a></span>
+						                                </c:if>
 					                                </c:forEach>
 					                                
 					                                <c:if test="${empty product.benefit }">
-					                         <span id="selected-price">${option.poprice}</span>&nbsp;<span>원<span>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="prepareOrder.delBuyGoods($(this),1,0);prepareOrder.getSizeRecommend('product_size_recommend','2060719','0',false,'');return false;">x</a></span>       
+					                         			<span id="selected-price">${option.poprice}</span>&nbsp;<span>원<span>&nbsp;&nbsp;<a href="" onclick="">x</a></span>       
 					                                </c:if>
 					                                
-                                    </div>
+                                                   </div>
                                 </div>
                                 </c:forEach>   
                                                
@@ -1022,7 +1127,7 @@
                     
                     
                     <div id="product-total">
-                        TOTAL :<span id="total"><b>0</b></span><span>원</span><span style="font-size: 8px;">(0)개</span>
+                        TOTAL :<span id="total"><b>0</b></span><span>원</span><span>(</span><span  style="font-size: 8px;" id="totalcount">0</span><span>)개</span>
                     </div>
                     <div id="product-button">
                     <c:if test="${not empty loginMember }">
@@ -1758,6 +1863,112 @@
 </body>
 <script>
 
+	
+	
+	 function optminus(mprice) {
+
+      
+//        price = $('#selected-price').text();   
+       
+//        console.log(price -= mprice);
+       
+//        console.log("가격 " + price);
+      
+      
+	    
+};
+
+var totalcount = 1;
+var quantity = 1;
+var price = 0;
+var originprice = 0;
+$('#optselect').change(function() {
+	 price = Number($('#selected-price').text()); 
+	 
+	 originprice =  price;
+	 console.log("가격 " + price);
+	 
+	
+});
+
+function optplus(pprice) {
+	$('#selected-price').text(price += pprice);
+	$('#total').text(price);
+	$('#quantity').val(++quantity);
+	
+    
+}
+
+function optminus(mprice) {
+	$('#selected-price').text(price -= mprice);
+	$('#total').text(price);
+	$('#quantity').val(--quantity);
+	if(price <= 0 || quantity <= 0) {
+		$('#selected-price').text(originprice);
+		alert('최소 주문 수량은 1개입니다.');
+	}
+	
+
+}
+
+
+
+let poName = '';
+$('#optselect').change(function() {
+    poName = '';
+    poName = $('#optselect option:selected').val();
+    console.log("poName" + poName);
+});
+
+
+function nowOrder(productNo){
+    
+    console.log(productNo)
+    console.log(poName)
+    let poAmount = $('#quantity').val();
+    console.log(poAmount)
+    window.location.href='${path}/cart/nowOrder/'+productNo+'/'+poName+'/'+poAmount                                                                                                                                                                                                                                                                                                
+    
+ }
+
+
+function cartInsert(productNo){
+	   console.log(productNo)
+	   console.log(poName)
+	   let cartProductCount = $('#quantity').val();
+	   console.log(cartProductCount)
+	   cartOptionSize = poName;
+	   
+	   $.ajax({
+	      url : '${path}/cart/insert',
+	      type : 'get',
+	      data : {productNo,cartOptionSize,cartProductCount},
+	      dataType : 'json',
+	      success : function(result){
+	         console.log(result)
+	         
+	         if (result === 0) {
+	            //비로그인시 체크
+	            if (confirm('장바구니는 로그인 후 이용가능합니다.\n\n로그인 하시겠습니까?')) {
+	               $('.openLogin').trigger('click');
+	            }else {
+	               return false;
+	            }
+	         }else if (result === 1) {
+	            if (confirm('상품이 정상적으로 장바구니에 담겼습니다.\n\n장바구니에서 확인하시겠습니까?')) {
+	               window.location.href='${path}/cart';
+	            }else {
+	               return false;
+	            }
+	         }
+	      },
+	      error : function(error){
+	         console.log(error)
+	      }
+	   })
+	}
+
+
 function requestLogin(){
 	 alert('로그인 후 다시 이용해주세요.');
  };
@@ -1781,12 +1992,9 @@ function likeCountUpdate(PNo, MNo, like) {
 			
 			
 			 result = obj.likecount
-	
-			
+
 				$('#Lcount').html(result);
 				
-			
-			
 			
 		}	
 	
@@ -1840,70 +2048,6 @@ function likeCheck(mno, pno) {
 
 
 
-
-
-let poName = '';
-$('#optselect').change(function() {
-    poName = '';
-    poName = $('#optselect option:selected').val();
-    console.log("poName" + poName);
-});
-
-function nowOrder(productNo){
-      
-      console.log(productNo)
-      console.log(poName)
-      let poAmount = $('#quantity').val();
-      console.log(poAmount)
-      window.location.href='${path}/cart/nowOrder/'+productNo+'/'+poName+'/'+poAmount                                                                                                                                                                                                                                                                                                
-      
-   }
-
-
-function cartInsert(productNo){
-	   console.log(productNo)
-	   console.log(poName)
-	   let cartProductCount = $('#quantity').val();
-	   console.log(cartProductCount)
-	   cartOptionSize = poName;
-	   
-	   $.ajax({
-	      url : '${path}/cart/insert',
-	      type : 'get',
-	      data : {productNo,cartOptionSize,cartProductCount},
-	      dataType : 'json',
-	      success : function(result){
-	         console.log(result)
-	         
-	         if (result === 0) {
-	            //비로그인시 체크
-	            if (confirm('장바구니는 로그인 후 이용가능합니다.\n\n로그인 하시겠습니까?')) {
-	               $('.openLogin').trigger('click');
-	            }else {
-	               return false;
-	            }
-	         }else if (result === 1) {
-	            if (confirm('상품이 정상적으로 장바구니에 담겼습니다.\n\n장바구니에서 확인하시겠습니까?')) {
-	               window.location.href='${path}/cart';
-	            }else {
-	               return false;
-	            }
-	         }
-	      },
-	      error : function(error){
-	         console.log(error)
-	      }
-	   })
-	}
-
-
-
-
-
-
-
-
-
 function qnaStatus(no, password) {
 	console.log(no,password);
 		
@@ -1920,8 +2064,6 @@ function qnaStatus(no, password) {
 	
 
 }
-
-
 
 
 // qna 글 상세 조회
@@ -2617,7 +2759,6 @@ $(document).ready( function() {
   });
   
   				
-			
 
 		
 	
@@ -2636,23 +2777,25 @@ $(document).ready( function() {
 	    		var total = $(item).find('#selected-price').text();
 	    		
 	    		 if(text == result) {
-	    			 
-	    			 
-	    		  $('#total').text(total);     
-	   	    	  $('#opt'+text).show();
+
+	    		  $('#total').text(total);  
+	   	    	  $('#opt'+text).show();	 
 	   	    	 
-	   	    	
-	   	    	
 	   	    	 }
+	   	      });
+	    	 
 	    	
-	    		
-	    		
-	    			
-	    		 
 	    	
-	   	      });		
-	    	 var result2 = $('#optselect option:selected').val2();
-	    	 console.log("result2" + result2);
+	    	 
+	    	 
+	    	 
+	    	 
+	    	 
+	    	 
+	    	 
+	    	 
+// 	    	 var result2 = $('#optselect option:selected').val2();
+// 	    	 console.log("result2" + result2);
 	    		});
 	    
 	     

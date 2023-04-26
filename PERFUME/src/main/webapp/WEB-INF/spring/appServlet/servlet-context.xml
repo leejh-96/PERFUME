@@ -125,6 +125,11 @@
 	 		<!-- 인터셉터를 제외시킬 요청 선택 -->
  				<exclude-mapping path="/product/list" />
  				<exclude-mapping path="/product/detail" />
+			    <exclude-mapping path="/product/scent" />
+ 				<exclude-mapping path="/product/paper" />
+ 				<exclude-mapping path="/product/salelist" />
+ 				<exclude-mapping path="/product/bestlist" />
+
 
 <!-- 	 		<exclude-mapping path="/member/idCheck" /> -->
 	 			<exclude-mapping path="/board/list" />
