@@ -64,7 +64,7 @@
                             <th class="col-2">성별</th>
                             <td>
                             	<c:choose>
-                            		<c:when test="${memberDTO.gender eq 'M'}">
+                            		<c:when test="${memberDTO.gender eq '남'}">
 	                           			<label><input type="radio" name="gender" value="남자" checked>&nbsp;남자</label>
 	                                	&nbsp;
 	                                	<label><input type="radio" name="gender" value="여자">&nbsp;여자</label>

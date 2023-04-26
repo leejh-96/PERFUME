@@ -14,9 +14,11 @@ import com.scent.perfume.product.model.vo.Product;
 import com.scent.perfume.product.model.vo.ProductBoard;
 import com.scent.perfume.product.model.vo.ProductBoardCategory;
 import com.scent.perfume.product.model.vo.ProductBoardReply;
+import com.scent.perfume.product.model.vo.ProductLike;
 import com.scent.perfume.product.model.vo.TopCate;
 
 @Service
+
 public class ProductServiceImpl implements ProductService{
 	@Autowired
 	private ProductMapper mapper;
@@ -34,13 +36,14 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<Product> getProductList(PageInfo pageInfo, String gender, String sort, String bn, String keyword) {
+	public List<Product> getProductList(PageInfo pageInfo, String gender, String sort, String bn, String keyword, String MNo) {
 		int limit = pageInfo.getListLimit();
 		int offset = (pageInfo.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
+		System.out.println("여기까지 " + MNo);
 		
-		return mapper.selectAll(rowBounds, gender, sort, bn, keyword);
+		return mapper.selectAll(rowBounds, gender, sort, bn, keyword, MNo);
 	}
 
 	@Override
@@ -97,13 +100,13 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public List<Product> getScentProductList(PageInfo pageInfo, int no, String gender, String bn, String sort,
-			String keyword) {
+			String keyword, String MNo) {
 		
 		int limit = pageInfo.getListLimit();
 		int offset = (pageInfo.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return mapper.selectScentProductByNo(rowBounds, no, gender, bn, sort, keyword);
+		return mapper.selectScentProductByNo(rowBounds, no, gender, bn, sort, keyword, MNo);
 	}
 
 	@Override
@@ -119,12 +122,12 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<Product> getProductPaperList(PageInfo pageInfo, String sort) {
+	public List<Product> getProductPaperList(PageInfo pageInfo, String sort, String MNo) {
 		int limit = pageInfo.getListLimit();
 		int offset = (pageInfo.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return mapper.selectPaperAll(sort, rowBounds);
+		return mapper.selectPaperAll(sort, rowBounds, MNo);
 	}
 
 	@Override
@@ -156,12 +159,12 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<Product> getSaleProductList(PageInfo pageInfo) {
+	public List<Product> getSaleProductList(PageInfo pageInfo, String MNo) {
 		int limit = pageInfo.getListLimit();
 		int offset = (pageInfo.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return mapper.selectSaleProductList(rowBounds);
+		return mapper.selectSaleProductList(rowBounds, MNo);
 	}
 
 	@Override
@@ -201,6 +204,7 @@ public class ProductServiceImpl implements ProductService{
 		} else {
 			// insert
 			result = mapper.insertReviewReply(reply);
+			result = mapper.updateBoardReplyCount(reply.getPbNo());
 		}
 		
 		return result; 
@@ -215,16 +219,18 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+	@Transactional
 	public int save(ProductBoard review) {
         int result = 0;
 		
 
-		if(review.getPbno() > 0) {
+		if(review.getPbNo() > 0) {
 			// update
 //			result = mapper.updateBoard(board);
 		} else {
 			// insert
 			result = mapper.insertReviewBoard(review);
+			
 		}
 		
 		return result; 
@@ -236,6 +242,149 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.selectBoardCategoryList();
 	}
 
+	@Override
+	public ProductBoard findBoardQnaBypbNo(int pbNo) {
+	
+		return mapper.selectBoardQnaBypbNo(pbNo);
+	}
+
+	@Override
+	@Transactional
+	public int saveQnaReply(ProductBoardReply qnaReply) {
+        int result = 0;
+		
+        
+		if(qnaReply.getPbrNo() > 0) {
+			// update
+//			result = mapper.updateBoard(board);
+			
+		} else {
+			// insert
+			result = mapper.insertQnaReply(qnaReply);
+			result = mapper.updateBoardReplyCount(qnaReply.getPbNo());
+		
+		}
+		
+		return result; 
+	}
+
+	@Override
+	@Transactional
+	public int findIsLike(ProductLike favorite) {
+		int like = 0;
+		int result = 0;
+		like = mapper.selectProductLikeByNo(favorite);
+	
+//		if(like == 0) {
+//			result = mapper.insertLike(favorite);
+//			System.out.println("result1 : " + result);
+//		} 
+//		else if(like == 1)	{
+//			result = mapper.delelteLike(favorite.getMNo(), favorite.getPNo());
+//			System.out.println("result2 : " + result);
+//		}
+		
+		
+
+		return like;
+		
+	}
+
+	@Override
+	public Product findByRelatedProductByNo(int no) {
+		
+		return mapper.selectRelatedProductByNo(no);
+	}
+
+	@Override
+	public List<Product> findRelatedProductByKeyword(String brand, int no) {
+		
+		return mapper.selectRelatedProductListByKeyword(brand, no);
+	}
+
+	@Override
+	@Transactional
+	public int saveLike(ProductLike favorite) {
+        int result = 0;
+        	
+			result = mapper.insertLike(favorite);
+			System.out.println("result1 : " + result);
+			
+
+		return result; 
+		
+	}
+
+	@Override
+	@Transactional
+	public int deleteLike(ProductLike favorite) {
+		int result = 0;
+		
+		    result = mapper.delelteLike(favorite.getMNo(), favorite.getPNo());
+		    	System.out.println("result2 : " + result);
+		  
+		    
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public int updateProductLikeCount(int PNo) {
+		
+		return mapper.updateProductLikeCount(PNo);
+	}
+
+	@Override
+	@Transactional
+	public int saveQna(ProductBoard qna) {
+        int result = 0;
+		
+
+		if(qna.getPbNo() > 0) {
+			// update
+//			result = mapper.updateBoard(board);
+		} else {
+			// insert
+			result = mapper.insertQnaBoard(qna);
+			
+		}
+		
+		return result; 
+	}
+
+	@Override
+	public Product findlikeCountByNo(int PNo) {
+		
+		
+		
+		return mapper.selectProductLikeCountByNo(PNo);
+	}
+
+	@Override
+	public List<ProductLike> findLikeListByNo(int no) {
+		
+		return mapper.selectLikeListByNo(no);
+	}
+
+	@Override
+	public Product getLikeCountByNo(int no) {
+	
+		return mapper.selectProductLikeCountByNo(no);
+	}
+
+	@Override
+	public ProductBoard findReviewByPbNo(int pbNo) {
+		
+		return mapper.selectReviewByPbNo(pbNo);
+	}
+
+	@Override
+	public List<Product> getBestProductList() {
+		
+		return mapper.selectBestProductList();
+	}
+
+	
 
 
 	
