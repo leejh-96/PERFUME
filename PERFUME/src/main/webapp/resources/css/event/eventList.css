@@ -22,7 +22,7 @@ body { background-color: #f6f6f2; }
 
 #writeButton button:hover {  background-color: rgb(120, 116, 100); border-color: rgb(120, 116, 100); }
 
-#searchNpage { margin-bottom : 5%; }
+#searchNpage { margin-bottom : 5%; margin-top: 4.5%; }
 
 #searchBar { width: 30%; margin-left: auto; margin-right: auto; }
 

@@ -70,6 +70,8 @@
 			</table>
 		</div>
 		<div id="searchNpage">
+				<button id="btnList" type="button" class="btn btn-secondary"
+        		onclick="location.href='${ path }/eventList'">최신목록</button>			
 			<form name="memberJoinFrm" action="${ path }/eventSearch" method="GET">
 				<div id="searchBar" class="input-group input-group-sm">
 					<select name="searchType" class="custom-select" id="inputGroupSelect04"
@@ -87,10 +89,10 @@
 			<div id="pageBar">
 				<!-- 맨 처음으로 -->
 				<button type="button" class="btn btn-outline-secondary"
-					onclick="location.href='${ path }/eventSearch?page=1'">&laquo;</button>
+					onclick="location.href='${ path }/eventSearch?page=1&searchType=${ searchType }&searchKeyword=${ searchKeyword }'">&laquo;</button>
 				<!-- 이전 페이지로 -->
 				<button type="button" class="btn btn-outline-secondary"
-					onclick="location.href='${ path }/eventSearch?page=${ pageInfo.prevPage }'">&lsaquo;</button>
+					onclick="location.href='${ path }/eventSearch?page=${ pageInfo.prevPage }&searchType=${ searchType }&searchKeyword=${ searchKeyword }'">&lsaquo;</button>
 				<!-- 5개 페이지 목록 -->
 				<c:forEach begin="${ pageInfo.startPage }"
 					end="${ pageInfo.endPage }" varStatus="status">
@@ -100,16 +102,16 @@
 						</c:when>
 						<c:otherwise>
 							<button class="btn btn-outline-secondary"
-								onclick="location.href='${ path }/eventSearch?page=${ status.current }'">${ status.current }</button>
+								onclick="location.href='${ path }/eventSearch?page=${ status.current }&searchType=${ searchType }&searchKeyword=${ searchKeyword }'">${ status.current }</button>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 				<!-- 다음 페이지로 -->
 				<button type="button" class="btn btn-outline-secondary"
-					onclick="location.href='${ path }/eventSearch?page=${ pageInfo.nextPage }'">&rsaquo;</button>
+					onclick="location.href='${ path }/eventSearch?page=${ pageInfo.nextPage }&searchType=${ searchType }&searchKeyword=${ searchKeyword }'">&rsaquo;</button>
 				<!-- 맨 끝으로 -->
 				<button type="button" class="btn btn-outline-secondary"
-					onclick="location.href='${ path }/eventSearch?page=${ pageInfo.maxPage }'">&raquo;</button>
+					onclick="location.href='${ path }/eventSearch?page=${ pageInfo.maxPage }&searchType=${ searchType }&searchKeyword=${ searchKeyword }'">&raquo;</button>
 			</div>
 		</div>
 	</section>

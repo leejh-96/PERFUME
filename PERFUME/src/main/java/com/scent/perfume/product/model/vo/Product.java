@@ -16,9 +16,10 @@ public class Product {
 	
 	String ptname;
 	
-	int pno;
+	int PNo;
 	
 	int PMno;
+	
 	
 	String brand;
 	
@@ -36,6 +37,7 @@ public class Product {
 	
 	int price;
 	
+	String pfrenamefilename;
 	
 	List<Option> option;
 	
@@ -51,10 +53,13 @@ public class Product {
 	
 	List<ProductBoard> productboard;
 	
+	ProductLike productlike;
+	
 	Date date;
 	
 	Date update;
 	
+	int likecount;
 	
 	
 	

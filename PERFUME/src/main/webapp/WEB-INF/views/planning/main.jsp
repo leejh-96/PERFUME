@@ -10,7 +10,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Perfume</title>
+    <title>NAEUM</title>
     <!-- CSS 불러오기 -->
     <link rel="stylesheet" href="${ path }/css/planning/main.css">
     <!-- jQuery 불러오기 -->
@@ -45,7 +45,7 @@
 			    <h1>BRAND</h1>
 			</div>
   			<div style="text-align: center;">
-    			<div id="article-slider" class="article-slider2" style="display: inline-block;">
+    			<div id="article-slider" class="article-slider2" style="display: flex;">
       				<div><a href="#"><img src="${ path }/images/planning/new001.png"></a></div>
       				<div><a href="#"><img src="${ path }/images/planning/new002.png"></a></div>
       				<div><a href="#"><img src="${ path }/images/planning/new003.png"></a></div>
@@ -71,7 +71,7 @@
 		        <div><a href="#"><img src="${ path }/images/planning/new005.png"></a></div>
 		        <div><a href="#"><img src="${ path }/images/planning/new006.png"></a></div>
 		    </div>
-		    <button class="next-slide3" style="float:left; display: inline-block; margin: 0; vertical-align: middle;">다음</button>
+		    <button class="next-slide3">다음</button>
 		    <div style="float:right;">
 		        <h1 style="text-align: center;">BEST</h1>
 		        <p style="text-align: center;">다른 사람들은 어떤 향을 제일 많이 찾을까요?<br><br>인기가 많은 향에는 '이유'가 존재합니다.<br>PERFUME에서 가장 잘 나가는 향수들 중<br>당신에게 꼭 맞는 향이 있을 수도 있습니다.</p>
@@ -86,7 +86,6 @@
 	 // NEW 슬라이드
 	    var slideIndex1 = 0;
 	    var slides1 = document.querySelectorAll(".article-slider1 div");
-	    var prevBtn1 = document.querySelector(".prev-slide1");
 	    var nextBtn1 = document.querySelector(".next-slide1");
 	
 	    showSlides();
@@ -112,6 +111,76 @@
 	        }
 	        showSlides();
 	    });
+	    
+	 // BRAND 슬라이드
+	    var slideIndex2 = 0;
+	    var slides2 = document.querySelectorAll(".article-slider2 div");
+	    var prevBtn2 = document.querySelector(".prev-slide2");
+	    var nextBtn2 = document.querySelector(".next-slide2");
+
+	    showSlides2();
+
+	    function showSlides2() {
+	        var i;
+	        for (i = 0; i < slides2.length; i++) {
+	            slides2[i].style.display = "none";
+	        }
+	        for (i = slideIndex2; i < slideIndex2 + 4; i++) {
+	            var j = i;
+	            if (j >= slides2.length) {
+	                j = j - slides2.length;
+	            }
+	            slides2[j].style.display = "block";
+	        }
+	    }
+
+	    nextBtn2.addEventListener("click", function () {
+	        slideIndex2 += 1;
+	        if (slideIndex2 >= slides2.length) {
+	            slideIndex2 = 0;
+	        }
+	        showSlides2();
+	    });
+
+	    prevBtn2.addEventListener("click", function () {
+	        slideIndex2 -= 1;
+	        if (slideIndex2 < 0) {
+	            slideIndex2 = slides2.length - 1;
+	        }
+	        showSlides2();
+	    });
+
+	    
+	 // BEST 슬라이드
+	    var slideIndex3 = 0;
+	    var slides3 = document.querySelectorAll(".article-slider3 div");
+	    var nextBtn3 = document.querySelector(".next-slide3");
+	
+	    showSlides3();
+	
+	    function showSlides3() {
+	        var i;
+	        for (i = 0; i < slides3.length; i++) {
+	            slides3[i].style.display = "none";
+	        }
+	        for (i = slideIndex3; i < slideIndex3 + 4; i++) {
+	            var j = i;
+	            if (j >= slides3.length) {
+	                j = j - slides3.length;
+	            }
+	            slides3[j].style.display = "block";
+	        }
+	    }
+	
+	    nextBtn3.addEventListener("click", function () {
+	        slideIndex3 += 1;
+	        if (slideIndex3 >= slides3.length) {
+	            slideIndex3 = 0;
+	        }
+	        showSlides3();
+	    });
+
+
 	</script>
     
     <jsp:include page="/WEB-INF/views/planning/footer.jsp"/>

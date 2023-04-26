@@ -76,6 +76,22 @@
 		WHERE M_ID = #{id} AND M_STATUS = 'Y'
 	</select>
 	
+<!-- 회원가입 이메일 중복 검사 -->
+	<select id="selectMemberByEmail" parameterType="string" resultMap="memberResultMap">
+		SELECT 
+			M_NO, M_DIVISION, M_STATUS, M_PATH, M_ID, M_PWD, M_NAME, M_BIRTH, M_GENDER, M_MAIL, M_PHONE, M_ADDR, M_POINT, M_CREATE, M_UPDATE, M_MAILSTATUS
+		FROM MEMBER
+		WHERE M_MAIL = #{email} AND M_STATUS = 'Y'
+	</select>
+	
+<!-- 회원가입 폰 중복 검사 -->
+	<select id="selectMemberByPhone" parameterType="string" resultMap="memberResultMap">
+		SELECT 
+			M_NO, M_DIVISION, M_STATUS, M_PATH, M_ID, M_PWD, M_NAME, M_BIRTH, M_GENDER, M_MAIL, M_PHONE, M_ADDR, M_POINT, M_CREATE, M_UPDATE, M_MAILSTATUS
+		FROM MEMBER
+		WHERE M_PHONE = #{phone} AND M_STATUS = 'Y'
+	</select>	
+	
 <!-- 회원가입 ID로 M_No 찾기 -->
 	<select id="selectMnoById" parameterType="string" resultType="_int">
 		SELECT M_NO
@@ -196,38 +212,38 @@
 	</select>
 	<select id="selectEventEndByTitle" parameterType="string" resultType="date">
 		SELECT BN_ENDDATE FROM BENEFIT WHERE BN_TITLE = #{bTitle}
-	</select>
-	<select id="selectPreTitleByNo" parameterType="_int" resultType="string">
-		SELECT PRE_TITLE
+	</select>	
+	<select id="selectPreNoByBNo" parameterType="_int" resultType="_int">
+		SELECT NVL(PRE_NO, 0) PRE_NO
 		FROM (SELECT B_NO, M_NO, BC_TYPE, B_TITLE,
-		             LEAD(B_TITLE, 1) OVER(ORDER BY B_NO DESC) AS NEXT_TITLE,
-		             LAG(B_TITLE, 1) OVER(ORDER BY B_NO DESC) AS PRE_TITLE
-		      FROM (SELECT B.B_NO AS B_NO, M.M_NO AS M_NO, B.BC_TYPE AS BC_TYPE, B.B_TITLE AS B_TITLE,
-		                   B.B_CONTENT AS B_CONTENT, B.B_CREATEDATE AS B_CREATEDATE, B.B_UPDATEDATE AS B_UPDATEDATE,
-		                   B.B_COUNT AS B_COUNT, B.B_STATUS AS B_STATUS, B.B_SORT AS B_SORT, B.NOTICE_YN AS NOTICE_YN
-		            FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
-		            WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
-		            ORDER BY B.B_NO DESC))
+             LEAD(B_NO, 1) OVER(ORDER BY B_NO DESC) AS NEXT_NO,
+             LAG(B_NO, 1) OVER(ORDER BY B_NO DESC) AS PRE_NO
+      FROM (SELECT B.B_NO AS B_NO, M.M_NO AS M_NO, B.BC_TYPE AS BC_TYPE, B.B_TITLE AS B_TITLE,
+                   B.B_CONTENT AS B_CONTENT, B.B_CREATEDATE AS B_CREATEDATE, B.B_UPDATEDATE AS B_UPDATEDATE,
+                   B.B_COUNT AS B_COUNT, B.B_STATUS AS B_STATUS, B.B_SORT AS B_SORT, B.NOTICE_YN AS NOTICE_YN
+            FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
+            WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
+            ORDER BY B.B_NO DESC))
 		WHERE B_NO = #{no}
 	</select>
-	<select id="selectNextTitleByNo" parameterType="_int" resultType="string">
-		SELECT NEXT_TITLE
+	<select id="selectNextNoByBNo" parameterType="_int" resultType="_int">
+		SELECT NVL(NEXT_NO, 0) NEXT_NO
 		FROM (SELECT B_NO, M_NO, BC_TYPE, B_TITLE,
-		             LEAD(B_TITLE, 1) OVER(ORDER BY B_NO DESC) AS NEXT_TITLE,
-		             LAG(B_TITLE, 1) OVER(ORDER BY B_NO DESC) AS PRE_TITLE
-		      FROM (SELECT B.B_NO AS B_NO, M.M_NO AS M_NO, B.BC_TYPE AS BC_TYPE, B.B_TITLE AS B_TITLE,
-		                   B.B_CONTENT AS B_CONTENT, B.B_CREATEDATE AS B_CREATEDATE, B.B_UPDATEDATE AS B_UPDATEDATE,
-		                   B.B_COUNT AS B_COUNT, B.B_STATUS AS B_STATUS, B.B_SORT AS B_SORT, B.NOTICE_YN AS NOTICE_YN
-		            FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
-		            WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
-		            ORDER BY B.B_NO DESC))
+             LEAD(B_NO, 1) OVER(ORDER BY B_NO DESC) AS NEXT_NO,
+             LAG(B_NO, 1) OVER(ORDER BY B_NO DESC) AS PRE_NO
+      FROM (SELECT B.B_NO AS B_NO, M.M_NO AS M_NO, B.BC_TYPE AS BC_TYPE, B.B_TITLE AS B_TITLE,
+                   B.B_CONTENT AS B_CONTENT, B.B_CREATEDATE AS B_CREATEDATE, B.B_UPDATEDATE AS B_UPDATEDATE,
+                   B.B_COUNT AS B_COUNT, B.B_STATUS AS B_STATUS, B.B_SORT AS B_SORT, B.NOTICE_YN AS NOTICE_YN
+            FROM BOARD B JOIN MEMBER M ON (B.M_NO = M.M_NO)
+            WHERE B.B_STATUS = 'Y' AND B.BC_TYPE = '이벤트'
+            ORDER BY B.B_NO DESC))
 		WHERE B_NO = #{no}
 	</select>
-	<select id="selectPreNoByPreTitle" parameterType="string" resultType="_int">
-		SELECT B_NO FROM BOARD WHERE B_TITLE = #{preTitle} AND B_STATUS='Y'
+	<select id="selectPreTitleByPreNo" parameterType="_int" resultType="string">
+		SELECT B_TITLE FROM BOARD WHERE B_NO = #{preNo} AND B_STATUS='Y' AND BC_TYPE = '이벤트'
 	</select>
-	<select id="selectNextNoByNextTitle" parameterType="string" resultType="_int">
-		SELECT B_NO FROM BOARD WHERE B_TITLE = #{nextTitle} AND B_STATUS='Y'
+	<select id="selectNextTitleByPreNo" parameterType="_int" resultType="string">
+		SELECT B_TITLE FROM BOARD WHERE B_NO = #{nextNo} AND B_STATUS='Y' AND BC_TYPE = '이벤트'
 	</select>
 	
 <!-- 게시물 수정 -->
@@ -312,14 +328,20 @@
 	</insert>
 	<!-- BTitle에서 향수 이름 알아오기 (PRODUCT 테이블에서 상품 번호 불러오기위해) -->
 	<select id="selectNamePrizeByBTitle" parameterType="string" resultType="string">
-		SELECT 
-			SUBSTR(BN_TITLE, INSTR(BN_TITLE, ' ', 1, 2) + 1, INSTR(BN_TITLE, ' ', 1, 3) - INSTR(BN_TITLE, ' ', 1, 2) - 1) AS NAME
-		FROM BENEFIT
-		WHERE BN_TITLE = #{bTitle}
+		SELECT P_NAME
+		FROM PRODUCT P 
+        JOIN PRODUCT_MIDCATEGORY PM ON ( P.PM_NO = PM.PM_NO )
+		WHERE 
+		  INSTR(#{bTitle}, P.P_NAME) > 0 AND 
+		  INSTR(#{bTitle}, P.P_BRAND) > 0 AND
+          PM.PM_C_NO = 1
 	</select>
 	<!-- 상품명으로 상품 번호 알아오기 -->
 	<select id="seletPNoByNamePrize" parameterType="string" resultType="_int">
-		SELECT P_NO FROM PRODUCT WHERE MOD(PM_NO, 2) = 1 AND P_NAME = #{namePrize}
+		SELECT P_NO
+		FROM PRODUCT P
+		JOIN PRODUCT_MIDCATEGORY PM ON ( P.PM_NO = PM.PM_NO )
+		WHERE PM.PM_C_NO = 1 AND P_NAME = #{namePrize}
 	</select>
 	<!-- PRODUCT_BENEFIT INSERT -->
 	<insert id="insertProductBenefit" parameterType="_int">

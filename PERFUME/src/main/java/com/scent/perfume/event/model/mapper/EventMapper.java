@@ -32,6 +32,12 @@ public interface EventMapper {
 // 회원가입 아이디 중복 검사
 	Member selectMemberById(@Param("id") String id);
 	
+// 회원가입 이메일 중복 검사
+	Member selectMemberByEmail(@Param("email") String email);
+
+// 회원가입 폰 중복 검사
+	Member selectMemberByPhone(@Param("phone") String phone);
+	
 // 회원가입 이메일 인증
 	// id를 통해 M_MAILSTATUS 컬럼을 난수로 변경
 	int getKey(@Param("id") String id, @Param("key") String key);
@@ -60,10 +66,10 @@ public interface EventMapper {
 // 게시물 보기	
 	Date selectEventStartByTitle(String bTitle);
 	Date selectEventEndByTitle(String bTitle);
-	String selectPreTitleByNo(int no);
-	String selectNextTitleByNo(int no);
-	int selectPreNoByPreTitle(String preTitle);
-	int selectNextNoByNextTitle(String nextTitle);
+	int selectPreNoByBNo(int no);
+	int selectNextNoByBNo(int no);
+	String selectPreTitleByPreNo(int preNo);
+	String selectNextTitleByPreNo(int nextNo);
 	
 // 게시글 등록
 	int insertEventBoard(Board board);
@@ -111,5 +117,9 @@ public interface EventMapper {
 	String selectPhoneNoForWinner(int epMNo);
 	// 당첨 뽑기 중복 금지
 	String getBnTitleByBTitleForWinner(String bnTitle);
+
+
+
+
 	
 }

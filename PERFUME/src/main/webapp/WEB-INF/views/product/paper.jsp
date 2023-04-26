@@ -420,6 +420,41 @@ max-width: 100%;
         #filtercaution { width: 50%; padding: 5px;}
        #filter {width: 50%; text-align: right;}
        #productfilter>div { height: 100%; float: left;}
+       
+       #share {
+	max-width: 100%;
+	max-height: 80%;
+	vertical-align: bottom;
+
+	transition: all 0.2s linear;
+}
+
+.like {
+	vertical-align: bottom;
+
+	font-size: 14px;
+}
+
+.a img {
+	transition: all 0.1s linear;
+}
+
+#share:hover {
+	transform: scale(1.2);
+}
+       
+       
+       .productlink {
+	font-size: 18px; font-weight: bold;
+	color: #333;
+	
+}
+
+.productlink:hover {
+	text-decoration: none;
+	color: #333;
+}
+       
     </style>
 </head>
 <body>
@@ -644,16 +679,61 @@ max-width: 100%;
                                         
                                         <c:forEach var="productfile" items="${ product.productfile }">
                                         <c:if test="${productfile.pfsort eq '1' }">
-                                         <a href="${ path }/product/detail?no=${product.pno}"> 
+                                         <a href="${ path }/product/detail?no=${product.PNo}"> 
                                         
                                         <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="card-img-top" alt="..." > </a>
                                         </c:if>
                                         </c:forEach>
-                                        	<div class="etcsymbols"style=" width: 100%; height: 10%; bottom: 0px; padding: 5px;">
-                                
-    
-                                            <span class="material-symbols-outlined" style="vertical-align: bottom; visibility: hidden;" id="share">share</span>
-                                        </div> 
+                                        	<div class="etcsymbols"
+													style="width: 100%; height: 35px; bottom: 0px; padding: 5px;">
+
+													<input type="hidden" value="${productlike.PNo }"
+														id="likeList" data-id="${productlike.PNo }"
+														name="likeName" />
+
+
+
+													<c:if test="${not empty product.productlike }">
+
+														<a
+															href="javascript:likeCheck(${loginMember.no}, ${product.PNo})">
+
+
+															<img
+															src="${ path }/upload/product/like.png"
+															class="heartimg${product.PNo}" data-id="${product.PNo}"
+															id="share">
+
+														</a>
+														<span id="share2${product.PNo}" class="like">${product.likecount}</span>
+
+													</c:if>
+
+
+													<c:if
+														test="${empty product.productlike && not empty loginMember }">
+
+														<a
+															href="javascript:likeCheck(${loginMember.no}, ${product.PNo})">
+
+															<img src="${ path }/upload/product/dislike(2).png"
+															class="heartimg${product.PNo}" data-id="${product.PNo}"
+															id="share">
+														</a>
+														<span id="share2${product.PNo}" class="like">${product.likecount}</span>
+													</c:if>
+
+													<c:if test="${empty loginMember }">
+
+
+														<a href="javascript:requestLogin()"> <img
+															src="${ path }/upload/product/icons8-하트-24.png" class="heartimg"
+															id="share">
+
+														</a>
+														<span id="share2" class="like">${product.likecount}</span>
+													</c:if>
+												</div>
                                         
                                         </div>
                                         
@@ -690,7 +770,8 @@ max-width: 100%;
                                         <hr>
                                         <div>
                                        <h6 style="font-size: 10px; font-weight: bold;">${product.topcate.ptname }</h6>
-                                       <h5 id="pname" style="font-size: 18px; font-weight: bold;">${product.name } </h5>
+                                       <h5 id="pname" style="font-size: 18px; font-weight: bold;"><a class="productlink" href="${ path }/product/detail?no=${product.PNo}">${product.name }
+										</a></h5>	
                                        <p class="card-text" style="font-size: 10px;">${product.eng }</p>
                                    
                                         </div>
@@ -867,6 +948,104 @@ $(document).ready( function() {
     }, 1000);
 
   });
+    
+    
+    function requestLogin(){
+   	 alert('로그인 후 다시 이용해주세요.');
+   };
+
+   	
+   function likeCountUpdate(PNo, MNo, like) {
+   	 
+   	$.ajax({
+   		type: 'POST',
+   		url: '${path}/likeCountUpdate',
+   		dataType: 'json',
+   		data: {	
+   			PNo, MNo, like
+   		},
+   		success : (obj) => {
+                 let result = '';
+   			
+   			result = obj.likecount
+   			
+   			console.log(result)
+   			
+   		
+   			$('#share2' +PNo).html(result);
+   			
+   			
+   		}	
+   	
+   	});
+   	
+
+   };
+
+
+
+
+
+   	
+   	
+   function likeCheck(mno, pno) {
+		 let MNo = mno;
+		 let PNo = pno;
+		 console.log(MNo);
+		 console.log(PNo);
+
+		 if(${empty loginMember})  {
+			 alert('로그인 후 다시 이용해주세요.');
+		 } else {
+		 
+		
+				 $.ajax({
+						type: 'POST',
+						url: '${path}/likeCheck',
+						dataType: 'json',
+						data: {	
+							MNo,PNo
+						},
+						success : (result) => {
+							
+							console.log();
+							
+							if(result == 1) {
+								
+								if(confirm('관심 상품을 해제 하시겠습니까?')) {
+									$('.heartimg'+ PNo).attr('src', '${ path }/upload/product/dislike(2).png')
+									$('#share2' + PNo).css('color', 'black')
+									likeCountUpdate(PNo, MNo, result);
+								} 
+								
+							}else if (result == 0) {
+								
+								
+								if(confirm('관심 상품을 등록 하시겠습니까?')) {
+									$('.heartimg' +PNo).attr('src', '${path}/upload/product/icons8-하트-24.png')
+									$('#share2' + PNo).css('color', '#f34141')
+									likeCountUpdate(PNo, MNo, result);
+								}
+							}
+							
+						}	
+						
+				 });
+		
+			
+		 
+		 };
+
+	};
+    
+    
+    
+    
+    
+    
+    
+    
+    
    
     $(document).ready(function() {
     $(".gender").on({
@@ -909,21 +1088,21 @@ $(document).ready( function() {
 // }
 
 
-$(".card").on({
-    "mouseenter":function(){
+// $(".card").on({
+//     "mouseenter":function(){
        
-        $(this).find('#share').css("visibility","visible");
+//         $(this).find('#share').css("visibility","visible");
     
   
 
 
 
-    },
-    "mouseleave":function(){
-        $(this).find('#share').css("visibility","hidden");
+//     },
+//     "mouseleave":function(){
+//         $(this).find('#share').css("visibility","hidden");
         
-    }
-  });
+//     }
+//   });
 
 
 

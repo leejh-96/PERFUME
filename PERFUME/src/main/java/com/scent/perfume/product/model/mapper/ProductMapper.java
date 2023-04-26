@@ -11,6 +11,7 @@ import com.scent.perfume.product.model.vo.Product;
 import com.scent.perfume.product.model.vo.ProductBoard;
 import com.scent.perfume.product.model.vo.ProductBoardCategory;
 import com.scent.perfume.product.model.vo.ProductBoardReply;
+import com.scent.perfume.product.model.vo.ProductLike;
 import com.scent.perfume.product.model.vo.TopCate;
 
 @Mapper
@@ -25,7 +26,9 @@ public interface ProductMapper {
 			@Param("gender") String gender, 
 			@Param("sort") String sort, 
 			@Param("brand") String bn,
-			@Param("keyword") String keyword);
+			@Param("keyword") String keyword,
+			@Param("MNo") String MNo
+			);
 
 	List<Product> selectProductByNo(@Param("no") int no);
 
@@ -43,7 +46,8 @@ public interface ProductMapper {
 			@Param("gender") String gender, 
 			@Param("brand") String bn,
 			@Param("sort") String sort, 
-			@Param("keyword") String keyword);
+			@Param("keyword") String keyword, 
+			@Param("MNo") String MNo);
 	
 		
 
@@ -59,7 +63,7 @@ public interface ProductMapper {
 
 	int selectProductPaperCount();
 
-	List<Product> selectPaperAll(@Param("sort") String sort, RowBounds rowBounds);
+	List<Product> selectPaperAll(@Param("sort") String sort, RowBounds rowBounds, @Param("MNo") String mNo);
 
 	List<ProductBoard> selectProductBoardByNo(@Param("no") int no, RowBounds rowBounds);
 
@@ -69,7 +73,7 @@ public interface ProductMapper {
 
 	int selectSaleProductCount();
 
-	List<Product> selectSaleProductList(RowBounds rowBounds);
+	List<Product> selectSaleProductList(RowBounds rowBounds, @Param("MNo") String MNo);
 
 	int selectQnaBoardCount(@Param("no") int no);
 
@@ -84,7 +88,39 @@ public interface ProductMapper {
 
 	int insertReviewBoard(ProductBoard review);
 
-	List<ProductBoardCategory> selectBoardCategoryList();  
+	List<ProductBoardCategory> selectBoardCategoryList();
+
+	ProductBoard selectBoardQnaBypbNo(@Param("pbNo") int pbNo);
+
+	int insertQnaReply(ProductBoardReply qnaReply);
+
+	int updateBoardReplyCount(int pbNo);
+
+	int selectProductLikeByNo(ProductLike favorite);
+
+	Product selectRelatedProductByNo(@Param("no") int no);
+
+	List<Product> selectRelatedProductListByKeyword(@Param("brand") String brand , @Param("no") int no);
+
+	int insertLike(ProductLike favorite);
+
+	int delelteLike(@Param("MNo")int MNo, @Param("PNo")int PNo);
+
+	int updateProductLikeCount(@Param("PNo")int PNo);
+
+	int insertQnaBoard(ProductBoard qna);
+
+	Product selectProductLikeCountByNo(@Param("PNo") int pNo);
+
+	List<ProductLike> selectLikeListByNo(@Param("MNo") int no);
+
+	ProductBoard selectReviewByPbNo(@Param("pbNo") int pbNo);
+
+	List<Product> selectBestProductList();
+
+
+
+	
 
 
 
