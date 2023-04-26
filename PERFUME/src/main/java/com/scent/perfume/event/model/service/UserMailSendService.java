@@ -69,7 +69,7 @@ public class UserMailSendService {
 		mapper.getKey(id, key);
 		
 		MimeMessage sendMail = mailSender.createMimeMessage();
-		String htmlStr = "<h2>안녕하세요 나를 찾는 여행 향수 쇼핑몰입니다.</h2><br><br>"
+		String htmlStr = "<h2>안녕하세요 나를 찾는 여행 [내음]입니다.</h2><br><br>"
 				+ "<h3>" + id + "님</h3>" + "<p>인증하기 버튼을 누르시면 회원가입이 완료됩니다.<br><br>"
 				+ "<a href='http://localhost:8088/" + request.getContextPath() + "/join/key_update?m_id=" + id + "&m_mailstatus=" + key + "'>인증하기</a></p>";
 				/* 
@@ -81,7 +81,7 @@ public class UserMailSendService {
 				 */	
 		try {
 			
-			sendMail.setSubject("[본인인증] 향수 쇼핑몰 회원가입 인증 메일입니다.", "utf-8");
+			sendMail.setSubject("[본인인증] 향수 쇼핑몰 내음 회원가입 인증 메일입니다.", "utf-8");
 			sendMail.setText(htmlStr, "utf-8", "html");
 			sendMail.addRecipient(RecipientType.TO, new InternetAddress(mail));
 			mailSender.send(sendMail);
