@@ -10,7 +10,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>아이디 찾기</title>
+    <title>아이디 찾기 결과</title>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>

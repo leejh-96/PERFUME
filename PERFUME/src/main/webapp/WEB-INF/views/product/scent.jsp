@@ -404,6 +404,41 @@ max-width: 100%;
 #card-img {
        box-shadow: 1px 1px 5px #e8e7e7;
        }
+       
+       #share {
+	max-width: 100%;
+	max-height: 80%;
+	vertical-align: bottom;
+
+	transition: all 0.2s linear;
+}
+
+.like {
+	vertical-align: bottom;
+color: #f34141;
+	font-size: 14px;
+}
+
+.a img {
+	transition: all 0.1s linear;
+}
+
+#share:hover {
+	transform: scale(1.2);
+}
+
+.productlink {
+	font-size: 18px; font-weight: bold;
+	color: #333;
+	
+}
+
+.productlink:hover {
+	text-decoration: none;
+	color: #333;
+}
+
+
     </style>
 </head>
 <body>
@@ -546,7 +581,7 @@ max-width: 100%;
 
                         </div>
                         <div id="s3_2" style="text-align:center; position: relative;">
-                            <div id="scent-detail">
+                            <div id="scent-detail" style="font-size: 12px; font-weight: bold; color: gray;">
                                 ${scent.ptdetail }
                             </div>
                             
@@ -581,10 +616,10 @@ max-width: 100%;
                                  <a href="${ path }/product/scent?no=4"><img src="https://img.freepik.com/free-photo/simplistic-pink-and-white-roses-and-copy-space-background_23-2148408316.jpg?size=626&ext=jpg&ga=GA1.2.1462281178.1681576788&semt=sph" src="" id="big"></a>
                                 </div>
                                 <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">WOODY</div>
-                                 <a href="${ path }/product/scent?no=5"><img src="https://t3.ftcdn.net/jpg/04/98/69/46/240_F_498694611_qUPJVlIdwV2cTU1QXrka1HqR9ea8D7oC.jpg" src="" id="big"></a>
+                                 <a href="${ path }/product/scent?no=6"><img src="https://t3.ftcdn.net/jpg/04/98/69/46/240_F_498694611_qUPJVlIdwV2cTU1QXrka1HqR9ea8D7oC.jpg" src="" id="big"></a>
                                 </div>
                                 <div class="scentcate" style="position: relative;" data-id="3"><div class="scentname" style="position: absolute; bottom:0;">LIGHTFLORAL</div>
-                                 <a href="${ path }/product/scent?no=6"><img src="https://img.freepik.com/free-photo/bunch-of-fresh-twigs-and-plants-in-vase_23-2148104490.jpg?size=626&ext=jpg&ga=GA1.2.1462281178.1681576788&semt=ais" src="" id="big"></a>
+                                 <a href="${ path }/product/scent?no=5"><img src="https://img.freepik.com/free-photo/bunch-of-fresh-twigs-and-plants-in-vase_23-2148104490.jpg?size=626&ext=jpg&ga=GA1.2.1462281178.1681576788&semt=ais" src="" id="big"></a>
                                 </div>
                             	
                             </div>
@@ -627,28 +662,59 @@ max-width: 100%;
                                 </div>
                         </div>
                     </div>
+             
                         <div id="s5_button">
-                          
-                          <button class="gender" type="button" id="gender1" value="F"  onclick="location.href='${ path }/product/scent?no=${no}&gender=F'">FEMME</button> &nbsp; &nbsp;
-                            <button class="gender" type="button" id="gender1" value="M" onclick="location.href='${ path }/product/scent?no=${no}&gender=M'">HOMME</button> 
+                          <c:if test="${gender eq 'F' }">
+							<button class="gender" type="button" id="gender1" value="F" style="border: 1px solid; font-weight: bold;"
+								onclick="location.href='${ path }/product/scent?no=${no}&gender=F'">FEMME</button>
+							&nbsp; &nbsp;
+							<button class="gender" type="button" id="gender1" value="M"
+								onclick="location.href='${ path }/product/scent?no=${no}&gender=M'">HOMME</button></c:if>
+							<c:if test="${empty gender}">
+							<button class="gender" type="button" id="gender1" value="F" 
+								onclick="location.href='${ path }/product/scent?no=${no}&gender=F'">FEMME</button>
+							&nbsp; &nbsp;
+							<button class="gender" type="button" id="gender1" value="M"
+								onclick="location.href='${ path }/product/scent?no=${no}&gender=M'">HOMME</button></c:if>
+								<c:if test="${gender eq 'M' }">
+							<button class="gender" type="button" id="gender1" value="F" 
+								onclick="location.href='${ path }/product/scent?no=${no}&gender=F'">FEMME</button>
+							&nbsp; &nbsp;
+							<button class="gender" type="button" id="gender1" value="M" style="border: 1px solid; font-weight: bold;"
+								onclick="location.href='${ path }/product/list?gender=M'">HOMME</button></c:if>
+								
                         </div>
                         <div id="s5_brand">
                             <!-- <p id="scent"><mark  style="background-color: rgb(243, 239, 236)"> BRAND</mark>  </p> -->
                             <table id="brand-select">
                             <tr>
+                            
                                 <th  width="100px">BRAND</th>
                                 <c:forEach var="product" items="${ brand }">
                                 
-                                <td >
-                            
-                                <label for="brand"></label>
-                    			 <c:if test="${not empty gender}">
-                                <input type="checkbox" name="brand" onclick="location.href='${ path }/product/scent?no=${no}&gender=${gender}&bn=${product.brand}'" >${product.brand}
-                                 </c:if>
-                                 <c:if test="${empty gender}">
-                                 <input type="checkbox" name="brand" onclick="location.href='${ path }/product/scent?no=${no}&bn=${product.brand}'" >${product.brand}
-                                 </c:if>
-                                </td>
+                                        <c:if test="${product.brand == bn }">
+										<td><label for="brand"></label> 
+										<c:if test="${not empty gender}">
+												<input type="checkbox" name="brand" id="bn" onclick="brandselect('${productboard.brand}')"
+												checked	onclick="location.href='${ path }/product/scent?no=${no}&gender=${gender}&bn=${product.brand}'">${product.brand}
+                                         </c:if> 
+                                         <c:if test="${empty gender}">
+												<input type="checkbox" name="brand" id="bn" class="brandselect"
+												checked	onclick="location.href='${ path }/product/scent?no=${no}&bn=${product.brand}'">${product.brand}
+                                         </c:if></td>
+												</c:if>
+												
+												<c:if test="${product.brand != bn }">
+										<td><label for="brand"></label> 
+										<c:if test="${not empty gender}">
+												<input type="checkbox" name="brand" id="bn"
+												onclick="location.href='${ path }/product/scent?no=${no}&gender=${gender}&bn=${product.brand}'">${product.brand}
+                                         </c:if> 
+                                         <c:if test="${empty gender}">
+												<input type="checkbox" name="brand" id="bn" class="brandselect"
+												onclick="location.href='${ path }/product/scent?no=${no}&bn=${product.brand}'">${product.brand}
+                                         </c:if></td>
+												</c:if>
                                 
                                 </c:forEach>
                             </tr>
@@ -714,16 +780,52 @@ max-width: 100%;
                                         
                                          <c:forEach var="productfile" items="${ product.productfile }">
                                         <c:if test="${productfile.pfsort eq '1' }">
-                                        <a href="${ path }/product/detail?no=${product.pno}">
+                                        <a href="${ path }/product/detail?no=${product.PNo}">
                                         
                                          <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="card-img-top" alt="..." > </a>
                                            </c:if>
                                         </c:forEach>
-                                        	<div class="etcsymbols"style=" width: 100%; height: 10%; bottom: 0px; padding: 5px;">
-                                
-    
-                                            <span class="material-symbols-outlined" style="vertical-align: bottom; visibility: hidden;" id="share">share</span>
-                                        </div> 
+                                        	<div class="etcsymbols"
+													style="width: 100%; height: 40px; bottom: 0px; padding: 5px;">
+
+													<input type="hidden" value="${productlike.PNo }"
+														id="likeList" data-id="${productlike.PNo }"
+														name="likeName" />
+
+
+
+													<c:if test="${not empty product.productlike }">
+														<a href="javascript:likeCheck(${loginMember.no}, ${product.PNo})">
+                                                        <img
+															src="${ path }/upload/product/like.png"
+															class="heartimg${product.PNo}" data-id="${product.PNo}"
+															id="share">
+														</a>
+														<span id="share2${product.PNo}" class="like">${product.likecount}</span>
+													</c:if>
+
+
+													<c:if test="${empty product.productlike && not empty loginMember }">
+
+														<a href="javascript:likeCheck(${loginMember.no}, ${product.PNo})">
+                                                         <img src="${ path }/upload/product/dislike(2).png"
+															class="heartimg${product.PNo}" data-id="${product.PNo}"
+															id="share">
+														</a>
+														<span id="share2${product.PNo}" class="dislike">${product.likecount}</span>
+													</c:if>
+
+													<c:if test="${empty loginMember }">
+
+
+														<a href="javascript:requestLogin()"> <img
+															src="${ path }/upload/product/icons8-하트-24.png" class="heartimg"
+															id="share">
+
+														</a>
+														<span id="share2" class="like" >${product.likecount}</span>
+													</c:if>
+												</div>
                                         
                                         </div>
                                         
@@ -760,7 +862,8 @@ max-width: 100%;
                                         <hr>
                                         <div>
                                        <h6 style="font-size: 10px; font-weight: bold;">${product.brand }</h6>
-                                       <h5 id="pname" style="font-size: 18px; font-weight: bold;">${product.name } </h5>
+                                       <h5 id="pname" style="font-size: 18px; font-weight: bold;"><a class="productlink" href="${ path }/product/detail?no=${product.PNo}">${product.name }
+										</a></h5>	
                                        <p class="card-text" style="font-size: 10px;">${product.eng }</p>
                                    
                                         </div>
@@ -968,7 +1071,93 @@ setTimeout(() => {
 });
 
  
- 
+function requestLogin(){
+	 alert('로그인 후 다시 이용해주세요.');
+};
+
+	
+function likeCountUpdate(PNo, MNo, like) {
+	 
+	$.ajax({
+		type: 'POST',
+		url: '${path}/likeCountUpdate',
+		dataType: 'json',
+		data: {	
+			PNo, MNo, like
+		},
+		success : (obj) => {
+              let result = '';
+			
+			result = obj.likecount
+			
+			console.log(result)
+			
+		
+			$('#share2' +PNo).html(result);
+			
+			
+		}	
+	
+	});
+	
+
+};
+
+
+
+
+
+	
+	
+function likeCheck(mno, pno) {
+	 let MNo = mno;
+	 let PNo = pno;
+	 console.log(MNo);
+	 console.log(PNo);
+
+	 if(${empty loginMember})  {
+		 alert('로그인 후 다시 이용해주세요.');
+	 } else {
+	 
+	
+			 $.ajax({
+					type: 'POST',
+					url: '${path}/likeCheck',
+					dataType: 'json',
+					data: {	
+						MNo,PNo
+					},
+					success : (result) => {
+						
+						console.log();
+						
+						if(result == 1) {
+							
+							if(confirm('관심 상품을 해제 하시겠습니까?')) {
+								$('.heartimg'+ PNo).attr('src', '${ path }/upload/product/dislike(2).png')
+								$('#share2' + PNo).css('color', 'black')
+								likeCountUpdate(PNo, MNo, result);
+							} 
+							
+						}else if (result == 0) {
+							
+							
+							if(confirm('관심 상품을 등록 하시겠습니까?')) {
+								$('.heartimg' +PNo).attr('src', '${path}/upload/product/like.png')
+								$('#share2' + PNo).css('color', '#f34141')
+								likeCountUpdate(PNo, MNo, result);
+							}
+						}
+						
+					}	
+					
+			 });
+	
+		
+	 
+	 };
+
+};
 
      
     var gender = document.getElementsByClassName('gender');
@@ -1052,21 +1241,21 @@ setTimeout(() => {
    
 
   
-    $(".card").on({
-        "mouseenter":function(){
+//     $(".card").on({
+//         "mouseenter":function(){
            
-            $(this).find('#share').css("visibility","visible");
+//             $(this).find('#share').css("visibility","visible");
         
       
 
 
 
-        },
-        "mouseleave":function(){
-            $(this).find('#share').css("visibility","hidden");
+//         },
+//         "mouseleave":function(){
+//             $(this).find('#share').css("visibility","hidden");
             
-        }
-      });
+//         }
+//       });
  
       $(".card-img-top").on({
         "mouseenter":function(){

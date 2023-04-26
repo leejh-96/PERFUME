@@ -10,7 +10,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Perfume</title>
+    <title>NAEUM</title>
     <!-- CSS 불러오기 -->
     <link rel="stylesheet" href="${ path }/css/planning/main.css">
     <!-- jQuery 불러오기 -->
