@@ -22,13 +22,17 @@ footer { background-color: #ffffff; }
 
 #boardList { color: dimgray; width: 80%; margin-left: auto; margin-right: auto; }
 
-#writeButton { float: right; margin-right: 5%; }
+#writeButton { float: right; margin-right: 10%; }
 
 #writeButton button:hover { background-color: rgb(120, 116, 100); border-color: rgb(120, 116, 100); }
 
 #searchNpage { margin-bottom : 5%; }
 
 #searchBar { width: 30%; margin-left: auto; margin-right: auto; }
+
+#btnList { background-color: rgb(120, 116, 100); border-color: rgb(120, 116, 100); margin-left: 10%; }
+
+#btnList:hover { background-color: rgb(90, 98, 104); border-color: rgb(90, 98, 104); }
 
 input[type="submit"] { background-color: rgb(120, 116, 100); border-color: rgb(120, 116, 100); }
 

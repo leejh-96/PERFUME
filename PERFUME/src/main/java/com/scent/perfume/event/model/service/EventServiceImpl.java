@@ -149,25 +149,29 @@ public class EventServiceImpl implements EventService {
 	public Date selectEventEndByTitle(String bTitle) {
 		return mapper.selectEventEndByTitle(bTitle);
 	}
+
 	@Override
 	@Transactional
-	public String findPreTitleByNo(int no) {
-		return mapper.selectPreTitleByNo(no);
+	public int findPreNoByBNo(int no) {	
+		return mapper.selectPreNoByBNo(no);
 	}
+
 	@Override
 	@Transactional
-	public String findNextTitleByNo(int no) {
-		return mapper.selectNextTitleByNo(no);
+	public int findNextNoByBNo(int no) {
+		return mapper.selectNextNoByBNo(no);
 	}
+	
 	@Override
 	@Transactional
-	public int findPreNoByPreTitle(String preTitle) {
-		return mapper.selectPreNoByPreTitle(preTitle);
+	public String findPreTitleByPreNo(int preNo) {
+		return mapper.selectPreTitleByPreNo(preNo);
 	}
+
 	@Override
 	@Transactional
-	public int findNextNoByNextTitle(String nextTitle) {
-		return mapper.selectNextNoByNextTitle(nextTitle);
+	public String findNextTitleByNextNo(int nextNo) {
+		return mapper.selectNextTitleByPreNo(nextNo);
 	}
 
 // 게시글 작성 수정
@@ -323,6 +327,9 @@ public class EventServiceImpl implements EventService {
 	public String getBnTitleByBTitleForWinner(String bnTitle) {
 		return mapper.getBnTitleByBTitleForWinner(bnTitle);
 	}
+
+
+
 
 
 

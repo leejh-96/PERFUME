@@ -122,6 +122,15 @@ public class CartServiceImpl implements CartService{
 		
 		return optionInfo;
 	}
+
+	@Override
+	@Transactional
+	public int insert(int no, Cart cart) {
+		
+		cart.setMemberNo(no);
+		
+		return cartMapper.insert(cart);
+	}
 	
 		
 }

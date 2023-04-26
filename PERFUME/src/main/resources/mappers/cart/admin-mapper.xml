@@ -578,13 +578,13 @@
 	</update>
 	
 	<delete id="deleteOrder" parameterType="string">
-		DELETE FROM order_detail
-		WHERE od_no = #{orderNo}
+		DELETE FROM ORDER_DETAIL
+		WHERE OD_NO = #{order}
 	</delete>
 	
 	<delete id="deleteOrderList" parameterType="string">
 		DELETE FROM "ORDER"
-		WHERE od_no = #{orderNo}
-	</delete>
+		WHERE OD_NO = #{order}
+	</delete> 
 
 </mapper>

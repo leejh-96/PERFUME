@@ -60,7 +60,7 @@ function check(){
 	}else if (!$.isNumeric(midcategory)) {
 		alert('상품구분을 선택해주세요!')
 		return false;
-	}else if (!(productGender === '남성'|| productGender === '여성')) {
+	}else if (!(productGender === 'M'|| productGender === 'F')) {
 		alert('추천성별을 선택해주세요!')
 		return false;
 	}
@@ -135,8 +135,17 @@ function deleteProduct(productNo){
 							<th colspan="3">${product.midCategoryName}</th>               			
                			</tr>
                			<tr class="table-warning">
-							<th>추천성별(남성/여성)</th>               			
-							<th colspan="3">${product.productGender}</th>         			
+							<th>추천성별(남성/여성)</th>          
+							
+							<th colspan="3">
+								<c:if test="${product.productGender == 'M'}">
+									남성
+								</c:if>
+								<c:if test="${product.productGender == 'F'}">
+									여성
+								</c:if>
+							</th>   			
+							   			
                			</tr>
                			<tr class="table-warning">
 							<th>상품브랜드</th>               			
@@ -247,7 +256,15 @@ function deleteProduct(productNo){
 	                                    </tr>
 	                                    <tr>
 	                                        <th>추천성별</th>
-	                                        <td>기존 추천성별(남성/여성) : ${product.productGender}</td>
+	                                        <td>
+	                                        기존 추천성별(남성/여성) : 
+		                                        <c:if test="${product.productGender == 'M'}">
+													남성
+												</c:if>
+												<c:if test="${product.productGender == 'F'}">
+													여성
+												</c:if>
+	                                        </td>
 	                                        <td colspan="3">
 	                                        	수정 추천성별 - 
 	                                            <select name="productGender" id="productGender" required>

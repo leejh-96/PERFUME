@@ -60,10 +60,10 @@ public interface EventMapper {
 // 게시물 보기	
 	Date selectEventStartByTitle(String bTitle);
 	Date selectEventEndByTitle(String bTitle);
-	String selectPreTitleByNo(int no);
-	String selectNextTitleByNo(int no);
-	int selectPreNoByPreTitle(String preTitle);
-	int selectNextNoByNextTitle(String nextTitle);
+	int selectPreNoByBNo(int no);
+	int selectNextNoByBNo(int no);
+	String selectPreTitleByPreNo(int preNo);
+	String selectNextTitleByPreNo(int nextNo);
 	
 // 게시글 등록
 	int insertEventBoard(Board board);
@@ -111,5 +111,7 @@ public interface EventMapper {
 	String selectPhoneNoForWinner(int epMNo);
 	// 당첨 뽑기 중복 금지
 	String getBnTitleByBTitleForWinner(String bnTitle);
+
+
 	
 }

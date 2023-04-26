@@ -11,56 +11,33 @@
 <meta charset="UTF-8">
 <title>관리자페이지-home</title>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
-<style type="text/css">
-/* 관리자페이지-home */
-
-*{
-	border: 1px solid red;
-}
-.adminhomediv{
-	height: calc(100%/6);
-}
-
-
-
-/* 관리자페이지-home */
-</style> 
+<script src="${ path }/js/jquery.fade-in.js"></script>
 </head>
 <body>
-
 <jsp:include page="/WEB-INF/views/cart/common/adminSidebar.jsp"/>
-	
-	
-		<div class="row adminhomediv">1
-		
-		
-		</div>
-		<div class="row adminhomediv">
-			<p>총 회원수 : <span></span> </p>
-			<p>회원가입 경로 <span>perfume : </span> <span>kakao : </span> <span>naver : </span> </p>
-			<p>비율 : <span>남성 : </span> <span>여성 : </span> </p>		
-		</div>
-		<div class="row adminhomediv">3
-		
-		
-		</div>
-		<div class="row adminhomediv">4
-		
-		
-		</div>
-		<div class="row adminhomediv">5
-		
-		
-		</div>
-		<div class="row adminhomediv">6
-		
-		
-		</div>
-		
-		
-	
+		<section>
+			<div id="carouselExampleInterval" class="row carousel slide" data-ride="carousel">
+                <div class="col  carousel-inner">
+                    <div class="carousel-item active" data-interval="1500">
+                    	<img class="img fade-in d-block w-100 img-carousel" width="100%" height="1000px" src="${ path }/images/aboutSite/001.png">
+                    </div>
+                    <div class="carousel-item " data-interval="1500">
+                    	<img class="img fade-in d-block w-100 img-carousel" width="100%" height="1000px" src="${ path }/images/aboutSite/002.png">
+                    </div>
+                    <div class="carousel-item " data-interval="1500">
+                    	<img class="img fade-in d-block w-100 img-carousel" width="100%" height="1000px" src="${ path }/images/aboutSite/003.png">
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-target="#carouselExampleInterval" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">이전</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-target="#carouselExampleInterval" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">다음</span>
+                    </button>
+                </div>
+            </div>
+		</section>
 <jsp:include page="/WEB-INF/views/cart/common/adminFootDiv.jsp"/>
-
-
 </body>
 </html>

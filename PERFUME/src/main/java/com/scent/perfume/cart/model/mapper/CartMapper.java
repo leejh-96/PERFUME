@@ -50,5 +50,7 @@ public interface CartMapper {
 	public AdminProductFile selectNowFile(@Param("productNo") int productNo);
 
 	public int updateCart(@Param("cartNo") int cartNo);
+
+	public int insert(@Param("cart") Cart cart);
 	
 }
