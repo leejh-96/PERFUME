@@ -222,7 +222,15 @@
 	                  		</c:if>
 	                    </th>
 	                    <th class="align-middle">
-	                        <img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="150px">
+	                       <!--  <img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="150px"> -->
+	                        <c:if test="${ empty option.file}">
+	                        	등록된 사진이 없습니다.
+	                        </c:if>
+	                        <c:if test="${ not empty option.file}">
+	                        	<c:forEach var="file" items="${option.file}">
+	                        		<img src="${path}/upload/product/${file.renameFileName}" width="150px">
+	                        	</c:forEach>
+	                        </c:if>
 	                    </th>
 	                    <th class="align-middle">
 	                        <sub>

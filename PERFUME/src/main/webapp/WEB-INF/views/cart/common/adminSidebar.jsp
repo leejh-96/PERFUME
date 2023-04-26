@@ -11,10 +11,10 @@
 <meta charset="UTF-8">
 <title>사이드바</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="${ path }/css/planning/header.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style type="text/css">
+body {font-family: 'Nanum Myeongjo', serif;}
 /* 관리자 사이드바 */
 .sidebar{
     background-color:  rgb(246, 247, 242);
@@ -39,6 +39,55 @@
 	color: highlight;
 }
 /* 관리자 사이드바 */
+/* 민지누나 헤더 */
+@charset "UTF-8";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100px;
+}
+
+.logo {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+a {
+	text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+}
+/* 민지누나 헤더 */
 </style>
 </head>
 <body>
@@ -53,7 +102,7 @@
                     <li><a href="#">MOUILLETTE</a></li>
                 </ul>
             </nav>
-            <h1 class="logo"><a href="${ path }/">Perfume</a></h1>
+            <h1 class="logo"><a href="${ path }/">NAEUM</a></h1>
             <nav class="user-nav">
                 <ul>
                     <li><a href="${ path }/eventList">EVENT</a></li>
