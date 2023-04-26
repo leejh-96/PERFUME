@@ -37,6 +37,7 @@
     </style>
 </head>
 <body>
+	<span>${member}</span>
 	<%@ include file="../planning/header.jsp" %>
 	<div class="container mt-5" style="min-width: 1200px">
 		<div class="row">

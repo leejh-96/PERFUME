@@ -80,6 +80,30 @@ public class EventController {
 							 .APPLICATION_JSON_VALUE).body(map);		
 	}
 	
+// 이메일 중복 검사
+	@PostMapping("/event/emailCheck")
+	public ResponseEntity<Map<String, Boolean>> emailCheck(@RequestParam("email") String email){	
+		Map<String, Boolean> map = new HashMap<>();
+		
+		map.put("duplicate", service.isDuplicateEmail(email));
+		
+		return ResponseEntity.ok()
+							 .header(HttpHeaders.CONTENT_TYPE, MediaType
+							 .APPLICATION_JSON_VALUE).body(map);		
+	}
+// 폰 중복 검사 /event/phoneCheck
+	@PostMapping("/event/phoneCheck")
+	public ResponseEntity<Map<String, Boolean>> phoneCheck(@RequestParam("phone") String phone){	
+		Map<String, Boolean> map = new HashMap<>();
+		
+		map.put("duplicate", service.isDuplicatePhone(phone));
+		
+		return ResponseEntity.ok()
+							 .header(HttpHeaders.CONTENT_TYPE, MediaType
+							 .APPLICATION_JSON_VALUE).body(map);		
+	}
+
+	
 // 전화번호 인증 문자 메세지 전송 컨트롤러
 	@RequestMapping("/sendSMS") //jsp 페이지 넘긴 mapping 값
 	@ResponseBody    
@@ -204,6 +228,8 @@ public class EventController {
 		
 		modelAndView.addObject("pageInfo", pageInfo);
 		modelAndView.addObject("list", list);
+		modelAndView.addObject("searchType", type);
+		modelAndView.addObject("searchKeyword", keyword);
 		modelAndView.setViewName("event/eventSearch");
 		
 		return modelAndView;
@@ -229,31 +255,24 @@ public class EventController {
 		board.setBnEndDate(service.selectEventEndByTitle(bTitle));
 		log.info("보드 셋 서비스 탄 후 : {}", board);
 		
-//		String preTitle = service.findPreTitleByNo(no);
-//		String nextTitle = service.findNextTitleByNo(no);
-//		
-//		board.setPreTitle(preTitle);
-//		board.setNextTitle(nextTitle);
-//		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
-//		board.setPreNo(service.findPreNoByPreTitle(preTitle));
-//		board.setNextNo(service.findNextNoByNextTitle(nextTitle));
+		// 이전글 다음글 번호 알아오기
+		int preNo = service.findPreNoByBNo(no);
+		int nextNo = service.findNextNoByBNo(no);
 		
-		String preTitle = service.findPreTitleByNo(no);
-		String nextTitle = service.findNextTitleByNo(no);
+		board.setPreNo(preNo);
+		board.setNextNo(nextNo);
 
-		board.setPreTitle(preTitle != null ? preTitle : null);
-		board.setNextTitle(nextTitle != null ? nextTitle : null);
-		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
-
-		if (preTitle != null) {
-		    board.setPreNo(service.findPreNoByPreTitle(preTitle));
-		}
-		if (nextTitle != null) {
-		    board.setNextNo(service.findNextNoByNextTitle(nextTitle));
-		}
-
-		
 		log.info("이전글 다음글 번호 찾는서비스 탄 후 : {}", board);
+		
+		if(preNo != 0) {
+			board.setPreTitle(service.findPreTitleByPreNo(preNo));
+		}
+		
+		if(nextNo != 0) {
+			board.setNextTitle(service.findNextTitleByNextNo(nextNo));
+		}
+
+		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
 		
 		modelAndView.addObject("board", board);
 		modelAndView.setViewName("event/eventView");
@@ -551,7 +570,7 @@ public class EventController {
 				successParticipate = service.participateEvent(mNo, bnNo);
 				
 				if(successParticipate > 0) {
-					modelAndView.addObject("msg", "이벤트 참여가 완료되었습니다. 당첨자에게는 문자를 전송해 드리니 당첨일(이벤트 종료날로부터 일주일 후) 이후 확인부탁드립니다.");
+					modelAndView.addObject("msg", "이벤트 참여가 완료되었습니다. 당첨자에게는 문자를 전송해 드리니 당첨일 이후 확인부탁드립니다.");
 					modelAndView.addObject("location", "/event/eventView?no=" + BNo);
 				} else {
 					modelAndView.addObject("msg", "이벤트 참여가 정상적으로 완료되지 않았습니다.");
@@ -658,6 +677,7 @@ public class EventController {
 //					    	modelAndView.addObject("msg", "메세지 전송에 실패하였습니다.");
 //							modelAndView.addObject("location", "/event/eventView?no=" + BNo);
 //					    }
+							
 					} else { // 베네핏 저장 실패
 						modelAndView.addObject("msg", "당첨자 추첨이 제대로 완료되지 않았습니다. BENEFIT INSERT ERROR");
 						modelAndView.addObject("location", "/event/eventView?no=" + BNo);	
@@ -669,6 +689,7 @@ public class EventController {
 				}
 			}
 		}
+		
 		modelAndView.setViewName("common/msg");
 		
 		return modelAndView;

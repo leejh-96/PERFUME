@@ -11,6 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Special</title>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${ path }/css/planning/special.css">
 </head>
 <body>
