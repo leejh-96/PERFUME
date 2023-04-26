@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+h2{ margin-top: 50px; margin-bottom: 60px; }
+
+section{ width: 1200px; height: auto; margin-left: auto; margin-right: auto; }
+
+body{ background-color: #f6f6f2; }
+
+header { background-color: #ffffff; }
+
+footer { background-color: #ffffff; }
+
+#boardList{ color:dimgray; width: 80%; margin-left: auto; margin-right: auto; }
+
+#boardList .titleTable{ background-color: rgb(228, 228, 228); text-align: center; width: 20%; }
+
+#boardList .contentTable{ width: 80%; padding-left: 4%; }
+
+#boardList #dateTitle{ width: 8%; text-align: center; }
+
+#contentTable{ text-align: center; margin: 30%; padding: 5%; }
+
+#preTitle:hover, #nextTitle:hover { background-color: rgb(228, 228, 224); }
+
+#titleAtag {color: inherit; text-decoration: none; }
+
+/* 목록 버튼 */
+#btnList { background-color: rgb(120, 116, 100); border-color: rgb(120, 116, 100); margin-left: 10%; }
+
+#btnList:hover { background-color: rgb(90, 98, 104); border-color: rgb(90, 98, 104); }
+
+#btnUpdate, #btnDelete { background-color: rgb(120, 116, 100); border-color: rgb(120, 116, 100); }
+
+#btnUpdate:hover, #btnDelete:hover { background-color: rgb(90, 98, 104); border-color: rgb(90, 98, 104); }
+
+/* 게시물 내 a태그 버튼 형식으로 변경 */	
+#contentTable a:link, #contentTable a:visited {
+  background:#e2d9b3; color:#fff; border:none; position:relative; height:60px; font-size:1.6em; padding:0 2em;
+  cursor:pointer; transition:800ms ease all; outline:none; text-align: center; text-decoration: none; display: inline-block; }
+
+#contentTable a:hover, #contentTable a:active{ background:#fff; color:#e2d9b3; }
+
+#contentTable a:before, #contentTable a:after{
+  content:''; position:absolute; top:0; right:0; height:2px; width:0; background: #e2d9b3; transition:400ms ease all; }
+
+#contentTable a:after{ right:inherit; top:inherit; left:0; bottom:0; }
+
+#contentTable a:hover:before, #contentTable a:hover:after{ width:100%; transition:800ms ease all; }

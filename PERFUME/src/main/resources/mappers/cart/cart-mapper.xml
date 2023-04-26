@@ -103,9 +103,9 @@
 		<result property="poName" column="po_name"/>
 		<result property="poPrice" column="po_price"/>
 		<result property="poAmount" column="po_amount"/>
-		<association property="product" select="selectNowProduct" column="p_no" javaType="CartProduct"/>
+		<!-- <association property="product" select="selectNowProduct" column="p_no" javaType="CartProduct"/>
 		<association property="file" select="selectNowFile" column="p_no" javaType="AdminProductFile"/>
-		<collection property="benefitList" select="selectProductBenefit" column="p_no" javaType="arraylist"/>
+		<collection property="benefitList" select="selectProductBenefit" column="p_no" javaType="arraylist"/> -->
 	</resultMap>
 	
 	<resultMap id="nowProductResultMap" type="CartProduct">
@@ -313,10 +313,33 @@
 		WHERE P_NO = #{productNo} AND PF_STATUS = 'Y' AND PF_SORT = 1
 	</select>
 	
+	<update id="updateCart" parameterType="_int">
+		UPDATE cart
+		SET  c_status = 'N'
+		WHERE  c_no = #{cartNo}
+	</update>
 	
+	<insert id="insert" parameterType="Cart">
+		INSERT INTO cart (  c_no,
+						    p_no,
+						    m_no,
+						    c_count,
+						    c_size,
+						    c_status,
+						    c_date,
+						    c_update
+						) VALUES (
+						    SEQ_CART_C_NO.NEXTVAL,
+						    #{cart.productNo},
+						    #{cart.memberNo},
+						    #{cart.cartProductCount},
+						    #{cart.cartOptionSize},
+						    DEFAULT,
+						    DEFAULT,
+						    DEFAULT
+						)
+	</insert>
 	
-	
-
 
 
 

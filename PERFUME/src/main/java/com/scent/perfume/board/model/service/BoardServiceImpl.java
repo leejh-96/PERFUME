@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.scent.perfume.board.model.mapper.BoardMapper;
 import com.scent.perfume.board.model.vo.Notice;
 import com.scent.perfume.common.util.PageInfo;
-import com.scent.perfume.event.model.vo.Board;
 
 //Service 어노테이션을 붙임으로써 비지니스로직을 처리해줄 수 있는 Bean으로 등록된다.
 //그 후, Controller에서 BoardService빈을 주입받을 수 있다. 
@@ -28,12 +27,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Notice> getBoardList(PageInfo pageInfo) {
+	public List<Notice> getBoardList(PageInfo pageInfo, String string) {
 		int limit = pageInfo.getListLimit();
 		int offset = (pageInfo.getCurrentPage() -1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return mapper.selectAll(rowBounds);
+		return mapper.selectAll(rowBounds, string);
 	}
 
 	@Override
@@ -69,6 +68,5 @@ public class BoardServiceImpl implements BoardService {
 		
 		return mapper.updateReadCount(notice);
 	}
-
 
 }

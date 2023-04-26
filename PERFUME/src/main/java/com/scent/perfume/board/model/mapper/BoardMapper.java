@@ -17,7 +17,7 @@ public interface BoardMapper {
 	 * 페이징처리를 위해 매개변수로 rowbounds를 넣어준다. 
 	 * Board타입의 List를 만들어 반환시켜주기위해 List컬렉션으로 반환타입을 지정한다.
 	 */
-	List<Notice> selectAll(RowBounds bounds);
+	List<Notice> selectAll(RowBounds bounds, String string);
 	
 	/*
 	 * 매개변수로 정수형인 게시글번호(no)를 받아준다. 

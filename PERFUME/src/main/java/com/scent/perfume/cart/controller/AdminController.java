@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,8 @@ import com.scent.perfume.cart.model.vo.AdminProductFile;
 import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.CartProduct;
+import com.scent.perfume.cart.model.vo.Order;
+import com.scent.perfume.cart.model.vo.OrderList;
 import com.scent.perfume.cart.model.vo.AdminProductFile;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +43,9 @@ public class AdminController {
 	
 	@Autowired
 	private ResourceLoader resourceLoader;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@RequestMapping("/home")
 	public String adminHome() {
@@ -84,9 +90,6 @@ public class AdminController {
 								@RequestParam("originalFileName") MultipartFile upfile,
 								Model model) {
 		
-		log.info("benefit : {}",benefit);
-		log.info("upfile : {}",upfile);
-		
 		int result = 0;
 		String location = null;
 		String renamedFileName = "";
@@ -120,9 +123,6 @@ public class AdminController {
 	public String benefitUpdate(@ModelAttribute Benefit benefit,
 								@RequestParam("originalFileName") MultipartFile upfile,
 								Model model) {
-		
-		log.info("benefit : {}",benefit);
-		log.info("upfile : {}",upfile);
 		
 		Benefit benefit2 = null;
 		int result = 0;
@@ -169,7 +169,6 @@ public class AdminController {
 							  Model model) {
 		
 		List<Benefit> list = null;
-		/* Date now = new Date(); */
 		
 		int count = adminService.getBenefitCount();
 		
@@ -177,7 +176,6 @@ public class AdminController {
 		
 		list = adminService.getAdminBenefitList(pageInfo);
 		
-		/* model.addAttribute("now", now); */
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("list", list);
 		
@@ -202,12 +200,7 @@ public class AdminController {
 	public int benefitApplyCheck(@RequestParam("benefitNo") int benefitNo,
 								 @RequestParam("productNo") int productNo) {
 		
-		log.info("benefitNo : {}",benefitNo);
-		log.info("productNo : {}",productNo);
-		
 		int result = adminService.benefitApplyCheck(benefitNo,productNo);
-		
-		log.info("result : {}",result);
 		
 		return result;
 	}
@@ -216,9 +209,6 @@ public class AdminController {
 	@PostMapping("benefitProductInsert")
 	public int benefitProductInsert(@RequestParam("benefitNo") int benefitNo,
 			 						@RequestParam("productNo") int productNo) {
-		
-		log.info("benefitNo : {}",benefitNo);
-		log.info("productNo : {}",productNo);
 		
 		int result = adminService.benefitProductInsert(benefitNo,productNo);
 		
@@ -229,9 +219,6 @@ public class AdminController {
 	@PostMapping("/benefitProductDelete")
 	public int benefitProductDelete(@RequestParam("benefitNo") int benefitNo,
 									@RequestParam("productNo") int productNo) {
-		
-		log.info("benefitNo : {}",benefitNo);
-		log.info("productNo : {}",productNo);
 		
 		int result = adminService.benefitProductDelete(benefitNo,productNo);
 		
@@ -246,8 +233,6 @@ public class AdminController {
 	@GetMapping("/memberDetail")
 	public String memberDetail(@RequestParam("memberNo") int memberNo,
 							   Model model) {
-		
-		log.info("memberNo : {}",memberNo);
 		
 		CartMember member = null;
 		
@@ -265,7 +250,6 @@ public class AdminController {
 		AdminPageInfo pageInfo = new AdminPageInfo(page, 10, count, 10);
 		
 		List<CartMember> list = adminService.getAdminMemberList(pageInfo);
-		log.info("list : {}",list);
 		
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("list", list);
@@ -277,9 +261,9 @@ public class AdminController {
 	public String memberUpdate(@ModelAttribute CartMember member,
 							   Model model) {
 		
-		log.info("MEMBER:{}", member);
-		
 		int result = 0;
+		
+		member.setMemberPwd(passwordEncoder.encode(member.getMemberPwd()));
 		
 		result = adminService.memberUpdate(member);
 		
@@ -298,8 +282,6 @@ public class AdminController {
 	public int idCheck(@RequestParam("id") String id) {
 		int result = 0;
 		
-		log.info("if : {}", id);
-		
 		result = adminService.idCheck(id);
 		
 		return result;
@@ -312,18 +294,13 @@ public class AdminController {
 		boolean adminPwd = false;
 		String adminPassWord = "";
 		
-		log.info("pwd : {}",pwd);
-		
 		adminPassWord = adminService.adminPwdCheck();
 		
-		log.info("adminPassWord : {}",adminPassWord);
-		
-		if (adminPassWord.equals(pwd)) {
+		if (passwordEncoder.matches(pwd, adminPassWord)) {
 			adminPwd = true;
 		}else {
 			adminPwd = false;
 		}
-		
 		return adminPwd;
 	}
 	
@@ -332,8 +309,6 @@ public class AdminController {
 	public int memberDelete(@RequestParam("memberNo") int memberNo) {
 		
 		int result = 0;
-		
-		log.info("memberNo : {}",memberNo);
 		
 		result = adminService.memberDelete(memberNo);
 		
@@ -423,10 +398,6 @@ public class AdminController {
 		String location = null;
 		String[] renamedFileName = new String[upfile.length];
 		
-		log.info("cartProduct.getPoList() : {}",cartProduct.getPoList());
-		log.info("cartProduct.getPoList() : {}",cartProduct.getPoList());
-		log.info("cartProduct.getPoList() : {}",cartProduct.getPoList());
-		
 		product = adminService.selectproductDetail(cartProduct.getProductNo());
 		
 		if (product != null) {
@@ -467,19 +438,14 @@ public class AdminController {
 	@ResponseBody
 	@PostMapping("delete")
 	public int delete(@RequestParam("productNo") int productNo,
-						Model model) {
+					  Model model) {
 		
 		int result = 0;
-		log.info("productNo : {}",productNo);
 		
 		List<AdminProductFile> fileList = null;
 		String location = null;
 		
 		fileList = adminService.selectFileDetail(productNo);
-		
-		
-		
-		log.info("fileList : {}",fileList);
 		
 		if (fileList != null) {
 			try {
@@ -497,6 +463,62 @@ public class AdminController {
 		return result;
 	}
 	
+	@GetMapping("/orderList")
+	public String orderList(@RequestParam(defaultValue = "1")int page,
+							Model model) {
+		
+		int count = adminService.getAdminOrderList();
+		AdminPageInfo pageInfo = new AdminPageInfo(page, 10, count, 10);
+		
+		List<Order> list = adminService.getAdminOrderDetailList(pageInfo);
+		
+		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("list", list);
+		
+		return "cart/adminOrderList";
+	}
 	
+	@GetMapping("/orderDetail")
+	public String orderDetail(@RequestParam("orderNo") String orderNo,
+							  Model model) {
+		
+		Order order = null;
+		
+		order = adminService.selectOrderList(orderNo);
+		
+		model.addAttribute("order", order);
+		
+		return "cart/adminOrderDetail";
+	}
+	
+	@ResponseBody
+	@PostMapping("/statusUpdate")
+	public int statusUpdate(@RequestParam("orderNo") String orderNo,
+							@RequestParam("status") String status) {
+		
+		log.info("orderNo : {}", orderNo);
+		log.info("status : {}", status);
+		
+		int result = adminService.statusUpdate(orderNo,status);
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("/deleteOrder")//삭제하기 해결하기
+	public int deleteOrder(@ModelAttribute OrderList order) {
+		
+		log.info("orderNo : {}",order);
+		
+		int result = adminService.deleteOrderList(order);
+		
+		if (result > 0) {
+			adminService.deleteOrder(order);
+		
+		return result;
+		}
+		
+		return result;
+	}
 	
 }

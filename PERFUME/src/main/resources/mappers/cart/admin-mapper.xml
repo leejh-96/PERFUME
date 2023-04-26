@@ -16,6 +16,47 @@
 		FROM  benefit
 		ORDER BY 1 DESC
 	</sql>
+	
+	<sql id="orderList">
+		SELECT  od_no,
+			    od_mno,
+			    od_method,
+			    od_date,
+			    od_price,
+			    od_discash,
+			    od_point,
+			    od_coupon,
+			    od_dlvcash,
+			    od_name,
+			    od_phone,
+			    od_email,
+			    od_dname,
+			    od_address,
+			    od_dphone,
+			    od_memo,
+			    od_status
+		FROM  order_detail
+	</sql>
+	
+	<sql id="memberList">
+		SELECT  m_no,
+			    m_division,
+			    m_status,
+			    m_path,
+			    m_id,
+			    m_pwd,
+			    m_name,
+			    m_birth,
+			    m_gender,
+			    m_mail,
+			    m_phone,
+			    m_addr,
+			    m_point,
+			    m_create,
+			    m_update,
+			    m_mailstatus
+		FROM member
+	</sql>
 
 	<resultMap id="ProductAllResultMap" type="CartProduct">
 		<id property="topCategoryName" column="PT_NAME"/> 
@@ -97,6 +138,61 @@
 	
 	<resultMap id="benefitFileResultMap" type="AdminProductFile">
 		<result property="renameFileName" column="BF_RENAMEFILENAME"/>
+	</resultMap>
+	
+	<resultMap id="orderDetailListResultMap" type="Order">
+		<id property="orderNo" column="od_no"/> 
+		<result property="memberNo" column="od_mno"/>
+		<result property="orderMethod" column="od_method"/>
+		<result property="orderDate" column="od_date"/>
+		<result property="finalPrice" column="od_price"/>
+		<result property="discount" column="od_discash"/>
+		<result property="point" column="od_point"/>
+		<result property="coupon" column="od_coupon"/>
+		<result property="delivery" column="od_dlvcash"/>
+		<result property="orderName" column="od_name"/>
+		<result property="orderPhone" column="od_phone"/>
+		<result property="orderEmail" column="od_email"/>
+		<result property="recipientName" column="od_dname"/>
+		<result property="recipientAddr" column="od_address"/>
+		<result property="recipientPhone" column="od_dphone"/>
+		<result property="memo" column="od_memo"/>
+		<result property="status" column="od_status"/>
+	</resultMap>
+	
+	<resultMap id="selectOrderListResultMap" type="Order">
+		<id property="orderNo" column="od_no"/> 
+		<result property="memberNo" column="od_mno"/>
+		<result property="orderMethod" column="od_method"/>
+		<result property="orderDate" column="od_date"/>
+		<result property="finalPrice" column="od_price"/>
+		<result property="discount" column="od_discash"/>
+		<result property="point" column="od_point"/>
+		<result property="coupon" column="od_coupon"/>
+		<result property="delivery" column="od_dlvcash"/>
+		<result property="orderName" column="od_name"/>
+		<result property="orderPhone" column="od_phone"/>
+		<result property="orderEmail" column="od_email"/>
+		<result property="recipientName" column="od_dname"/>
+		<result property="recipientAddr" column="od_address"/>
+		<result property="recipientPhone" column="od_dphone"/>
+		<result property="memo" column="od_memo"/>
+		<result property="status" column="od_status"/>
+		<collection property="orderList" javaType="arraylist" select="findByOrderList" column="od_no"/>
+	</resultMap>
+	
+	<resultMap id="findByOrderListResultMap" type="OrderList">
+		<id property="orderListNo" column="o_no"/> 
+		<result property="productNo" column="p_no"/>
+		<result property="orderNo" column="od_no"/>
+		<result property="orderCount" column="o_count"/>
+		<result property="orderSize" column="o_size"/>
+		<result property="orderPrice" column="o_price"/>
+		<result property="orderFileName" column="PF_RENAMEFILENAME"/>
+		<result property="productNo" column="P_NO"/>
+		<result property="productName" column="P_NAME"/>
+		<result property="productEng" column="P_ENG"/>
+		<result property="productBrand" column="P_BRAND"/>
 	</resultMap>
 
 	<insert id="insertProduct" useGeneratedKeys="true" keyColumn="P_NO" keyProperty="productNo" parameterType="CartProduct">
@@ -270,45 +366,13 @@
 	</select>
 	
 	<select id="getAdminMemberList" resultMap="AdminMemberListResultMap">
-		SELECT  m_no,
-			    m_division,
-			    m_status,
-			    m_path,
-			    m_id,
-			    m_pwd,
-			    m_name,
-			    m_birth,
-			    m_gender,
-			    m_mail,
-			    m_phone,
-			    m_addr,
-			    m_point,
-			    m_create,
-			    m_update,
-			    m_mailstatus
-		FROM member
+		<include refid="memberList"/>
     	where M_DIVISION = 2 
     	ORDER BY 14 DESC
 	</select>
 	
 	<select id="selectMemberDetail" parameterType="_int" resultMap="AdminMemberListResultMap">
-		SELECT  m_no,
-			    m_division,
-			    m_status,
-			    m_path,
-			    m_id,
-			    m_pwd,
-			    m_name,
-			    m_birth,
-			    m_gender,
-			    m_mail,
-			    m_phone,
-			    m_addr,
-			    m_point,
-			    m_create,
-			    m_update,
-			    m_mailstatus
-		FROM member
+		<include refid="memberList"/>
 	    where M_DIVISION = 2 and M_STATUS = 'Y' and m_no = #{memberNo}
 	</select>
 	
@@ -430,7 +494,8 @@
 		     bn_createdate = SYSDATE,
 		     bn_enddate = #{benefit.benefitEndDate},
 		     bn_ratio = #{benefit.benefitRatio},
-		     bn_name = #{benefit.benefitName}
+		     bn_name = #{benefit.benefitName},
+		     BN_STATUS = 'Y'
 		WHERE bn_no = #{benefit.benefitNo}
 	</update>
 	
@@ -473,9 +538,53 @@
 		WHERE bn_no = #{benefitNo}
 	</delete>
 	
+	<select id="getAdminOrderList" resultType="_int">
+		SELECT  count(*)
+		FROM  order_detail
+	</select>
 	
+	<select id="getAdminOrderDetailList" resultMap="orderDetailListResultMap">
+		<include refid="orderList"/>
+		ORDER BY 1 DESC
+	</select>
 	
+	<select id="selectOrderList" parameterType="string" resultMap="selectOrderListResultMap">
+		<include refid="orderList"/>
+		WHERE OD_NO = #{orderNo}
+	</select>
 	
+	<select id="findByOrderList" parameterType="string" resultMap="findByOrderListResultMap">
+		SELECT  O.o_no,
+			    O.p_no,
+			    O.od_no,
+			    O.o_count,
+			    O.o_size,
+			    O.o_price,
+			    PF.PF_RENAMEFILENAME,
+			    P.P_NO,
+			    P.P_NAME,
+			    P.P_ENG,
+			    P.P_BRAND
+		FROM  "ORDER" O
+	    JOIN PRODUCT_FILE PF ON(O.P_NO = PF.P_NO)
+	    JOIN PRODUCT P ON(O.P_NO = P.P_NO)
+	    where od_no = #{orderNo} AND PF_SORT = 1
+	</select>
 	
+	<update id="statusUpdate" parameterType="string">
+		UPDATE order_detail
+		SET  od_status = #{status}
+		WHERE  od_no = #{orderNo}
+	</update>
+	
+	<delete id="deleteOrder" parameterType="string">
+		DELETE FROM ORDER_DETAIL
+		WHERE OD_NO = #{order}
+	</delete>
+	
+	<delete id="deleteOrderList" parameterType="string">
+		DELETE FROM "ORDER"
+		WHERE OD_NO = #{order}
+	</delete> 
 
 </mapper>

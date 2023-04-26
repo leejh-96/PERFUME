@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.scent.perfume.cart.model.vo.AdminProductFile;
 import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.cart.model.vo.Cart;
 import com.scent.perfume.cart.model.vo.CartMember;
@@ -23,11 +24,6 @@ public interface CartMapper {
 	public List<Cart> selectCart(int memberNo);
 
 	public CartProduct selectCartProductInfo(@Param("cartNo") int cartNo,@Param("productNo") int productNo);
-
-	/*
-	 * public int amountUpdate(@Param("cartNo") int
-	 * cartNo,@Param("cartProductCount") int cartProductCount);
-	 */
 
 	public int couponUpdate(@Param("memberNo") int memberNo,@Param("benefitNo") int benefitNo);
 
@@ -48,5 +44,13 @@ public interface CartMapper {
 	public Order orderList(@Param("orderNo") String orderNo);
 
 	public productOption selectNowOrder(@Param("productNo") int productNo,@Param("poName") int poName);
+
+	public CartProduct selectNowProduct(@Param("productNo") int productNo);
+
+	public AdminProductFile selectNowFile(@Param("productNo") int productNo);
+
+	public int updateCart(@Param("cartNo") int cartNo);
+
+	public int insert(@Param("cart") Cart cart);
 	
 }

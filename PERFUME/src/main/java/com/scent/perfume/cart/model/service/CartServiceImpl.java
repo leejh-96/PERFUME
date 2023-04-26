@@ -41,8 +41,6 @@ public class CartServiceImpl implements CartService{
 		
 		clist = cartMapper.selectCart(memberNo);
 		
-		/* clist.get(0).getBList() */
-		
 		for(int i = 0; i<clist.size(); i++) {
 			clist.get(i).setCartProduct(cartMapper.selectCartProductInfo(clist.get(i).getCartNo(),clist.get(i).getProductNo()));
 			clist.get(i).setBenefitList(cartMapper.selectProductBenefit(clist.get(i).getProductNo()));;
@@ -82,7 +80,9 @@ public class CartServiceImpl implements CartService{
 	@Transactional
 	public int orderListInsert(OrderList orderList) {
 		
-		return cartMapper.orderListInsert(orderList);
+		cartMapper.orderListInsert(orderList);
+		
+		return cartMapper.updateCart(orderList.getCartNo());
 	}
 
 	@Override
@@ -92,23 +92,12 @@ public class CartServiceImpl implements CartService{
 		
 		order = cartMapper.orderList(orderNo);
 		
-		/*
-		 * int result1 = this.memberPointUpdate(order.getPoint(), order.getMemberNo());
-		 * log.info("result1 : {}",result1); int plusPoint =
-		 * (5/100)*order.getFinalPrice();
-		 * 
-		 * int result2 = this.memberPlusPoint(plusPoint, order.getMemberNo());
-		 * log.info("result2 : {}",result2);
-		 */
 		return order;
 	}
 
 	@Override
 	@Transactional
 	public int memberPointUpdate(int point, int memberNo) {
-		
-		log.info("point : {}",point);
-		log.info("memberNo : {}",memberNo);
 		
 		return cartMapper.minusPoint(point,memberNo);
 	}
@@ -117,16 +106,30 @@ public class CartServiceImpl implements CartService{
 	@Transactional
 	public int memberPlusPoint(int plusPoint, int memberNo) {
 		
-		log.info("plusPoint : {}",plusPoint);
-		log.info("memberNo : {}",memberNo);
-		
 		return cartMapper.plusPoint(plusPoint,memberNo);
 	}
 
 	@Override
 	public productOption selectNowOrder(productOption option) {
 		
-		return cartMapper.selectNowOrder(option.getProductNo(), option.getPoName());
+		productOption optionInfo = null;
+		
+		optionInfo = cartMapper.selectNowOrder(option.getProductNo(), option.getPoName());
+		
+		optionInfo.setProduct(cartMapper.selectNowProduct(option.getProductNo()));
+		optionInfo.setBenefit(cartMapper.selectProductBenefit(option.getProductNo()));
+		optionInfo.setFile(cartMapper.selectNowFile(option.getProductNo()));
+		
+		return optionInfo;
+	}
+
+	@Override
+	@Transactional
+	public int insert(int no, Cart cart) {
+		
+		cart.setMemberNo(no);
+		
+		return cartMapper.insert(cart);
 	}
 	
 		

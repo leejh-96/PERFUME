@@ -14,7 +14,10 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" >
 <style>
-	a:link{text-decoration:none; color:gray;} 
+	#titleAtag{
+			color: inherit;
+			text-decoration: none;
+		} 
 	
 	 section{
            width: 1200px;
@@ -71,20 +74,37 @@
 					</tr>
 				</thead>
 				<tbody>
-				<c:if test="${ empty list }">
+				<c:if test="${empty noticeList && empty generalList}">
 					<tr>
 						<td colspan="6">
 							조회된 게시글이 없습니다.
 						</td>
 					</tr>	
 				</c:if>
-				<c:if test="${ not empty list }">
-					<c:forEach var="board" items="${ list }">
+				<c:if test="${ not empty noticeList || not empty generalList}">
+					<c:forEach var="board" items="${ noticeList }">
+						<tr>
+							<td style="font-weight: bold; color: dimgray;">${ board.BNo}</td>
+							<td style="font-weight: bold; color: dimgray;">공지</td>
+							<td style="font-weight: bold; color: dimgray;">
+								<a id="titleAtag" href="${ path }/board/view?no=${ board.BNo }">
+									[공지] ${ board.BTitle }
+								</a>
+							</td>
+							<td style="font-weight: bold; color: dimgray;">${ board.writerId }</td>
+							<td style="font-weight: bold; color: dimgray;">
+								<fmt:formatDate type="date" value="${ board.BCreateDate }"/>
+							</td>
+							<td style="text-align: center; font-weight: bold; color: dimgray;">${board.BCount }</td>
+						</tr>
+					</c:forEach>
+									
+					<c:forEach var="board" items="${ generalList }">
 						<tr>
 							<td>${ board.BNo}</td>
 							<td>공지</td>
 							<td>
-								<a href="${ path }/board/view?no=${ board.BNo }">
+								<a id="titleAtag" href="${ path }/board/view?no=${ board.BNo }">
 									${ board.BTitle }
 								</a>
 							</td>

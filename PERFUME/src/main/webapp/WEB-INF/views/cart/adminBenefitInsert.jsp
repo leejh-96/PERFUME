@@ -27,6 +27,16 @@ textarea{
 table{
 	text-align: center;
 }
+.buttonlist{
+
+	text-align: center;
+}
+.tabledetail{
+	margin-top :50px;
+}
+.tableback_color{
+	background-color: rgb(118, 174, 135);
+}
 /* 관리자-혜택등록 */
 </style>
 <script type="text/javascript">
@@ -69,10 +79,10 @@ table{
 
 						<h1>혜택등록</h1>
                     	<form action="${path}/admin/benefitInsert" method="POST" id="form1" class="form-inline" enctype="multipart/form-data" onsubmit="return check();">
-                        <table class="table">
+                        <table class="table table-hover tabledetail">
                             <tbody>
                                 <tr>
-                                    <th>혜택구분선택</th>
+                                    <th class="tableback_color">혜택구분선택</th>
                                     <td colspan="5">
                                         <select name="benefitName" id="benefitName" required>
                                             <option selected>------선택------</option>
@@ -83,42 +93,43 @@ table{
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>혜택제목</th>
+                                    <th class="tableback_color">혜택제목</th>
                                     <td colspan="5">
                                         <input type="text" name="benefitTitle" placeholder="제목을 입력해주세요." required class="form-control form-control-sm">
                                     </td>
                                 </tr>
                                 <tr style="height: 250px;">
-                                    <th style="height: 250px;" class="align-middle">혜택내용</th>
+                                    <th style="height: 250px;" class="align-middle tableback_color">혜택내용</th>
                                     <td colspan="5" style="height: 250px;">
                                         <textarea name="benefitContent" placeholder="혜택소개글 작성" required class="form-control" rows="5" style="height: 250px; width: 100%" ></textarea>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>등록날짜 : </th>
+                                    <th class="tableback_color">등록날짜 : </th>
                                     <th>*등록날짜는 등록한날로 자동으로 입력됩니다.*</th>
-                                    <th>종료날짜 : </th>
+                                    <th class="tableback_color">종료날짜 : </th>
                                     <td colspan="3">
                                         <input type="date" name="benefitEndDate" placeholder="형식 : 2023-04-18" required class="form-control form-control-sm">
                                     </td>
                                 </tr>
                                 <tr>
-                                	<th>혜택비율 : </th>
+                                	<th class="tableback_color">혜택비율 : </th>
                                     <th colspan="5">
                                     	*모든 혜택은 5%가 적용됩니다.*
                                     	<input type="hidden" name="benefitRatio" value="5">	
                                   	</th>
                                 </tr>
                                 <tr>
-                                    <th>이미지등록</th>
+                                    <th class="tableback_color">이미지등록</th>
                                     <td colspan="5">
                                         <input id="" class="upFile" type="file" name="originalFileName" required style="color: orange;">
+                                        *이미지는 한개만 등록 가능합니다.*
                                     </td>
                                 </tr>
                                 </tbody>
                              </table>
                            	 
-                       		<div>
+                       		<div class="container buttonlist">
 		                        <button type="submit" class="btn btn-warning" >등록하기</button>
 		                        <button class="btn btn-warning" >취소하기</button>
                             </div>

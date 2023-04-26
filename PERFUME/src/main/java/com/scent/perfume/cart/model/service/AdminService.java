@@ -9,6 +9,8 @@ import com.scent.perfume.cart.model.vo.AdminProductFile;
 import com.scent.perfume.cart.model.vo.Benefit;
 import com.scent.perfume.cart.model.vo.CartMember;
 import com.scent.perfume.cart.model.vo.CartProduct;
+import com.scent.perfume.cart.model.vo.Order;
+import com.scent.perfume.cart.model.vo.OrderList;
 
 public interface AdminService {
 
@@ -57,5 +59,18 @@ public interface AdminService {
 	int benefitProductDelete(int benefitNo, int productNo);
 
 	int benefitAllDelete(int benefitNo);
+
+	int getAdminOrderList();
+
+	List<Order> getAdminOrderDetailList(AdminPageInfo pageInfo);
+
+	Order selectOrderList(String orderNo);
+
+	int statusUpdate(String orderNo, String status);
+
+	int deleteOrderList(OrderList order);//삭제하기 해결하기
+
+	int deleteOrder(OrderList order);//삭제하기 해결하기
+
 
 }

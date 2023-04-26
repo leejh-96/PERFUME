@@ -26,6 +26,19 @@
 table{
 	text-align: center;
 }
+.tabledetail{
+	margin-top :50px;
+}
+#myModal{
+	z-index: 2000;
+}
+.buttonlist{
+	text-align: center;
+}
+.tableback_color{
+	background-color: rgb(118, 174, 135);
+}
+
 /* 상품수정 && modal */
 
 </style>
@@ -47,7 +60,7 @@ function check(){
 	}else if (!$.isNumeric(midcategory)) {
 		alert('상품구분을 선택해주세요!')
 		return false;
-	}else if (!(productGender === '남성'|| productGender === '여성')) {
+	}else if (!(productGender === 'M'|| productGender === 'F')) {
 		alert('추천성별을 선택해주세요!')
 		return false;
 	}
@@ -91,13 +104,12 @@ function deleteProduct(productNo){
 </script>
 </head>
 <body>
-<div class="container" style="height: 100px;"></div>
 <jsp:include page="/WEB-INF/views/cart/common/adminSidebar.jsp"/>
                 
                 
-               		<table class="table">
-               			<tr>
-               				<th class="align-middle">
+               		<table class="table table-hover tabledetail">
+               			<tr class="table-warning">
+               				<th class="align-middle ">
                					<span>상품이미지</span>
                				</th>
                				<c:if test="${empty product.pfList}">
@@ -114,41 +126,50 @@ function deleteProduct(productNo){
                					</c:forEach>
                				</c:if>
                			</tr>
-               			<tr>
+               			<tr class="table-warning">
 							<th>향카테고리</th>               			
 							<th colspan="3">${product.topCategoryName}</th>               			
                			</tr>
-               			<tr>
+               			<tr class="table-warning">
 							<th>상품구분(상품/시향지)</th>               			
 							<th colspan="3">${product.midCategoryName}</th>               			
                			</tr>
-               			<tr>
-							<th>추천성별(남성/여성)</th>               			
-							<th colspan="3">${product.productGender}</th>         			
+               			<tr class="table-warning">
+							<th>추천성별(남성/여성)</th>          
+							
+							<th colspan="3">
+								<c:if test="${product.productGender == 'M'}">
+									남성
+								</c:if>
+								<c:if test="${product.productGender == 'F'}">
+									여성
+								</c:if>
+							</th>   			
+							   			
                			</tr>
-               			<tr>
+               			<tr class="table-warning">
 							<th>상품브랜드</th>               			
 							<th colspan="3">${product.productBrand}</th>         			
                			</tr>
-               			<tr>
+               			<tr class="table-warning">
 							<th>상품제목</th>               			
 							<th colspan="3">${product.productTitle}</th>         			
                			</tr>
-               			<tr>
+               			<tr class="table-warning">
 							<th>상품명/영문명</th>               			
 							<th colspan="3">${product.productName}/${product.productEngName}</th>         			
                			</tr>
-               			<tr>
+               			<tr class="table-warning">
 							<th>상품설명</th>               			
 							<th colspan="3">${product.productDetail}</th>         			
                			</tr>
-               			<tr>
+               			<tr class="table-warning">
 							<th>상품기준가격</th>               			
 							<th colspan="3">${product.productPrice}</th>         			
                			</tr>
                			
            				<c:if test="${empty product.poList}">
-	             			<tr>
+	             			<tr class="table-warning">
 	             				<th colspan="4">
 	             					<span>상품의 옵션이 등록되지 않았습니다.</span>
 	             				</th>
@@ -156,7 +177,7 @@ function deleteProduct(productNo){
            				</c:if>
            				<c:if test="${not empty product.poList}">
 	           				<c:forEach var="option" items="${product.poList}" varStatus="status">
-		             			<tr>
+		             			<tr class="table-warning">
 		             				<th>
 		             					${status.count} 번째 옵션
 		             				</th>
@@ -174,7 +195,7 @@ function deleteProduct(productNo){
            				</c:if>
                		</table>
                		
-               		<div>
+               		<div class="buttonlist">
 	               		<button class="btn btn-warning" data-toggle="modal" data-target="#myModal">수정하기</button>
 	               		<button class="btn btn-warning" onclick="goback()">목록으로</button>
 	               		<button class="btn btn-warning" onclick="deleteProduct('${product.productNo}')">삭제하기</button>
@@ -197,13 +218,13 @@ function deleteProduct(productNo){
 					        <form action="${path}/admin/update" method="POST" class="form-inline" enctype="multipart/form-data" onsubmit="return check();">
 		                    
 		                        
-		                        <table class="table">
+		                        <table class="table table-hover">
 		                            <tbody>
 		                            	<tr>
 		                            		<th colspan="6">상품번호 : ${product.productNo}<input type="hidden" name="productNo" value="${product.productNo}"></th>
 		                            	</tr>
 		                                <tr>
-		                                    <th colspan="6"><strong>1.</strong> 상품카테고리선택</th>
+		                                    <th colspan="6" class="tableback_color"><strong>1.</strong> 상품카테고리선택</th>
 		                                </tr>
 	                                    <tr>
 	                                        <th>상품향선택</th>
@@ -235,7 +256,15 @@ function deleteProduct(productNo){
 	                                    </tr>
 	                                    <tr>
 	                                        <th>추천성별</th>
-	                                        <td>기존 추천성별(남성/여성) : ${product.productGender}</td>
+	                                        <td>
+	                                        기존 추천성별(남성/여성) : 
+		                                        <c:if test="${product.productGender == 'M'}">
+													남성
+												</c:if>
+												<c:if test="${product.productGender == 'F'}">
+													여성
+												</c:if>
+	                                        </td>
 	                                        <td colspan="3">
 	                                        	수정 추천성별 - 
 	                                            <select name="productGender" id="productGender" required>
@@ -246,7 +275,7 @@ function deleteProduct(productNo){
 	                                        </td>
 	                                    </tr>
 	                                    <tr>
-	                                        <th colspan="6"><strong>2.</strong> 상품정보등록</th>
+	                                        <th colspan="6" class="tableback_color"><strong>2.</strong> 상품정보등록</th>
 	                                    </tr>
 	                                    <tr>
 	                                        <th>브랜드</th>
@@ -291,18 +320,18 @@ function deleteProduct(productNo){
 	                           	 <table class="table">
 	                           		<tbody>   
 		                                <tr>
-		                                    <th colspan="3"><strong>3.</strong> 상품이미지첨부파일</th>
+		                                    <th colspan="6" class="tableback_color"><strong>3.</strong> 상품이미지첨부파일</th>
 		                                </tr>
 		                                <tr>
-		                                	<th colspan="3">기존 상품이미지</th>
+		                                	<th colspan="6">기존 상품이미지</th>
 		                                </tr>
                							<tr>	
                								<c:if test="${empty product.pfList}">
-			               						<td colspan="3">등록된 사진이 없습니다.</td>
+			               						<td colspan="6">등록된 사진이 없습니다.</td>
 			               					</c:if>
 				               				<c:if test="${not empty product.pfList}">
 				               					<c:forEach var="file" items="${product.pfList}" varStatus="status">
-						               				<td>
+						               				<td colspan="2">
 						               					<%-- <img src="${path}/upload/product/${file.renameFileName}" class="rounded img-fluid"> --%>
 						               					${status.count}번째 상품이미지
 								        				<img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="200px" class="rounded img-fluid"> 
@@ -312,7 +341,10 @@ function deleteProduct(productNo){
 			               				</tr>
 	                                    <tr>
 	                                        <th class="align-middle">상품이미지 수정</th>
-	                                        <td colspan="3">
+	                                        <td class="align-middle" colspan="5">
+	                                        	<br>*이미지는 3장 모두 수정가능합니다.*<br><br>
+	                                        	1.첫번째 사진:썸네일<br><br>
+	                                        	2.두번째,세번째 사진은 설명 및 상세보기<br><br>
 	                                            <input id="" class="upFile" type="file" name="originalFileName" multiple="multiple" required style="color: orange;">
 	                                        </td>
 	                                    </tr>
@@ -321,7 +353,7 @@ function deleteProduct(productNo){
 	                       		 <table class="table" id="productTable">
 	                         		<tbody>
 	                         			<tr>
-	                         				<th colspan="6"><strong>4.</strong> 상품옵션등록</th>
+	                         				<th colspan="6" class="tableback_color"><strong>4.</strong> 상품옵션등록</th>
 	                         			</tr>
 	                         			<c:if test="${not empty product.poList}">
 					           				<c:forEach var="option" items="${product.poList}" varStatus="status">
@@ -349,9 +381,9 @@ function deleteProduct(productNo){
 	                                 </tbody>
 	                       		 </table>
 	                       		 	<!-- Modal footer -->
-							        <div class="modal-footer">
-							          <button type="submit" class="btn btn-secondary">수정하기</button>
-							          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+	                       		 	<div class="container buttonlist">
+							          <button type="submit" class="btn btn-warning">수정하기</button>
+							          <button type="button" class="btn btn-warning" data-dismiss="modal">닫기</button>
 							        </div>
 					        	 	<!-- Modal footer -->
                            	</form>
@@ -364,11 +396,6 @@ function deleteProduct(productNo){
                		  <!-- The Modal -->
                		 
 <jsp:include page="/WEB-INF/views/cart/common/adminFootDiv.jsp"/>
-               		
-			
-
-
-<div class="container" style="height: 100px;"></div>
 
 </body>
 </html>

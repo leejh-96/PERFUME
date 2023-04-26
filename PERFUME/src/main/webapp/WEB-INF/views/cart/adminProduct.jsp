@@ -13,7 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
 <style>
 *{
-   border: 1px solid red; 
+   /* border: 1px solid red;  */
 }
 textarea{
     resize: none;
@@ -29,24 +29,25 @@ table{
 	text-align: center;
 
 }
-.buttonWrap{
-
-	align-items: center;
+.buttonlist{
+	text-align: center;
+}
+.tableback_color{
+	background-color: rgb(118, 174, 135);
 }
 /* 관리자-상품등록 */
 
 </style>
 </head>
 <body>
-<div class="container" style="height: 100px;"></div>
 <jsp:include page="/WEB-INF/views/cart/common/adminSidebar.jsp"/>
 
                     <h1>상품등록</h1>
                     	<form action="${path}/admin/insert" method="POST" id="form1" class="form-inline" enctype="multipart/form-data" onsubmit="return check();">
-                        <table class="table">
+                        <table class="table table-hover">
                             <tbody>
                                 <tr>
-                                    <th colspan="6"><strong>1.</strong> 상품카테고리선택</th>
+                                    <th colspan="6" class="tableback_color"><strong>1.</strong> 상품카테고리선택</th>
                                 </tr>
                                     <tr>
                                         <th>상품향선택</th>
@@ -74,7 +75,7 @@ table{
                                         
                                     </tr>
                                     <tr>
-                                        <th colspan="6"><strong>2.</strong> 상품정보등록</th>
+                                        <th colspan="6" class="tableback_color"><strong>2.</strong> 상품정보등록</th>
                                     </tr>
                                     <tr>
                                         <th>브랜드</th>
@@ -128,11 +129,16 @@ table{
                            	 <table class="table">
                            		<tbody>   
 	                                <tr>
-	                                    <th colspan="6"><strong>3.</strong> 상품이미지첨부파일</th>
+	                                    <th colspan="6" class="tableback_color"><strong>3.</strong> 상품이미지첨부파일</th>
 	                                </tr>
                                     <tr>
-                                        <th>상품이미지등록</th>
-                                        <td colspan="5">
+                                        <th class="align-middle">이미지등록</th>
+                                        <td>
+                                        	<br>*상품이미지는 3장만 등록가능합니다.*<br><br>
+                                        	1.첫번째 사진은 썸네일사진입니다.<br><br>
+                                        	2.두번째,세번째 사진은 설명 및 상세보기사진입니다.<br>
+                                       	</td>
+                                        <td colspan="4" class="align-middle">
                                             <input id="" class="upFile" type="file" name="originalFileName" multiple="multiple" onchange="fileUpload()" required style="color: orange;">
                                         </td>
                                     </tr>
@@ -141,7 +147,7 @@ table{
                        		 <table class="table" id="productTable">
                        		 	<thead>
                        		 		<tr>
-                                        <th colspan="3"><strong>4.</strong> 상품옵션등록</th>
+                                        <th colspan="3" class="align-middle tableback_color"><strong>4.</strong> 상품옵션등록</th>
                                         <th colspan="3">
                                            *옵션을 추가하실려면 버튼을 클릭해주세요*
                                             <button type="button" id="optionbtn">추가</button>
@@ -154,7 +160,7 @@ table{
                                 
                        		 </table>
                        		
-                       		<div class="buttonWrap">
+                       		<div class="container buttonlist">
 	                        	<button type="submit" class="btn btn-warning" >등록하기</button>
 	                        	<button type="reset" class="btn btn-warning" >취소하기</button>
                             </div>
@@ -213,7 +219,7 @@ function check(){
 	}else if (!$.isNumeric(midcategory)) {
 		alert('상품구분을 선택해주세요!')
 		return false;
-	}else if (!(productGender === '남성'|| productGender === '여성')) {
+	}else if (!(productGender === 'M'|| productGender === 'F')) {
 		alert('추천성별을 선택해주세요!')
 		return false;
 	}
@@ -227,6 +233,5 @@ function numberMaxLength(e){
 }
 
 </script>
-<div class="container" style="height: 100px;"></div>
 </body>
 </html>

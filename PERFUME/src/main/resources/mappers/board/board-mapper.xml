@@ -14,7 +14,7 @@
 			   B.B_CREATEDATE
 		FROM BOARD B 
 		JOIN MEMBER M ON(B.M_NO = M.M_NO) 
-		WHERE B.B_STATUS = 'Y'
+		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE LIKE '%공지사항%'
 	</sql>
 
 	<!-- DB 의 조회 결과와 자바의 객체를 명시적으로 mapping해줄 때 사용한다. -->
@@ -29,6 +29,7 @@
 		<result property="BStatus" column="B_STATUS"/>
 		<result property="BCreateDate" column="B_CREATEDATE"/>
 		<result property="BUpdateDate" column="B_UPDATEDATE"/>
+		<result property="Notice_yn" column="NOTICE_YN"/>
 	</resultMap>
 	
 	<!-- 게시글 목록 조회 -->
@@ -38,6 +39,15 @@
 	
 	<select id="selectAll" resultMap="boardListResultMap">
 		<include refid="boardListSql"/>
+		<choose>
+			<when test='Notice_yn == "Y"'>
+				AND NOTICE_YN = 'Y'
+			</when>
+			<when test='Notice_yn == "N"'>
+				AND NOTICE_YN = 'N'
+			</when>
+		</choose>
+		
 		ORDER BY B.B_NO DESC
 	</select>
 
@@ -166,26 +176,37 @@
 	</select>
 
 	<!-- 게시글 등록 -->
-	<insert id="insertBoard" parameterType="Board"
+	<insert id="insertBoard" parameterType="Notice"
 			useGeneratedKeys="true" keyProperty="BNo" keyColumn="B_NO">
 		INSERT INTO BOARD (
 			B_NO,
 			M_NO,
 			B_TITLE,
 			B_CONTENT,
-			BC_TYPE
+			BC_TYPE,
+			NOTICE_YN
 		)
 		VALUES(
 			SEQ_BOARD_B_NO.NEXTVAL,
 			#{BMno},
 			#{BTitle},
 			#{BContent},
-			'공지사항'
+			'공지사항',
+			<trim suffixOverrides=",">
+				<choose>
+					<when test='Notice_yn == "Y"'>
+						'Y',
+					</when>
+					<when test='Notice_yn == "N"'>
+						'N',
+					</when>
+				</choose>
+			</trim>
 		)
 	</insert>
 	
 	<!-- 게시글 수정 -->
-	<update id="updateBoard" parameterType="Board">
+	<update id="updateBoard" parameterType="Notice">
 		UPDATE BOARD 
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="BTitle != null">
@@ -194,7 +215,15 @@
 			<if test="BContent != null">
 				B_CONTENT = #{BContent},
 			</if>
-			B_UPDATEDATE = SYSDATE
+			B_UPDATEDATE = SYSDATE,
+			<choose>
+				<when test='Notice_yn == "Y"'>
+					NOTICE_YN = 'Y',
+				</when>
+				<when test='Notice_yn == "N"'>
+					NOTICE_YN = 'N',
+				</when>
+			</choose>
 		</trim>
 		WHERE B_NO = #{BNo}
 	</update>

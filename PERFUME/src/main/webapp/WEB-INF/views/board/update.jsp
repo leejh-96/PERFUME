@@ -78,6 +78,13 @@
 				
 				<table id='tbl-board' class="table">
 					<tr>
+						<th>공지글 여부</th>
+						<td colspan="2">
+							<input type="radio" name="notice_yn" value="Y"/>공지글&nbsp;&nbsp;&nbsp;
+							<input type="radio" name="notice_yn" value="N" checked="checked"/>일반글
+						</td>
+					</tr>
+					<tr>
 						<th>제목</th>
 						<td><input type="text" name="title" id="title"
 								value="${ board.BTitle }"></td>

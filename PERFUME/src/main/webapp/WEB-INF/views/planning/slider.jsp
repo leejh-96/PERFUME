@@ -10,7 +10,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Perfume</title>
+    <title>NAEUM</title>
     <!-- CSS 불러오기 -->
     <link rel="stylesheet" href="${ path }/css/planning/slider.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -32,9 +32,22 @@
 	    <!-- 슬라이드 이미지 -->
 	    <div class="carousel-inner">
 	      <div class="carousel-item active">
-	        <a href="${ path }/planning/special02">
-	          <img src="${ path }/images/planning/slider001.png" class="d-block w-100" alt="Slider Image 1">
-	        </a>
+	        <c:if test="${ empty loginMember }">
+				<a href="${ path }/join">
+					<img src="${ path }/images/planning/slider001.png" class="d-block w-100" alt="Slider Image 1">
+				</a>
+			</c:if>
+
+			<c:if test="${not empty loginMember}">
+    			<img src="${path}/images/planning/slider001.png" class="d-block w-100" alt="Slider Image 1" onclick="showCouponMessage()">
+			</c:if>
+
+			<script>
+				function showCouponMessage() {
+				    alert("이미 5% 할인 쿠폰을 발급받으셨습니다. 마이페이지에서 쿠폰 내역을 확인해보세요.");
+				    window.location.href = "${path}/mypage";
+				}
+			</script>
 	      </div>
 	      <div class="carousel-item">
 	        <a href="${ path }/planning/special01">
@@ -42,7 +55,7 @@
 	        </a>
 	      </div>
 	      <div class="carousel-item">
-	        <a href="${ path }/planning/special03">
+	        <a href="${ path }/planning/special02">
 	          <img src="${ path }/images/planning/slider003.png" class="d-block w-100" alt="Slider Image 3">
 	        </a>
 	      </div>

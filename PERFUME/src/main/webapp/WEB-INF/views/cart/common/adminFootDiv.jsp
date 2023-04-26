@@ -16,5 +16,6 @@
         </div><!-- 밑에 4개 div는 꼭 포함시켜야함~ -->
     </div><!-- 밑에 4개 div는 꼭 포함시켜야함~ -->
 </div><!-- 밑에 4개 div는 꼭 포함시켜야함~ -->
+<jsp:include page="/WEB-INF/views/planning/footer.jsp"/>
 </body>
 </html>

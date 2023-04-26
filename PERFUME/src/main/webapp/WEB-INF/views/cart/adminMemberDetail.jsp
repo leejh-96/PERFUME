@@ -17,6 +17,18 @@
 table{
 	text-align: center;
 }
+#myModal{
+	z-index: 2000;
+}
+.tabledetail{
+	margin-top :50px;
+}
+.buttonlist{
+	text-align: center;
+}
+.tableback_color{
+	background-color: rgb(118, 174, 135);
+}
 /* 회원상세보기&&회원수정 */
 </style>
 <script type="text/javascript">
@@ -156,87 +168,87 @@ function check(){
 
 <jsp:include page="/WEB-INF/views/cart/common/adminSidebar.jsp"/>
 
-					<table class="table">
+					<table class="table table-hover tabledetail">
 						<thead>
-							<tr>
+							<tr class="table-warning">
                                 <th colspan="2"><strong>회원상세정보</strong></th>
                             </tr>
 						</thead>
                         <tbody>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>회원번호</th>
                                 <td>
                                 	${member.memberNo }
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>회원구분</th>
                                 <td>
                                 	${member.memberDevision}
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>회원가입경로</th>
                                 <td>
                                 	${member.memberPath}
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>회원아이디</th>
                                 <td>
                                 	${member.memberId}
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>회원이름</th>
                                 <td>
                                 	${member.memberName}
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>생년월일</th>
                                 <td>
                                 	<fmt:formatDate type="date" value="${member.memberBirth}"/>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>회원성별</th>
-                                <c:if test="${member.gender == 'M' || member.gender == '남성' || member.gender == '남자'}">
+                                <c:if test="${member.gender == 'M' || member.gender == '남성' || member.gender == '남자'|| member.gender == '남'}">
 	                                <td>
 	                                	남성
 	                                </td>
                                 </c:if>
-                                <c:if test="${member.gender == 'F' || member.gender == '여성' || member.gender == '여자'}}">
+                                <c:if test="${member.gender == 'F' || member.gender == '여성' || member.gender == '여자'|| member.gender == '여'}}">
 	                                <td>
 	                                	여성
 	                                </td>
                                 </c:if>
                             </tr>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>회원이메일</th>
                                 <td>
                                 	${member.memberMail}
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>회원전화번호</th>
                                 <td>
                                 	${member.memberPhone}
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>회원주소</th>
                                 <td>
                                 	${member.memberAddr}
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>회원포인트</th>
                                 <td>
                                 	${member.memberPoint} <span>POINT</span> 
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-warning">
                                 <th>회원생성일</th>
                                 <td>
                                 	<fmt:formatDate type="date" value="${member.memberCreateDate}"/>
@@ -245,7 +257,7 @@ function check(){
                          </tbody>
                      </table>
                      
-                     <div>
+                     <div class="buttonlist">
 	               		<button class="btn btn-warning" data-toggle="modal" data-target="#myModal">수정하기</button>
 	               		<button class="btn btn-warning" onclick="location.href='${path}/admin/memberList'">목록으로</button>
 	               		<button class="btn btn-warning" onclick="Inactive('${member.memberNo}','${member.memberName}')">비활성하기</button>
@@ -270,16 +282,16 @@ function check(){
 		                        <table class="table">
 			                        <tbody>
 			                            <tr>
-			                                <th colspan="3"><strong>회원상세정보</strong></th>
+			                                <th colspan="3" class="tableback_color"><strong>회원상세정보</strong></th>
 			                            </tr>
 			                            <tr>
-			                                <th>회원번호</th>
+			                                <th class="tableback_color">회원번호</th>
 			                                <td colspan="2">
 			                                	${member.memberNo}
 			                                </td>
 			                            </tr>
 			                            <tr>
-			                                <th>회원구분</th>
+			                                <th class="tableback_color">회원구분</th>
 			                                
 			                            	<c:if test="${member.memberDevision eq '2'}">    
 				                                <td colspan="2">
@@ -289,76 +301,76 @@ function check(){
 			                            
 			                            </tr>
 			                            <tr>
-			                                <th>회원가입경로</th>
+			                                <th class="tableback_color">회원가입경로</th>
 			                                <td colspan="2">
 			                                	${member.memberPath}
 			                                </td>
 			                            </tr>
 			                            <tr>
-			                                <th>회원아이디</th>
+			                                <th class="tableback_color">회원아이디</th>
 			                                <td>
 			                                	<input id="memberId" type="text" name="memberId" placeholder="형식: 첫글자는 반드시 영문 소문자,4~12자의 영문,소문자,숫자 입력" class="container" required="required">
 			                                </td>
-			                                <td><button type="button" onclick="idChecked()">중복검사</button></td>
+			                                <td><button type="button" class="btn btn-warning" onclick="idChecked()">중복검사</button></td>
 			                            </tr>
 			                            <tr>
-			                                <th>회원비밀번호</th>
+			                                <th class="tableback_color">회원비밀번호</th>
 			                                <td colspan="2">
 			                                	<input id="pass1" type="password" placeholder="형식: 영문자, 숫자, 특수문자 포함하여 총 8 ~ 15자로 입력" class="container" required="required">
 			                                </td>
 			                            </tr>
 			                            <tr>
-			                                <th>비밀번호확인</th>
+			                                <th class="tableback_color">비밀번호확인</th>
 			                                <td colspan="2">
 			                                	<input id="pass2" type="password" placeholder="형식: 영문자, 숫자, 특수문자 포함하여 총 8 ~ 15자로 입력" class="container" name="memberPwd" required="required">
 			                                </td>
 			                            </tr>
 			                            <tr>
-			                                <th>회원이름</th>
+			                                <th class="tableback_color">회원이름</th>
 			                                <td colspan="2">
 			                                	${member.memberName}
 			                                </td>
 			                            </tr>
 			                            <tr>
-			                                <th>생년월일</th>
+			                                <th class="tableback_color">생년월일</th>
 			                                <td colspan="2">
 			                                	<fmt:formatDate type="date" value="${member.memberBirth}"/>
 			                                </td>
 			                            </tr>
 			                            <tr>
-			                                <th>회원성별</th>
-			                                <c:if test="${member.gender == 'M' || member.gender == '남성' || member.gender == '남자'}">
+			                                <th class="tableback_color">회원성별</th>
+			                                <c:if test="${member.gender == 'M' || member.gender == '남성' || member.gender == '남자'|| member.gender == '남'}">
 				                                <td colspan="2">
 				                                	남성
 				                                </td>
 			                                </c:if>
-			                                <c:if test="${member.gender == 'F' || member.gender == '여성' || member.gender == '여자'}}">
+			                                <c:if test="${member.gender == 'F' || member.gender == '여성' || member.gender == '여자'|| member.gender == '여'}}">
 				                                <td colspan="2">
 				                                	여성
 				                                </td>
 			                                </c:if>
 			                            </tr>
 			                            <tr>
-			                                <th>회원이메일</th>
+			                                <th class="tableback_color">회원이메일</th>
 			                                <td colspan="2">
 			                                	<input id="email" type="email" name="memberMail" placeholder="형식: kildong@kh.com" class="container" required="required">
 			                                </td>
 			                            </tr>
 			                            <tr>
-			                                <th>회원전화번호</th>
+			                                <th class="tableback_color">회원전화번호</th>
 			                                <td colspan="2">
 			                                	<input type="tel" name="memberPhone" placeholder="형식: - 제외한 숫자, 01000000000" class="container" required="required">
 			                                </td>
 			                            </tr>
 			                            <tr>
-						                    <th rowspan="2">
+						                    <th rowspan="2" class="tableback_color">
 						                        회원주소
 						                    </th>
 						                    <td>
 						                    	<input id="addr1" type="text" placeholder="도로명 주소를 입력해주세요." class="container" required>
 						                    </td>
 						                    <td>
-						                    	<input type="button" onclick="Postcode()" value="우편번호 찾기">
+						                    	<input type="button" class="btn btn-warning" onclick="Postcode()" value="우편번호 찾기">
 						                    </td>
 						                </tr>
 						                <tr>
@@ -368,13 +380,13 @@ function check(){
 						                    </td>
 						                </tr>
 			                            <tr>
-			                                <th>회원포인트</th>
+			                                <th class="tableback_color">회원포인트</th>
 			                                <td colspan="2">
 			                                	${member.memberPoint} <span>POINT</span> 
 			                                </td>
 			                            </tr>
 			                            <tr>
-			                                <th>회원생성일</th>
+			                                <th class="tableback_color">회원생성일</th>
 			                                <td colspan="2">
 			                                	<fmt:formatDate type="date" value="${member.memberCreateDate}"/>
 			                                </td>
@@ -383,7 +395,7 @@ function check(){
                      			</table>
 	                           	 
                        		 	<!-- Modal footer -->
-						        <div class="modal-footer">
+						        <div class="container buttonlist">
 						          <button type="submit" class="btn btn-warning">수정하기</button>
 						          <button type="button" class="btn btn-warning" data-dismiss="modal">닫기</button>
 						        </div>

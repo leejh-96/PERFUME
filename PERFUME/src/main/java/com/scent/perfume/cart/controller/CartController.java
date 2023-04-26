@@ -66,8 +66,6 @@ public class CartController {
 		CartMember memberInfo = null;
 		List<Cart> clist = null;
 		
-		log.info("member : {}",member);
-		
 		//로그인체크로직작성
 		if (member != null) {
 			//회원의 장바구니 상품과 혜택정보를 불러온다.	
@@ -111,10 +109,10 @@ public class CartController {
 		int result = cartService.cartDelete(memberNo,cartNo);
 		
 		if (result > 0) {
-			System.out.println("성공");
+			log.info("성공");
 			return result;
 		}else {
-			System.out.println("실패");
+			log.info("실패");
 			return result;
 		}
 	}
@@ -132,9 +130,9 @@ public class CartController {
 		System.out.println(order);
 		
 		if (result > 0) {
-			System.out.println("성공");
+			log.info("성공");
 		}else {
-			System.out.println("실패");
+			log.info("실패");
 		}
 		return order;
 	}
@@ -148,10 +146,8 @@ public class CartController {
 		int result = cartService.orderListInsert(orderList);
 		
 		if (result > 0) {
-			System.out.println("성공");
 			return result;
 		}else {
-			System.out.println("실패");
 			return result;
 		}
 	}
@@ -188,9 +184,6 @@ public class CartController {
 	public int pointUpdate(@PathVariable("point") int point,
 						   @PathVariable("memberNo") int memberNo) {
 		
-		log.info("point : {}",point);
-		log.info("memberNo : {}",memberNo);
-		
 		return cartService.memberPointUpdate(point,memberNo);
 	}
 	
@@ -210,13 +203,11 @@ public class CartController {
 						   @ModelAttribute productOption option,
 						   Model model) {
 		
-		log.info("option : {}",option);
 		CartMember memberInfo = null;
 		productOption directInfo = null;
 		//로그인 정보 가져오기
 		HttpSession member = request.getSession();
 		Member loginMember = (Member)member.getAttribute("loginMember");
-		log.info("loginMember : {}",loginMember);
 		
 		if (loginMember != null) {
 			//회원일 경우
@@ -240,7 +231,7 @@ public class CartController {
 				model.addAttribute("msg", "잘못된 접근입니다.");
 				model.addAttribute("location", "/product/detail?no="+option.getProductNo());
 			}
-		}else {
+		}else if (loginMember == null) {
 			//비회원일 경우
 			directInfo = cartService.selectNowOrder(option);
 			if (directInfo != null) {
@@ -256,7 +247,27 @@ public class CartController {
 		return "common/msg";
 	}
 	
-	
+	@ResponseBody
+	@GetMapping("/cart/insert")
+	public int insert(HttpServletRequest request,
+					  @ModelAttribute Cart cart) {
+		
+		int result = 0;
+		
+		HttpSession member = request.getSession();
+		
+		Member loginMember = (Member)member.getAttribute("loginMember");
+		
+		log.info("cart : {}",cart);
+		log.info("loginMember : {}",loginMember);
+		
+		if (loginMember != null) {
+			
+			result = cartService.insert(loginMember.getNo(),cart);
+			
+		}
+		return result;
+	}
 	
 	
 	
