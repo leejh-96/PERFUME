@@ -96,6 +96,20 @@ public class EventServiceImpl implements EventService {
 	public Boolean isDuplicateId(String id) {
 		return mapper.selectMemberById(id) != null;
 	}
+	
+// 회원가입 이메일 중복 검사
+	@Override
+	@Transactional
+	public Boolean isDuplicateEmail(String email) {
+		return mapper.selectMemberByEmail(email) != null;
+	}
+
+// 회원가입 폰 중복 검사
+	@Override
+	@Transactional
+	public Boolean isDuplicatePhone(String phone) {
+		return mapper.selectMemberByPhone(phone) != null;
+	}
 
 
 /////////////////////////////////////////////////이벤트게시판//////////////////////////////////////////////////
@@ -251,7 +265,7 @@ public class EventServiceImpl implements EventService {
 	public int insertEventPrize(int emNo, int epMNo) {
 		return mapper.insertEventPrize( emNo, epMNo);
 	}
-	// 당첨자에게 쿠폰 발급 BENEFIT, MEMBER_BENEFIT_INFOR INSERT
+	// 당첨자에게 쿠폰 발급 BENEFIT, MEMBER_BENEFIT_INFO, PRODUCT_BENEFIT INSERT
 	@Override
 	@Transactional
 	public int insertBenefit(int epMNo, String BTitle) {
@@ -261,27 +275,27 @@ public class EventServiceImpl implements EventService {
 		int resultProductBenefit = 0;
 		
 		benefitTitle = BTitle + " 당첨자 쿠폰";
-		log.info("베네핏 타이틀 로그 benefitTitle : {}", benefitTitle);
+//		log.info("베네핏 타이틀 로그 benefitTitle : {}", benefitTitle);
 		
 		// BENEFIT에 INSERT
 		resultBenefit = mapper.insertBenefitForWinner(benefitTitle);
-		log.info("베네핏 인서트 잘 됐는지 확인 resultBenefit 0이면 안됨 1이면 됨 : {}",resultBenefit);
+//		log.info("베네핏 인서트 잘 됐는지 확인 resultBenefit 0이면 안됨 1이면 됨 : {}",resultBenefit);
 		
 		// benefitTitle로 BN_NO 찾아오기
 		int bnNo = mapper.getBnNoByBenefitTitle(benefitTitle);
-		log.info("비엔 엔오 새로 만든 이벤트명과 동일한지 확인 4월 ~ 당첨자 쿠폰 : {}", bnNo);
+//		log.info("비엔 엔오 새로 만든 이벤트명과 동일한지 확인 4월 ~ 당첨자 쿠폰 : {}", bnNo);
 		// MEMBER_BENEFIT_INFO에 INSERT
 		resultMemberBenefitInfo = mapper.insertMemberBenefitInfoForWinner(bnNo, epMNo);
-		log.info("멤버 베네핏인포에 당첨자 정보 잘 들어갔는지 확인 : {}", resultMemberBenefitInfo);
+//		log.info("멤버 베네핏인포에 당첨자 정보 잘 들어갔는지 확인 : {}", resultMemberBenefitInfo);
 		// BTitle에서 향수 이름 알아오기 (PRODUCT 테이블에서 상품 번호 불러오기위해)
 		String namePrize = mapper.selectNamePrizeByBTitle(BTitle);
-		log.info("상품이름 향수 이름! 잘 가져오나 확인 : {}", namePrize);
-		// namePrize로 PRODUC 테이블에서 상품 코드 가져오기
+//		log.info("상품이름 향수 이름! 잘 가져오나 확인 : {}", namePrize);
+		// namePrize로 PRODUCT 테이블에서 상품 코드 가져오기
 		int pNo = mapper.seletPNoByNamePrize(namePrize);
 		log.info("피엔오상품번호잘 가져왔나 확인 : {}", pNo);
 		// PRODUCT_BENEFIT에 혜택번호, 상품번호 INSERT
 		resultProductBenefit = mapper.insertProductBenefit(bnNo, pNo);
-		log.info("프로덕트 베네핏 인서트 잘 됐는지 확인 resultProductBenefit 0이면 안됨 1이면 됨 : {}", resultProductBenefit);
+//		log.info("프로덕트 베네핏 인서트 잘 됐는지 확인 resultProductBenefit 0이면 안됨 1이면 됨 : {}", resultProductBenefit);
 		
 		//셋다 > 0 이면 return 1, 하나라도 !>0 이면 return 0
 		if( resultBenefit > 0 && resultMemberBenefitInfo > 0 && resultProductBenefit > 0) {
@@ -291,6 +305,7 @@ public class EventServiceImpl implements EventService {
 		}
 		
 	}
+	
 	// epMNo로 당첨자 전화번호 알아오기
 	@Override
 	@Transactional
@@ -327,6 +342,8 @@ public class EventServiceImpl implements EventService {
 	public String getBnTitleByBTitleForWinner(String bnTitle) {
 		return mapper.getBnTitleByBTitleForWinner(bnTitle);
 	}
+
+	
 
 
 

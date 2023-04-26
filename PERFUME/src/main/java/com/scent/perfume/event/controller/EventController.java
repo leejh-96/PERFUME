@@ -80,6 +80,30 @@ public class EventController {
 							 .APPLICATION_JSON_VALUE).body(map);		
 	}
 	
+// 이메일 중복 검사
+	@PostMapping("/event/emailCheck")
+	public ResponseEntity<Map<String, Boolean>> emailCheck(@RequestParam("email") String email){	
+		Map<String, Boolean> map = new HashMap<>();
+		
+		map.put("duplicate", service.isDuplicateEmail(email));
+		
+		return ResponseEntity.ok()
+							 .header(HttpHeaders.CONTENT_TYPE, MediaType
+							 .APPLICATION_JSON_VALUE).body(map);		
+	}
+// 폰 중복 검사 /event/phoneCheck
+	@PostMapping("/event/phoneCheck")
+	public ResponseEntity<Map<String, Boolean>> phoneCheck(@RequestParam("phone") String phone){	
+		Map<String, Boolean> map = new HashMap<>();
+		
+		map.put("duplicate", service.isDuplicatePhone(phone));
+		
+		return ResponseEntity.ok()
+							 .header(HttpHeaders.CONTENT_TYPE, MediaType
+							 .APPLICATION_JSON_VALUE).body(map);		
+	}
+
+	
 // 전화번호 인증 문자 메세지 전송 컨트롤러
 	@RequestMapping("/sendSMS") //jsp 페이지 넘긴 mapping 값
 	@ResponseBody    
@@ -546,7 +570,7 @@ public class EventController {
 				successParticipate = service.participateEvent(mNo, bnNo);
 				
 				if(successParticipate > 0) {
-					modelAndView.addObject("msg", "이벤트 참여가 완료되었습니다. 당첨자에게는 문자를 전송해 드리니 당첨일(이벤트 종료날로부터 일주일 후) 이후 확인부탁드립니다.");
+					modelAndView.addObject("msg", "이벤트 참여가 완료되었습니다. 당첨자에게는 문자를 전송해 드리니 당첨일 이후 확인부탁드립니다.");
 					modelAndView.addObject("location", "/event/eventView?no=" + BNo);
 				} else {
 					modelAndView.addObject("msg", "이벤트 참여가 정상적으로 완료되지 않았습니다.");
@@ -653,6 +677,7 @@ public class EventController {
 //					    	modelAndView.addObject("msg", "메세지 전송에 실패하였습니다.");
 //							modelAndView.addObject("location", "/event/eventView?no=" + BNo);
 //					    }
+							
 					} else { // 베네핏 저장 실패
 						modelAndView.addObject("msg", "당첨자 추첨이 제대로 완료되지 않았습니다. BENEFIT INSERT ERROR");
 						modelAndView.addObject("location", "/event/eventView?no=" + BNo);	
@@ -664,6 +689,7 @@ public class EventController {
 				}
 			}
 		}
+		
 		modelAndView.setViewName("common/msg");
 		
 		return modelAndView;
