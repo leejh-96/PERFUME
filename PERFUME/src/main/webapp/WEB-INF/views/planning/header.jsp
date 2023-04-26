@@ -82,23 +82,24 @@
     <script>
 		 // 모달창 가져오기
 		 $(document).ready(function() {
-			// 로그인 버튼 클릭 시 모달창 보이기
-			 $('.openLogin').click(function() {
-			     $('#loginmodal').show();
-			 });
-
-			 // 모달창 바깥 클릭 시 모달창 닫기
-			 $('#loginmodal').click(function(event) {
-			     if (event.target == this) {
-			         $(this).hide();
-			     }
-			 });
-
-			 // X버튼 클릭 시 모달창 닫기
-			 $('#loginmodal .close').click(function() {
-			     $('#loginmodal').hide();
-			 });
-        });
+	    // 로그인 버튼 클릭 시 모달창 보이기
+	    $('.openLogin').click(function(e) {
+	        e.preventDefault();
+	        $('#loginmodal').show();
+	    });
+	
+	    // 모달창 바깥 클릭 시 모달창 닫기
+	    $('#loginmodal').click(function(event) {
+	        if (event.target == this) {
+	            $(this).hide();
+	        }
+	    });
+	
+	    // X버튼 클릭 시 모달창 닫기
+	    $('#loginmodal .close').click(function() {
+	        $('#loginmodal').hide();
+	    });
+	});
 	    
 	
 	    // 카카오로 로그인 구현

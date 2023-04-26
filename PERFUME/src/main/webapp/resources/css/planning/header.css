@@ -48,7 +48,7 @@ nav a {
 
 /* 모달창 CSS */
 #loginmodal {
-    display: flex;
+    display: none;
     align-items: center;
     z-index: 1;
     justify-content: center;
