@@ -190,6 +190,8 @@ public class AdminController {
 		
 		benefit = adminService.benefitDetail(benefitNo);
 		
+		log.info("benefit : {}",benefit);
+		
 		model.addAttribute("benefit", benefit);
 		
 		return "cart/adminBenefitDetail";

@@ -302,8 +302,8 @@ ${order}
 					        				<c:forEach var="orderList" items="${order.orderList}">
 					        					<tr>
 					        						<th class="align-middle">
-						        						<%-- <img src="${path}/upload/benefit/${orderList.orderFileName}" width="100px"> --%>
-					        							<img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="100px" class="rounded">
+						        						<img src="${path}/upload/product/${orderList.orderFileName}" width="100px" class="rounded">
+					        							<!-- <img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="100px" class="rounded"> -->
 					        						</th>
 							        				<th class="align-middle">${orderList.orderNo}</th>
 								                    <th class="align-middle">${orderList.productNo}</th>
@@ -374,7 +374,7 @@ ${order}
                		
                		<div class="buttonlist">
 	               		<button class="btn btn-warning" onclick="location.href='${path}/admin/orderList'">목록으로</button>
-	               		<button class="btn btn-warning" onclick="deleteOrder('${order.orderNo}')">삭제하기</button>
+	               		<%-- <button class="btn btn-warning" onclick="deleteOrder('${order.orderNo}')">삭제하기</button> --%>
                		</div>
 
 <jsp:include page="/WEB-INF/views/cart/common/adminFootDiv.jsp"/>

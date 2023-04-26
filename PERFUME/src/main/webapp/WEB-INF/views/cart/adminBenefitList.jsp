@@ -45,45 +45,6 @@
 <body>
 	<jsp:include page="/WEB-INF/views/cart/common/adminSidebar.jsp"/>
 	
-				<!-- <input class="form-control" id="myInput" type="text" placeholder="검색을 통해 빠르게 찾을 수 있어요!"> -->
-				
-				<%-- <div class="row listmenu">
-       				<div class="col">번호</div>
-       				<div class="col">혜택구분</div>
-                    <div class="col">혜택명</div>
-                    <div class="col">혜택적용율</div>
-                    <div class="col">혜택기간</div>
-                    <div class="col">혜택진행상태</div>
-                    <!-- <div class="col-2">등록일자</div> -->
-       			</div>
-       			
-       			<c:if test="${empty list}">
-       				 <div class="col">등록된 혜택이 없습니다.</div>
-       			</c:if>
-       			
-       			<c:if test="${not empty list}">
-       				<c:forEach var="benefit" items="${ list }" varStatus="status">
-	        			<div class="row listdiv">
-	        				<div class="col">${status.count}</div>
-        					<div class="col">${benefit.benefitName}</div>
-       						<div class="col"><a href="${path}/admin/benefitDetail?benefitNo=${benefit.benefitNo}">${benefit.benefitTitle}</a></div>
-        					<div class="col">${benefit.benefitRatio}%</div>
-		                    <div class="col">
-			                    <fmt:formatDate type="date" value="${benefit.benefitCreateDate}"/>
-			                    ~
-			                    <fmt:formatDate type="date" value="${benefit.benefitEndDate}"/>
-		                    </div>
-		                    <div class="col">
-		                    	<c:if test="${benefit.benefitStatus == 'Y'}">
-		                    		<span id="statusY">진행중인 혜택</span>
-		                    	</c:if>
-		                    	<c:if test="${benefit.benefitStatus == 'N'}">
-		                    		<span id="statusN">종료된 혜택</span>
-		                    	</c:if>
-		                    </div>
-	        			</div>
-        			</c:forEach>
-       			</c:if> --%>
        			<input class="form-control" id="myInput" type="text" placeholder="검색을 통해 빠르게 찾을 수 있어요!">
        			<table class="table table-striped table-hover">
        			
@@ -95,7 +56,6 @@
 		                    <th>혜택적용율</th>
 		                    <th>혜택기간</th>
 		                    <th>혜택진행상태</th>
-		                    <!-- <div class="col-2">등록일자</div> -->
 	                    </tr>
 	       			</thead>
 	       			<tbody id="myTable">

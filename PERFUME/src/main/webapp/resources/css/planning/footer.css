@@ -6,11 +6,12 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Nanum Myeongjo', serif;
 }
 
 /* 푸터 영역 */
 .footer-text {
+	font-family: 'Nanum Myeongjo', serif;
     height: auto;
     font-size: medium;
     text-align: center;

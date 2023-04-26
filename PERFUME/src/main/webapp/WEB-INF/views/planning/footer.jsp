@@ -5,6 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <c:set var="path" value="${ pageContext.request.contextPath }" />
+<link href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${ path }/css/planning/footer.css">
 
 <footer>

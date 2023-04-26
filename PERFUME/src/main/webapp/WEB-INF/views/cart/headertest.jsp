@@ -11,15 +11,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name ="google-signin-client_id" content="176536335938-dmlgnn72m6p2pia44gdoarb4iejs7u3t.apps.googleusercontent.com">
-    <title>NAEUM</title>
+    <title>Perfume</title>
     <!-- CSS 불러오기 -->
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${ path }/css/planning/header.css">
     <!-- jQuery 불러오기 -->
     <script src="${ path }/js/jquery-3.6.3.js"></script>
     <!-- 로그인 API 자바스크립트 불러오기 -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+	<style type="text/css">
+* {
+    box-sizing: border-box;
+    /* border: 1px solid red; */
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100px;
+}
+
+.logo {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+a {
+	text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 모달창 CSS */
+/* .modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+ */
+ .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+} 
+	/* ==== */
+	input,button{
+		border: none;
+		font-weight: bolder;
+		border-radius: 10px;
+	}
+	#id,#pwd{
+		border: 1px solid gray;
+	}
+	#modaldivwrap{
+		width: 600px;
+		text-align: center;	
+	}
+	#modaldivwrap div{
+		height: 30px;
+		margin: 5px;
+	}
+	#modaldivwrap input{
+		width: 60%;
+		height: 100%;
+		
+	}
+	#loginbtn{
+		width: 60%;
+		height: 100%;
+		background-color: orange;
+		color: white;
+		font-size: x-large;
+		font-weight: bolder;
+		
+	}
+	#finddivwrap{
+		margin: 15px;
+		width: 600px;
+		display: flex;
+		justify-content: center;
+	}
+	#findId,#findPwd{
+		font-size: x-large;
+		font-weight: bolder;
+	}
+	#finddivwrap > div{
+		width: 358px;
+	}
+	#finddivwrap > div > div{
+		vertical-align: middle;
+		float: left;
+		width: 50%;
+	}
+	#finddivwrap > div > div > a{
+		display: flex;
+		justify-content: space-around;
+	}
+	#finddivwrap > div > div > a > button {
+		width: 100%;
+	}
+	#ulwrap{
+		width: 600px;
+		height: 70px;
+		text-align: center;	
+		padding: 0;
+		margin: 0;
+		line-height: 35px;
+	}
+	#ulwrap li{
+		display: inline-block;
+		width: 358px;
+	}
+	#ulwrap li > button{
+		width: 100%;
+		height: 30px;
+	}
+	.modal-content{
+		padding-bottom: 100px;
+	}
+	
+	</style>
 </head>
 <body>
     <header>
@@ -29,10 +194,10 @@
                     <li><a href="${ path }/aboutSite">ABOUT US</a></li>
                     <li><a href="${ path }/planning/special">SPECIAL</a></li>
                     <li><a href="${ path }/product/list">SCENT</a></li>
-                    <li><a href="${ path }/product/paper">MOUILLETTE</a></li>
+                    <li><a href="#">MOUILLETTE</a></li>
                 </ul>
             </nav>
-            <h1 class="logo"><a href="${ path }/">NAEUM</a></h1>
+            <h1 class="logo"><a href="${ path }/">Perfume</a></h1>
             <nav class="user-nav">
                 <ul>
                     <li><a href="${ path }/eventList">EVENT</a></li>
@@ -56,52 +221,76 @@
         </div>
 
         <!-- 로그인 모달창 구현 -->
-        <div id="loginmodal">
+        <div id="mymodal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2 style="text-align: center;">LOGIN</h2>
                 <form id="loginForm" action="${ path }/login" method="POST">
-                    <div>
-                        <label for="id" style="font-weight: bold;">아이디</label><br>
-                        <input type="text" id="id" name="id" required placeholder="아이디를 입력하세요."><br>
-                        <label for="pwd" style="font-weight: bold;">비밀번호</label><br>
-                        <input type="password" id="pwd" name="pwd" required placeholder="비밀번호를 입력하세요."><br><br>
-                        <button type="submit">Login</button><br><br>
+                    <div id="modaldivwrap">
+	                        <label for="id" style="font-weight: bold;"> <span class="spanlogin">아이디</span> </label>
+                    	<div>
+	                        <input type="text" id="id" name="id" required placeholder="아이디를 입력하세요.">
+                        </div>
+	                        <label for="pwd" style="font-weight: bold;"><span class="spanlogin">비밀번호</span></label>
+                        <div>
+	                        <input type="password" id="pwd" name="pwd" required placeholder="비밀번호를 입력하세요.">
+                        </div>
+                        <div>
+                        	<button type="submit" id="loginbtn">Login</button>
+                    	</div>
                     </div>
                 </form>
-                    <div>
-                        <a href="${ path }/planning/findId"><button type="button" id="findId">아이디 찾기</button></a>
-      					<a href="${ path }/planning/findPwd"><button type="button" id="findPwd">비밀번호 찾기</button></a><br><br>
+                    <div id="finddivwrap">
+                    	<div>
+                    		<div>
+	                        	<a href="${ path }/planning/findId"><button type="button" id="findId" class="close" onclick="findId()">아이디 찾기</button></a>
+	                        </div>
+	                        <div>
+	      						<a href="${ path }/planning/findPwd"><button type="button" id="findPwd" class="close" onclick="closeModal()">비밀번호 찾기</button></a>
+	      					</div>
+                    	</div>
                     </div>
-                    <ul style="list-style: none;">
-                        <li onclick="kakaoLogin();"><button type="button">카카오로 로그인</button></li>
+                    <ul style="list-style: none;" id="ulwrap">
+                        <li onclick="kakaoLogin();"><button type="button" style="background-color: yellow;">카카오로 로그인</button></li>
                         <li id="googleLogin" onclick="googleLogin();"><button type="button">구글로 로그인</button></li>
                     </ul>
             </div>
         </div>
     
     <script>
-		 // 모달창 가져오기
-		 $(document).ready(function() {
-	    // 로그인 버튼 클릭 시 모달창 보이기
-	    $('.openLogin').click(function(e) {
-	        e.preventDefault();
-	        $('#loginmodal').show();
-	    });
+    
+    
+    
+ 		/* // 로그인 모달창
+	    // 모달창 가져오기
+	    var modal = document.querySelector('.modal');
 	
-	    // 모달창 바깥 클릭 시 모달창 닫기
-	    $('#loginmodal').click(function(event) {
-	        if (event.target == this) {
-	            $(this).hide();
-	        }
-	    });
+	    // 모달창을 열 버튼 가져오기
+	    var btn = document.querySelector('.openLogin');
+	
+	    // 모달창을 닫는 span 요소 가져오기
+	    var span = document.querySelector('.close');
+	
+	    // 모달창 버튼 클릭 시 모달창 구현 
+	    btn.onclick = function() {
+	        modal.style.display = 'block';
+	    }
 	
 	    // X버튼 클릭 시 모달창 닫기
-	    $('#loginmodal .close').click(function() {
-	        $('#loginmodal').hide();
-	    });
-	});
+	    span.onclick = function() {
+	        modal.style.display = 'none';
+	    }
+	
+	    // 모달창 바깥 클릭 시 모달창 닫기
+	    window.onclick = function(event) {
+	        if (event.target == modal) {
+	            modal.style.display = 'none';
+	        }
+	    }
 	    
+	    function closeModal() {
+	    	modal.style.display = 'none';
+	    } */
 	
 	    // 카카오로 로그인 구현
 	    Kakao.init('838aa760211421e8483192e159afd189'); //발급받은 키 중 javascript키를 사용해준다.
