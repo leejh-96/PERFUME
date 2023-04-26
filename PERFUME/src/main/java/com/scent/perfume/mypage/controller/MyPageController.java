@@ -7,12 +7,14 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,24 +22,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.scent.perfume.mypage.model.service.CategoryService;
+import com.scent.perfume.mypage.model.service.MyPageMemberService;
 import com.scent.perfume.mypage.model.service.MyPageService;
-import com.scent.perfume.mypage.model.vo.CategoryDTO;
 import com.scent.perfume.mypage.model.vo.CouponDTO;
 import com.scent.perfume.mypage.model.vo.DeliveryAddressDTO;
 import com.scent.perfume.mypage.model.vo.MemberDTO;
 import com.scent.perfume.mypage.model.vo.OrderDetailDTO;
-import com.scent.perfume.mypage.model.vo.PointDTO;
 import com.scent.perfume.mypage.model.vo.ProductDTO;
 import com.scent.perfume.mypage.model.vo.UpdateMemberDTO;
 import com.scent.perfume.planning.model.service.MemberService;
+import com.scent.perfume.planning.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 @RequestMapping("/mypage")
+@SessionAttributes("loginMember")
 public class MyPageController {
 	private int contentPerPage=10; // 한 페이지에 보여지는 게시물의 개수
 	
@@ -55,6 +58,163 @@ public class MyPageController {
 	
 //	@Autowired 리뷰 미구현 ;
 //	private ReviewService reviewService;
+	
+	@RequestMapping("/mypage")
+	public String mypage(@ModelAttribute("loginMember") Member member,
+						  Model model) {
+		if(member != null) { 
+			MemberDTO memberDto =service.getMember(member.getNo());
+			model.addAttribute("memberDto", memberDto);
+		} else {
+			model.addAttribute("msg", "잘못된 접근입니다");
+			model.addAttribute("location", "/");
+			return "common/msg";
+		}
+			return "mypage/mypage";
+	}
+	
+	
+	
+//	@GetMapping("/confirmPassword/changeInfo")
+//    public String changeInfo(HttpSession session, Model model) {
+//        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+//        
+//        if (memberDTO == null) {
+//            return "redirect:/member/login";
+//        }
+//        
+//        model.addAttribute("memberDTO", memberDTO);
+//        return "mypage/confirmPassword";
+//    }
+//    
+//    @GetMapping("/changeInfo")
+//    public String changeInfo(HttpSession session, Model model, String password) {
+//        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+//        
+//        if (memberDTO == null) {
+//            return "redirect:/member/login";
+//        }
+//        
+//        if (MyPageService.confirmPassword(memberDTO.getMemberId(), password)) {
+//            model.addAttribute("memberDTO", memberDTO);
+//            return "mypage/changeInfo";
+//        } else {
+//            model.addAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");
+//            return "mypage/confirmPassword";
+//        }
+//    }
+	
+    
+    
+	@RequestMapping(value="/mypage/confirmPassword/", method=RequestMethod.GET)
+	public String getConfirmForm(@ModelAttribute("loginMember") Member member, Principal principal, Model model) throws Exception {
+		try {
+			MemberDTO memberDTO = MyPageMemberService.getMemberId(principal.getName());
+			model.addAttribute("memberDTO", memberDTO);
+			
+//			List<CategoryDTO> parentCategory = categoryService.showCategoryMenu();
+//			model.addAttribute("parentCategory", parentCategory);
+			
+			long memberPoint = service.getMemberPoint(memberDTO.getMemberId());
+			model.addAttribute("memberPoint", memberPoint);
+			
+			long couponCount = service.getCouponCount(memberDTO.getMemberId(), "available");
+			model.addAttribute("couponCount", couponCount);
+			
+//			// 작성 가능한 상품평 개수 불러오기
+//			List<ProductDTO> writeableList = reviewService.getWriteableReview(memberDTO.getId());
+//			model.addAttribute("writeableList", writeableList);
+//			model.addAttribute("writeableCount", writeableList.size());
+			
+			model.addAttribute("member", member);
+		} catch(Exception e) {
+			log.info(e.getMessage());
+		}
+		return "mypage/confirmPassword";
+	}
+	
+	@RequestMapping(value="/confirmPassword/}", method=RequestMethod.POST)
+	public String confirmPassword(@PathVariable("type") String type,
+		@RequestParam("userPassword") String userPassword, Principal principal, Model model) throws Exception {
+		try {
+			MemberDTO memberDTO = MyPageMemberService.getMemberId(principal.getName());
+			String phoneNum = memberDTO.getPhone().substring(0, 3) + "-"
+				+ memberDTO.getPhone().substring(3, 7) + "-" + memberDTO.getPhone().substring(7);
+			
+//			List<CategoryDTO> parentCategory = categoryService.showCategoryMenu();
+//			model.addAttribute("parentCategory", parentCategory);
+			
+			long memberPoint = service.getMemberPoint(memberDTO.getMemberId());
+			model.addAttribute("memberPoint", memberPoint);
+			
+			long couponCount = service.getCouponCount(memberDTO.getMemberId(), "available");
+			model.addAttribute("couponCount", couponCount);
+			
+//			// 작성 가능한 상품평 개수 불러오기
+//			List<ProductDTO> writeableList = reviewService.getWriteableReview(memberDTO.getMemberId());
+//			model.addAttribute("writeableList", writeableList);
+//			model.addAttribute("writeableCount", writeableList.size());
+			
+			if(service.confirmPassword(userPassword, memberDTO.getPassword())) {
+				if(type.equals("changeInfo")) {
+					String[] birthdate = memberDTO.getBirthDate().split("-");
+					model.addAttribute("birthYear", birthdate[0]);
+					model.addAttribute("birthMonth", birthdate[1]);
+					model.addAttribute("birthDay", birthdate[2]);
+					model.addAttribute("phoneNum", phoneNum);
+				}
+				model.addAttribute("memberDTO", memberDTO);
+				return "mypage/"+type;
+			}
+			return "redirect:/mypage/confirmPassword/"+type;
+		} catch(Exception e) {
+			log.info(e.getMessage());
+			return "redirect:/mypage/confirmPassword"+type;
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/changePassword", method=RequestMethod.POST)
+	public String changePassword(@RequestParam("curPassword") String curPassword,
+		@RequestParam("newPassword") String newPassword, Principal principal, Model model) throws Exception {
+		try {
+			MemberDTO memberDTO = MyPageMemberService.getMemberId(principal.getName());
+			if(service.changePassword(curPassword, newPassword, memberDTO)) {
+				model.addAttribute("memberDTO", memberDTO);
+				return "1";
+			}
+			return "2";
+		} catch(Exception e) {
+			log.info(e.getMessage());
+			return "3";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/changeInfo", method=RequestMethod.POST)
+	public String changeInfo(@ModelAttribute UpdateMemberDTO updateDTO, BindingResult result, Principal principal, Model model) throws Exception {
+		try {
+			MemberDTO memberDTO = MyPageMemberService.getMemberId(principal.getName());
+			if(service.changeInfo(updateDTO, memberDTO)) {
+				model.addAttribute("memberDTO", memberDTO);
+				return "1";
+			}
+			return "2";
+		} catch(Exception e) {
+			log.info(e.getMessage());
+			return "3";
+		}
+	}    
+	
+	@RequestMapping(value="/confirmPassword")
+	public String confirmPassword() {
+		return "mypage/confirmPassword";
+	}
+	
+	
+//		1차 컷.	
+	
+	
 	
 	public List<ProductDTO> setSeenProducts(long page, long productCount, HttpServletRequest request) throws NumberFormatException, Exception {
 		List<ProductDTO> productList = new ArrayList<>();
@@ -206,6 +366,8 @@ public class MyPageController {
 		}
 		return "mypage/orderDetail";
 	}
+	
+	
 
 	@ResponseBody
 	@RequestMapping(value="/orderHistory/updateOrderStatus", method=RequestMethod.POST)
@@ -398,82 +560,6 @@ public class MyPageController {
 		return "1";
 	}
 	
-	
-	@RequestMapping(value="/confirmPassword/{type}", method=RequestMethod.GET)
-	public String getConfirmForm(@PathVariable("type") String type, Principal principal, Model model) throws Exception {
-		try {
-			MemberDTO memberDTO = service.getMember(principal.getName());
-			model.addAttribute("memberDTO", memberDTO);
-			
-//			List<CategoryDTO> parentCategory = categoryService.showCategoryMenu();
-//			model.addAttribute("parentCategory", parentCategory);
-			
-			long memberPoint = service.getMemberPoint(memberDTO.getMemberId());
-			model.addAttribute("memberPoint", memberPoint);
-			
-			long couponCount = service.getCouponCount(memberDTO.getMemberId(), "available");
-			model.addAttribute("couponCount", couponCount);
-		} finally {
-			return "mypage/confirmPassword";
-		}
-	}
-	
-	@RequestMapping(value="/confirmPassword/{type}", method=RequestMethod.POST)
-	public String confirmPassword(@PathVariable("type") String type,
-		@RequestParam("userPassword") String userPassword, Principal principal, Model model) throws Exception {
-		try {
-			MemberDTO memberDTO = service.getMember(principal.getName());
-			String phoneNum = memberDTO.getPhone().substring(0, 3) + "-"
-				+ memberDTO.getPhone().substring(3, 7) + "-" + memberDTO.getPhone().substring(7);
-			
-//			List<CategoryDTO> parentCategory = categoryService.showCategoryMenu();
-//			model.addAttribute("parentCategory", parentCategory);
-			
-			long memberPoint = service.getMemberPoint(memberDTO.getMemberId());
-			model.addAttribute("memberPoint", memberPoint);
-			
-			long couponCount = service.getCouponCount(memberDTO.getMemberId(), "available");
-			model.addAttribute("couponCount", couponCount);
-			
-			return "redirect:/mypage/confirmPassword/"+type;
-		} catch(Exception e) {
-			log.info(e.getMessage());
-			return "redirect:/mypage/confirmPassword"+type;
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/changePassword", method=RequestMethod.POST)
-	public String changePassword(@RequestParam("curPassword") String curPassword,
-		@RequestParam("newPassword") String newPassword, Principal principal, Model model) throws Exception {
-		try {
-			MemberDTO memberDTO = service.getMember(principal.getName());
-			if(service.changePassword(curPassword, newPassword, memberDTO)) {
-				model.addAttribute("memberDTO", memberDTO);
-				return "1";
-			}
-			return "2";
-		} catch(Exception e) {
-			log.info(e.getMessage());
-			return "3";
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/changeInfo", method=RequestMethod.POST)
-	public String changeInfo(@ModelAttribute UpdateMemberDTO updateDTO, BindingResult result, Principal principal, Model model) throws Exception {
-		try {
-			MemberDTO memberDTO = service.getMember(principal.getName());
-			if(service.changeInfo(updateDTO, memberDTO)) {
-				model.addAttribute("memberDTO", memberDTO);
-				return "1";
-			}
-			return "2";
-		} catch(Exception e) {
-			log.info(e.getMessage());
-			return "3";
-		}
-	}
 	
 	@RequestMapping(value="/resignMember", method=RequestMethod.GET)
 	public String getResignForm(Principal principal, Model model) throws Exception {

@@ -14,6 +14,11 @@ public interface EventService {
 	int save(Member member, Terms terms, String tCheck);
 // 회원가입 아이디 중복검사
 	Boolean isDuplicateId(String id);
+// 회원가입 이메일 중복검사
+	Boolean isDuplicateEmail(String email);
+// 회원가입 폰 중복검사
+	Boolean isDuplicatePhone(String phone);
+	
 // 게시판 목록 조회
 	int getEventCount();
 	List<Board> getEventList(PageInfo pageInfo);
@@ -28,11 +33,11 @@ public interface EventService {
 	int findNextNoByBNo(int no);
 	String findPreTitleByPreNo(int preNo);
 	String findNextTitleByNextNo(int nextNo);
-	
 // 게시글 작성 수정
 	int saveEventWrite(Board board);
 // 게시글 삭제
 	int deleteEventBoard(int no);
+	
 // 추첨 이벤트 참여
 	// 선택약관 동의 여부 확인
 	String findOptionAgreeByMNo(int mNo);
@@ -57,6 +62,7 @@ public interface EventService {
 	String findPhoneNoForWinner(int epMNo);
 	// 당첨 뽑기 중복 금지
 	String getBnTitleByBTitleForWinner(String bnTitle);
+
 
 
 

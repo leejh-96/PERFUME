@@ -98,4 +98,6 @@ public interface MyPageMapper {
 
     List<OrderPerformanceDTO> getOrderPerformanceAll() throws Exception;
 
+	MemberDTO getMemberInfo(@Param("no")int no);
+
 }

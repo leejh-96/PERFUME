@@ -137,7 +137,7 @@
 			if (bnEndDate.getTime() < today.getTime()) {
 				
 				// 게시글의 앵커 태그 누를 때 현재 페이지의 값을 파라미터로 넘기기
-				 let myString = "월";					// 찾을 문자열
+				 let myString = "월 ";					// 찾을 문자열
 				 let title = "${board.BTitle}";
 
 				 if (title.indexOf(myString) > -1) {	// 찾을 문자열이 제목에 포함되어있는지 확인하는 코드

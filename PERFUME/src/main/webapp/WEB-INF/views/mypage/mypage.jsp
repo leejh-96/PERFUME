@@ -38,6 +38,7 @@
 			<%@ include file="mypageMenu.jsp" %>
             <div class="col">
                 <%@ include file="quickMenu.jsp" %>
+                ${memberDto}
                 <div>
                     <h5><b>최근 본 상품</b></h5>
                 </div>

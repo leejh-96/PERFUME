@@ -3,6 +3,34 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.scent.perfume.mypage.model.mapper.MyPageMapper">
+
+	<resultMap type="MemberDTO" id="memberInfoResultMap">
+		<id property="number" column="M_NO" />
+		<result property="division" column="M_DIVISION"/>
+		<result property="status" column="M_STATUS"/>
+		<result property="path" column="M_PATH"/>
+		<result property="userId" column="M_ID"/>
+		<result property="password" column="M_PWD"/>
+		<result property="name" column="M_NAME"/>
+		<result property="birthDate" column="M_BIRTH"/>
+		<result property="gender" column="M_GENDER"/>
+		<result property="email" column="M_MAIL"/>
+		<result property="phone" column="M_PHONE"/>
+		<result property="address" column="M_ADDR"/>
+		<result property="point" column="M_POINT"/>
+		<result property="createDate" column="M_CREATE"/>
+		<result property="updateDate" column="M_UPDATE"/>
+		<result property="mailStatus" column="M_MAILSTATUS"/>
+	</resultMap>
+	<select id="getMemberInfo" parameterType="_int" resultMap="memberInfoResultMap">
+		SELECT *
+		FROM MEMBER
+		WHERE M_NO = #{no} 
+		
+	
+	</select>
+
+
 	<select id="getOrderDetailList" resultType="OrderDetailDTO">
 		select b.*
 		from
