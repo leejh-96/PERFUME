@@ -102,7 +102,7 @@
        #aside2 {width: 12%;}
 
        #s1 {height: 4%;}
-       #s2 {height: 18%; background-color: rgb(90, 94, 97); }  
+       #s2 {height: 10%; background-color: #d6b486; }
      
        #s5 {height: 4%;}
        #s6 {height: 74%; border-top: 2px;}
@@ -233,7 +233,11 @@
     #d2 {
         width: 30%;
     }
-
+	
+	#bestimg {
+		max-height: 100%;
+		max-width: 100%;
+	}
     
 
     .row { margin: 20px;}
@@ -435,7 +439,44 @@
        #sumbimg1 { width: 33%;}
        #sumbimg2 { width: 34%;}
 
+	 #share {
+	max-width: 100%;
+	max-height: 80%;
+	vertical-align: bottom;
 
+	transition: all 0.2s linear;
+}
+
+.like {
+	vertical-align: bottom;
+	color: #f34141;
+	font-size: 14px;
+}
+
+.a img {
+	transition: all 0.1s linear;
+}
+
+#share:hover {
+	transform: scale(1.2);
+}
+#s2>div {
+            height: 100%;
+            float: left;
+        }
+        
+  .productlink {
+	font-size: 18px; font-weight: bold;
+	color: #333;
+	
+}
+
+.productlink:hover {
+	text-decoration: none;
+	color: #333;
+}      
+        
+        
 
     </style>
 </head>
@@ -561,28 +602,21 @@
                     <div id="s1">
 
                     </div>
-                    <div id="s2" >
-                        <div id="s2_1">
-                            <p style="line-height: 150px;">더 큰 혜택, 더 편한 쇼핑, PERFUME의 SALE 상품을 모아봤습니다.</p>
-                            
-                        </div>
-                        <hr id="salehr">
-                        <div id="s2_2">
-                        PERFUME <br> <br> SALE
-                        </div>
-                        <div id="s2_3">
-                          
-                                <div id="sumbimg1" >
-                                    <img src="${ path }/images/product/${ productfile.pfrenamefilename}" class="img1" alt="">
-                                </div>
-                            
-                                <div id="sumbimg2" >
-                                    <img src="${ path }/images/product/${ productfile.pfrenamefilename}" class="img1" alt="">
-                                </div>
-    
-                         
-                        </div>
+                     <div id="s2" >
+                        <div style="width: 66%; text-align: left; color: white;  padding: 50PX;">
+                        <p style="font-size: 50px; font-weight: 300;">SALE SHOP</p>
+                        <P style="font-size: 15px;">더 큰 혜택, 더 편한 쇼핑, PERFUME의 SALE 상품을 모았습니다.</P>
+                        <hr>
+                     </div>
+                       
+                      <div style="width: 34%;">
+                        <img src="https://img.freepik.com/premium-photo/women-s-perfume-bottle-mockup-and-dry-hydrangea-flowers-on-beige-background-natural-earthy-colors-copy-space_94255-5927.jpg?size=626&ext=jpg&ga=GA1.2.1462281178.1681576788&semt=robertav1_2_sidr"  id="bestimg" alt="">
+                      </div>
                     </div>
+                    
+                    
+                    
+                 
                         
                   
                     
@@ -632,16 +666,30 @@
                                         
                                         <c:forEach var="productfile" items="${ product.productfile }">
                                         <c:if test="${productfile.pfsort eq '1' }">
-                                         <a href="${ path }/product/detail?no=${product.pno}"> 
+                                         <a href="${ path }/product/detail?no=${product.PNo}"> 
                                         
                                         <img src="${ path }/upload/product/${productfile.pfrenamefilename}" class="card-img-top" alt="..." > </a>
                                         </c:if>
                                         </c:forEach>
-                                        	<div class="etcsymbols"style=" width: 100%; height: 10%; bottom: 0px; padding: 5px;">
-                                
-    
-                                            <span class="material-symbols-outlined" style="vertical-align: bottom; visibility: hidden;" id="share">share</span>
-                                        </div> 
+                                        <div class="etcsymbols"
+													style="width: 100%; height: 35px; bottom: 0px; padding: 5px;">
+
+													<input type="hidden" value="${productlike.PNo }"
+														id="likeList" data-id="${productlike.PNo }"
+														name="likeName" />
+
+
+
+										
+
+														 <img
+															src="${ path }/upload/product/icons8-하트-24.png" class="heartimg"
+															id="share">
+
+														
+														<span id="share2" class="like">${product.likecount}</span>
+													
+												</div>
                                         
                                         </div>
                                         
@@ -652,60 +700,75 @@
                                             
                                         </div>
                                         
-                                        <div class="p-status"style="position: absolute; width: 100%;">
+                                        <c:forEach var="benefit" items="${product.benefit}">
+                                        <div class="p-status"style="position: absolute; width: 100%; text-align: right; padding: 5px;" >
                                         
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-<%--                                         <c:if test="${product.date}"> --%>
-<%--                                         </c:if> --%>
-                                        
-                                      <%--   <c:forEach var="benefit" items="${product.benefit}">
-                                        	<c:if test="${benefit.bnenddate > today}">
-                                        		<c:if test="${benefit.bnname eq ('기획전')}">
-                                            		<span class="badge badge-danger">기획전</span>
-                                            	</c:if>
-                                            	<c:if test="${benefit.bnname eq ('이벤트')}">
-                             	              		 <span class="badge badge-danger">이벤트</span>
-                                            	</c:if>
+                                         <jsp:useBean id="now" class="java.util.Date" />
+                                  
+                                         <fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:ss" var="today" />
+                                         <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd HH:ss" var="endday" />
+                                         
+                                     <!-- 할인값을 가진 상품들만 모았어도 기간이 지나면 배너 삭제해야함 -->
+                                        <c:if test="${today < endday }">
+                                        	<c:if test="${benefit.bnname eq '이벤트' }">
+                                                  <span class="badge badge-dark">EVENT</span>
                                             </c:if>
-                                            </c:forEach> --%>
+                                     	   
+                                     	    <c:if test="${benefit.bnname eq '기획전' }">
+                                                  <span class="badge badge-dark">SPECIAL</span>
+                                     	    </c:if> 
+ 										</c:if>	
+                                      
                                         </div>
-                                       
+                                        </c:forEach> 
                                         <hr>
                                         <div>
                                        <h6 style="font-size: 10px; font-weight: bold;">${product.brand }</h6>
-                                       <h5 id="pname" style="font-size: 18px; font-weight: bold;">${product.name } </h5>
+                                       <h5 id="pname" style="font-size: 18px; font-weight: bold;"><a class="productlink" href="${ path }/product/detail?no=${product.PNo}">${product.name }
+										</a></h5>	
                                        <p class="card-text" style="font-size: 10px;">${product.eng }</p>
                                    
                                         </div>
                                         
                                         <hr>
                                         <div style="position: relative;">
-                                             <c:forEach var="benefit" items="${product.benefit}" begin="0" end="0">
-                                             <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="enddate"/>
-                                             <c:if test="${not empty product.benefit }">
+                                        
+                        <c:forEach var="benefit" items="${product.benefit}" begin="0" end="0">
+                              <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="enddate"/>
+                                             
+                              <c:if test="${not empty product.benefit }">
+                              
+<!--                               		  할인값을 가진 상품이어도 기간이 지나면, 할인율 해제 하기 위해서 안에 if문 구성     -->
+
+                                     <c:if test="${today < endday }">
                                             <div style="position: absolute; height: 90%; width: 100%; text-align: right; padding: 1px;">
                                                 <span class="badge badge-danger" id="discount"> SALE <br>   ${benefit.bnratio}%</span>
                                             </div>
-                                            <!-- 원가 - (원가 * 할인율) = 세일가  -->
                                            
-                                           
-                                           
-                                           
-                                           <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
+                                              <!-- 할인가 계산 -->
+                                              <!-- 원가 - (원가 * 할인율) = 세일가  -->
+                                             <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
                                              <fmt:parseNumber var="saleprice" value="${product.price*salepricerate}"/>
                                              <fmt:parseNumber var="productsaleprice" value="${product.price-saleprice}"/>
-                                            <p class="card-text" id="pprice" ><fmt:formatNumber value="${productsaleprice}" pattern="###,###"/><span style="font-size: 12px;">won</span> <br>
-                                            <span class="originprice">
-                                            <fmt:formatNumber value="${product.price}" pattern="###,###"/>
-                                            <span class="originprice" style="font-size: 8px;">won</span></span></p>
-                                            
-                                            </c:if>
-											</c:forEach>
+                                             
+                                            <p class="card-text" id="pprice" >
+	                                            <fmt:formatNumber value="${productsaleprice}" pattern="###,###"/><span style="font-size: 12px;">won</span> 
+	                                            <br>
+	                                            
+	                                            <span class="originprice">
+	                                            <fmt:formatNumber value="${product.price}" pattern="###,###"/>
+	                                            <span class="originprice" style="font-size: 8px;">won</span></span>
+                                            </p>
+                                     </c:if>
+                                     
+                                     <c:if test="${today > endday }">
+                                     	<p class="card-text" id="pprice"><fmt:formatNumber value="${product.price}" pattern="###,###"/>  
+                                     	<span style="font-size: 12px;">won</span></p>	 
+                                     </c:if> 
+                                       
+                              </c:if>
+						</c:forEach>
+											
                                             <c:if test="${empty product.productbenefit }">
                                             <p class="card-text" id="pprice"><fmt:formatNumber value="${product.price}" pattern="###,###"/>  <span style="font-size: 12px;">won</span></p>
                                             </c:if>
@@ -787,7 +850,89 @@ setTimeout(() => {
 
 });
 
+function requestLogin(){
+	 alert('로그인 후 다시 이용해주세요.');
+};
 
+	
+function likeCountUpdate(PNo, MNo, like) {
+	 
+	$.ajax({
+		type: 'POST',
+		url: '${path}/likeCountUpdate',
+		dataType: 'json',
+		data: {	
+			PNo, MNo, like
+		},
+		success : (obj) => {
+              let result = '';
+			
+			result = obj.likecount
+			
+			console.log(result)
+			
+		
+			$('#share2' +PNo).html(result);
+			
+			
+		}	
+	
+	});
+	
+
+};
+
+
+
+
+
+	
+	
+function likeCheck(mno, pno) {
+	 let MNo = mno;
+	 let PNo = pno;
+	 console.log(MNo);
+	 console.log(PNo);
+
+	 if(${empty loginMember})  {
+		 alert('로그인 후 다시 이용해주세요.');
+	 } else {
+	 
+	
+			 $.ajax({
+					type: 'POST',
+					url: '${path}/likeCheck',
+					dataType: 'json',
+					data: {	
+						MNo,PNo
+					},
+					success : (result) => {
+						
+						console.log();
+						
+						if(result == 1) {
+							$('.heartimg'+ PNo).attr('src', '${path}/upload/product/love.png')
+							if(confirm('관심 상품을 해제 하시겠습니까?')) {
+								likeCountUpdate(PNo, MNo, result);
+							} 
+							
+						}else if (result == 0) {
+							
+							$('.heartimg' +PNo).attr('src', '${path}/upload/product/free-icon-thumbs-up-3128313.png')
+							if(confirm('관심 상품을 등록 하시겠습니까?')) {
+								likeCountUpdate(PNo, MNo, result);
+							}
+						}
+						
+					}	
+					
+			 });
+	
+		
+	 
+	 };
+
+};
 
 
 
@@ -841,21 +986,21 @@ setTimeout(() => {
    
 
   
-    $(".card").on({
-        "mouseenter":function(){
+//     $(".card").on({
+//         "mouseenter":function(){
            
-            $(this).find('#share').css("visibility","visible");
+//             $(this).find('#share').css("visibility","visible");
         
       
 
 
 
-        },
-        "mouseleave":function(){
-            $(this).find('#share').css("visibility","hidden");
+//         },
+//         "mouseleave":function(){
+//             $(this).find('#share').css("visibility","hidden");
             
-        }
-      });
+//         }
+//       });
  
       $(".card-img-top").on({
         "mouseenter":function(){
