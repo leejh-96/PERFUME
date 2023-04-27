@@ -140,9 +140,7 @@
         background-color: yellowgreen;
     }
     .pay-list{
-        display: flex;
-        justify-content:space-between;
-        align-content: center;
+        text-align: center;
     }
     .payway{
         margin-bottom: 30px;
@@ -222,7 +220,12 @@
 	                  		</c:if>
 	                    </th>
 	                    <th class="align-middle">
-	                        <img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="150px">
+	                        <c:if test="${empty directInfo.file.renameFileName}">
+	                        	등록된 사진이 없습니다.
+	                        </c:if>
+	                        <c:if test="${not empty directInfo.file.renameFileName}">
+                        		<img src="${path}/upload/product/${directInfo.file.renameFileName}" width="150px">
+	                        </c:if>
 	                    </th>
 	                    <th class="align-middle">
 	                        <sub>
@@ -534,7 +537,7 @@
 	    	<div class="container payway">
 	              <h4>결제방법</h4>
 	              <div class="row">
-	                  <div class="col-8 pay-list">
+	                  <div class="col-8 pay-list container">
 	                      <input id="payment" type="hidden" name="pay" value="${memberInfo.memberNo}"><!-- 회원테스트 -->
 	                      <input id="payment2" type="hidden" name="pay" value=""><!-- 비회원테스트 -->
 	                      <button id="pay6" class="btn btn-outline-secondary pay" onclick="payselect(6)" value="html5_inicis">카드결제</button>
@@ -1101,7 +1104,7 @@ $(document).ready(function(){
 				        			contentType: 'application/json; charset=utf-8',
 				        			async : false,
 				        			success : function(obj){
-				        				/*  $('#myModalorder').modal('show') */
+				        				/* $('#myModalorder').modal('show') */
 				        				
 			        					$('input:checkbox[name=cartCheckBox]').each(function(index){
 			        						if (this.disabled == true) {

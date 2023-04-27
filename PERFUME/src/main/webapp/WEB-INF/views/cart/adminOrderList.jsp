@@ -44,11 +44,6 @@
 .statusdr,.statusdc{
 	color: blue;
 }
-
-
-
-
-
 </style>
 </head>
 <body>
@@ -65,7 +60,6 @@
 		                    <th>결제수단</th>
 		                    <th>결제날짜</th>
 		                    <th>주문상태</th>
-		                    <!-- <div class="col-2">등록일자</div> -->
 	                    </tr>
 	       			</thead>
 	       			<tbody id="myTable">
@@ -137,8 +131,6 @@
 				    <button type="button" class="btn btn-warning" onclick="location.href='${ path }/admin/orderList?page=${ pageInfo.maxPage }'">>></button>
 				   
        			</div>
-
-
 
 
 <jsp:include page="/WEB-INF/views/cart/common/adminFootDiv.jsp"/>

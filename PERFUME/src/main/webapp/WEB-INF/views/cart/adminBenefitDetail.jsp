@@ -232,20 +232,12 @@ function deleteBenefit(benefitNo){
 	}
 	
 }
-
-
 $(document).ready(function(){
 	let sDate = new Date();
 	sDate.setDate(sDate.getDate() + 1); 
 	let minStr = sDate.toISOString().split('T')[0];
 	$('#endDate').prop('min', minStr);
 })
-
-
-
-
-
-
 </script>
 </head>
 <body>
@@ -254,7 +246,7 @@ $(document).ready(function(){
 					<table class="table table-hover tabledetail">
 					<tbody>
                			<tr class="table-warning">
-               				<th class="align-middle">
+               				<th class="align-middle" style="width: 200px; height: 200px;">
                					<span>혜택이미지</span>
                				</th>
                				<c:if test="${empty benefit.benefitFileList}">
@@ -263,9 +255,8 @@ $(document).ready(function(){
                				
                				<c:if test="${not empty benefit.benefitFileList}">
                					<c:forEach var="file" items="${benefit.benefitFileList}" varStatus="status">
-		               				<th>
-		               					<%-- <img src="${path}/upload/benefit/${file.renameFileName}" class="rounded img-fluid"> --%>
-				        				<img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="50%" class="rounded img-fluid"> 
+		               				<th style="width: 200px; height: 200px;">
+		               					<img src="${path}/upload/benefit/${file.renameFileName}" width="100%" height="100%" class="rounded img-fluid">
 		               				</th>
                					</c:forEach>
                				</c:if>
@@ -356,14 +347,16 @@ $(document).ready(function(){
 			               				
 			               				<c:if test="${not empty benefit.benefitFileList}">
 				               				<td style="width: 200px">
-						        				<img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" class="rounded img-fluid"> 
+					               				<c:forEach var="file" items="${benefit.benefitFileList}" varStatus="status">
+					               					<img src="${path}/upload/benefit/${file.renameFileName}" width="100%" class="rounded img-fluid">
+					               				</c:forEach>
 				               				</td>
 			               				</c:if>
 			               				<td class="tableback_color align-middle">
 			               					<span>변경이미지등록</span>
 			               				</td>
 			               				<td class="align-middle">
-			               					<input id="" class="upFile" type="file" name="originalFileName" required style="color: orange;">
+			               					<input class="upFile" type="file" name="originalFileName" required style="color: orange;">
 			               				</td>
 			               			</tr>
 			               			<tr>
@@ -452,11 +445,11 @@ $(document).ready(function(){
 		                        		<tr>
 		                        			<th colspan="12">
 		                        			*상품명을 클릭하면 상품의 상세페이지로 넘어갑니다.*<br>
-		                        			*적용하기 버튼을 누르시면 상품이 현재 기획전 할인에 등록 되었는지를 확인 하실 수 있습니다.*
+		                        			*체크 버튼을 누르시면 상품이 현재 기획전 할인에 등록 되었는지를 확인 하실 수 있습니다.*
 		                        			</th>
 		                        		</tr>
 		                        		<tr class="thead">
-					        				<th class="align-middle">썸네일</th>
+					        				<th class="align-middle" style="width: 100px; height: 100px;">썸네일</th>
 					        				<th colspan="2" class="align-middle benefitproducttable">상품번호</th>
 						                    <th colspan="2" class="align-middle benefitproducttable">향구분</th>
 						                    <th colspan="2" class="align-middle benefitproducttable">상품구분</th>
@@ -469,12 +462,13 @@ $(document).ready(function(){
 				                    </thead>
 			        			
 			        			<c:if test="${not empty benefit.productList}">
-			        				<c:forEach var="product" items="${ benefit.productList }">
+			        				<c:forEach var="product" items="${ benefit.productList}" varStatus="status">
 				        				<tbody>
 				        					<tr>
-				        						<th class="align-middle">
-					        						<%-- <img src="${path}/upload/benefit/${file.renameFileName}" width="100px"> --%>
-				        							<img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="100px" class="rounded">
+				        						<th class="align-middle" style="width: 100px; height: 100px;">
+				        						<%-- ${ benefit.productList} --%>
+					        						<img src="${path}/upload/product/${product.renameFileName}" width="100%" height="100%" class="rounded">
+				        							<!-- <img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="100px" class="rounded"> -->
 				        						</th>
 						        				<th colspan="2" class="align-middle benefitproducttable">${product.productNo}</th>
 							                    <th colspan="2" class="align-middle benefitproducttable">${product.topCategoryName}</th>
@@ -484,18 +478,11 @@ $(document).ready(function(){
 							                    <th class="align-middle">${product.productPrice}</th>
 							                    <th colspan="2" class="align-middle benefitproducttable"><fmt:formatDate type="date" value="${product.productDate}"/></th>
 				        						<th class="align-middle">
-													<button id="applyBtn${product.productNo}" type="button" class="btn btn-warning" onclick="benefitApply(${benefit.benefitNo},${product.productNo})">체크하기</button>
+													<button id="applyBtn${product.productNo}" type="button" class="btn btn-warning" onclick="benefitApply(${benefit.benefitNo},${product.productNo})">체크</button>
 													<button id="resetBtn${product.productNo}" style="display: none;" type="button" class="btn btn-warning" onclick="resetApply(${benefit.benefitNo},${product.productNo})">취소하기</button>
 													<span id="notApply${product.productNo}" style="display: none;"></span>
 												</th>
 				        					</tr>
-				        					<%-- <tr>
-				        						<th class="align-middle" colspan="12">
-													<button id="applyBtn${product.productNo}" type="button" class="btn btn-warning" onclick="benefitApply(${benefit.benefitNo},${product.productNo})">체크하기</button>
-													<button id="resetBtn${product.productNo}" style="display: none;" type="button" class="btn btn-warning" onclick="resetApply(${benefit.benefitNo},${product.productNo})">취소하기</button>
-													<span id="notApply${product.productNo}" style="display: none;"></span>
-												</th>
-				        					</tr> --%>
 				        				</tbody>	
 			        				</c:forEach>
 			        			</c:if>

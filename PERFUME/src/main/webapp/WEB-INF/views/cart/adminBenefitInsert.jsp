@@ -39,40 +39,6 @@ table{
 }
 /* 관리자-혜택등록 */
 </style>
-<script type="text/javascript">
-
-	/* $('#benefitName').change(function(){
-		
-		let value = $('#benefitName').value();
-		
-		if (value === '기획전할인') {
-			
-		}
-		
-	}) */
-	
-	
- /*   function check(){
-	let topcategory = $('#topcategory').val();
-	console.log(topcategory)
-	let midcategory = $('#midcategory').val();
-	console.log(midcategory)
-	let productGender = $('#productGender').val();
-	console.log(productGender)
-	
-	if (!$.isNumeric(topcategory)) {
-		alert('향 카테고리를 선택해주세요!')
-		return false;
-	}else if (!$.isNumeric(midcategory)) {
-		alert('상품구분을 선택해주세요!')
-		return false;
-	}else if (!(productGender === '남성'|| productGender === '여성')) {
-		alert('추천성별을 선택해주세요!')
-		return false;
-	}
-} */   
-	
-</script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/cart/common/adminSidebar.jsp"/>
@@ -135,10 +101,6 @@ table{
                             </div>
                             
                            	</form>
-
-
-
-
 <jsp:include page="/WEB-INF/views/cart/common/adminFootDiv.jsp"/>
 </body>
 </html>

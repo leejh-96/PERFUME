@@ -54,9 +54,15 @@ public class CartController {
 	private CartService cartService;
 	
 	@RequestMapping("/cartTest")
-	public String test() {
+	public String test() {//테스트용
 		
 		return "cart/test";
+	}
+	
+	@RequestMapping("/header")
+	public String header() {//테스트용
+		
+		return "cart/headertest";
 	}
 	
 	@RequestMapping("/cart")
@@ -70,8 +76,11 @@ public class CartController {
 		if (member != null) {
 			//회원의 장바구니 상품과 혜택정보를 불러온다.	
 			clist = cartService.selectCartInfo(member.getNo());
+			
 			//회원의 혜택정보를 불러온다.
 			memberInfo = cartService.selectCartMemberInfo(member.getNo());
+			
+			log.info("clist : {}",clist);
 			
 			model.addAttribute("memberInfo", memberInfo);
 			model.addAttribute("clist", clist);
@@ -218,6 +227,9 @@ public class CartController {
 				directInfo = cartService.selectNowOrder(option);
 				
 				if (directInfo != null) {
+					log.info("option : {}",option);
+					log.info("memberInfo : {}",memberInfo);
+					log.info("directInfo : {}",directInfo);
 					model.addAttribute("option", option);
 					model.addAttribute("memberInfo", memberInfo);
 					model.addAttribute("directInfo", directInfo);
@@ -235,6 +247,9 @@ public class CartController {
 			//비회원일 경우
 			directInfo = cartService.selectNowOrder(option);
 			if (directInfo != null) {
+				log.info("option : {}",option);
+				log.info("memberInfo : {}",memberInfo);
+				log.info("directInfo : {}",directInfo);
 				model.addAttribute("option", option);
 				model.addAttribute("memberInfo", memberInfo);
 				model.addAttribute("directInfo", directInfo);

@@ -28,7 +28,7 @@ body { background-color: #f6f6f2; }
 
 input[type="submit"] { background-color: rgb(120, 116, 100); border-color: rgb(120, 116, 100); }
 
-#pageBar { width: 30%; margin-top: 10px; margin-left: auto; margin-right: auto; text-align: center; }
+#pageBar { width: 50%; margin-top: 10px; margin-left: auto; margin-right: auto; text-align: center; }
 
 #pageBar button:hover { background-color: rgb(120, 116, 100); border-color: rgb(120, 116, 100); }
 

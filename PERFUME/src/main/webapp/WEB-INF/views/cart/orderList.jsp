@@ -82,10 +82,6 @@
     
 </head>
 <body>
-<%-- <h1>주문내역 페이지</h1>
-<p>${order}</p>
-<p>${plusPoint}</p> --%>
-
 <jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 
 <div id="cart-wrap" ><!-- 전체 div 시작 -->
@@ -105,9 +101,9 @@
 
                 <h1>주문이 확인되었습니다.</h1>
                 <div class="container ordercp-div">
-                <input id="memberNo" type="hidden" value="${order.memberNo}">
-                ${order.recipientName}님 저희 쇼핑몰을 이용해주셔서 감사합니다.<br>
-                정확한 배송 일정은 문의주시기 바랍니다.
+	                <input id="memberNo" type="hidden" value="${order.memberNo}">
+	                ${order.recipientName}님 저희 쇼핑몰을 이용해주셔서 감사합니다.<br>
+	                정확한 배송 일정은 문의주시기 바랍니다.
                 </div>
                 <!-- 배송정보 -->
                 <table class="table table-bordered">
@@ -187,10 +183,14 @@
             <div class="col-4">
                 <div class="col media-div">
                     <!-- 주문상품리스트 보여주기 -->
-                    
                     <c:forEach var="oList" items="${order.orderList}">
                     <div class="media">
-                        <img src="https://cdn.pixabay.com/photo/2019/04/06/19/22/glass-4108085__480.jpg" class="align-self-center rounded-circle" width="110px" height="110px">
+                        <c:if test="${ empty oList}">
+                        	등록된 사진이 없습니다.
+                        </c:if>
+                        <c:if test="${ not empty oList}">
+                       		<img src="${path}/upload/product/${oList.orderFileName}" class="align-self-center rounded-circle" width="110px" height="110px">
+                        </c:if>
                         <div class="media-body">
                             <a href="${path}/product/detail?no=${oList.productNo}">
                                 <h4 class="media-components"><span>${oList.productBrand}-</span>${oList.productName}</h4>

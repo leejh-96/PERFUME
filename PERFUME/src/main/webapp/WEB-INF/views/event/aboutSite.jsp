@@ -27,7 +27,7 @@
 <body>
 	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
 		<section>
-				<img class="img fade-in" src="images/aboutSite/001.png">
+				<img class="img fade-in" src="${ path }/images/aboutSite/001.png">
 				<img class="img fade-in" src="${ path }/images/aboutSite/002.png">
 				<img class="img fade-in" src="${ path }/images/aboutSite/003.png">
 		</section>

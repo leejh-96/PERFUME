@@ -20,16 +20,18 @@
 	font-size: large;
 	color: orange;
 }
+
  textarea{
     resize: none;
 }
 table{
 	text-align: center;
+	
 }
 .tabledetail{
 	margin-top :50px;
 }
-#myModal{
+#myModal2{
 	z-index: 2000;
 }
 .buttonlist{
@@ -38,7 +40,6 @@ table{
 .tableback_color{
 	background-color: rgb(118, 174, 135);
 }
-
 /* 상품수정 && modal */
 
 </style>
@@ -118,10 +119,10 @@ function deleteProduct(productNo){
                				
                				<c:if test="${not empty product.pfList}">
                					<c:forEach var="file" items="${product.pfList}" varStatus="status">
-		               				<th style="width: 200px">
-		               					<%-- <img src="${path}/upload/product/${file.renameFileName}" class="rounded img-fluid"> --%>
+		               				<th>
 		               					${status.count}번째 상품이미지
-				        				<img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg"  class="rounded img-fluid"> 
+		               					<img src="${path}/upload/product/${file.renameFileName}" width="200px" class="rounded img-fluid">
+		               					<!-- <img src="https://cdn.pixabay.com/photo/2023/04/24/02/51/crimson-rosella-7947000_640.jpg" width="120px" class="rounded img-fluid"> -->
 		               				</th>
                					</c:forEach>
                				</c:if>
@@ -131,11 +132,11 @@ function deleteProduct(productNo){
 							<th colspan="3">${product.topCategoryName}</th>               			
                			</tr>
                			<tr class="table-warning">
-							<th>상품구분(상품/시향지)</th>               			
+							<th>상품구분<br>(상품/시향지)</th>               			
 							<th colspan="3">${product.midCategoryName}</th>               			
                			</tr>
                			<tr class="table-warning">
-							<th>추천성별(남성/여성)</th>          
+							<th>추천성별<br>(남성/여성)</th>          
 							
 							<th colspan="3">
 								<c:if test="${product.productGender == 'M'}">
@@ -332,9 +333,9 @@ function deleteProduct(productNo){
 				               				<c:if test="${not empty product.pfList}">
 				               					<c:forEach var="file" items="${product.pfList}" varStatus="status">
 						               				<td colspan="2">
-						               					<%-- <img src="${path}/upload/product/${file.renameFileName}" class="rounded img-fluid"> --%>
 						               					${status.count}번째 상품이미지
-								        				<img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="200px" class="rounded img-fluid"> 
+						               					<img src="${path}/upload/product/${file.renameFileName}" width="200px" class="rounded img-fluid">
+								        				<!-- <img src="https://cdn.pixabay.com/photo/2023/04/24/02/51/crimson-rosella-7947000_640.jpg" width="200px" class="rounded img-fluid"> -->
 						               				</td>
 				               					</c:forEach>
 				               				</c:if>
@@ -396,6 +397,5 @@ function deleteProduct(productNo){
                		  <!-- The Modal -->
                		 
 <jsp:include page="/WEB-INF/views/cart/common/adminFootDiv.jsp"/>
-
 </body>
 </html>
