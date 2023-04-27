@@ -41,8 +41,6 @@ public class ProductServiceImpl implements ProductService{
 		int offset = (pageInfo.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		System.out.println("여기까지 " + MNo);
-		
 		return mapper.selectAll(rowBounds, gender, sort, bn, keyword, MNo);
 	}
 
@@ -308,7 +306,7 @@ public class ProductServiceImpl implements ProductService{
         int result = 0;
         	
 			result = mapper.insertLike(favorite);
-			System.out.println("result1 : " + result);
+	
 			
 
 		return result; 
@@ -321,7 +319,7 @@ public class ProductServiceImpl implements ProductService{
 		int result = 0;
 		
 		    result = mapper.delelteLike(favorite.getMNo(), favorite.getPNo());
-		    	System.out.println("result2 : " + result);
+		    	
 		  
 		    
 		return result;

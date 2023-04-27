@@ -901,7 +901,12 @@ accent-color: purple;
 						<div id="s5_product">
 							<div id="d7"></div>
 							<div id="s5_productwrap">
-								<div align="center">PERFUME</div>
+							<div align="center">
+							<a class="link"
+										href="${ path }/product/list">
+							<h3 style="font-weight: bold;">PERFUME</h3>
+							</a>
+							</div>
 							</div>
 						</div>
 						<div id="s5_button">
@@ -929,13 +934,13 @@ accent-color: purple;
 						</div>
 						<div id="s5_brand">
 							<!-- <p id="scent"><mark  style="background-color: rgb(243, 239, 236)"> BRAND</mark>  </p> -->
-							<table id="brand-select">
+							<table id="brand-select" >
 								<tr>
 									<th width="100px">BRAND</th>
 									<c:forEach var="product" items="${ brand }">
 									
 												<c:if test="${product.brand == bn }">
-										<td><label for="brand"></label> 
+										<td ><label for="brand"></label> 
 										<c:if test="${not empty gender}">
 												<input type="checkbox" name="brand" id="bn" onclick="brandselect('${productboard.brand}')"
 												checked	onclick="location.href='${ path }/product/list?gender=${gender}&bn=${product.brand}'">${product.brand}
@@ -1107,25 +1112,21 @@ accent-color: purple;
 												</div>
 
 											</div>
-
-											<div class="p-status-wrap" style="position: absolute;">
-											</div>
-											<div
-												style="position: absolute; text-align: center; padding: 3px;">
-												<h5
-													style="color: white; font-weight: bold; font-size: 13px;">NEW</h5>
-
-											</div>
-
+									<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="today"></fmt:parseNumber>
+									<fmt:parseNumber value="${product.date.time / (1000*60*60*24)}" integerOnly="true" var="newdate" />
+									<%-- <fmt:formatDate value="${product.date }" --%>
+<%-- 														pattern="yyyy-MM-dd" var="newdate" /> --%>
+									             <c:if test="${today - newdate le 3}">
+													<div class="p-status-wrap" style="position: absolute;">
+													</div>
+													<div style="position: absolute; text-align: center; padding: 3px;">
+										            <h5 style="color: white; font-weight: bold; font-size: 13px;">NEW</h5>
+													</div>
+	                                             </c:if>	
+	                                             
+	                                             
 											<div class="p-status"
 												style="position: absolute; width: 100%;">
-
-
-
-
-
-
-
 												<%--                                         <c:if test="${product.date}"> --%>
 												<%--                                         </c:if> --%>
 
