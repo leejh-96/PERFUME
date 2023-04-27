@@ -542,46 +542,55 @@ public class EventController {
 		char ch = 'Y';
 //		log.info("동의 여부 확인 : {}",optionAgr);
 		
-		if(!optionAgr.contains(Character.toString(ch))) { // String 과 char 타입이 자바에서는 다르기 때문에 직접 optionAgr != 'Y'이런 식으로 비교하면 에러 발생.
-		// 선택 약관에 동의하지 않았을 때 (optionAgr에 'Y'가 포함되어 있지 않을 때)	약관 동의 선택 여부 묻기
-
-			modelAndView.addObject("msg", "선택 약관에 동의하지 않으시면 참여가 불가능합니다. 동의 후 이벤트에 참여하시겠습니까?");
-			modelAndView.addObject("locationAgr", "/optionAgree?bNo=" + BNo + "&mNo=" + mNo + "&bTitle=" + BTitle);	// 확인 후 작동 잘 하면 수신 동의 참여 컨트롤러로 변경!
-			modelAndView.addObject("locationNotAgr", "/event/eventView?no=" + BNo);	// 수신 동의하지 않을시 해당 페이지에 머무르기		
-			modelAndView.setViewName("event/confirm");
-		} else {
-		// 선택 약관에 동의했을 때 이벤트 참여
+		if(loginMember.getDivision() == 1) {
+			modelAndView.addObject("msg", "관리자 계정은 이벤트 참여가 불가능합니다.");
+			modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+			modelAndView.setViewName("common/msg");
 			
-			int participate = 0;
-			// 이미 참여한 회원인지 확인
-			participate = service.getParticipateEventMNo(mNo);
-			
-			if(participate > 0) {
-				// 이미 참여한 회원
-				modelAndView.addObject("msg", "이미 이벤트에 참여하셨습니다.");
-				modelAndView.addObject("location", "/event/eventView?no=" + BNo);	
+		}else {
+		
+			if(!optionAgr.contains(Character.toString(ch))) { // String 과 char 타입이 자바에서는 다르기 때문에 직접 optionAgr != 'Y'이런 식으로 비교하면 에러 발생.
+			// 선택 약관에 동의하지 않았을 때 (optionAgr에 'Y'가 포함되어 있지 않을 때)	약관 동의 선택 여부 묻기
+	
+				modelAndView.addObject("msg", "선택 약관에 동의하지 않으시면 참여가 불가능합니다. 동의 후 이벤트에 참여하시겠습니까?");
+				modelAndView.addObject("locationAgr", "/optionAgree?bNo=" + BNo + "&mNo=" + mNo + "&bTitle=" + BTitle);	// 확인 후 작동 잘 하면 수신 동의 참여 컨트롤러로 변경!
+				modelAndView.addObject("locationNotAgr", "/event/eventView?no=" + BNo);	// 수신 동의하지 않을시 해당 페이지에 머무르기		
+				modelAndView.setViewName("event/confirm");
 			} else {
-				// EVENT_MEMBER에 회원 mNo INSERT
+			// 선택 약관에 동의했을 때 이벤트 참여
 				
-				// BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
-				int bnNo = 0;
-				bnNo = service.getBnNoByBTitle(BTitle);
+				int participate = 0;
+				// 이미 참여한 회원인지 확인
+				participate = service.getParticipateEventMNo(mNo);
 				
-				// 이벤트 참여 회원 DB에 저장
-				int successParticipate = 0;
-				successParticipate = service.participateEvent(mNo, bnNo);
-				
-				if(successParticipate > 0) {
-					modelAndView.addObject("msg", "이벤트 참여가 완료되었습니다. 당첨자에게는 문자를 전송해 드리니 당첨일 이후 확인부탁드립니다.");
-					modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+				if(participate > 0) {
+					// 이미 참여한 회원
+					modelAndView.addObject("msg", "이미 이벤트에 참여하셨습니다.");
+					modelAndView.addObject("location", "/event/eventView?no=" + BNo);	
 				} else {
-					modelAndView.addObject("msg", "이벤트 참여가 정상적으로 완료되지 않았습니다.");
-					modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+					// EVENT_MEMBER에 회원 mNo INSERT
+					
+					// BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
+					int bnNo = 0;
+					bnNo = service.getBnNoByBTitle(BTitle);
+					
+					// 이벤트 참여 회원 DB에 저장
+					int successParticipate = 0;
+					successParticipate = service.participateEvent(mNo, bnNo);
+					
+					if(successParticipate > 0) {
+						modelAndView.addObject("msg", "이벤트 참여가 완료되었습니다. 당첨자에게는 문자를 전송해 드리니 당첨일 이후 확인부탁드립니다.");
+						modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+					} else {
+						modelAndView.addObject("msg", "이벤트 참여가 정상적으로 완료되지 않았습니다.");
+						modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+					}
+					
 				}
-				
+	
 			}
-
 			modelAndView.setViewName("common/msg");		
+		
 		}
 		
 		return modelAndView;
