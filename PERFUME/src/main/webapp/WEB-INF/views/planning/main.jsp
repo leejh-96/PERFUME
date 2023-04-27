@@ -60,7 +60,7 @@
   			</div>
 		</div>
         <div id="banner" class="banner2">
-        	<div><a href="${ path }/event/eventView?no=1"><img src="${ path }/images/planning/banner002.png"></a></div>
+        	<div><a href="${ path }/event/eventView?no=141"><img src="${ path }/images/planning/banner002.png"></a></div>
         </div>
         <div id="article" class="article3">
 		    <div id="article-slider" class="article-slider3" style="float:left;">
