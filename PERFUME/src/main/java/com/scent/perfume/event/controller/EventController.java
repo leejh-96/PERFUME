@@ -60,7 +60,7 @@ public class EventController {
 		System.out.println("사이트 소개창 연결 테스트");
 		return "event/aboutSite";
 	}
-	
+
 	
 // 회원가입 페이지 연결
 	@GetMapping("join")
@@ -121,8 +121,9 @@ public class EventController {
         // 휴대폰 api 쪽으로 가기
         eventServiceImpl.certifiedPhoneNumber(phoneNumber, numStr);
         
-        //찐으로 쓸 때  return numStr; 서비스 api도 변경하기
-        return "0000";
+        //찐으로 쓸 때  서비스 api도 변경하기
+        return numStr;
+        //return "0000";
     }
 	
 // 회원가입
@@ -667,17 +668,17 @@ public class EventController {
 					
 					if(setBenefit > 0 ) { // 제대로 저장 완료
 //						// epMNo로 당첨자 전화번호 알아오기
-//						String winnerPhone = service.findPhoneNoForWinner(epMNo);
-//						log.info("당첨자 폰번호 : {}", winnerPhone);
+						String winnerPhone = service.findPhoneNoForWinner(epMNo);
+						log.info("당첨자 폰번호 : {}", winnerPhone);
 //						
 //						// 폰번호 받아와 문자 전송 coolsms api로					
-//						if (eventServiceImpl.sendSMSToWinner(winnerPhone, BTitle)) {
+						if (eventServiceImpl.sendSMSToWinner(winnerPhone, BTitle)) {
 							modelAndView.addObject("msg", "당첨자 추첨이 완료되었습니다. 관리자 페이지에서 발급된 쿠폰을 확인해주세요.");
 							modelAndView.addObject("location", "/event/eventView?no=" + BNo);
-//					    } else {
-//					    	modelAndView.addObject("msg", "메세지 전송에 실패하였습니다.");
-//							modelAndView.addObject("location", "/event/eventView?no=" + BNo);
-//					    }
+					    } else {
+					    	modelAndView.addObject("msg", "메세지 전송에 실패하였습니다.");
+					    	modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+					    }
 							
 					} else { // 베네핏 저장 실패
 						modelAndView.addObject("msg", "당첨자 추첨이 제대로 완료되지 않았습니다. BENEFIT INSERT ERROR");

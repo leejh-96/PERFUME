@@ -36,8 +36,8 @@ public class EventServiceImpl implements EventService {
 	// 회원가입 전화번호인증 문자전송
 	@Transactional
 	public void certifiedPhoneNumber(String phoneNumber, String numStr) {
-		String api_key = "테스트시홈피에서키받아서하기";
-		String api_secret = "테스트할때홈피에서키받아서하기";
+		String api_key = "NCSWVWI29SPJDRIE";
+		String api_secret = "0VP1LIITRL1C4ODRRN0VGG3ZXFW2Z6WN";
 		Message coolsms = new Message(api_key, api_secret);
 		
 		
@@ -316,8 +316,8 @@ public class EventServiceImpl implements EventService {
 	// 향수 증정 이벤트 당첨자 문자 전송
 	@Transactional
 	public boolean sendSMSToWinner(String winnerPhone, String BTitle) {
-		String api_key = "홈피에서 받아오기";
-		String api_secret = "홈피에서 받아오기";
+		String api_key = "NCSWVWI29SPJDRIE";
+		String api_secret = "0VP1LIITRL1C4ODRRN0VGG3ZXFW2Z6WN";
 		Message coolsms = new Message(api_key, api_secret);
 		
 		HashMap<String, String> params = new HashMap<String, String>();
