@@ -121,7 +121,8 @@ function deleteProduct(productNo){
                					<c:forEach var="file" items="${product.pfList}" varStatus="status">
 		               				<th>
 		               					${status.count}번째 상품이미지
-		               					<img src="${path}/upload/product/${file.renameFileName}" class="rounded img-fluid">
+		               					<img src="${path}/upload/product/${file.renameFileName}" width="200px" class="rounded img-fluid">
+		               					<!-- <img src="https://cdn.pixabay.com/photo/2023/04/24/02/51/crimson-rosella-7947000_640.jpg" width="120px" class="rounded img-fluid"> -->
 		               				</th>
                					</c:forEach>
                				</c:if>
@@ -131,11 +132,11 @@ function deleteProduct(productNo){
 							<th colspan="3">${product.topCategoryName}</th>               			
                			</tr>
                			<tr class="table-warning">
-							<th>상품구분(상품/시향지)</th>               			
+							<th>상품구분<br>(상품/시향지)</th>               			
 							<th colspan="3">${product.midCategoryName}</th>               			
                			</tr>
                			<tr class="table-warning">
-							<th>추천성별(남성/여성)</th>          
+							<th>추천성별<br>(남성/여성)</th>          
 							
 							<th colspan="3">
 								<c:if test="${product.productGender == 'M'}">
@@ -334,7 +335,7 @@ function deleteProduct(productNo){
 						               				<td colspan="2">
 						               					${status.count}번째 상품이미지
 						               					<img src="${path}/upload/product/${file.renameFileName}" width="200px" class="rounded img-fluid">
-								        				<!-- <img src="https://cdn.pixabay.com/photo/2017/09/06/12/05/perfume-2721147__480.jpg" width="200px" class="rounded img-fluid">  -->
+								        				<!-- <img src="https://cdn.pixabay.com/photo/2023/04/24/02/51/crimson-rosella-7947000_640.jpg" width="200px" class="rounded img-fluid"> -->
 						               				</td>
 				               					</c:forEach>
 				               				</c:if>

@@ -140,9 +140,7 @@
         background-color: yellowgreen;
     }
     .pay-list{
-        display: flex;
-        justify-content:space-between;
-        align-content: center;
+        text-align: center;
     }
     .payway{
         margin-bottom: 30px;
@@ -1160,7 +1158,7 @@
 				        			contentType: 'application/json; charset=utf-8',
 				        			async : false,
 				        			success : function(obj){
-				        				/* $('#myModalorder').modal('show')  */
+				        				/* $('#myModalorder').modal('show') */
 				        				
 			        					$('input:checkbox[name=cartCheckBox]').each(function(index){
 			        						if (this.disabled == true) {
@@ -1205,7 +1203,7 @@
 				        			}
 				        		})
 				        		payment = '';
-				        		/*  $('#myModalorder').modal('hide')  */
+				        		 /* $('#myModalorder').modal('hide') */  
  				        		window.location.href='${path}/cart/orderList/'+order.orderNo+'/'+order.memberNo+'/'+plusPoint;
  				        	} else {
 				        		//결제 실패 로직
@@ -1296,7 +1294,7 @@
             	<div class="spinner-border d-flex justify-content-center" style="width: 10rem; height: 10rem;" role="status">
                     <span class="sr-only">결제가 진행 중입니다~~~~~</span>
                 </div>
-          	</div> -->
+          	</div>  -->
 	    
 	      	<div id="cart-sup">
 	          	<span id="cartSequence" class="sequence">01장바구니</span>
@@ -1351,7 +1349,7 @@
 	                    </th>
 	                    <th class="align-middle">
 	                        <sub>
-	                            <a href="${path}/product/detail?no=${cart.cartProduct.productNo}">
+	                            <a href="${path}/product/detail?no=${cart.productNo}">
 	                            	<span>[${cart.cartProduct.productBrand}]</span>
 	                            	<span>${cart.cartProduct.productEngName}</span><br>
 	                                <span>${cart.cartProduct.productTitle}</span><br>
@@ -1666,7 +1664,7 @@
 	    	<div class="container payway">
 	              <h4>결제방법</h4>
 	              <div class="row">
-	                  <div class="col-8 pay-list">
+	                  <div class="col-8 pay-list container">
 	                      <input id="payment" type="hidden" name="pay" value="${memberInfo.memberNo}"><!-- 회원테스트 -->
 	                      <!-- <input id="payment2" type="hidden" name="pay" value="">비회원테스트 -->
 	                      <button id="pay6" class="btn btn-outline-secondary pay" onclick="payselect(6)" value="html5_inicis">카드결제</button>
