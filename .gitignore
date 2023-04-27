@@ -14,7 +14,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-*.png
+
 
 # External tool builders
 .externalToolBuilders/
@@ -48,6 +48,7 @@ local.properties
 
 # STS (Spring Tool Suite)
 .springBeans
+*.png
 
 # Code Recommenders
 .recommenders/

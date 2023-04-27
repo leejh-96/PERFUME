@@ -806,7 +806,10 @@
                         P_PRICE,
                         LIKE_COUNT,
                         BN_NAME B_BN_NAME,
+                        BN_TITLE B_BN_TITLE,
+                        BN_CONTENT B_BN_CONTENT,
                         BN_RATIO B_BN_RATIO,
+                        BN_CREATEDATE B_BN_CREATEDATE,
                         BN_ENDDATE AS B_BN_ENDDATE,
                         PF_RENAMEFILENAME AS PF_PF_RENAMEFILENAME,
                         PF_SORT AS PF_PF_SORT
