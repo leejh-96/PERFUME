@@ -194,7 +194,7 @@
             </div>
         </div>
         <div id="submitDiv">
-            <button id="btnSubmit" class="btn btn-secondary btn-lg" type="submit" >회원가입</button>
+            <button id="btnSubmit" class="btn btn-secondary btn-lg" type="submit" ><b>회원가입</b></button>
         </div>
     </form>
     </section>    
