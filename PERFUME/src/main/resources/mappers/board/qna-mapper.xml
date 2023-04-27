@@ -5,7 +5,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- mapper namespace를 mapper인터페이스의 이름 으로 지정해야 한다. -->
-<mapper namespace="com.scent.perfume.board.model.mapper.BoardMapper">
+<mapper namespace="com.scent.perfume.board.model.mapper.QnABoardMapper">
 	<sql id="boardListSql">
 		SELECT B.B_NO, 
 			   B.B_TITLE, 
@@ -14,40 +14,44 @@
 			   B.B_CREATEDATE
 		FROM BOARD B 
 		JOIN MEMBER M ON(B.M_NO = M.M_NO) 
-		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE LIKE '%공지사항%'
+		WHERE B.B_STATUS = 'Y' AND B.BC_TYPE LIKE '%QnA%'
 	</sql>
 
 	<!-- DB 의 조회 결과와 자바의 객체를 명시적으로 mapping해줄 때 사용한다. -->
-	<resultMap id="boardListResultMap" type="Notice">
-		<id property="BNo" column="B_NO"/>
-		<result property="BMno" column="M_NO"/>
-		<result property="BTitle" column="B_TITLE"/>
-		<result property="writerId" column="M_ID"/>
-		<result property="BCount" column="B_COUNT"/>
-		<result property="BContent" column="B_CONTENT"/>
-		<result property="BType" column="BC_TYPE"/>
-		<result property="BStatus" column="B_STATUS"/>
-		<result property="BCreateDate" column="B_CREATEDATE"/>
-		<result property="BUpdateDate" column="B_UPDATEDATE"/>
-		<result property="Notice_yn" column="NOTICE_YN"/>
+	<resultMap id="boardListResultMap" type="com.scent.perfume.board.model.vo.QnABoard">
+		<id property="No" column="B_NO"/>
+		<result property="Title" column="B_TITLE"/>
+		<result property="WriterId" column="M_ID"/>
+		<result property="Content" column="B_CONTENT"/>
+		<result property="ReadCount" column="B_COUNT"/>
+		<result property="CreateDate" column="B_CREATEDATE"/>
+	</resultMap>
+	
+	<!-- return 타입은 Board인스턴스이므로 해당 Mapper 인터페이스의 추상메서드와 맞춰줘야 한다. -->
+	<resultMap id="boardDetailResultMap" type="com.scent.perfume.board.model.vo.QnABoard" extends="boardListResultMap">
+		<result property="Content" column="B_CONTENT"/>
+		<result property="Type" column="BC_TYPE"/>
+		<result property="ModifyDate" column="B_UPDATEDATE"/>
+		<collection property="Replies" javaType="arraylist" columnPrefix="R_" resultMap="replyResultMap"/>
+	</resultMap>
+	
+	<resultMap id="replyResultMap" type="com.scent.perfume.board.model.vo.Reply">
+		<id property="No" column="NO"/>
+		<result property="BoardNo" column="B_NO"/>
+		<result property="Content" column="CONTENT"/>
+		<result property="Status" column="STATUS"/>
+		<result property="WriterNo" column="WRITER_NO"/>
+		<result property="CreateDate" column="CREATE_DATE"/>
+		<result property="ModifyDate" column="MODIFY_DATE"/>
 	</resultMap>
 	
 	<!-- 게시글 목록 조회 -->
 	<select id="selectBoardCount" resultType="_int">
-		SELECT COUNT(*) FROM BOARD WHERE B_STATUS='Y' AND BC_TYPE = '공지사항'
+		SELECT COUNT(*) FROM BOARD WHERE B_STATUS='Y'
 	</select>
 	
 	<select id="selectAll" resultMap="boardListResultMap">
 		<include refid="boardListSql"/>
-		<choose>
-			<when test='Notice_yn == "Y"'>
-				AND NOTICE_YN = 'Y'
-			</when>
-			<when test='Notice_yn == "N"'>
-				AND NOTICE_YN = 'N'
-			</when>
-		</choose>
-		
 		ORDER BY B.B_NO DESC
 	</select>
 
@@ -158,83 +162,110 @@
 	</select>
 	
 	<!-- 
-		게시글 상세 조회
+		게시글 상세 조회(댓글 포함)
 		return 타입은 resultMap의  return 타입으로 확인해야 한다. 
 	-->
-	<select id="selectBoardByNo" parameterType="_int" resultMap="boardListResultMap">
-		SELECT B.B_NO,
-		       B.B_TITLE, 
-		       M.M_NO, 
-		       M.M_ID,
-		       B.B_COUNT,
+	<select id="selectBoardByNo" parameterType="_int" resultMap="boardDetailResultMap">
+		SELECT B.B_NO ,
+		       B.B_TITLE , 
+		       M.M_ID , 
+		       B.B_COUNT,	
 		       B.B_CONTENT,
-		       B.B_CREATEDATE,
-		       B.B_UPDATEDATE
+		       B.B_CREATEDATE AS CREATE_DATE,
+		       B.B_UPDATEDATE,
+		       R.NO AS "R_NO",
+		       R.B_NO AS "R_BOARD_NO",
+		       R.CONTENT AS "R_CONTENT",
+		       M2.M_ID AS "R_ID",
+		       R.CREATE_DATE AS "R_CREATE_DATE",
+		       R.MODIFY_DATE AS "R_MODIFY_DATE"
 		FROM BOARD B
 		INNER JOIN MEMBER M ON(B.M_NO = M.M_NO)
-		WHERE B.B_STATUS = 'Y' AND B.B_NO = #{BNo}
+		LEFT OUTER JOIN REPLY R ON(B.B_NO = R.B_NO)
+		LEFT OUTER JOIN MEMBER M2 ON(R.WRITER_NO = M2.M_NO)
+		WHERE B.B_STATUS = 'Y' AND B.B_NO = #{No}
+	</select>
+
+	<select id="selectReplyByNo" parameterType="_int" resultMap="replyResultMap">
+		SELECT R.NO,
+			   R.B_NO,
+			   R.WRITER_NO,
+			   M.M_ID,
+			   R.CONTENT,
+			   R.STATUS,
+			   R.CREATE_DATE,
+			   R.MODIFY_DATE
+		FROM REPLY R
+		INNER JOIN MEMBER M ON (R.WRITER_NO = M.M_NO)
+		WHERE R.NO = #{no} AND R.STATUS = 'Y'
 	</select>
 
 	<!-- 게시글 등록 -->
-	<insert id="insertBoard" parameterType="Notice"
-			useGeneratedKeys="true" keyProperty="BNo" keyColumn="B_NO">
-		INSERT INTO BOARD (
+	<insert id="insertBoard" parameterType="com.scent.perfume.board.model.vo.QnABoard"
+			useGeneratedKeys="true" keyProperty="No" keyColumn="NO">
+	INSERT INTO BOARD (
 			B_NO,
 			M_NO,
 			B_TITLE,
 			B_CONTENT,
-			BC_TYPE,
-			NOTICE_YN
+			BC_TYPE
 		)
 		VALUES(
 			SEQ_BOARD_B_NO.NEXTVAL,
-			#{BMno},
-			#{BTitle},
-			#{BContent},
-			'공지사항',
-			<trim suffixOverrides=",">
-				<choose>
-					<when test='Notice_yn == "Y"'>
-						'Y',
-					</when>
-					<when test='Notice_yn == "N"'>
-						'N',
-					</when>
-				</choose>
-			</trim>
+			#{board.WriterNo},
+			#{board.Title},
+			#{board.Content},
+			'QnA'
+		)
+	</insert>
+	
+	<!-- 댓글 등록 -->
+	<insert id="insertReply" parameterType="com.scent.perfume.board.model.vo.Reply"
+			useGeneratedKeys="true" keyProperty="No" keyColumn="NO">
+		INSERT INTO REPLY (
+			NO,
+			B_NO,
+			WRITER_NO,
+			CONTENT
+		)
+		VALUES(
+			SEQ_BOARD_REPLY_NO.NEXTVAL,
+			#{BoardNo},
+			#{WriterNo},
+			#{Content}
 		)
 	</insert>
 	
 	<!-- 게시글 수정 -->
-	<update id="updateBoard" parameterType="Notice">
+	<update id="updateBoard" parameterType="com.scent.perfume.board.model.vo.QnABoard">
 		UPDATE BOARD 
 		<trim prefix="SET" suffixOverrides=",">
-			<if test="BTitle != null">
-				B_TITLE = #{BTitle},
+			<if test="Title != null">
+				B_TITLE = #{Title},
 			</if>
-			<if test="BContent != null">
-				B_CONTENT = #{BContent},
+			<if test="Content != null">
+				B_CONTENT = #{Content},
 			</if>
-			B_UPDATEDATE = SYSDATE,
-			<choose>
-				<when test='Notice_yn == "Y"'>
-					NOTICE_YN = 'Y',
-				</when>
-				<when test='Notice_yn == "N"'>
-					NOTICE_YN = 'N',
-				</when>
-			</choose>
+			<if test="CreateDate != null">
+				B_CREATEDATE = #{CreateDate},
+			</if>
+			B_UPDATEDATE = SYSDATE
 		</trim>
-		WHERE B_NO = #{BNo}
+		WHERE B_NO = #{No}
 	</update>
 	
 	<!-- 게시글 삭제 -->
 	<update id="updateStatus" parameterType="map">
-		UPDATE BOARD SET B_STATUS = #{BStatus} WHERE B_NO = #{BNo}
+		UPDATE BOARD SET B_STATUS = #{status} WHERE B_NO = #{No}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<update id="updateReplyStatus" parameterType="map">
+		UPDATE REPLY SET B_STATUS = #{status} WHERE B_NO = #{No}
 	</update>
 	
 	<!-- 게시글 조회수 증가 -->
-	<update id="updateReadCount" parameterType="Notice">
-		UPDATE BOARD SET B_COUNT = B_COUNT + 1 WHERE B_NO = #{board.BNo}
+	<update id="updateReadCount" parameterType="com.scent.perfume.board.model.vo.QnABoard">
+		UPDATE BOARD SET B_COUNT = B_COUNT + 1 WHERE B_NO = #{board.No}
 	</update>
 </mapper>

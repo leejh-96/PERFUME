@@ -794,7 +794,7 @@
 	                                        </div> 
 	                                        </c:if>
 	                                            
-	                                           <c:if test="${benefit.bnname eq '기획전' }">
+	                                           <c:if test="${benefit.bnname eq '기획전할인' }">
 	                                           <div style="position: absolute; text-align: center; padding: 10px; height: 70px; color: rgb(86, 85, 85);"id="event11${product.PNo }" onclick="eventclick(${product.PNo})" >  
                                                   <span class="badge badge-dark">SPECIAL</span>   
                                                     <div style="position: absolute; border: 1px solid; height: 60px; width: 150px; background-color: white; font-size: 12px; display: none" id="event12${product.PNo }" >

@@ -62,11 +62,11 @@
                 <h2 style="text-align: center;">LOGIN</h2>
                 <form id="loginForm" action="${ path }/login" method="POST">
                     <div>
-                        <label for="id" style="font-weight: bold;">아이디</label><br>
+                        <label for="id" style="font-weight: bold; text-align: center;">아이디</label><br>
                         <input type="text" id="id" name="id" required placeholder="아이디를 입력하세요."><br>
-                        <label for="pwd" style="font-weight: bold;">비밀번호</label><br>
+                        <label for="pwd" style="font-weight: bold; text-align: center;">비밀번호</label><br>
                         <input type="password" id="pwd" name="pwd" required placeholder="비밀번호를 입력하세요."><br><br>
-                        <button type="submit">Login</button><br><br>
+                        <button type="submit" style="width:220px;">Login</button><br><br>
                     </div>
                 </form>
                     <div>
@@ -74,8 +74,8 @@
       					<a href="${ path }/planning/findPwd"><button type="button" id="findPwd">비밀번호 찾기</button></a><br><br>
                     </div>
                     <ul style="list-style: none;">
-                        <li onclick="kakaoLogin();"><button type="button">카카오로 로그인</button></li>
-                        <li id="googleLogin" onclick="googleLogin();"><button type="button">구글로 로그인</button></li>
+                        <li onclick="kakaoLogin();"><button type="button" style="width:220px; margin-right:40px;">카카오로 로그인</button></li>
+                        <li id="googleLogin" onclick="googleLogin();"><button type="button" style="width:220px; margin-right:40px;">구글로 로그인</button></li>
                     </ul>
             </div>
         </div>

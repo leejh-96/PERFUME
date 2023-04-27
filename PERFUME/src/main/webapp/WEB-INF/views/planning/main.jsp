@@ -29,12 +29,12 @@
             	<p style="text-align: center;">당신에게 어울리는 향을 아직 찾지 못하셨나요?<br><br>매일 입고되는 NAEUM의 새로운 향들,<br>NAEUM과 함께 당신에게 어울리는 향을<br>찾아나가는 여정을 떠나보아요.</p>
             </div>
             <div id="article-slider" class="article-slider1" style="float:right;">
-                <div><a href="#"><img src="${ path }/images/planning/new001.png"></a></div>
-                <div><a href="#"><img src="${ path }/images/planning/new002.png"></a></div>
-                <div><a href="#"><img src="${ path }/images/planning/new003.png"></a></div>
-                <div><a href="#"><img src="${ path }/images/planning/new004.png"></a></div>
-                <div><a href="#"><img src="${ path }/images/planning/new005.png"></a></div>
-                <div><a href="#"><img src="${ path }/images/planning/new006.png"></a></div>
+                <div><a href="${ path }/product/detail?no=7"><img src="${ path }/upload/product/PERFUME19-1.jpg"></a></div>
+                <div><a href="${ path }/product/detail?no=14"><img src="${ path }/upload/product/PERFUME4-1.jpg"></a></div>
+                <div><a href="${ path }/product/detail?no=9"><img src="${ path }/upload/product/PERFUME15-1.jpg"></a></div>
+                <div><a href="${ path }/product/detail?no=20"><img src="${ path }/upload/product/PERFUME20-1.jpg"></a></div>
+                <div><a href="${ path }/product/detail?no=2"><img src="${ path }/upload/product/PERFUME7-1.jpg"></a></div>
+                <div><a href="${ path }/product/detail?no=13"><img src="${ path }/upload/product/PERFUME5-1.jpg"></a></div>
             </div>
     		<button class="next-slide1">다음</button>
         </div>
@@ -60,16 +60,16 @@
   			</div>
 		</div>
         <div id="banner" class="banner2">
-        	<div><a href="${ path }/event/eventView?no=1"><img src="${ path }/images/planning/banner002.png"></a></div>
+        	<div><a href="${ path }/event/eventView?no=141"><img src="${ path }/images/planning/banner002.png"></a></div>
         </div>
         <div id="article" class="article3">
 		    <div id="article-slider" class="article-slider3" style="float:left;">
-		        <div><a href="#"><img src="${ path }/images/planning/sale001.png"></a></div>
-		        <div><a href="#"><img src="${ path }/images/planning/sale002.png"></a></div>
-		        <div><a href="#"><img src="${ path }/images/planning/sale003.png"></a></div>
-		        <div><a href="#"><img src="${ path }/images/planning/sale004.png"></a></div>
-		        <div><a href="#"><img src="${ path }/images/planning/sale005.png"></a></div>
-		        <div><a href="#"><img src="${ path }/images/planning/sale006.png"></a></div>
+		        <div><a href="${ path }/product/detail?no=28"><img src="${ path }/upload/product/PERFUME25-1.jpg"></a></div>
+		        <div><a href="${ path }/product/detail?no=17"><img src="${ path }/upload/product/PERFUME9-1.jpg"></a></div>
+		        <div><a href="${ path }/product/detail?no=12"><img src="${ path }/upload/product/PERFUME3-1.jpg"></a></div>
+		        <div><a href="${ path }/product/detail?no=11"><img src="${ path }/upload/product/PERFUME13-1.jpg"></a></div>
+		        <div><a href="${ path }/product/detail?no=5"><img src="${ path }/upload/product/PERFUME8-1.jpg"></a></div>
+		        <div><a href="${ path }/product/detail?no=21"><img src="${ path }/upload/product/PERFUME21-1.jpg"></a></div>
 		    </div>
 		    <button class="next-slide3">다음</button>
 		    <div style="float:right;">

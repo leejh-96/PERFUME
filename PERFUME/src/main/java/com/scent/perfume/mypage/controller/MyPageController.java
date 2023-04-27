@@ -73,6 +73,30 @@ public class MyPageController {
 			return "mypage/mypage";
 	}
 	
+	 @GetMapping("/confirmPassword/changeInfo")
+	    public String changeInfoPage() {
+	        return "mypage/changeInfo";
+	    }
+	 
+//	 @GetMapping("/pointHistory/all")
+//	    public String getAllPointHistory() {
+//	        return "mypage/point-history-all";
+//	    }
+	 
+	 @GetMapping("/confirmPassword/changePassword")
+	    public String changePasswordPage() {
+	        return "mypage/changePassword";
+	    }
+	 
+	 @GetMapping("/myReview")
+	    public String myReviewPage() {
+	        return "mypage/myReview";
+	    }
+	 
+//	 @GetMapping("/myReview")
+//	    public String getMyReview {
+//	        return "mypage/myReview";
+//	    }
 	
 	
 //	@GetMapping("/confirmPassword/changeInfo")
@@ -173,22 +197,23 @@ public class MyPageController {
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/changePassword", method=RequestMethod.POST)
-	public String changePassword(@RequestParam("curPassword") String curPassword,
-		@RequestParam("newPassword") String newPassword, Principal principal, Model model) throws Exception {
-		try {
-			MemberDTO memberDTO = MyPageMemberService.getMemberId(principal.getName());
-			if(service.changePassword(curPassword, newPassword, memberDTO)) {
-				model.addAttribute("memberDTO", memberDTO);
-				return "1";
-			}
-			return "2";
-		} catch(Exception e) {
-			log.info(e.getMessage());
-			return "3";
-		}
-	}
+	// 196~211 주석처리
+//	@ResponseBody
+//	@RequestMapping(value="/changePassword", method=RequestMethod.POST)
+//	public String changePassword(@RequestParam("curPassword") String curPassword,
+//		@RequestParam("newPassword") String newPassword, Principal principal, Model model) throws Exception {
+//		try {
+//			MemberDTO memberDTO = MyPageMemberService.getMemberId(principal.getName());
+//			if(service.changePassword(curPassword, newPassword, memberDTO)) {
+//				model.addAttribute("memberDTO", memberDTO);
+//				return "1";
+//			}
+//			return "2";
+//		} catch(Exception e) {
+//			log.info(e.getMessage());
+//			return "3";
+//		}
+//	}
 	
 	@ResponseBody
 	@RequestMapping(value="/changeInfo", method=RequestMethod.POST)

@@ -117,7 +117,7 @@
 					  // 기본 이벤트 동작을 중단. href 속성을 변경하기 위해 앵커태그의 이벤트 중단시킴				  
 					  event.preventDefault();
 					  // url 다시 지정
-					  var url = '${ path }/participatePresentPerfume?bNo=${ board.BNo }&bTitle=${ board.BTitle }';
+					  var url = '${ path }/participatePresentPerfume?bNo=${ board.BNo }&&bTitle=${ board.BTitle }';
 					  // 새로운 URL로 이동합니다.
 					  window.location.href = url;
 				 } else {
