@@ -34,9 +34,9 @@ public interface QnABoardMapper {
 	
 	int updateReplyStatus(@Param("no") int no, @Param("status") String status);
 	
-	int insertBoard(QnABoard board);
+	int insertBoard(@Param("board") QnABoard board);
 	
-	int updateBoard(QnABoard board);
+	int updateBoard(@Param("board") QnABoard board);
 
 	int updateReadCount(@Param("board")QnABoard board);
 

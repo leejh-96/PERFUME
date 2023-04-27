@@ -137,9 +137,10 @@ public class QnABoardController {
 	public ModelAndView write(ModelAndView modelAndView, @ModelAttribute QnABoard board,
 			@SessionAttribute("loginMember") Member loginMember) {
 		int result = 0;
-
+		
 //	2. 작성한 게시글 데이터를 데이터 베이스에 저장
 		board.setWriterNo(loginMember.getNo());
+		log.info("board : {}",board);
 		result = service.save(board);
 		
 		if (result > 0) {

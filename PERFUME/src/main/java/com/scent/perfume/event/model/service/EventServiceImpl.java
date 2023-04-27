@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.scent.perfume.common.util.PageInfo;
 import com.scent.perfume.event.model.mapper.EventMapper;
-import com.scent.perfume.event.model.vo.ReplyBoard;
+import com.scent.perfume.event.model.vo.Board;
 import com.scent.perfume.event.model.vo.Terms;
 import com.scent.perfume.planning.model.vo.Member;
 
@@ -123,7 +123,7 @@ public class EventServiceImpl implements EventService {
 	}
 	@Override
 	@Transactional
-	public List<ReplyBoard> getEventList(PageInfo pageInfo) {
+	public List<Board> getEventList(PageInfo pageInfo) {
 		int limit = pageInfo.getListLimit();
 		int offset = (pageInfo.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset,limit);
@@ -139,7 +139,7 @@ public class EventServiceImpl implements EventService {
 	}
 	@Override
 	@Transactional
-	public List<ReplyBoard> getEventListByKeyword(PageInfo pageInfo, String type, String keyword) {
+	public List<Board> getEventListByKeyword(PageInfo pageInfo, String type, String keyword) {
 		int limit = pageInfo.getListLimit();
 		int offset = (pageInfo.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset,limit);
@@ -150,7 +150,7 @@ public class EventServiceImpl implements EventService {
 // 상세 게시글 보기
 	@Override
 	@Transactional
-	public ReplyBoard findBoardByNo(int no) {
+	public Board findBoardByNo(int no) {
 		return mapper.selectEventViewByNo(no);
 	}
 	@Override
@@ -191,7 +191,7 @@ public class EventServiceImpl implements EventService {
 // 게시글 작성 수정
 	@Override
 	@Transactional
-	public int saveEventWrite(ReplyBoard board) {
+	public int saveEventWrite(Board board) {
 		int result = 0;
 		
 		if(board.getBNo()>0) {
@@ -342,6 +342,14 @@ public class EventServiceImpl implements EventService {
 	public String getBnTitleByBTitleForWinner(String bnTitle) {
 		return mapper.getBnTitleByBTitleForWinner(bnTitle);
 	}
+
+	/*
+	 * @Override public ReplyBoard findBoardByNo(int no) { // TODO Auto-generated
+	 * method stub return null; }
+	 * 
+	 * @Override public int saveEventWrite(ReplyBoard board) { // TODO
+	 * Auto-generated method stub return 0; }
+	 */
 
 	
 

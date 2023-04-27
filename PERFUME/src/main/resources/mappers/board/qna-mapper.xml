@@ -212,9 +212,9 @@
 		)
 		VALUES(
 			SEQ_BOARD_B_NO.NEXTVAL,
-			#{WriterNo},
-			#{Title},
-			#{Content},
+			#{board.WriterNo},
+			#{board.Title},
+			#{board.Content},
 			'QnA'
 		)
 	</insert>
