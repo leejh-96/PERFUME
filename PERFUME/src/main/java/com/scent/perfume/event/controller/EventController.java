@@ -28,6 +28,9 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.scent.perfume.cart.model.vo.Benefit;
+import com.scent.perfume.common.util.MultipartFileUtil;
+import com.scent.perfume.common.util.PageInfo;
 import com.scent.perfume.event.model.service.EventService;
 import com.scent.perfume.event.model.service.EventServiceImpl;
 import com.scent.perfume.event.model.service.UserMailSendService;
@@ -35,8 +38,6 @@ import com.scent.perfume.event.model.vo.Board;
 import com.scent.perfume.event.model.vo.MemberBenefitInfo;
 import com.scent.perfume.event.model.vo.Terms;
 import com.scent.perfume.planning.model.vo.Member;
-import com.scent.perfume.cart.model.vo.Benefit;
-import com.scent.perfume.common.util.*;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,7 +53,7 @@ public class EventController {
 	EventServiceImpl eventServiceImpl;
 	@Autowired
 	private UserMailSendService mailsender;
-	
+		
 // 사이트 소개 페이지 연결
 	@RequestMapping("/aboutSite")
 	public String aboutSite() {
