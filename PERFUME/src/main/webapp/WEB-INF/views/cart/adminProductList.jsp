@@ -70,8 +70,8 @@
 		        					</c:if>
 		        					<c:if test="${not empty product.renameFileName && product.renameFileName != null}">
 		        						<th style="width: 150px; height: 150px;" class="align-middle">
-		        							<img src="https://cdn.pixabay.com/photo/2023/04/24/02/51/crimson-rosella-7947000_640.jpg" width="100%" height="100%" class="rounded img-fluid">
-		        							<%-- <img src="${path}/upload/product/${product.renameFileName}" width="100%" height="100%" class="rounded img-fluid"> --%>
+		        							<!-- <img src="https://cdn.pixabay.com/photo/2023/04/24/02/51/crimson-rosella-7947000_640.jpg" width="100%" height="100%" class="rounded img-fluid"> -->
+		        							<img src="${path}/upload/product/${product.renameFileName}" width="100%" height="100%" class="rounded img-fluid">
 		        						</th>
 		        					</c:if>
 		        					<th class="align-middle">${product.productNo}</th>

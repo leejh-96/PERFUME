@@ -135,7 +135,6 @@ function deleteOrder(orderNo){
 </script>
 </head>
 <body>
-${order}
 <jsp:include page="/WEB-INF/views/cart/common/adminSidebar.jsp"/>
 
 					<table class="table table-hover tabledetail">
@@ -280,7 +279,6 @@ ${order}
 					        
 					        <!-- Modal body -->
 					        <div class="modal-body">
-		                        <%-- <input type="hidden" name="benefitNo" value="${benefit.benefitNo}"> --%>
 		                        <table class="table ordertable">
 	                        		<tr class="thead">
 				        				<th class="align-middle">상품이미지</th>
