@@ -31,7 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.scent.perfume.event.model.service.EventService;
 import com.scent.perfume.event.model.service.EventServiceImpl;
 import com.scent.perfume.event.model.service.UserMailSendService;
-import com.scent.perfume.event.model.vo.Board;
+import com.scent.perfume.event.model.vo.ReplyBoard;
 import com.scent.perfume.event.model.vo.MemberBenefitInfo;
 import com.scent.perfume.event.model.vo.Terms;
 import com.scent.perfume.planning.model.vo.Member;
@@ -171,7 +171,7 @@ public class EventController {
 //		log.info("listCount : {}", listCount);
 		
 		PageInfo pageInfo = new PageInfo(page, 5, listCount, 10);
-		List<Board> list = service.getEventList(pageInfo);
+		List<ReplyBoard> list = service.getEventList(pageInfo);
 		
 //		log.info("list : {}", list);
 		
@@ -198,7 +198,7 @@ public class EventController {
 //		log.info("리스트카운트트트트트트ㅡ트트ㅡ트ㅡ트트트 : {}", listCount);
 		
 		PageInfo pageInfo = new PageInfo(page, 5, listCount, 10);
-		List<Board> list = service.getEventListByKeyword(pageInfo, type, keyword);
+		List<ReplyBoard> list = service.getEventListByKeyword(pageInfo, type, keyword);
 		
 //		log.info("list : {}", list);
 		
@@ -214,7 +214,7 @@ public class EventController {
 	@GetMapping("event/eventView")
 	public ModelAndView eventView(ModelAndView modelAndView, @RequestParam("no") int no) {
 		System.out.println("이벤트 상세 게시글 연결 테스트");
-		Board board = null;
+		ReplyBoard board = null;
 		
 		log.info("no : {}", no);
 		log.info("보드 파인드 보드 엔오 서비스 타기 전 : {}", board);
@@ -282,7 +282,7 @@ public class EventController {
 	@PostMapping("/eventWrite")
 	public ModelAndView eventWrite(	
 			ModelAndView modelAndView,
-			@ModelAttribute Board board,
+			@ModelAttribute ReplyBoard board,
 			@SessionAttribute("loginMember") Member loginMember) {
 		System.out.println("이벤트 게시글 등록");
 		
@@ -404,7 +404,7 @@ public class EventController {
 	public ModelAndView eventUpdate(ModelAndView modelAndView,
 									@RequestParam("no") int no,
 									@SessionAttribute("loginMember") Member loginMember) {
-		Board board = null;
+		ReplyBoard board = null;
 		
 		log.info(loginMember.toString());
 		log.info("no : {}", no);
@@ -430,7 +430,7 @@ public class EventController {
 									@RequestParam("bContent") String bContent,
 									@SessionAttribute("loginMember") Member loginMember) {
 		int result = 0;
-		Board board = null;
+		ReplyBoard board = null;
 		
 		log.info("{}, {}, {}", new Object[] {no, bTitle, bContent});
 		
@@ -470,7 +470,7 @@ public class EventController {
 		
 		// 본인 게시글 여부 확인
 		int result = 0;
-		Board board = null;
+		ReplyBoard board = null;
 		
 		board = service.findBoardByNo(no);
 		
