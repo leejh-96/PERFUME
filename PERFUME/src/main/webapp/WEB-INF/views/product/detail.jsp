@@ -920,7 +920,7 @@
                       
                         <c:if test="${productfile.pfsort eq '1' }">
                      
-                        <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="big" alt="">
+                        <img src="${ path }/upload/product/${productfile.pfrenamefilename}" class="big" alt="">
                         </c:if>
                         </c:forEach>
                         </div>  
