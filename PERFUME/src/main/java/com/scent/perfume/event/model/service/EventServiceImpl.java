@@ -230,8 +230,8 @@ public class EventServiceImpl implements EventService {
 	// 이미 참여한 회원인지 확인
 	@Override
 	@Transactional
-	public int getParticipateEventMNo(int mNo) {
-		return mapper.getParticipateEventMNo(mNo);
+	public int getParticipateEventMNo(int mNo, int bnNo) {
+		return mapper.getParticipateEventMNo(mNo, bnNo);
 	}
 	// BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
 	@Override

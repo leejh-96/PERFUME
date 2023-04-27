@@ -280,7 +280,7 @@
 	</update>
 	<!-- 이미 참여한 회원인지 확인 -->
 	<select id="getParticipateEventMNo" parameterType="_int" resultType="_int">
-		SELECT COUNT(*) FROM EVENT_MEMBER WHERE EM_MNO = #{mNo}
+		SELECT COUNT(*) FROM EVENT_MEMBER WHERE EM_MNO = #{mNo} AND BN_NO = #{bnNo}
 	</select>
 	<!-- BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기 -->
 	<select id="getBnNoByBTitle" parameterType="string" resultType="_int">

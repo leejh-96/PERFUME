@@ -551,11 +551,14 @@ public class EventController {
 			modelAndView.setViewName("event/confirm");
 		} else {
 		// 선택 약관에 동의했을 때 이벤트 참여
+			// BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
+			int bnNo = 0;
+			bnNo = service.getBnNoByBTitle(BTitle);
 			
-			int participate = 0;
 			// 이미 참여한 회원인지 확인
-			participate = service.getParticipateEventMNo(mNo);
-			
+			int participate = 0;
+			participate = service.getParticipateEventMNo(mNo, bnNo);
+
 			if(participate > 0) {
 				// 이미 참여한 회원
 				modelAndView.addObject("msg", "이미 이벤트에 참여하셨습니다.");
@@ -563,10 +566,8 @@ public class EventController {
 			} else {
 				// EVENT_MEMBER에 회원 mNo INSERT
 				
-				// BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
-				int bnNo = 0;
-				bnNo = service.getBnNoByBTitle(BTitle);
-				
+				log.info("엠엔오오오오오 : {}", mNo);
+				log.info("비엔엠오오오오오 : {}", bnNo);
 				// 이벤트 참여 회원 DB에 저장
 				int successParticipate = 0;
 				successParticipate = service.participateEvent(mNo, bnNo);
