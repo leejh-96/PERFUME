@@ -25,33 +25,35 @@
 	<div id="product">
 	<div class="pd1">
 		<div class="product-info">
-			<div class="product-img"><a href="#"><img src="${ path }/images/planning/floral01.jpg"></a></div>
+			<div class="product-img"><a href="${ path }/product/detail?no=28"><img src="${ path }/upload/product/PERFUME25-1.jpg"></a></div>
 			<div class="product-text">
-				<p><strong>메종마르지엘라 플라워마켓</strong></p>
-				<p style="text-decoration:line-through;">정가 : 147,800원</p>
-				<p style="color:red;"><strong>특가 : 140,410원</strong></p>
+				<p><strong>로즈 페탈 25 오 드 뚜왈렛</strong></p>
+				<p style="text-decoration:line-through;">정가 : 259,000원</p>
+				<p style="color:red;"><strong>특가 : 246,050
+원</strong></p>
 			</div>
 		</div>
 	</div>
 	
 	<div class="pd2">
 		<div class="product-info">
-			<div class="product-img"><a href="#"><img src="${ path }/images/planning/floral02.jpg"></a></div>
+			<div class="product-img"><a href="${ path }/product/detail?no=17"><img src="${ path }/upload/product/PERFUME9-1.jpg"></a></div>
 			<div class="product-text">
-				<p><strong>구찌 블룸 오 드 퍼퓸</strong></p>
-				<p style="text-decoration:line-through;">정가 : 80,000원</p>
-				<p style="color:red;"><strong>특가 : 76,000원</strong></p>
+				<p><strong>우모 오 드 뚜왈렛</strong></p>
+				<p style="text-decoration:line-through;">정가 : 100,000원</p>
+				<p style="color:red;"><strong>특가 : 95,000원</strong></p>
 			</div>
 		</div>
 	</div>
 	
 	<div class="pd3">
 		<div class="product-info">
-			<div class="product-img"><a href="#"><img src="${ path }/images/planning/floral03.jpg"></a></div>
+			<div class="product-img"><a href="${ path }/product/detail?no=12"><img src="${ path }/upload/product/PERFUME3-1.jpg"></a></div>
 			<div class="product-text">
-				<p><strong>디올 포에버 앤 에버 오 드 뚜왈렛</strong></p>
-				<p style="text-decoration:line-through;">정가 : 123,000원</p>
-				<p style="color:red;"><strong>특가 : 116,850원</strong></p>
+				<p><strong>앤쏠로지램프하트리스</strong></p>
+				<p style="text-decoration:line-through;">정가 : 54,000원</p>
+				<p style="color:red;"><strong>특가 : 51,300
+원</strong></p>
 			</div>
 		</div>
 	</div>

@@ -23,7 +23,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="${path }/js/jquery-3.6.3.js"></script>
   <script src="${path }/slick/slick.min.js"></script>
-
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+  integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
+<script>
+  Kakao.init('abc7279469d1e95ca06b761472aa140c');
+  Kakao.isInitialized();
+  </script>
+  
+  
   <link rel="stylesheet" href="${path }/slick/slick-theme.css">
   <link rel="stylesheet" href="${path }/slick/slick.css">
   
@@ -37,7 +44,7 @@
 
        div * {                                        
        
-/*         border: 2px solid red;      */
+/*             border: 2px solid red;      */
             box-sizing: border-box;
             
         }
@@ -142,17 +149,17 @@
         
         #product-title {height: 5%; }
         
-        #product-sizeinfo { height: 6%; }
+        #product-sizeinfo { height: 8%; }
         
-        #product-caution {height: 20%; font-size: 12px; margin-bottom: 20px;}
-        #product-meaning{ height: 11%; font-size: 12px;}
+        #product-caution {height: 19%; font-size: 12px; margin-bottom: 20px;}
+        #product-meaning{ height: 13%; font-size: 12px;}
         #product-price{height: 5%; border-bottom: 1px solid #ccc; }
         
         #product-option{height: 10%; border-bottom: 1px solid #ccc;}
         .option-count { height: 15%;}
         #product-benefits{height: 8%; border-bottom: 1px solid #ccc;}
         
-        #product-total {height: 3%; font-size: 13px; text-align: right;}
+        #product-total {height: 3%; font-size: 13px; text-align: right; margin: 15px;}
         #product-button { text-align: right;  }
         
         #product-menu {text-align: center; height: 5%; }
@@ -357,6 +364,7 @@
   
   li {list-style-type: none;
   font-weight: 600;
+  font-size:12px;
   color: gray;
   }
 
@@ -912,7 +920,7 @@
                       
                         <c:if test="${productfile.pfsort eq '1' }">
                      
-                        <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="big" alt="">
+                        <img src="${ path }/upload/product/${productfile.pfrenamefilename}" class="big" alt="">
                         </c:if>
                         </c:forEach>
                         </div>  
@@ -925,7 +933,7 @@
                             </div>
                             </c:if>
                             </c:forEach>
-                            <c:forEach var="productfile" items="${ product.productfile }" begin="1" end="2">
+                            <c:forEach var="productfile" items="${ product.productfile }" begin="1" end="1">
                             <c:if test="${productfile.pfsort eq '2' }">
                             <div id="sumbimg1" >
                                 <img src="${ path }/upload/product/${ productfile.pfrenamefilename}" class="img1" alt="">
@@ -944,18 +952,19 @@
                     
                 </div>
                 
-               
+               	<p style="padding: 5px; font-size: 10px; font-weight: bold;"> ${product.brand } ></p> 
                 <div id="product-detail-area" style="height: 100%;">
                     <div id="product-detail" style="height: 100%;">
-                     <hr>
+                   		
                         
                     <div id="product-title" >
                     <div style="font-size: 20px; width: 50%;">
                     	 <strong>${product.name }</strong>&nbsp;
                     </div>
-                    <div style="width: 40%; height: 45px;">
+                    <div style="width: 40%; height: 30px;">
                     <img  src="${ path }/upload/product/icons8-하트-24.png" class="heartimg">
                     <span style="font-size: 15px; text-align: left;" id="Lcount">${LikeCount.likecount}</span>
+                  
                     </div>
                  
                          
@@ -964,14 +973,29 @@
                         ${product.title }
                     </div>
              
-                    <div id="product-sizeinfo">
-                        <h6 style="font-size: 14px;">scent : <span><strong>${product.topcate.ptname }</strong> </span></h6> 
+                    <div id="product-sizeinfo" style="border-top: 1px solid #ccc; padding: 5px; ">
+                    <table id="benefits" width="100%" >
+                            <tr style="font-weight: bold; color: gray;">
+                            	
+                                <th width="20%" style="color: black; font-size: 17px;">${product.topcate.ptname }</th>
+                               
+                            </tr>
+                            <tr style="font-weight: bold; ">
+                                <th  style="color: black;">단위/용량</th>
+                                <td><c:forEach var="option" items="${option}"> ${option.poname}ML</c:forEach></td>
+                            </tr>
+
+                        </table>
+                    
+                    
+                    
+<%--                         <h6 style="font-size: 14px;"><span><strong style="font-size: 15px;">${product.topcate.ptname }</strong> </span></h6>  --%>
                          
-                        <h6 style="font-size: 14px;">size :  <span><strong> <c:forEach var="option" items="${option}"> ${option.poname}ml </c:forEach></strong></span> </h6>   
+<%--                         <h6 style="font-size: 14px; font-weight: bold;">단위/용량 <span><strong> <c:forEach var="option" items="${option}"> ${option.poname}ml </c:forEach></strong></span> </h6>    --%>
                      
                     </div>
                
-                    <div id="product-caution" style="font-size: 13px;">
+                    <div id="product-caution" style="font-size: 13px; border-top: 1px solid #ccc; padding: 15px;" >
                         <h6 style="font-size: 15px;"><b>구매 시 주의사항</b></h6>
                      
                         <li>1. 제작과정에서 생긴 작은 기포나 미세한 스크래치가 있을 수 있습니다.</li><br>
@@ -980,9 +1004,9 @@
                         케이스가 한번이라도 펌핑을 한 경우, 가치가 감소된 경우엔 무조건 교환/반품/환불이 불가능합니다.</li><br>
                         <li>4. 컵의 입구 부분이 완전히 고르지 않을 수 있습니다.</li><br>
                     </div>
-                    <div id="product-meaning">
-                        <h6 style="font-size: 15px;"><b>설명</b></h6>
-                        ${product.detail }
+                    <div id="product-meaning" style="padding: 15px; border-top: 1px solid #ccc;" >
+                        <h6 style="font-size: 15px; "><b>설명</b></h6>
+                      <p style="font-weight: bold; color: gray; "> ${product.detail }</p>
                         
                     </div>
                     <div id="product-price">
@@ -1023,24 +1047,24 @@
                         
                     </div>
 
-                    <div id="product-benefits">
+                    <div id="product-benefits" style="padding: 5px;">
                         <table id="benefits" width="100%" >
-                            <tr style="font-weight: bold;">
-                                <th width="20%">적립금</th>
+                            <tr style="font-weight: bold; color: gray;">
+                                <th width="20%" style="color: black;">적립금</th>
                                 <td width="80%" style="font-size: 20px; color: navy;">5%</td>
                             </tr>
-                            <tr style="font-weight: bold;">
-                                <th>배송비</th>
+                            <tr style="font-weight: bold; color: gray;">
+                                <th  style="color: black;">배송비</th>
                                 <td>90000원 미만 주문 시 배송비 3000원이 추가 됩니다.</td>
                             </tr>
 
                         </table>
                     </div>
-                    <div id="product-option" >
+                    <div id="product-option" style="padding: 5px;" >
                         <div class="option-area">
                         <table id="option"  >
-                            <tr style="border-bottom: 1px solid #ccc;">
-                                <th  width="80px">용량</th>
+                            <tr style="border-bottom: 1px solid #ccc; color: gray; ">
+                                <th  width="80px" style="color: black;">용량</th>
                                 <td width="80%">
                                 
                      	
@@ -1056,8 +1080,8 @@
                                 </td>
             
                             </tr>
-                            <tr>
-                                <th>포장지</th>
+                            <tr style="font-weight: bold; color: gray;">
+                                <th style="color: black;">포장지</th>
                                 <td><select  name="option2" id="optselect2" class="" option_style="select" >
                                     <option value="*" selected link_image="">- [선택] 포장지 선택 -</option>
                                     <option value="**" disabled link_image="">-------------------</option>
@@ -1072,7 +1096,7 @@
                     </div>
                               <c:forEach var="option" items="${option}">
                         <div class="opt-table" id="opt${option.poname}" data-id="${option.poname}"style="border: 1px solid #ccc; padding: 10px; display: none;">
-                                    <div style="width: 55%; font-size: 16px; font-weight: bold; line-height: 40px;">
+                                    <div style="width: 55%; font-size: 12px; font-weight: bold; line-height: 40px; ">
                                     <p>${product.eng } -<span class="sizeval">${option.poname}ml</span></p>
                                     </div>
                                     
@@ -1126,8 +1150,8 @@
                    
                     
                     
-                    <div id="product-total">
-                        TOTAL :<span id="total"><b>0</b></span><span>원</span><span>(</span><span  style="font-size: 8px;" id="totalcount">0</span><span>)개</span>
+                    <div id="product-total" style="font-size: 12px; font-weight: bold;">
+                        TOTAL :<span id="total" style="font-size: 20px; font-weight: bold;"><b>0</b></span><span style="font-weight: bold;">won</span><span>(</span><span  style="font-size: 12px;" id="totalcount">0</span><span style="">)개</span>
                     </div>
                     <div id="product-button">
                     <c:if test="${not empty loginMember }">
@@ -1147,6 +1171,9 @@
 						<div style="text-align: right; margin: 15px; height: 40px;">
 						<a id="btnFacebook" class="link-icon facebook" href="javascript:shareFacebook();"><img src="${path }/upload/product/icon-facebook.png" class="big"></a>
 						<a id="btnFacebook" class="link-icon twitter" href="javascript:shareTwitter();"><img src="${path }/upload/product/icon-twitter.png" class="big"></a>
+						<a id="btnFacebook" class="link-icon twitter" href="javascript:sharekakao();"><img src="${path }/upload/product/icon-kakao.png" class="big"></a>
+						
+
 						<a id="btnFacebook" class="link-icon kakao" href="javascript:clip();" ><img src="${path }/upload/product/link.png" class="big"></a>
 						</div>
 						
@@ -1522,7 +1549,7 @@
 		                                			 <a class="link" type="button" href="javascript:requestQna();">
 		                                            상품 문의</a>		
 		                                	      </c:if>
-												  <c:if test="${loginMember.id eq productboard.mid || loginMember.division eq 1}">  
+												  <c:if test="${not empty loginMember || loginMember.division eq 1}">  
 											       	<a class="link" type="button" data-toggle="collapse" data-target="#collapseOne${productboard.pbNo}" aria-expanded="false" aria-controls="collapseOne${productboard.pbNo}">
 		                                            상품 문의</a>
 		                                          </c:if>
@@ -1713,33 +1740,15 @@
            </c:forEach>
         <div id="footer">
 		<footer>
-        <div>
-            <nav class="footer-nav">
-                <ul>
-                    <li><a href="#">NOTICE</a>
-                        <p>PERFUME의 중요 소식을 확인해보세요.</p>
-                    </li>
-                    <li><a href="#">SAMPLE</a>
-                        <p>적당량의 SAMPLE을 소개합니다.</p>    
-                    </li>
-                    <li><a href="#">EVENT</a>
-                        <p>다양한 이벤트에 참여해보세요</p>
-                    </li>
-                    <li><a href="#">ASK</a>
-                        <p>언제나 고객과 함께하겠습니다.</p>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <pre class="footer-text">
-            상호명 <b>PERFUME</b>     대표자 <b>이정수</b>     사업자등록번호 <b>123-45-67890</b>     통신판매업신고번호 <b>제 2023-서울강남-0001호</b><br>
-            고객센터 <b>070-1212-3434</b>     주소 <b>06234 서울특별시 강남구 테헤란로 14길 6 (역삼동) 남도빌딩 4층 PERFUME </b><br>
-            개인정보보호책임자 <b>공민지(cs@perfume.com)</b><br><br>    
-            ※ <b>PERFUME</b>에서 제공하는 모든 콘텐츠는 <b>저작권법에 의하여 보호받는 저작물</b>로서, 모든 권리는 <b>PERFUME</b>에 있습니다.<br>
-            본사이트에서 제공되는 콘텐츠를 무단으로 복제 및 배포하는 경우 <b>저작권법에 의하여 처벌</b>받을 수 있습니다.<br><br>
-            <b>Copyright ⓒ PERFUME. All rights reserved.</b>
-        </pre>
-    </footer>
+	<pre class="footer-text">
+        상호명 <b>NAEUM</b>     바지사장 <b>이정수</b>     사업자등록번호 <b>123-45-67890</b>     통신판매업신고번호 <b>제 2023-서울강남-0001호</b><br>
+        고객센터 <b>070-1212-3434</b>     주소 <b>06234 서울특별시 강남구 테헤란로 14길 6 (역삼동) 남도빌딩 4층 NAEUM </b><br>
+        개인정보보호책임자 <b>공민지(cs@naeum.com)</b><br><br>    
+        ※ <b>NAEUM</b>에서 제공하는 모든 콘텐츠는 <b>저작권법에 의하여 보호받는 저작물</b>로서, 모든 권리는 <b>NAEUM</b>에 있습니다.<br>
+        본사이트에서 제공되는 콘텐츠를 무단으로 복제 및 배포하는 경우 <b>저작권법에 의하여 처벌</b>받을 수 있습니다.<br><br>
+        <b>Copyright ⓒ NAEUM. All rights reserved.</b>
+    </pre>
+</footer>
         </div>
         
         <div class="modal fade" id="staticBackdrop1${productboard.pbcNo}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -1895,7 +1904,7 @@ function optplus(pprice) {
 	$('#selected-price').text(price += pprice);
 	$('#total').text(price);
 	$('#quantity').val(++quantity);
-	
+	$('#totalcount').text(++totalcount);
     
 }
 
@@ -1903,12 +1912,19 @@ function optminus(mprice) {
 	$('#selected-price').text(price -= mprice);
 	$('#total').text(price);
 	$('#quantity').val(--quantity);
+	$('#totalcount').text(--totalcount);
 	if(price <= 0 || quantity <= 0) {
 		$('#selected-price').text(originprice);
 		alert('최소 주문 수량은 1개입니다.');
 	}
-	
-
+	if($('#total').text() <= 0) {
+	   $('#total').text(0);
+		
+	}
+	if(quantity <= 0) {
+		   $('#quantity').val(0);
+		   $('#totalcount').text(0);
+		}
 }
 
 
@@ -2703,18 +2719,18 @@ $('#replyenter').click(function () {
 
 
 
-$("#mainimg").on({
-    "mouseenter":function(){
+// $("#mainimg").on({
+//     "mouseenter":function(){
        
-        $(this).css({'opacity':'0.8'});
+//         $(this).css({'opacity':'0.8'});
 
-    },
+//     },
     
-    "mouseleave":function(){
-        $(this).css({'opacity':'1'});
+//     "mouseleave":function(){
+//         $(this).css({'opacity':'1'});
         
-    }
-  });
+//     }
+//   });
 
 
 
@@ -2883,10 +2899,74 @@ setTimeout(() => {
 
 });
 
+function sharekakao() {
+Kakao.Share.sendDefault({
+	  objectType: 'feed',
+	  content: {
+	    title: 'PERFUME',
+	    description: '아메리카노, 빵, 케익',
+	    imageUrl:
+	      'https://mud-kage.kakao.com/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
+	    link: {
+	      mobileWebUrl: 'https://developers.kakao.com',
+	      webUrl: 'https://developers.kakao.com',
+	    },
+	  },
+	  itemContent: {
+	    profileText: 'Kakao',
+	    profileImageUrl: 'https://mud-kage.kakao.com/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+	    titleImageUrl: 'https://mud-kage.kakao.com/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+	    titleImageText: 'Cheese cake',
+	    titleImageCategory: 'Cake',
+	    items: [
+	      {
+	        item: 'Cake1',
+	        itemOp: '1000원',
+	      },
+	      {
+	        item: 'Cake2',
+	        itemOp: '2000원',
+	      },
+	      {
+	        item: 'Cake3',
+	        itemOp: '3000원',
+	      },
+	      {
+	        item: 'Cake4',
+	        itemOp: '4000원',
+	      },
+	      {
+	        item: 'Cake5',
+	        itemOp: '5000원',
+	      },
+	    ],
+	    sum: '총 결제금액',
+	    sumOp: '15000원',
+	  },
+	  social: {
+	    likeCount: 10,
+	    commentCount: 20,
+	    sharedCount: 30,
+	  },
+	  buttons: [
+	    {
+	      title: '웹으로 이동',
+	      link: {
+	        mobileWebUrl: 'https://developers.kakao.com',
+	        webUrl: 'https://developers.kakao.com',
+	      },
+	    },
+	    {
+	      title: '앱으로 이동',
+	      link: {
+	        mobileWebUrl: 'https://developers.kakao.com',
+	        webUrl: 'https://developers.kakao.com',
+	      },
+	    },
+	  ],
+	});
 
-
-
-
+};
 </script>
 
 

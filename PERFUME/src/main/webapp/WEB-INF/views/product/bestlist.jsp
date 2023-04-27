@@ -24,7 +24,7 @@
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
-  <script src="${path }/js/jquery-3.6.3.js"></script>
+  <script src="${path }/js/jquery-3.6.3.min.js"></script>
   <script src="${path }/slick/slick.min.js"></script>
 
 <link rel="stylesheet" href="${ path }/css/planning/header.css">
@@ -38,7 +38,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Open+Sans&display=swap');
     
         div * {
-/*             border: 2px solid red;   */
+/*              border: 2px solid red; */
             box-sizing: border-box;
             
         }
@@ -56,33 +56,15 @@
             margin:auto;
         }
 
-        #header{
-            height: 2%;
-            
-            background-color: white;
-            /* position: fixed; */
-            
-          
-        }
 
-        #header1{ width: 30%;}
-        #navigator{ width: 50%; }
-        #header2{ width: 20%; }
-        #header>div {
-            float: left;
-            height: 100%;
-        }
+       
 
         #section {
             height: 90%;
             
         }
 
-        #footer {
-            height: 8%;
-            background-color: rgb(157, 226, 203);
         
-        }
         #section1 {height: 17%;
              /* border-bottom: 1px solid;  */
              background-color: rgb(54, 58, 62);
@@ -102,7 +84,7 @@
        #aside2 {width: 12%;}
 
        #s1 {height: 4%;}
-       #s2 {height: 10%; background-color: #d6b486; }
+       #s2 {height: 10%; background-color: #ece0e2; }  
      
        #s5 {height: 4%;}
        #s6 {height: 74%; border-top: 2px;}
@@ -233,11 +215,7 @@
     #d2 {
         width: 30%;
     }
-	
-	#bestimg {
-		max-height: 100%;
-		max-width: 100%;
-	}
+
     
 
     .row { margin: 20px;}
@@ -293,13 +271,7 @@
     }
 
     .etcsymbols{ text-align: right; background-color: white; } 
-    .p-status-wrap{ border-bottom: 23px solid  transparent;
-    border-top: 23px solid rgb(231, 231, 135); width:0; height: 0;
-    border-left: 23px solid rgb(238, 238, 186);
-    border-right: 23px solid transparent;
-    opacity: 0.6;
-    
-    }
+   
 
 
     .link {
@@ -429,7 +401,6 @@
        max-height: 100%;
        }
        
-       #event12 {display: none;}
        
        #s2_1 {height: 20%;  text-align: center; color: white; font-size: 15PX; }
        #s2_2 {height: 44%; text-align: center; color: white; font-size: 50px; font-weight: bolder;}
@@ -450,7 +421,7 @@
 
 .like {
 	vertical-align: bottom;
-	color: #f34141;
+
 	font-size: 14px;
 }
 
@@ -461,12 +432,22 @@
 #share:hover {
 	transform: scale(1.2);
 }
-#s2>div {
+.heartimg {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        #s2>div {
             height: 100%;
             float: left;
         }
+
+        #bestimg {
+            max-width: 100%;
+            max-height: 100%;
+        }
         
-  .productlink {
+      .productlink {
 	font-size: 18px; font-weight: bold;
 	color: #333;
 	
@@ -475,10 +456,9 @@
 .productlink:hover {
 	text-decoration: none;
 	color: #333;
-}      
+}  
         
         
-
     </style>
 </head>
 <body>
@@ -632,7 +612,6 @@
     </script>
         
     </header>
-
         <div id="section">
             <div id="section1">
                <section class="slider">
@@ -683,21 +662,17 @@
                     <div id="s1">
 
                     </div>
-                     <div id="s2" >
-                        <div style="width: 66%; text-align: left; color: white;  padding: 50PX;">
-                        <p style="font-size: 50px; font-weight: 300;">SALE SHOP</p>
-                        <P style="font-size: 15px;">더 큰 혜택, 더 편한 쇼핑, PERFUME의 SALE 상품을 모았습니다.</P>
+                    <div id="s2" >
+                        <div style="width: 66%; text-align: left; color: rgb(86, 85, 85);  padding: 50PX;">
+                        <p style="font-size: 50px; font-weight: 300;">BEST SHOP</p>
+                        <P style="font-size: 15px;">인기 상품 TOP 10을 한눈에 모았습니다.</P>
                         <hr>
                      </div>
                        
                       <div style="width: 34%;">
-                        <img src="https://img.freepik.com/premium-photo/women-s-perfume-bottle-mockup-and-dry-hydrangea-flowers-on-beige-background-natural-earthy-colors-copy-space_94255-5927.jpg?size=626&ext=jpg&ga=GA1.2.1462281178.1681576788&semt=robertav1_2_sidr"  id="bestimg" alt="">
+                        <img src="https://img.freepik.com/premium-photo/a-chic-bottle-of-women-s-perfume-or-eau-de-parfum-lies-on-a-woman-s-accessory-a-scarf-and-lilac-flowers-space-for-text-pink-background_425936-3537.jpg?w=1060"  id="bestimg" alt="">
                       </div>
                     </div>
-                    
-                    
-                    
-                 
                         
                   
                     
@@ -706,7 +681,8 @@
                        
                         <div id="s5_productwrap">
                             <div align="center" style="padding: 10px;">
-                                SALE PRODUCT
+                            
+                             <p>BEST PRODUCT</p>   
                                 </div>
                                 
                         </div>
@@ -715,10 +691,7 @@
                       
                         
                         <div id="productfilter">
-                            <a class="link"	href="#link" > 최신 상품 </a> <span class="bar">|</span> 
-							<a class="link"	href="#link"> 낮은 가격 </a> <span class="bar">|</span>
-							<a class="link"	href="#link"> 높은 가격 </a> <span class="bar">|</span>
-							<a class="link"	href="#link"> 사용 후기</a>
+                          
                         </div>
                        
                     </div>
@@ -733,7 +706,7 @@
                                     </div>
                                     
                                </c:if>
-                                    <c:forEach var="product" items="${ list }" >
+                                    <c:forEach var="product" items="${ list }" begin="0" end="0">
   									
                                     <fmt:formatDate value="${product.date}" pattern="yyyy-MM-dd hh:mm:ss" var="newdate"/>
                                     
@@ -759,69 +732,31 @@
 														id="likeList" data-id="${productlike.PNo }"
 														name="likeName" />
 
-
-														 <img
+														<img
 															src="${ path }/upload/product/icons8-하트-24.png" class="heartimg"
 															id="share">
-
-														
-														<span id="share2" class="like">${product.likecount}</span>
+														<span id="share2" class="like" style="color: #f34141; font-weight: bold;   ">${product.likecount}</span>
 													
 												</div>
                                         
                                         </div>
-                  
-                                     
-                                      	
-                                      	     <c:forEach var="benefit" items="${product.benefit}">
+                                      
+                                        <div style="position: absolute; text-align: center; padding: 10px; height: 70px;" >
+                                            <img src="${path }/upload/product/first-rank.png" class="heartimg">
+                                            
+                                        </div>
+                                        
+                                        <c:forEach var="benefit" items="${product.benefit}">
+                                        <div class="p-status"style="position: absolute; width: 100%; text-align: right; padding: 5px;" >
+                                        
                                          <jsp:useBean id="now" class="java.util.Date" />
                                   
-                                         <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
-                                         <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="endday" />
-                                         <fmt:formatDate value="${benefit.bncreatedate }" pattern="yyyy-MM-dd" var="eventstartday" />
-                                     <!-- 할인값을 가진 상품들만 모았어도 기간이 지나면 배너 삭제해야함 -->
-                                       
-                                        	
-                                        	 <c:if test="${today < endday }">
-                                        	<c:if test="${benefit.bnname eq '이벤트' }">
-                                        	<div style="position: absolute; text-align: center; padding: 10px; height: 70px; color: rgb(86, 85, 85);"id="event11${product.PNo }" onclick="eventclick(${product.PNo})" >
-                                        	
-                                                <span class="badge badge-dark">EVENT</span>
-	                                            <div style="position: absolute; border: 1px solid; height: 60px; width: 170px; background-color: white; font-size: 12px; display: none" id="event12${product.PNo }" >
-	                                                <p style="font-weight: bold; font-size: 10px; padding: 3px;" >${benefit.bntitle}</p> 
-	                                                 <p style="font-weight: bold; font-size: 10px;">  ${eventstartday } ~  ${endday}</p> 
-	                                            </div>
-	                                        </div> 
-	                                        </c:if>
-	                                            
-	                                           <c:if test="${benefit.bnname eq '기획전할인' }">
-	                                           <div style="position: absolute; text-align: center; padding: 10px; height: 70px; color: rgb(86, 85, 85);"id="event11${product.PNo }" onclick="eventclick(${product.PNo})" >  
-                                                  <span class="badge badge-dark">SPECIAL</span>   
-                                                    <div style="position: absolute; border: 1px solid; height: 60px; width: 150px; background-color: white; font-size: 12px; display: none" id="event12${product.PNo }" >
-	                                                <p style="font-weight: bold; font-size: 10px; padding: 3px;">${benefit.bntitle}</p>  
-	                                                  <p style="font-weight: bold; font-size: 10px;">${eventstartday } ~  ${endday}</p> 
-	                                                </div>
-                                               </div>
-                                                  
-                                     	       </c:if>   
-	                                            
-	                                          </c:if>	  
-                                          
-                                            
-                                     	   
-                                     	   
- 										
-                                      		  </c:forEach> 
-                                      
-                                         <div class="p-status"style="position: absolute; width: 100%; text-align: right; padding: 5px;" >
-                      
+                                         <fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:ss" var="today" />
+                                         <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd HH:ss" var="endday" />
+                          
                                         </div>
-                                      
-                                      
-                                      
-                                      
+                                        </c:forEach> 
                                         <hr>
-                                        
                                         <div>
                                        <h6 style="font-size: 10px; font-weight: bold;">${product.brand }</h6>
                                        <h5 id="pname" style="font-size: 18px; font-weight: bold;"><a class="productlink" href="${ path }/product/detail?no=${product.PNo}">${product.name }
@@ -893,6 +828,386 @@
                                       </div>
                                       </div>  
                                 </c:forEach>
+                               
+                               		<c:forEach var="product" items="${ list }" begin="1" end="1">
+  									
+                                    <fmt:formatDate value="${product.date}" pattern="yyyy-MM-dd hh:mm:ss" var="newdate"/>
+                                    
+                                   <c:set var="sevenDayAfter" value="<%=new Date(new Date().getTime() + 60*60*24*1000*7)%>"/>
+                                   <fmt:formatDate value="${sevenDayAfter}" pattern="yyyy-MM-dd hh:mm:ss" var="sevenDayAfterStr"/>
+                                 
+                                <div class="col-sm-6 col-lg-3">
+                     
+                                    <div class="card">
+                                        <div id="card-img" style="position: relative;">
+                                        
+                                        <c:forEach var="productfile" items="${ product.productfile }">
+                                        <c:if test="${productfile.pfsort eq '1' }">
+                                         <a href="${ path }/product/detail?no=${product.PNo}"> 
+                                        
+                                        <img src="${ path }/upload/product/${productfile.pfrenamefilename}" class="card-img-top" alt="..." > </a>
+                                        </c:if>
+                                        </c:forEach>
+                                        <div class="etcsymbols"
+													style="width: 100%; height: 35px; bottom: 0px; padding: 5px;">
+
+													<input type="hidden" value="${productlike.PNo }"
+														id="likeList" data-id="${productlike.PNo }"
+														name="likeName" />
+
+														<img
+															src="${ path }/upload/product/icons8-하트-24.png" class="heartimg"
+															id="share">
+														<span id="share2" class="like" style="color: #f34141; font-weight: bold;   ">${product.likecount}</span>
+													
+												</div>
+                                        
+                                        </div>
+                                      
+                                        <div style="position: absolute; text-align: center; padding: 10px; height: 70px;" >
+                                            <img src="${path }/upload/product/second-rank.png" class="heartimg">
+                                            
+                                        </div>
+                                        
+                                        <c:forEach var="benefit" items="${product.benefit}">
+                                        <div class="p-status"style="position: absolute; width: 100%; text-align: right; padding: 5px;" >
+                                        
+                                         
+                                  
+                                         <fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:ss" var="today" />
+                                         <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd HH:ss" var="endday" />
+                          
+                                        </div>
+                                        </c:forEach> 
+                                        <hr>
+                                        <div>
+                                       <h6 style="font-size: 10px; font-weight: bold;">${product.brand }</h6>
+                                       <h5 id="pname" style="font-size: 18px; font-weight: bold;"><a class="productlink" href="${ path }/product/detail?no=${product.PNo}">${product.name }
+										</a></h5>	
+                                       <p class="card-text" style="font-size: 10px;">${product.eng }</p>
+                                   
+                                        </div>
+                                        
+                                        <hr>
+                                        <div style="position: relative;">
+                                        
+                        <c:forEach var="benefit" items="${product.benefit}" begin="0" end="0">
+                              <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="enddate"/>
+                                             
+                              <c:if test="${not empty product.benefit }">
+                              
+<!--                               		  할인값을 가진 상품이어도 기간이 지나면, 할인율 해제 하기 위해서 안에 if문 구성     -->
+
+                                     <c:if test="${today < endday }">
+                                            <div style="position: absolute; height: 90%; width: 100%; text-align: right; padding: 1px;">
+                                                <span class="badge badge-danger" id="discount"> SALE <br>   ${benefit.bnratio}%</span>
+                                            </div>
+                                           
+                                              <!-- 할인가 계산 -->
+                                              <!-- 원가 - (원가 * 할인율) = 세일가  -->
+                                             <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
+                                             <fmt:parseNumber var="saleprice" value="${product.price*salepricerate}"/>
+                                             <fmt:parseNumber var="productsaleprice" value="${product.price-saleprice}"/>
+                                             
+                                            <p class="card-text" id="pprice" >
+	                                            <fmt:formatNumber value="${productsaleprice}" pattern="###,###"/><span style="font-size: 12px;">won</span> 
+	                                            <br>
+	                                            
+	                                            <span class="originprice">
+	                                            <fmt:formatNumber value="${product.price}" pattern="###,###"/>
+	                                            <span class="originprice" style="font-size: 8px;">won</span></span>
+                                            </p>
+                                     </c:if>
+                                     
+                                     <c:if test="${today > endday }">
+                                     	<p class="card-text" id="pprice"><fmt:formatNumber value="${product.price}" pattern="###,###"/>  
+                                     	<span style="font-size: 12px;">won</span></p>	 
+                                     </c:if> 
+                                       
+                              </c:if>
+						</c:forEach>
+											
+                                            <c:if test="${empty product.productbenefit }">
+                                            <p class="card-text" id="pprice"><fmt:formatNumber value="${product.price}" pattern="###,###"/>  <span style="font-size: 12px;">won</span></p>
+                                            </c:if>
+                                           
+                                        </div>
+                                        
+                                        
+<%--                                           <c:forEach var="benefit" items="${product.benefit}"> --%>
+<%--                                           <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="enddate"/>  --%>
+<%--                                            <c:if test="${not empty product.benefit }"> --%>
+                                           
+<%--                                         	<p class="card-text" id="pprice">${product.price } <span>won</span> <br> --%>
+<%--                                             <span class="originprice">${product.price }<span class="originprice">won</span></span></p> --%>
+<%--                                         	</c:if> --%>
+                                          
+<%--                                           </c:forEach> --%>
+<%--                                           <c:if test="${empty product.productbenefit }"> --%>
+<%--                                           <p class="card-text" id="pprice">${product.price } <span>won</span></p>  --%>
+<%--                                           </c:if>  --%>
+                                          
+                                        
+                                      </div>
+                                      </div>  
+                                </c:forEach>
+                               			
+                               		<c:forEach var="product" items="${ list }" begin="2" end="2">
+  									
+                                    <fmt:formatDate value="${product.date}" pattern="yyyy-MM-dd hh:mm:ss" var="newdate"/>
+                                    
+                                   <c:set var="sevenDayAfter" value="<%=new Date(new Date().getTime() + 60*60*24*1000*7)%>"/>
+                                   <fmt:formatDate value="${sevenDayAfter}" pattern="yyyy-MM-dd hh:mm:ss" var="sevenDayAfterStr"/>
+                                 
+                                <div class="col-sm-6 col-lg-3">
+                     
+                                    <div class="card">
+                                        <div id="card-img" style="position: relative;">
+                                        
+                                        <c:forEach var="productfile" items="${ product.productfile }">
+                                        <c:if test="${productfile.pfsort eq '1' }">
+                                         <a href="${ path }/product/detail?no=${product.PNo}"> 
+                                        
+                                        <img src="${ path }/upload/product/${productfile.pfrenamefilename}" class="card-img-top" alt="..." > </a>
+                                        </c:if>
+                                        </c:forEach>
+                                        <div class="etcsymbols"
+													style="width: 100%; height: 35px; bottom: 0px; padding: 5px;">
+
+													<input type="hidden" value="${productlike.PNo }"
+														id="likeList" data-id="${productlike.PNo }"
+														name="likeName" />
+
+														<img
+															src="${ path }/upload/product/icons8-하트-24.png" class="heartimg"
+															id="share">
+														<span id="share2" class="like" style="color: #f34141; font-weight: bold;   ">${product.likecount}</span>
+													
+												</div>
+                                        
+                                        </div>
+                                      
+                                        <div style="position: absolute; text-align: center; padding: 10px; height: 70px;" >
+                                            <img src="${path }/upload/product/third-rank.png" class="heartimg">
+                                            
+                                        </div>
+                                        
+                                        <c:forEach var="benefit" items="${product.benefit}">
+                                        <div class="p-status"style="position: absolute; width: 100%; text-align: right; padding: 5px;" >
+                                        
+                                        
+                                  
+                                         <fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:ss" var="today" />
+                                         <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd HH:ss" var="endday" />
+                          
+                                        </div>
+                                        </c:forEach> 
+                                        <hr>
+                                        <div>
+                                       <h6 style="font-size: 10px; font-weight: bold;">${product.brand }</h6>
+                                       <h5 id="pname" style="font-size: 18px; font-weight: bold;"><a class="productlink" href="${ path }/product/detail?no=${product.PNo}">${product.name }
+										</a></h5>	
+                                       <p class="card-text" style="font-size: 10px;">${product.eng }</p>
+                                   
+                                        </div>
+                                        
+                                        <hr>
+                                        <div style="position: relative;">
+                                        
+                        <c:forEach var="benefit" items="${product.benefit}" begin="0" end="0">
+                              <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="enddate"/>
+                                             
+                              <c:if test="${not empty product.benefit }">
+                              
+<!--                               		  할인값을 가진 상품이어도 기간이 지나면, 할인율 해제 하기 위해서 안에 if문 구성     -->
+
+                                     <c:if test="${today < endday }">
+                                            <div style="position: absolute; height: 90%; width: 100%; text-align: right; padding: 1px;">
+                                                <span class="badge badge-danger" id="discount"> SALE <br>   ${benefit.bnratio}%</span>
+                                            </div>
+                                           
+                                              <!-- 할인가 계산 -->
+                                              <!-- 원가 - (원가 * 할인율) = 세일가  -->
+                                             <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
+                                             <fmt:parseNumber var="saleprice" value="${product.price*salepricerate}"/>
+                                             <fmt:parseNumber var="productsaleprice" value="${product.price-saleprice}"/>
+                                             
+                                            <p class="card-text" id="pprice" >
+	                                            <fmt:formatNumber value="${productsaleprice}" pattern="###,###"/><span style="font-size: 12px;">won</span> 
+	                                            <br>
+	                                            
+	                                            <span class="originprice">
+	                                            <fmt:formatNumber value="${product.price}" pattern="###,###"/>
+	                                            <span class="originprice" style="font-size: 8px;">won</span></span>
+                                            </p>
+                                     </c:if>
+                                     
+                                     <c:if test="${today > endday }">
+                                     	<p class="card-text" id="pprice"><fmt:formatNumber value="${product.price}" pattern="###,###"/>  
+                                     	<span style="font-size: 12px;">won</span></p>	 
+                                     </c:if> 
+                                       
+                              </c:if>
+						</c:forEach>
+											
+                                            <c:if test="${empty product.productbenefit }">
+                                            <p class="card-text" id="pprice"><fmt:formatNumber value="${product.price}" pattern="###,###"/>  <span style="font-size: 12px;">won</span></p>
+                                            </c:if>
+                                           
+                                        </div>
+                                        
+                                        
+<%--                                           <c:forEach var="benefit" items="${product.benefit}"> --%>
+<%--                                           <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="enddate"/>  --%>
+<%--                                            <c:if test="${not empty product.benefit }"> --%>
+                                           
+<%--                                         	<p class="card-text" id="pprice">${product.price } <span>won</span> <br> --%>
+<%--                                             <span class="originprice">${product.price }<span class="originprice">won</span></span></p> --%>
+<%--                                         	</c:if> --%>
+                                          
+<%--                                           </c:forEach> --%>
+<%--                                           <c:if test="${empty product.productbenefit }"> --%>
+<%--                                           <p class="card-text" id="pprice">${product.price } <span>won</span></p>  --%>
+<%--                                           </c:if>  --%>
+                                          
+                                        
+                                      </div>
+                                      </div>  
+                                </c:forEach>
+                               
+                               
+                               		<c:forEach var="product" items="${ list }" begin="3" end="9">
+  									
+                                    <fmt:formatDate value="${product.date}" pattern="yyyy-MM-dd hh:mm:ss" var="newdate"/>
+                                    
+                                   <c:set var="sevenDayAfter" value="<%=new Date(new Date().getTime() + 60*60*24*1000*7)%>"/>
+                                   <fmt:formatDate value="${sevenDayAfter}" pattern="yyyy-MM-dd hh:mm:ss" var="sevenDayAfterStr"/>
+                                 
+                                <div class="col-sm-6 col-lg-3">
+                     
+                                    <div class="card">
+                                        <div id="card-img" style="position: relative;">
+                                        
+                                        <c:forEach var="productfile" items="${ product.productfile }">
+                                        <c:if test="${productfile.pfsort eq '1' }">
+                                         <a href="${ path }/product/detail?no=${product.PNo}"> 
+                                        
+                                        <img src="${ path }/upload/product/${productfile.pfrenamefilename}" class="card-img-top" alt="..." > </a>
+                                        </c:if>
+                                        </c:forEach>
+                                        <div class="etcsymbols"
+													style="width: 100%; height: 35px; bottom: 0px; padding: 5px;">
+
+													<input type="hidden" value="${productlike.PNo }"
+														id="likeList" data-id="${productlike.PNo }"
+														name="likeName" />
+
+														<img
+															src="${ path }/upload/product/icons8-하트-24.png" class="heartimg"
+															id="share">
+														<span id="share2" class="like" style="color: #f34141; font-weight: bold;   ">${product.likecount}</span>
+													
+												</div>
+                                        
+                                        </div>
+                                      
+                                        <div style="position: absolute; text-align: center; padding: 10px; height: 70px;" >
+                                           
+                                            
+                                        </div>
+                                        
+                                        <c:forEach var="benefit" items="${product.benefit}">
+                                        <div class="p-status"style="position: absolute; width: 100%; text-align: right; padding: 5px;" >
+                                        
+                                         
+                                  
+                                         <fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:ss" var="today" />
+                                         <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd HH:ss" var="endday" />
+                          
+                                        </div>
+                                        </c:forEach> 
+                                        <hr>
+                                        <div>
+                                       <h6 style="font-size: 10px; font-weight: bold;">${product.brand }</h6>
+                                       <h5 id="pname" style="font-size: 18px; font-weight: bold;"><a class="productlink" href="${ path }/product/detail?no=${product.PNo}">${product.name }
+										</a></h5>	
+                                       <p class="card-text" style="font-size: 10px;">${product.eng }</p>
+                                   
+                                        </div>
+                                        
+                                        <hr>
+                                        <div style="position: relative;">
+                                        
+                        <c:forEach var="benefit" items="${product.benefit}" begin="0" end="0">
+                              <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="enddate"/>
+                                             
+                              <c:if test="${not empty product.benefit }">
+                              
+<!--                               		  할인값을 가진 상품이어도 기간이 지나면, 할인율 해제 하기 위해서 안에 if문 구성     -->
+
+                                     <c:if test="${today < endday }">
+                                            <div style="position: absolute; height: 90%; width: 100%; text-align: right; padding: 1px;">
+                                                <span class="badge badge-danger" id="discount"> SALE <br>   ${benefit.bnratio}%</span>
+                                            </div>
+                                           
+                                              <!-- 할인가 계산 -->
+                                              <!-- 원가 - (원가 * 할인율) = 세일가  -->
+                                             <fmt:parseNumber var="salepricerate" value="${benefit.bnratio/100}"/>
+                                             <fmt:parseNumber var="saleprice" value="${product.price*salepricerate}"/>
+                                             <fmt:parseNumber var="productsaleprice" value="${product.price-saleprice}"/>
+                                             
+                                            <p class="card-text" id="pprice" >
+	                                            <fmt:formatNumber value="${productsaleprice}" pattern="###,###"/><span style="font-size: 12px;">won</span> 
+	                                            <br>
+	                                            
+	                                            <span class="originprice">
+	                                            <fmt:formatNumber value="${product.price}" pattern="###,###"/>
+	                                            <span class="originprice" style="font-size: 8px;">won</span></span>
+                                            </p>
+                                     </c:if>
+                                     
+                                     <c:if test="${today > endday }">
+                                     	<p class="card-text" id="pprice"><fmt:formatNumber value="${product.price}" pattern="###,###"/>  
+                                     	<span style="font-size: 12px;">won</span></p>	 
+                                     </c:if> 
+                                       
+                              </c:if>
+						</c:forEach>
+											
+                                            <c:if test="${empty product.productbenefit }">
+                                            <p class="card-text" id="pprice"><fmt:formatNumber value="${product.price}" pattern="###,###"/>  <span style="font-size: 12px;">won</span></p>
+                                            </c:if>
+                                           
+                                        </div>
+                                        
+                                        
+<%--                                           <c:forEach var="benefit" items="${product.benefit}"> --%>
+<%--                                           <fmt:formatDate value="${benefit.bnenddate}" pattern="yyyy-MM-dd" var="enddate"/>  --%>
+<%--                                            <c:if test="${not empty product.benefit }"> --%>
+                                           
+<%--                                         	<p class="card-text" id="pprice">${product.price } <span>won</span> <br> --%>
+<%--                                             <span class="originprice">${product.price }<span class="originprice">won</span></span></p> --%>
+<%--                                         	</c:if> --%>
+                                          
+<%--                                           </c:forEach> --%>
+<%--                                           <c:if test="${empty product.productbenefit }"> --%>
+<%--                                           <p class="card-text" id="pprice">${product.price } <span>won</span></p>  --%>
+<%--                                           </c:if>  --%>
+                                          
+                                        
+                                      </div>
+                                      </div>  
+                                </c:forEach>	
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
                                 </div> 
 
                         </div>
@@ -910,19 +1225,7 @@
                                  
                             </div>
                             <br>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                  <li class="page-item disabled">
-                                    <a class="page-link">Previous</a>
-                                  </li>
-                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                  <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                  </li>
-                                </ul>
-                              </nav>
+                           
                         </div>
                     </div>
                 </div>
@@ -930,10 +1233,33 @@
                 </div>
             </div>
         </div>
-        <div id="footer">
-
+     
+		<footer>
+				<div>
+					<nav class="footer-nav">
+						<ul>
+							<li><a href="#">NOTICE</a>
+								<p>PERFUME의 중요 소식을 확인해보세요.</p></li>
+							<li><a href="#">SAMPLE</a>
+								<p>적당량의 SAMPLE을 소개합니다.</p></li>
+							<li><a href="#">EVENT</a>
+								<p>다양한 이벤트에 참여해보세요</p></li>
+							<li><a href="#">ASK</a>
+								<p>언제나 고객과 함께하겠습니다.</p></li>
+						</ul>
+					</nav>
+				</div>
+				<pre class="footer-text">
+            상호명 <b>PERFUME</b>     대표자 <b>이정수</b>     사업자등록번호 <b>123-45-67890</b>     통신판매업신고번호 <b>제 2023-서울강남-0001호</b><br>
+            고객센터 <b>070-1212-3434</b>     주소 <b>06234 서울특별시 강남구 테헤란로 14길 6 (역삼동) 남도빌딩 4층 PERFUME </b><br>
+            개인정보보호책임자 <b>공민지(cs@perfume.com)</b><br><br>    
+            ※ <b>PERFUME</b>에서 제공하는 모든 콘텐츠는 <b>저작권법에 의하여 보호받는 저작물</b>로서, 모든 권리는 <b>PERFUME</b>에 있습니다.<br>
+            본사이트에서 제공되는 콘텐츠를 무단으로 복제 및 배포하는 경우 <b>저작권법에 의하여 처벌</b>받을 수 있습니다.<br><br>
+            <b>Copyright ⓒ PERFUME. All rights reserved.</b>
+        </pre>
+			</footer>
         </div>
-    </div>
+    
 </body>
 
 
@@ -1079,7 +1405,7 @@ function likeCheck(mno, pno) {
 
  
    
-	
+
 
 
  
@@ -1129,37 +1455,6 @@ function likeCheck(mno, pno) {
    }
 
   });
-  
-  
-  
-  function eventclick(pno) {
-  
-	  console.log(pno)
-  
-
-	  
-	    $('#event11' + pno).on({
-    "mouseenter":function(){
-       
-    	 $('#event12'+ pno).fadeIn(200);
-
-   },
-   "mouseleave":function(){
-	     $('#event12'+ pno).fadeOut(200);
-
-   }
-
-  });
-	  
-	       
-
-
-	   
-	
-  
-  
-  
-  }
   
   
 //부트스트랩 캐러샐 슬라이드 구현
@@ -1230,4 +1525,5 @@ function likeCheck(mno, pno) {
 	        })
 	    }
 </script>
+
 </html>

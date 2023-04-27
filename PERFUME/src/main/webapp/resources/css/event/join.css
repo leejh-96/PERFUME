@@ -30,13 +30,13 @@ button[id^=btn]:hover { background-color: rgb(120, 116, 100); border-color: rgb(
 
 #birth-year, #birthHelpBlock{ margin-left: 13px; }
 /* 전화번호 */
-#phone, #verification-code{ width: 63%; float: left; margin-right: 5px; }
+#phone, #verification-code{ width: 65%; float: left; margin-right: 5px; }
 
 #btnPh1, #btnPh2 { float: left; }
 
 #phDiv { margin-bottom: 20px; }
 /* 주소 */
-#sample6_postcode { width: 63%; float: left; margin-right: 5px; }
+#sample6_postcode { width: 65%; float: left; margin-right: 5px; }
 
 .addressDiv{ margin-bottom: 6px; }
 /* 약관 동의 */

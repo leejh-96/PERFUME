@@ -35,6 +35,7 @@
 			</div>
 			<br>
 			<br>
+			<div id="searchResult" style="margin-left: 10%;">[ ${ searchType } ]에서 [ ${ searchKeyword } ]을(를) 검색하신 결과입니다.</div>
 			<table id="boardList" class="table table-hover">
 				<thead>
 					<tr>

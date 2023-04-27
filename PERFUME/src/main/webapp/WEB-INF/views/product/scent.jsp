@@ -909,12 +909,17 @@ color: #f34141;
                                         
                                         </div>
                                         
-                                        <div class="p-status-wrap" style="position: absolute;">   
-                                        </div>
-                                        <div style="position: absolute; text-align: center; padding: 3px;">
-                                            <h5 style="color: white; font-weight: bold; font-size: 13px; ">NEW</h5>
-                                            
-                                        </div>
+                                       <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="today"></fmt:parseNumber>
+									<fmt:parseNumber value="${product.date.time / (1000*60*60*24)}" integerOnly="true" var="newdate" />
+									<%-- <fmt:formatDate value="${product.date }" --%>
+<%-- 														pattern="yyyy-MM-dd" var="newdate" /> --%>
+									             <c:if test="${today - newdate le 3}">
+													<div class="p-status-wrap" style="position: absolute;">
+													</div>
+													<div style="position: absolute; text-align: center; padding: 3px;">
+										            <h5 style="color: white; font-weight: bold; font-size: 13px;">NEW</h5>
+													</div>
+	                                             </c:if>	
                                         
                                         <div class="p-status"style="position: absolute; width: 100%;">
                                         

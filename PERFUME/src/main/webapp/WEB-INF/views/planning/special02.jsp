@@ -25,33 +25,34 @@
 	<div id="product">
 	<div class="pd1">
 		<div class="product-info">
-			<div class="product-img"><a><img src="${ path }/images/planning/spicy01.jpg"></a></div>
+			<div class="product-img"><a href="${ path }/product/detail?no=11"><img src="${ path }/upload/product/PERFUME13-1.jpg"></a></div>
 			<div class="product-text">
-				<p><strong>딥디크 도손 오 드 퍼퓸</strong></p>
-				<p style="text-decoration:line-through;">정가 : 215,800원</p>
-				<p style="color:red;"><strong>특가 : 205,010원</strong></p>
+				<p><strong>알뤼르 오 드 빠르펭</strong></p>
+				<p style="text-decoration:line-through;">정가 : 255,000원</p>
+				<p style="color:red;"><strong>특가 : 242,250
+원</strong></p>
 			</div>
 		</div>
 	</div>
 	
 	<div class="pd2">
 		<div class="product-info">
-			<div class="product-img"><a><img src="${ path }/images/planning/spicy02.jpg"></a></div>
+			<div class="product-img"><a href="${ path }/product/detail?no=5"><img src="${ path }/upload/product/PERFUME8-1.jpg"></a></div>
 			<div class="product-text">
-				<p><strong>발렌티노 우모 오 드 뚜왈렛</strong></p>
-				<p style="text-decoration:line-through;">정가 : 100,000원</p>
-				<p style="color:red;"><strong>특가 : 95,000원</strong></p>
+				<p><strong>보체 비바 오 드 퍼퓸</strong></p>
+				<p style="text-decoration:line-through;">정가 : 90,000원</p>
+				<p style="color:red;"><strong>특가 : 85,500원</strong></p>
 			</div>
 		</div>
 	</div>
 	
 	<div class="pd3">
 		<div class="product-info">
-			<div class="product-img"><a><img src="${ path }/images/planning/spicy03.jpg"></a></div>
+			<div class="product-img"><a href="${ path }/product/detail?no=21"><img src="${ path }/upload/product/PERFUME21-1.jpg"></a></div>
 			<div class="product-text">
-				<p><strong>톰포드 블랙 오키드 오 드 퍼퓸</strong></p>
-				<p style="text-decoration:line-through;">정가 : 160,000원</p>
-				<p style="color:red;"><strong>특가 : 152,000원</strong></p>
+				<p><strong>캔디 플로럴 오 드 뚜왈렛</strong></p>
+				<p style="text-decoration:line-through;">정가 : 87,500원</p>
+				<p style="color:red;"><strong>특가 : 83,125원</strong></p>
 			</div>
 		</div>
 	</div>

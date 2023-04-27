@@ -36,14 +36,14 @@ public class EventServiceImpl implements EventService {
 	// 회원가입 전화번호인증 문자전송
 	@Transactional
 	public void certifiedPhoneNumber(String phoneNumber, String numStr) {
-		String api_key = "테스트시홈피에서키받아서하기";
-		String api_secret = "테스트할때홈피에서키받아서하기";
+		String api_key = "NCSWVWI29SPJDRIE";
+		String api_secret = "0VP1LIITRL1C4ODRRN0VGG3ZXFW2Z6WN";
 		Message coolsms = new Message(api_key, api_secret);
 		
 		
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("to", phoneNumber);    
-		params.put("from", "02-1234-5678");   
+		params.put("from", "010-6743-3373");   
 		params.put("type", "SMS");
 		params.put("text", "향수 쇼핑몰 [내음] 회원가입 인증 번호는 [" + numStr + "]입니다.");
 		params.put("app_version", "test app 1.2"); // application name and version
@@ -316,13 +316,13 @@ public class EventServiceImpl implements EventService {
 	// 향수 증정 이벤트 당첨자 문자 전송
 	@Transactional
 	public boolean sendSMSToWinner(String winnerPhone, String BTitle) {
-		String api_key = "홈피에서 받아오기";
-		String api_secret = "홈피에서 받아오기";
+		String api_key = "NCSWVWI29SPJDRIE";
+		String api_secret = "0VP1LIITRL1C4ODRRN0VGG3ZXFW2Z6WN";
 		Message coolsms = new Message(api_key, api_secret);
 		
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("to", winnerPhone);    
-		params.put("from", "02-1234-5678");   
+		params.put("from", "010-6743-3373");   
 		params.put("type", "SMS");
 		params.put("text", "축하드립니다. 향수 쇼핑몰 내음의 [" + BTitle + "]에 당첨되셨습니다.");
 		params.put("app_version", "test app 1.2"); // application name and version
