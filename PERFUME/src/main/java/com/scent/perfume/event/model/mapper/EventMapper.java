@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.scent.perfume.cart.model.vo.Benefit;
-import com.scent.perfume.event.model.vo.Board;
+import com.scent.perfume.event.model.vo.ReplyBoard;
 import com.scent.perfume.event.model.vo.MemberBenefitInfo;
 import com.scent.perfume.event.model.vo.Terms;
 import com.scent.perfume.planning.model.vo.Member;
@@ -54,14 +54,14 @@ public interface EventMapper {
 	
 // 게시판 목록 조회
 	int selectEventBoardCount();
-	List<Board> selectAll(RowBounds rowBounds);
+	List<ReplyBoard> selectAll(RowBounds rowBounds);
 	
 // 게시물 검색
 	int selectEventCountByKeyword(@Param("type") String type, @Param("keyword") String keyword);
-	List<Board> selectAllByKeyword(@Param("rowBounds") RowBounds rowBounds, @Param("type") String type, @Param("keyword") String keyword);
+	List<ReplyBoard> selectAllByKeyword(@Param("rowBounds") RowBounds rowBounds, @Param("type") String type, @Param("keyword") String keyword);
 
 // 게시물 검색
-	Board selectEventViewByNo(@Param("no") int no);
+	ReplyBoard selectEventViewByNo(@Param("no") int no);
 
 // 게시물 보기	
 	Date selectEventStartByTitle(String bTitle);
@@ -72,8 +72,8 @@ public interface EventMapper {
 	String selectNextTitleByPreNo(int nextNo);
 	
 // 게시글 등록
-	int insertEventBoard(Board board);
-	int updateEventBoard(Board board);
+	int insertEventBoard(ReplyBoard board);
+	int updateEventBoard(ReplyBoard board);
 	
 // 게시글 삭제
 	int updateEventBoardStatus(@Param("no") int no, @Param("bStatus") String bStatus);
