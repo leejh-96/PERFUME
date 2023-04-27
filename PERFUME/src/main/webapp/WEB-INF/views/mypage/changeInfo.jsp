@@ -54,7 +54,7 @@
                     <tbody class="table-group-divider">
                         <tr>
                             <th class="col-2">아이디(이메일)</th>
-                            <td>${memberDTO.email}</td>
+                            <td>${memberDTO.memberId}</td>
                         </tr>
                         <tr>
                             <th class="col-2">이름</th>
@@ -134,7 +134,7 @@
                         </tr>
                         <tr>
                             <th class="col-2">휴대폰 번호</th>
-                            <td>${phone}</td>
+                            <td>${memberDTO.phone}</td>
                         </tr>
                     </tbody>
                 </table>
