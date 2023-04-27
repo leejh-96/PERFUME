@@ -28,6 +28,18 @@
 	align-items: center;
 	border: 1px solid navy;
 }
+.thead{
+	background-color: rgb(118, 174, 135);
+}
+#myInput{
+	margin-top: 50px;
+	margin-bottom: 10px;
+}
+.listbtngroup{
+	font-weight: bolder;
+    border: none;
+    text-align: center;
+}
 /* 관리자 memberList */
 </style>
 <script type="text/javascript">
@@ -83,117 +95,108 @@ function memberRecover(memberNo){
 	
 }
 
+
 </script>
 </head>
 <body>
-<div class="container" style="height: 100px;"></div>
 <jsp:include page="/WEB-INF/views/cart/common/adminSidebar.jsp"/>
 
+   			<input class="form-control" id="myInput" type="text" placeholder="검색을 통해 빠르게 찾을 수 있어요!">
+       		<table class="table table-striped table-hover">
+   				<thead class="listmenu thead">
+		   			<tr>
+		   				<th>회원번호</th>
+		   				<th>이름</th>
+		                <th>아이디</th>
+		                <th>이메일</th>
+		                <th>핸드폰</th>
+		                <th>상태</th>
+		                <th>-</th>
+		   			</tr>
+   				</thead>
+   				<tbody id="myTable">
+		   			<c:if test="${empty list}">
+		   				<tr>
+		   					<th class="col">등록된 회원이 없습니다.</th>
+		   				</tr>
+		   			</c:if>
+		   			<c:if test="${not empty list}">
+		                <c:forEach var="member" items="${list}">
+			     			<tr class="listdiv">
+		  					  <td>${member.memberNo}</td>
+		  					  <c:if test="${member.memberStatus == 'Y'}">
+			    			  	  <td><a href="${path}/admin/memberDetail?memberNo=${member.memberNo}">${member.memberName}</a></td>
+		   					  </c:if>
+		   					  <c:if test="${member.memberStatus == 'N'}">
+		   					  	  <td>${member.memberName}</td>
+		   					  </c:if> 
+		   					  <td>${member.memberId}</td>
+			                  <td>${member.memberMail}</td>
+			                  <td>${member.memberPhone}</td>
+			                  <c:if test="${member.memberStatus == 'Y'}">
+			                  	  <td>
+		                          		<i class="fa-solid fa-circle member-active">활동</i>
+		                          </td>
+		                      </c:if>
+				              <!-- 활동유무에 따라 처리 -->
+		                      <c:if test="${member.memberStatus == 'N'}">
+			                      <td>
+			                      		<i class="fa-solid fa-circle member-unactive">비활동</i>
+			                      </td>
+		                      </c:if>         
+				              <!-- 활동유무에 따라 처리 -->
+		                      <c:if test="${member.memberStatus == 'Y'}">
+		                       	 <td>
+			                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='${path}/admin/memberDetail?memberNo=${member.memberNo}'">
+			                            상세보기
+			                        </button>
+		                       	 </td>
+		                      </c:if>         
+				              <!-- 활동유무에 따라 처리 -->
+		                      <c:if test="${member.memberStatus == 'N'}">
+			                      <td>
+				                       <button type="button" class="btn btn-outline-secondary" onclick="memberRecover('${member.memberNo}')">
+				                           복구하기
+				                       </button>
+			                      </td>
+		                      </c:if>    
+			     			</tr>
+		    			</c:forEach>
+		   			</c:if>
+   				</tbody>
+   			</table>
             
-            <!-- 회원관리 검색 폼 시작 -->
-            <form action="" method="" class="form-inline">
-                <div class="input-group mt-3 mb-3">
-                    <div class="input-group-prepend">
-                        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
-                            선택하세요.
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">이름</a>
-                            <a class="dropdown-item" href="#">아이디</a>
-                            <a class="dropdown-item" href="#">핸드폰</a>
-                        </div>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Username">
-                    <button type="button" class="btn btn-outline-secondary">검색</button>
-                </div>
-            </form>
-            <!-- 회원관리 검색 폼 끝 -->
-
-            <!-- 회원 table 시작 -->
-            <div class="row listmenu">
-   				<div class="col">회원번호</div>
-   				<div class="col">이름</div>
-                <div class="col">아이디</div>
-                <div class="col-2">이메일</div>
-                <div class="col">핸드폰</div>
-                <div class="col">상태</div>
-                <div class="col-2">-</div>
+            <div class="container listbtngroup">
+        				
+       			<button type="button" class="btn btn-warning" onclick="location.href='${path}/admin/memberList?page=1'"><<</button>
+			    <button type="button" class="btn btn-warning" onclick="location.href='${path}/admin/memberList?page=${pageInfo.prevPage}'"><</button>
+			    
+			    <c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
+					<c:choose>
+						<c:when test="${ status.current == pageInfo.currentPage}">
+							<button class="btn btn-warning" disabled>${ status.current }</button>
+						</c:when>
+						<c:otherwise>						
+							<button class="btn btn-warning" onclick="location.href='${ path }/admin/memberList?page=${ status.current }'">${ status.current }</button>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			    
+			    <button type="button" class="btn btn-warning"  onclick="location.href='${ path }/admin/memberList?page=${ pageInfo.nextPage }'">></button>
+			    <button type="button" class="btn btn-warning" onclick="location.href='${ path }/admin/memberList?page=${ pageInfo.maxPage }'">>></button>
+			   
    			</div>
-   			<c:if test="${empty list}">
-   				 <div class="col">등록된 회원이 없습니다.</div>
-   			</c:if>
-   			<c:if test="${not empty list}">
-                <c:forEach var="member" items="${list}">
-	     			<div class="row listdiv">
-  					  <div class="col">${member.memberNo}</div>
-  					  <c:if test="${member.memberStatus == 'Y'}">
-	    			  	  <div class="col"><a href="${path}/admin/memberDetail?memberNo=${member.memberNo}">${member.memberName}</a></div>
-   					  </c:if>
-   					  <c:if test="${member.memberStatus == 'N'}">
-   					  	  <div class="col">${member.memberName}</div>
-   					  </c:if> 
-   					  <div class="col">${member.memberId}</div>
-	                  <div class="col-2">${member.memberMail}</div>
-	                  <div class="col">${member.memberPhone}</div>
-	                  <c:if test="${member.memberStatus == 'Y'}">
-	                  	  <div class="col">
-                          		<i class="fa-solid fa-circle member-active">활동</i>
-                          </div>
-                      </c:if>
-		              <!-- 활동유무에 따라 처리 -->
-                      <c:if test="${member.memberStatus == 'N'}">
-	                      <div class="col">
-	                      		<i class="fa-solid fa-circle member-unactive">비활동</i>
-	                      </div>
-                      </c:if>         
-		              <!-- 활동유무에 따라 처리 -->
-                      <c:if test="${member.memberStatus == 'Y'}">
-                       	 <div class="col-2">
-	                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='${path}/admin/memberDetail?memberNo=${member.memberNo}'">
-	                            상세보기
-	                        </button>
-                       	 </div>
-                      </c:if>         
-		              <!-- 활동유무에 따라 처리 -->
-                      <c:if test="${member.memberStatus == 'N'}">
-	                      <div class="col-2">
-		                       <button type="button" class="btn btn-outline-secondary" onclick="memberRecover('${member.memberNo}')">
-		                           복구하기
-		                       </button>
-	                      </div>
-                      </c:if>    
-		                        
-		                        
-	                  
-	                  
-	     			</div>
-    			</c:forEach>
-   			</c:if>
-            
-	            <div id="listbtngroup">
-	        				
-	       			<button type="button" class="btn btn-warning" onclick="location.href='${path}/admin/memberList?page=1'"><<</button>
-				    <button type="button" class="btn btn-warning" onclick="location.href='${path}/admin/memberList?page=${pageInfo.prevPage}'"><</button>
-				    
-				    <c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
-						<c:choose>
-							<c:when test="${ status.current == pageInfo.currentPage}">
-								<button disabled>${ status.current }</button>
-							</c:when>
-							<c:otherwise>						
-								<button onclick="location.href='${ path }/admin/memberList?page=${ status.current }'">${ status.current }</button>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				    
-				    <button type="button" class="btn btn-warning"  onclick="location.href='${ path }/admin/memberList?page=${ pageInfo.nextPage }'">></button>
-				    <button type="button" class="btn btn-warning" onclick="location.href='${ path }/admin/memberList?page=${ pageInfo.maxPage }'">>></button>
-				   
-	   			</div>
                 
 <jsp:include page="/WEB-INF/views/cart/common/adminFootDiv.jsp"/>
 
+<script type="text/javascript">
+$("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+});
+</script> 
 
-<div class="container" style="height: 100px;"></div>
 </body>
 </html>

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ProductBoardReply {
 	int pbrNo;
 	int pbNo;
-	int mNo;
+	int MNo;
 	String mid;
 	String pbrContent;
 	String pbrstatus;

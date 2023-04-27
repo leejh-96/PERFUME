@@ -6,7 +6,8 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Nanum Myeongjo', serif;
+    text-decoration: none;
 }
 
 
@@ -19,29 +20,28 @@ body {
 	align-items: center;
 }
 
-.article-slider {
+#article-slider {
 	display: flex; /* flexbox 사용 */
 	align-items: center; /* 수직 정렬 */
 	overflow: hidden; /* 슬라이더 영역 보이지 않게 처리 */
 	white-space: nowrap; /* 슬라이드 요소를 한 줄로 배치 */
 }
 
-.article-slider > div {
-	flex-shrink: 0; /* 크기 조정 금지 */
+#article-slider > div {
+	flex: 0 0 auto; /* 크기 조정 금지 */
 	text-align: center; /* 수평 정렬 */
 	margin: 0 5px; /* 요소 간 좌우 간격 설정 */
 	padding: 10px 0; /* 슬라이드의 내부 여백 설정 */
 	display: inline-block;
 }
 
-.article-slider > div img {
+#article-slider > div img {
     width: 100px;
     height: 150px;
-    background-color: red;
 }
 
 /* NEW 배치 정렬 */
-.article1 > .article-slider {
+.article1 > #article-slider {
 	margin-left: 300px;
 }
 
@@ -51,7 +51,7 @@ body {
 }
 
 /* BEST 배치 정렬 */
-.article3 > .article-slider {
+.article3 > #article-slider {
 	margin-right: 300px;
 }
 

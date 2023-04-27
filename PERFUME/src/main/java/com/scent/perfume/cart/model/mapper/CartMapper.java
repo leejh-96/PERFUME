@@ -25,11 +25,6 @@ public interface CartMapper {
 
 	public CartProduct selectCartProductInfo(@Param("cartNo") int cartNo,@Param("productNo") int productNo);
 
-	/*
-	 * public int amountUpdate(@Param("cartNo") int
-	 * cartNo,@Param("cartProductCount") int cartProductCount);
-	 */
-
 	public int couponUpdate(@Param("memberNo") int memberNo,@Param("benefitNo") int benefitNo);
 
 	public int couponReset(@Param("memberNo") int memberNo,@Param("benefitNo") int benefitNo);
@@ -53,5 +48,9 @@ public interface CartMapper {
 	public CartProduct selectNowProduct(@Param("productNo") int productNo);
 
 	public AdminProductFile selectNowFile(@Param("productNo") int productNo);
+
+	public int updateCart(@Param("cartNo") int cartNo);
+
+	public int insert(@Param("cart") Cart cart);
 	
 }

@@ -14,108 +14,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eventWrite</title>
-    
-    <!-- eventWrite CSS -->
-<%--     <link rel="stylesheet" href="${ path }/css/event/eventWrite.css"> --%>
-<!--     Bootstrap CSS
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    Bootstrap jQuery, JS
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    include summernote css/js
+
+   	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" >
+	
+	<!-- include libraries(jQuery, bootstrap) -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	    
+	<!-- 썸머노트CDN방식 -->
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
-   -->
-   <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" >
-
-<!-- include libraries(jQuery, bootstrap) -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    
-<!-- 썸머노트CDN방식 -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
    
-<style>
-        h2{
-            margin-top: 50px;
-            margin-bottom: 60px;
-        }
-        section{
-            width: 1200px;
-            height: auto;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        body{
-            background-color: #f6f6f2;
-        }
-
-        #boardList{
-            color:dimgray;
-            width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        /* #boardList * {
-            pointer-events: none;
-        } */
-
-        #boardList .titleTable{
-            background-color: rgb(228, 228, 228);
-            text-align: center;
-            width: 20%;
-        }
-        #boardList .contentTable{
-            width: 80%;
-            padding-left: 4%;
-        }
-
-        #boardList #dateTitle{
-            width: 8%;
-            text-align: center;
-        }
-        #boakrdList #dateContent{
-            width: 8%;
-            text-align: center;
-        }
-        #boardList #countTitle{
-            width: 8%;
-            text-align: center;
-        }
-        #boakrdList #countContent{
-            width: 8%;
-            text-align: center;
-        }
-        #contentBody{
-            text-align: center;
-            margin: 30%;
-            padding: 0%;
-        }
-        .input {
-            width:100%;
-            height: 100%;
-            border: none;
-            background-color: transparent;
-        }
-
-    /* 목록 버튼 */
-        #btnList, #btnSubmit, #btnReset {
-            background-color: rgb(120, 116, 100);
-            border-color: rgb(120, 116, 100);
-        }
-        #btnList:hover, #btnSubmit:hover, #btnReset:hover {
-            background-color: rgb(90, 98, 104);
-            border-color: rgb(90, 98, 104);
-        }
-</style>
+	<!-- CSS -->
+	<link rel="stylesheet" href="${ path }/css/event/eventUpdate.css">
 </head>
 <body>
 
@@ -213,8 +127,7 @@
  	    $('#summernote').summernote(setting);
 
  	    // 자바스크립트 함수를 통해 ajax로 서버에서 파일 업로드 진행. 서버에서 기대하는 값 : 파일 업로드 성공 후 파일 경로를 return
- 	    function sendFile(file, el){			// 함수의 인수 file, summernote의 엘리먼트(el)
- 	    alert('작동!');        
+ 	    function sendFile(file, el){			// 함수의 인수 file, summernote의 엘리먼트(el)      
  	    data = new FormData();			// FormData 객체 생성
  	            data.append("file", file);		// FormData에 파일 추가
  	            $.ajax({
@@ -227,8 +140,8 @@
  	                processData: false,											// 데이터를 처리하지 않도록 설정
  	                success: function(obj) {									// ajax요청이 성공하면 실행될 콜백 함수 정의, data 
  	                        $(el).summernote('editor.insertImage', obj.url);	// Summernote의 엘리먼트 el에 이미지를 삽입
- 	                		console.log('되는거니.... 들어왔니...');
- 	                		console.log(obj.url);
+// 	                		console.log('되는거니.... 들어왔니...');
+// 	                		console.log(obj.url);
  	                }
 
  	            });
@@ -237,6 +150,4 @@
  	});
 	</script>
 
-<jsp:include page="/WEB-INF/views/planning/footer.jsp"/>
-</body>
-</html>
+	<jsp:include page="/WEB-INF/views/planning/footer.jsp"/>

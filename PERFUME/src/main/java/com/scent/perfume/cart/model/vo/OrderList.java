@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderList {
-
+	
+	private int orderListNo;
+	private int cartNo;
 	private String orderNo;
 	private String orderFileName;
 	private int productNo;

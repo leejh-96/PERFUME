@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+body{ background-color: #f6f6f2; }
+      
+header { background-color: #ffffff; }
+		
+footer { background-color: #ffffff; }
+      
+section{ margin-left: auto; margin-right: auto; width: 800px; }
+
+section * { margin-left: auto; margin-right: auto; }
+
+input[type=button] { background-color: rgb(226, 217, 179); border-color: rgb(226, 217, 179); }
+
+input[type=button]:hover { background-color: rgb(120, 116, 100); border-color: rgb(120, 116, 100); }
+
+button[id^=btn]{ background-color: rgb(226, 217, 179); border-color: rgb(226, 217, 179); }
+
+button[id^=btn]:hover { background-color: rgb(120, 116, 100); border-color: rgb(120, 116, 100); }
+/* h1 */
+#title { margin-top: 10%; margin-bottom: 5%; }
+/* 생년월일 */
+#topDivBirth{ margin-bottom: 0; }
+
+#divBirth1{ height: 30px; }
+
+#labelBirth { margin-left: 11px; }
+
+#birth-year, #birth-month, #birth-date{ width: 30%; float: left; margin-right: 5px; margin-left: 5px; }
+
+#birth-year, #birthHelpBlock{ margin-left: 13px; }
+/* 전화번호 */
+#phone, #verification-code{ width: 65%; float: left; margin-right: 5px; }
+
+#btnPh1, #btnPh2 { float: left; }
+
+#phDiv { margin-bottom: 20px; }
+/* 주소 */
+#sample6_postcode { width: 65%; float: left; margin-right: 5px; }
+
+.addressDiv{ margin-bottom: 6px; }
+/* 약관 동의 */
+.form-check-label{ width: 310px; font-size: small; }
+
+#btnAgr1, #btnAgr2 { margin-top: 5px; }
+
+.divAgr { background-color: white; font-size: small; height: 150px; padding: 4%; border: 1px solid gray; display: none; overflow: auto; }
+
+pre { white-space: pre-wrap; }
+/* 제출 버튼 */
+#submitDiv{ width: 800px; margin: auto; margin-bottom: 10%; }
+
+#btnSubmit{ width: 25%; margin-left: auto; margin-right: auto; display:block; background-color: rgb(120, 116, 100); border-color: rgb(120, 116, 100); }
+
+#btnSubmit:hover{ background-color: rgb(226, 217, 179); border-color: rgb(226, 217, 179); }
+/* 버튼 disabled 일 때 hover 색상 변경 안되게 */
+button[id^="btn"]:disabled { background-color: rgb(160, 166, 171); border-color: rgb(160, 166, 171); }

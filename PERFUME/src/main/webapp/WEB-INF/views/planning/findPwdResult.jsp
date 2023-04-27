@@ -10,6 +10,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
     <title>비밀번호 찾기 결과</title>
 </head>
 <body>

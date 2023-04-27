@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+body {
+    margin: 0;
+    font-family: 'Nanum Myeongjo', serif;
+}
+
 #title {
 	margin-top: 50px;
 	margin-bottom: 70px;
@@ -12,6 +17,7 @@ h2 {
 #special-content {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	margin-bottom: 20px;
 }
 
@@ -21,6 +27,8 @@ h2 {
 
 .product-info {
 	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .product-img {
@@ -34,5 +42,5 @@ h2 {
 }
 
 .product-img a img {
-	width: 20%;
+	width: 30%;
 }

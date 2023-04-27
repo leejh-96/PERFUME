@@ -10,47 +10,49 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>기획전 2</title>
+	<title>성년의 날 기념 Spicy 향수 3종 기획전</title>
+	<link href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="${ path }/css/planning/special.css">
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
     
 	<div id="title">
-		<h2>기획전 2</h2>
-		<p style="text-align: center;">기획전 2에 대한 설명</p>
+		<h2>성년의 날 기념 Spicy 향수 3종 기획전</h2>
+		<p style="text-align: center;">자극적이고 톡톡 튀는 Spicy 향수를 5% 할인된 금액에 구매하세요.</p>
 	</div>
 	
 	<div id="product">
 	<div class="pd1">
 		<div class="product-info">
-			<div class="product-img"><a><img src="${ path }/images/planning/new001.png"></a></div>
+			<div class="product-img"><a href="${ path }/product/detail?no=11"><img src="${ path }/upload/product/PERFUME13-1.jpg"></a></div>
 			<div class="product-text">
-				<p><strong>구찌 플로럴 뭐시기</strong></p>
-				<p style="text-decoration:line-through;">정가 : 100,000원</p>
-				<p style="color:red;"><strong>특가 : 95,000원</strong></p>
+				<p><strong>알뤼르 오 드 빠르펭</strong></p>
+				<p style="text-decoration:line-through;">정가 : 255,000원</p>
+				<p style="color:red;"><strong>특가 : 242,250
+원</strong></p>
 			</div>
 		</div>
 	</div>
 	
 	<div class="pd2">
 		<div class="product-info">
-			<div class="product-img"><a><img src="${ path }/images/planning/new002.png"></a></div>
+			<div class="product-img"><a href="${ path }/product/detail?no=5"><img src="${ path }/upload/product/PERFUME8-1.jpg"></a></div>
 			<div class="product-text">
-				<p><strong>샤넬 플로럴 뭐시기</strong></p>
-				<p style="text-decoration:line-through;">정가 : 150,000원</p>
-				<p style="color:red;"><strong>특가 : 142,500원</strong></p>
+				<p><strong>보체 비바 오 드 퍼퓸</strong></p>
+				<p style="text-decoration:line-through;">정가 : 90,000원</p>
+				<p style="color:red;"><strong>특가 : 85,500원</strong></p>
 			</div>
 		</div>
 	</div>
 	
 	<div class="pd3">
 		<div class="product-info">
-			<div class="product-img"><a><img src="${ path }/images/planning/new003.png"></a></div>
+			<div class="product-img"><a href="${ path }/product/detail?no=21"><img src="${ path }/upload/product/PERFUME21-1.jpg"></a></div>
 			<div class="product-text">
-				<p><strong>크리드 플로럴 뭐시기</strong></p>
-				<p style="text-decoration:line-through;">정가 : 130,000원</p>
-				<p style="color:red;"><strong>특가 : 123,500원</strong></p>
+				<p><strong>캔디 플로럴 오 드 뚜왈렛</strong></p>
+				<p style="text-decoration:line-through;">정가 : 87,500원</p>
+				<p style="color:red;"><strong>특가 : 83,125원</strong></p>
 			</div>
 		</div>
 	</div>

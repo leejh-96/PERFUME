@@ -12,149 +12,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>signUp</title>
 
-    <style>
-        body{
-            background-color: #f6f6f2;
-        }
-        section{
-            margin-left: auto;
-            margin-right: auto;
-            width: 800px;
-        }
-        section * {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        input[type=button] {
-            background-color: rgb(226, 217, 179);
-            border-color: rgb(226, 217, 179);
-        }
-        input[type=button]:hover {
-            background-color: rgb(120, 116, 100);
-            border-color: rgb(120, 116, 100);
-        }
-
-        button[id^=btn]{
-            background-color: rgb(226, 217, 179);
-            border-color: rgb(226, 217, 179);
-        }
-        button[id^=btn]:hover {
-            background-color: rgb(120, 116, 100);
-            border-color: rgb(120, 116, 100);
-        }
-        
-/* h1 */
-        #title {
-            margin-top: 10%;
-            margin-bottom: 5%;
-        }
-/* 생년월일 */
-        #topDivBirth{
-            margin-bottom: 0;
-        }
-        #divBirth1{
-            height: 30px;
-        }
-        #labelBirth {
-            margin-left: 11px;
-        }
-        #birth-year, #birth-month, #birth-date{
-            width: 30%;
-            float: left;
-            margin-right: 5px;
-            margin-left: 5px;
-        }
-        #birth-year, #birthHelpBlock{
-            margin-left: 13px;
-        }
-        
-/* 전화번호 */
-        #phone, #verification-code{
-            width: 63%;
-            float: left;
-            margin-right: 5px;
-        }
-        #btnPh1, #btnPh2 {
-            float: left;
-        }
-        #phDiv {
-            margin-bottom: 20px;
-        }
-/* 주소 */
-        #sample6_postcode {
-            width: 63%;
-            float: left;
-            margin-right: 5px;
-        }
-        .addressDiv{
-            margin-bottom: 6px;
-        }
-
-/* 약관 동의 */
-        .form-check-label{
-            width: 310px;
-            font-size: small;
-        }
-        #btnAgr1, #btnAgr2 {
-            margin-top: 5px;
-        }
-        .divAgr {
-            background-color: white;
-            font-size: small;
-            height: 150px;
-            padding: 4%;
-            border: 1px solid gray;
-            display: none;
-            overflow: auto;
-        }
-        pre {
-            white-space: pre-wrap;
-        }
-
-/* 제출 버튼 */
-        #submitDiv{
-            width: 800px;
-            margin: auto;
-            margin-bottom: 10%;
-        }
-        #btnSubmit{
-            width: 25%;
-            margin-left: auto;
-            margin-right: auto;
-            display:block;
-            background-color: rgb(120, 116, 100);
-            border-color: rgb(120, 116, 100);
-        }
-        #btnSubmit:hover{
-        	background-color: rgb(226, 217, 179);
-            border-color: rgb(226, 217, 179);
-        }
-
-/* 버튼 disabled 일 때 hover 색상 변경 안되게 */
-        button[id^="btn"]:disabled {
-            background-color: rgb(160, 166, 171);
-            border-color: rgb(160, 166, 171);
-        }
-    
-
-    </style>
-    <!-- jQuery -->
-    <script src="${path}/js/jquery-3.6.3.js"></script>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<!-- CSS -->
+	<link rel="stylesheet" href="${ path }/css/event/join.css">
+	<!-- jQuery -->
+	<script src="${ path }/js/jquery-3.6.3.js"></script>
 </head>
 <body>
-
 	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
-
     <section>
-
-    <h6 style="color:red;">아이디, 이메일 전화 번호 중복 검사 ajax로, 약관 체크박스 변경 셀렉트 색상 변경, 비번 안전 보통 등등, 유효성 검사 완료해야 폼 넘어가게</h6>
     <h1 id="title" align="center">회원가입</h1>
     <form class="needs-validation" name="memberJoinFrm" action="${ path }/join" method="POST" onsubmit="return check()" novalidate>
         <div class="form-group">
@@ -217,7 +86,7 @@
                     </select>
                     <input type="text" name="birthDate" id="birth-date" class="form-control" placeholder="일" required>
                     <small id="birthHelpBlock" class="form-text text-muted">
-                    년(네 자리 ex.1995) 일(두 자리 ex.01)로 입력해주세요.
+                    년(네 자리 ex.1995) <b style="color: orange;">일(두 자리 ex.01)</b>로 입력해주세요.
                     </small>
                     <span id="birthCheck" style="font-size: small;"></span>
                 </div>
@@ -289,7 +158,9 @@
                         쇼핑정보 수신(선택)에 모두 동의합니다.
                     </div>
                     </label><br>
-                    <label class="form-check-label"><input type="checkbox" name="option1" id="essential-agreement" class="form-check-input" required> <b>[필수]</b> 필수 이용 약관에 동의합니다.</label>
+                    <label class="form-check-label">
+                    	<input type="checkbox" name="option1" id="essential-agreement" class="form-check-input" required> <b>[필수]</b> 필수 이용 약관에 동의합니다.
+                    </label>
                     <!-- 버튼 아코디언 챗 gpt 참고 -->
                     <button type="button" id="btnAgr1" class="btn btn-secondary btn-sm" onclick="showEssentialAgreement()">+</button>    
                     <div id="essential-agreement-content" class="divAgr">
@@ -297,7 +168,7 @@
                         <pre>
 제1조(목적)
 
-이 약관은 (주)퍼퓸그라피 (전자상거래 사업자)가 운영하는 사이버 몰(이하 "몰"이라 한다)에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리•의무 및 책임사항을 규정함을 목적으로 합니다.
+이 약관은 (주)내음 (전자상거래 사업자)가 운영하는 사이버 몰(이하 "몰"이라 한다)에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리•의무 및 책임사항을 규정함을 목적으로 합니다.
 「PC통신, 무선 등을 이용하는 전자상거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다」
 
 제2조(정의)
@@ -305,26 +176,10 @@
 ①"몰" 이란 회사가 재화 또는 용역(이하 "재화 등"이라 함)을 이용자에게 제공하기 위하여 컴퓨터 등 정보통신설비를 이용하여 재화 등을 거래할 수 있도록 설정한 가상의 영업장을 말하며, 아울러 사이버몰을 운영하는 사업자의 의미로도 사용합니다.
 
 ②"이용자"란 "몰"에 접속하여 이 약관에 따라 "몰"이 제공하는 서비스를 받는 회원 및 비회원을 말합니다.
-
-③"회원"이라 함은 “몰”에 회원등록을 한 자로서, 계속적으로 “몰”이 제공하는 서비스를 이용할 수 있는 자를 말합니다.
-
-④"비회원"이라 함은 회원에 가입하지 않고 "몰"이 제공하는 서비스를 이용하는 자를 말합니다.
-
-제3조 (약관 등의 명시와 설명 및 개정)
-
-①"몰"은 이 약관의 내용과 상호 및 대표자 성명, 영업소 소재지 주소(소비자의 불만을 처리할 수 있는 곳의 주소를 포함), 전화번호•모사전송번호•전자우편주소, 사업자등록번호, 통신판매업신고번호, 개인정보관리책임자 등을 이용자가 쉽게 알 수 있도록 사이버몰의 초기 서비스화면(전면)에 게시합니다. 다만, 약관의 내용은 이용자가 연결화면을 통하여 볼 수 있도록 할 수 있습니다.
-
-②"몰"은 이용자가 약관에 동의하기에 앞서 약관에 정하여져 있는 내용 중 청약철회•배송책임•환불조건 등과 같은 중요한 내용을 이용자가 이해할 수 있도록 별도의 연결화면 또는 팝업화면 등을 제공하여 이용자의 확인을 구하여야 합니다.
-
-③"몰"은 「전자상거래 등에서의 소비자보호에 관한 법률」, 「약관의 규제에 관한 법률」, 「전자문서 및 전자거래기본법」, 「전자금융거래법」, 「전자서명법」, 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」, 「방문판매 등에 관한 법률」, 「소비자기본법」 등 관련 법을 위배하지 않는 범위에서 이 약관을 개정할 수 있습니다.
-
-④"몰"이 약관을 개정할 경우에는 적용일자 및 개정사유를 명시하여 현행약관과 함께 몰의 초기화면에 그 적용일자 7일 이전부터 적용일자 전일까지 공지합니다. 다만, 이용자에게 불리하게 약관내용을 변경하는 경우에는 최소한 30일 이상의 사전 유예기간을 두고 공지합니다. 이 경우 "몰"은 개정 전 내용과 개정 후 내용을 명확하게 비교하여 이용자가 알기 쉽도록 표시합니다.
-
-⑤"몰"이 약관을 개정할 경우에는 그 개정약관은 그 적용일자 이후에 체결되는 계약에만 적용되고 그 이전에 이미 체결된 계약에 대해서는 개정전의 약관조항이 그대로 적용됩니다. 다만 이미 계약을 체결한 이용자가 개정약관 조항의 적용을 받기를 원하는 뜻을 제3항에 의한 개정약관의 공지기간 내에 "몰"에 송신하여 "몰"의 동의를 받은 경우에는 개정약관 조항이 적용됩니다.
-
-⑥이 약관에서 정하지 아니한 사항과 이 약관의 해석에 관하여는 전자상거래 등에서의 소비자보호에 관한 법률, 약관의 규제 등에 관한 법률, 공정거래위원회가 정하는 전자상거래 등에서의 소비자 보호지침 및 관계법령 또는 상관례에 따릅니다.</pre>
                     </div>
-                    <label class="form-check-label"><input type="checkbox" name="tCheck" id="optional-agreement" value="Y" class="form-check-input"> <b>[선택]</b> 마케팅 용도와 광고성 정보 수신에 동의합니다.</label>
+                    <label class="form-check-label">
+                    	<input type="checkbox" name="tCheck" id="optional-agreement" value="Y" class="form-check-input"> <b>[선택]</b> 마케팅 용도와 광고성 정보 수신에 동의합니다.
+                    </label>
                     <button type="button" id="btnAgr2" class="btn btn-secondary btn-sm" onclick="showOptionalAgreement()">+</button>
                     <div id="optional-agreement-content" class="divAgr">
                         <h6><b>선택 약관</b></h6>
@@ -339,12 +194,10 @@
             </div>
         </div>
         <div id="submitDiv">
-            <button id="btnSubmit" class="btn btn-secondary btn-lg" type="submit" >회원가입</button>
+            <button id="btnSubmit" class="btn btn-secondary btn-lg" type="submit" ><b>회원가입</b></button>
         </div>
     </form>
-    </section>
-
-    
+    </section>    
 
     <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -373,7 +226,6 @@
     
     $(document).ready(function(){
     	
-    
         // 아이디 체크
         $('#userId').keyup((event) => {
         	// let id = event.target.value;                // 자바스크립트용 표현
@@ -543,12 +395,29 @@
 	        let email = $(event.target).val();             // 제이쿼리 표현
 	        let regExp = /^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$/       // 정규표현식
 	
-	        // 유효성 체크만 되어있음
-	        // db와 비교해서 중복되는 값이 잇는지 확인하는 것도 포함시키기
 	        if(email === null || email === '') {
 	            $('#emailCheck').text('').css({color: 'red', fontweight: 'bold'});
 	        } else if(regExp.test(email)) {
-	            $('#emailCheck').text('').css({color: 'green', fontweight: 'bold'});
+	            // 이메일 중복 검사
+	            $.ajax({
+	           		type: 'POST',
+	           		url: '${path}/event/emailCheck',
+	           		dataType: 'json',
+	           		data: {
+	           			email
+	           		},
+	           		success: (obj) => {
+	           			if(obj.duplicate){
+	           				$('#emailCheck').text('이미 사용중인 이메일입니다.').css({color: 'red', fontweight: 'bold'});
+	           			} else {
+	           				$('#emailCheck').text('사용 가능한 이메일입니다.').css({color: 'green', fontweight: 'bold'});
+	           			}
+	           		},
+	           		error: (error) => {
+	           			console.log(error);
+	           		}
+	           	});
+	            
 	        } else {
 	            $('#emailCheck').text('이메일 형식에 맞게 제대로 입력해주세요. (ex.perfume@mimoa.com)').css({color: 'red', fontweight: 'bold'});
 	        }
@@ -564,8 +433,30 @@
 	            $('#phoneCheck').text('').css({color: 'red', fontweight: 'bold'});
 	            $('#btnPh1').attr("disabled", true);
 	        } else if(regExp.test(phone)) {
-	            $('#phoneCheck').text('').css({color: 'green', fontweight: 'bold'});
-	            $('#btnPh1').attr("disabled", false);
+	        	
+	            $.ajax({
+	           		type: 'POST',
+	           		url: '${path}/event/phoneCheck',
+	           		dataType: 'json',
+	           		data: {
+	           			phone
+	           		},
+	           		success: (obj) => {
+	           			if(obj.duplicate){
+	           				$('#phoneCheck').text("이미 사용중인 휴대폰 번호입니다.").css({color: 'red', fontweight: 'bold'});
+	           				$('#btnPh1').attr("disabled", true);
+	           				console.log("중복검사 실패?");
+	           			} else {
+	           				$('#phoneCheck').text('').css({color: 'green', fontweight: 'bold'});
+	        	            $('#btnPh1').attr("disabled", false);
+	        	            console.log("중복검사 성공?");
+	           			}
+	           		},
+	           		error: (error) => {
+	           			console.log(error);
+	           		}
+	           	});
+	           
 	        } else {
 	            $('#phoneCheck').text("휴대폰 번호를 '-'없이 숫자만 입력해주세요.").css({color: 'red', fontweight: 'bold'});
 				$('#btnPh1').attr("disabled", true);
@@ -574,7 +465,7 @@
         
     // 휴대폰 번호 인증 	
 	//휴대폰 번호인증
-	var code2 = "";
+		var code2 = "";
 		$("#btnPh1").click(function(){
 		    var phone = $("#phone").val();
 		    $.ajax({
@@ -610,98 +501,98 @@
   	
     }); /* 도큐먼트레디함수마무리 */
 
-    // 제출 유효성 검사
-    function check(){
-    	
-    	var inval_Arr = new Array(10).fill(false);
-
-       	//아이디 체크
-       	if(document.getElementById("idCheck").style.color === 'red'){
-       		document.getElementById("idCheck").focus();
-   	        inval_Arr[0] = false;
-       	} else {
-       		inval_Arr[0] = true;
-       	}    
-
-       	// 비밀번호 체크
- 	   	if(document.getElementById("pwdCheck").style.color === 'red'){
-   	        inval_Arr[1] = false;
-   	    } else {
-   	    	inval_Arr[1] = true;    	
-   	    }
-   	    	
-   	    // 비번 일치 체크	
-       	if(document.getElementById("conPwdCheck").style.color === 'red'){
-   	        inval_Arr[2] = false;
-   	    } else {
-   	    	inval_Arr[2] = true;	    	
-   	    }
-    	    	
-   	    // 이름 체크	
-       	if(document.getElementById("nameCheck").style.color === 'red'){
-   	        inval_Arr[3] = false;
-   	    } else {
-   	    	inval_Arr[3] = true;
-   	    }
-   	    	
-   	    // 생년월일 체크	
-       	if(document.getElementById("birthCheck").style.color === 'red'){
-           	inval_Arr[4] = false;
-   	    } else {
-   	    	inval_Arr[4] = true; 	
-   	    }
-   	    	
-   	    // 이메일 체크	
-       	if(document.getElementById("emailCheck").style.color === 'red'){
-   	        inval_Arr[5] = false;
-   	    } else {
-   	    	inval_Arr[5] = true;	    	
-   	    }
-   	    	
-   	    // 폰 정규식 체크	
-       	if(document.getElementById("phoneCheck").style.color === 'red'){
-   	        inval_Arr[6] = false;
-   	    } else {
-   	    	inval_Arr[6] = true;	    	
-   	    }
-   	    	
-   	   	// 폰 인증 체크	
-		if(!document.getElementById("verification-code").disabled){
-   	        inval_Arr[7] = false;
-   	    } else {
-   	    	inval_Arr[7] = true;
-   	    }
-   	    	
-   	    // 주소 체크	
-       	if((document.getElementById("sample6_postcode").value === null || document.getElementById("sample6_postcode").value === '')
-           || (document.getElementById("sample6_address").value === null || document.getElementById("sample6_address").value === '')){
-           	inval_Arr[8] = false;
-   	    } else {
-   	    	inval_Arr[8] = true;
-   	    }
-   	    
-   	    // 필수약관 체크
-       	if(!document.getElementById("essential-agreement").checked){
-   	        inval_Arr[9] = false;
-   	    } else {
-   	    	inval_Arr[9] = true;
-   	    }
-   	    	
-       	let validAll = true;
-       	for(let i = 0; i < inval_Arr.length; i++){
-       	  if(inval_Arr[i] === false){
-       	    validAll = false;
-       	  }
-       	}
-
-       	if(validAll){
-       	  return true;
-       	} else {
-       	  alert('입력한 정보들을 다시 한 번 확인해주세요.');
-       	  return false;
-       	}
-    }
-    
+	    // 제출 유효성 검사
+	    function check(){
+	    	
+	    	var inval_Arr = new Array(10).fill(false);
+	
+	       	//아이디 체크
+	       	if(document.getElementById("idCheck").style.color === 'red'){
+	       		document.getElementById("idCheck").focus();
+	   	        inval_Arr[0] = false;
+	       	} else {
+	       		inval_Arr[0] = true;
+	       	}    
+	
+	       	// 비밀번호 체크
+	 	   	if(document.getElementById("pwdCheck").style.color === 'red'){
+	   	        inval_Arr[1] = false;
+	   	    } else {
+	   	    	inval_Arr[1] = true;    	
+	   	    }
+	   	    	
+	   	    // 비번 일치 체크	
+	       	if(document.getElementById("conPwdCheck").style.color === 'red'){
+	   	        inval_Arr[2] = false;
+	   	    } else {
+	   	    	inval_Arr[2] = true;	    	
+	   	    }
+	    	    	
+	   	    // 이름 체크	
+	       	if(document.getElementById("nameCheck").style.color === 'red'){
+	   	        inval_Arr[3] = false;
+	   	    } else {
+	   	    	inval_Arr[3] = true;
+	   	    }
+	   	    	
+	   	    // 생년월일 체크	
+	       	if(document.getElementById("birthCheck").style.color === 'red'){
+	           	inval_Arr[4] = false;
+	   	    } else {
+	   	    	inval_Arr[4] = true; 	
+	   	    }
+	   	    	
+	   	    // 이메일 체크	
+	       	if(document.getElementById("emailCheck").style.color === 'red'){
+	   	        inval_Arr[5] = false;
+	   	    } else {
+	   	    	inval_Arr[5] = true;	    	
+	   	    }
+	   	    	
+	   	    // 폰 정규식 체크	
+	       	if(document.getElementById("phoneCheck").style.color === 'red'){
+	   	        inval_Arr[6] = false;
+	   	    } else {
+	   	    	inval_Arr[6] = true;	    	
+	   	    }
+	   	    	
+	   	   	// 폰 인증 체크	
+			if(!document.getElementById("verification-code").disabled){
+	   	        inval_Arr[7] = false;
+	   	    } else {
+	   	    	inval_Arr[7] = true;
+	   	    }
+	   	    	
+	   	    // 주소 체크	
+	       	if((document.getElementById("sample6_postcode").value === null || document.getElementById("sample6_postcode").value === '')
+	           || (document.getElementById("sample6_address").value === null || document.getElementById("sample6_address").value === '')){
+	           	inval_Arr[8] = false;
+	   	    } else {
+	   	    	inval_Arr[8] = true;
+	   	    }
+	   	    
+	   	    // 필수약관 체크
+	       	if(!document.getElementById("essential-agreement").checked){
+	   	        inval_Arr[9] = false;
+	   	    } else {
+	   	    	inval_Arr[9] = true;
+	   	    }
+	   	    	
+	       	let validAll = true;
+	       	for(let i = 0; i < inval_Arr.length; i++){
+	       	  if(inval_Arr[i] === false){
+	       	    validAll = false;
+	       	  }
+	       	}
+	
+	       	if(validAll){
+	       	  return true;
+	       	} else {
+	       	  alert('입력한 정보들을 다시 한 번 확인해주세요.');
+	       	  return false;
+	       	}
+	    }
+	    
 
         // 약관 동의 전체 체크 기능
         function checkAll() {
@@ -733,65 +624,59 @@
 
         // 주소 api
         function sample6_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
-                
-                } else {
-                    document.getElementById("sample6_extraAddress").value = '';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
-            }
-        }).open();
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
+	                    document.getElementById("sample6_extraAddress").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("sample6_extraAddress").value = '';
+	                }
+	
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('sample6_postcode').value = data.zonecode;
+	                document.getElementById("sample6_address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("sample6_detailAddress").focus();
+	            }
+	        }).open();
         }
-
-
     </script>
-
-
 
     <!-- 주소 api -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- Bootstrap jQuery, JS -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" ></script>
 <jsp:include page="/WEB-INF/views/planning/footer.jsp"/>

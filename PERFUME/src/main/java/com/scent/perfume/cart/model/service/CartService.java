@@ -15,8 +15,6 @@ public interface CartService {
 
 	CartMember selectCartMemberInfo(int memberNo);
 
-	/* int amountUpdate(int cartNo, int cartProductCount); */
-
 	int couponUpdate(int memberNo, int benefitNo);
 
 	int couponReset(int memberNo, int benefitNo);
@@ -27,8 +25,6 @@ public interface CartService {
 
 	int orderListInsert(OrderList orderList);
 
-	/* String selectOrderPrimaryKey(String orderNo); */
-
 	int memberPointUpdate(int point, int memberNo); 
 
 	Order orderList(String orderNo);
@@ -37,6 +33,6 @@ public interface CartService {
 
 	productOption selectNowOrder(productOption option);
 
-	/* CartProduct selectCartProductInfo(int cartNo, int productNo); */
+	int insert(int no, Cart cart);
 
 }

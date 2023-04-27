@@ -15,32 +15,20 @@
   <title>aboutSite</title>
 
   <style>
-  	body{
-      background-color: #f6f6f2;
-  	}
-  	:not(header){
-      background-color: #f6f6f2;
-  	}
-    section{
-      width: 1200px;
-      text-align: center;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .img{
-      width: 80%;
-      margin-left: auto;
-      margin-right: auto;
-    }
+  	body{ background-color: #f6f6f2; }
+  	header { background-color: #ffffff; }
+	footer { background-color: #ffffff; }
+    section{ width: 1200px; text-align: center; margin-left: auto; margin-right: auto; }
+    .img{ width: 80%; margin-left: auto; margin-right: auto; }
   </style>
 <script src="js/jquery-3.6.3.js"></script>
 <script src="${ path }/js/jquery.fade-in.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/planning/header.jsp"/>
-	<section>
-			<img class="img fade-in" src="images/aboutSite/001.png">
-			<img class="img fade-in" src="${ path }/images/aboutSite/002.png">
-			<img class="img fade-in" src="${ path }/images/aboutSite/003.png">
-	</section>
- <jsp:include page="/WEB-INF/views/planning/footer.jsp"/>
+		<section>
+				<img class="img fade-in" src="${ path }/images/aboutSite/001.png">
+				<img class="img fade-in" src="${ path }/images/aboutSite/002.png">
+				<img class="img fade-in" src="${ path }/images/aboutSite/003.png">
+		</section>
+ 	<jsp:include page="/WEB-INF/views/planning/footer.jsp"/>

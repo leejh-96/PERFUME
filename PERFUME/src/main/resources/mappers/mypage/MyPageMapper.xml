@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scent.perfume.mypage.model.mapper.MyPageMapper">
+
+	<resultMap type="MemberDTO" id="memberInfoResultMap">
+		<id property="number" column="M_NO" />
+		<result property="division" column="M_DIVISION"/>
+		<result property="status" column="M_STATUS"/>
+		<result property="path" column="M_PATH"/>
+		<result property="userId" column="M_ID"/>
+		<result property="password" column="M_PWD"/>
+		<result property="name" column="M_NAME"/>
+		<result property="birthDate" column="M_BIRTH"/>
+		<result property="gender" column="M_GENDER"/>
+		<result property="email" column="M_MAIL"/>
+		<result property="phone" column="M_PHONE"/>
+		<result property="address" column="M_ADDR"/>
+		<result property="point" column="M_POINT"/>
+		<result property="createDate" column="M_CREATE"/>
+		<result property="updateDate" column="M_UPDATE"/>
+		<result property="mailStatus" column="M_MAILSTATUS"/>
+	</resultMap>
+	<select id="getMemberInfo" parameterType="_int" resultMap="memberInfoResultMap">
+		SELECT *
+		FROM MEMBER
+		WHERE M_NO = #{no} 
+		
+	
+	</select>
+
+
+	<select id="getOrderDetailList" resultType="OrderDetailDTO">
+		select b.*
+		from
+			(select rownum as rnum, a.*
+			 from
+				 (select OD_NO, OD_MNO, OD_METHOD, OD_DATE, OD_PRICE, OD_DISCASH, OD_POINT, OD_COUPON, OD_DLVCASH,
+				 OD_NAME, OD_PHONE, OD_EMAIL, OD_DNAME, OD_ADDRESS, OD_DNAME, OD_ADDRESS, OD_DPHONE, OD_MEMO, OD_STATUS, M_ID
+				  from Order_Detail where M_ID = #{memberId}
+				  order by orderDate desc) a) b
+		where rnum between #{startNum} and #{endNum}
+	</select>
+	
+	<select id="getOrderHistoryPages" resultType="OrderDetailDTO">
+		select select OD_NO, OD_MNO, OD_METHOD, OD_DATE, OD_PRICE, OD_DISCASH, OD_POINT, OD_COUPON, OD_DLVCASH,
+				 OD_NAME, OD_PHONE, OD_EMAIL, OD_DNAME, OD_ADDRESS, OD_DNAME, OD_ADDRESS, OD_DPHONE, OD_MEMO, OD_STATUS, M_ID
+		from Order_Detail where M_ID = #{memberId}
+		order by orderDate desc
+		offset #{startPages} rows FETCH FIRST 10 rows only
+	</select>
+
+	<select id="getOrderList" resultType="OrderDTO">
+		select O_NO, P_NO, OD_NO, O_COUNT, O_SIZE, O_PRICE
+		from Order where OD_NO = #{orderNumber}
+		order by pname
+	</select>
+	
+	<select id="getOrderDetailDetail" resultType="OrderDetailDTO">
+		select select OD_NO, OD_MNO, OD_METHOD, OD_DATE, OD_PRICE, OD_DISCASH, OD_POINT, OD_COUPON, OD_DLVCASH,
+				 OD_NAME, OD_PHONE, OD_EMAIL, OD_DNAME, OD_ADDRESS, OD_DNAME, OD_ADDRESS, OD_DPHONE, OD_MEMO, OD_STATUS, M_ID
+		from Order_Detail where OD_NO = #{orderNumber}
+	</select>
+	
+	<update id="updateOrderStatus">
+		update Order_Detail set OD_STATUS = #{orderStatus} where OD_NO = #{orderNumber}
+	</update>
+	
+
+	<select id="getAvailableCoupon" resultType="CouponDTO">
+		select b.*
+		from
+			(select rownum as rnum, a.*
+			 from
+			 	 (select MBI_NO, M_NO, BN_NO, MBI_STATUS, BN_CREATEDATE, BN_ENDDATE, BN_NAME
+				  from MEMBER_BENEFIT_INFO where M_NO = #{number}
+				  <![CDATA[
+					  and used = 0 and sysdate <= expirationdate
+				  ]]>
+				  order by createDate desc) a) b
+		where rnum between #{startNum} and #{endNum}
+	</select>
+	
+	
+	<select id="getUnavailableCoupon" resultType="CouponDTO">
+		select b.*
+		from
+			(select rownum as rnum, a.*
+			 from
+				 (select MBI_NO, M_NO, BN_NO, MBI_STATUS, BN_CREATEDATE, BN_ENDDATE, BN_NAME
+			  	   from MEMBER_BENEFIT_INFO where M_NO = #{number}
+			  	  <![CDATA[
+			 	  	  and (used = 1 or (used = 0 and sysdate > expirationdate))
+			  	  ]]>
+			  	  order by createDate desc) a) b
+		where rnum between #{startNum} and #{endNum}
+	</select>
+
+	<select id="getAddressList" resultType="DeliveryAddressDTO">
+		select M_ADDR, M_ID
+		from MEMBER where memberId = #{memberId}
+		order by addressId
+	</select>
+	
+	<select id="getDefaultAddress" resultType="DeliveryAddressDTO">
+		select M_ADDR, M_ID
+		from MEMBER
+		where memberId = #{memberId} and isdefault = 1
+	</select>
+	
+	<insert id="addAddress" parameterType="DeliveryAddressDTO">
+		insert into MEMBER(M_ADDR, M_ID)
+		values(#{addressId}, #{memberId})
+	</insert>
+	
+	<delete id="deleteAddress">
+		delete from MEMBER
+		where M_ID = #{memberId} and M_ADDR = #{addressId}
+	</delete>
+	
+	<update id="setDefault">
+		update M_ADDR set isdefault = 1 <!-- ?? -->
+		where M_ID = #{memberId} and M_ADDR = #{addressId}
+	</update>
+	
+	<update id="cancelDefault">
+		update M_ADDR set isdefault = 0 where M_ID = #{memberId}
+	</update>
+	
+	<update id="changePassword">
+		update MEMBER set password = #{newPassword} where M_ID = #{memberId}
+	</update>
+	
+	<!-- 여기 -->
+	
+	<insert id="insertResignMember">
+		insert into resignmember(M_ID, M_NO, M_PWD, M_NAME, M_BIRTH, M_GENDER, M_MAIL, M_PHONE, M_ADDR, M_POINT, M_CREATE, M_UPDATE )
+		values(#{memberId}, #{number}, #{path}, #{password}, #{name}, #{birtDate}, #{gender}, #{email}, #{phone}, #{address}, #{point}), #{joinDate}, #{updateDate}
+	</insert>
+	
+	<update id="disableMember">
+		update MEMBER set disabled=1 where M_ID = #{memberId}
+	</update>
+	
+	<select id="getOrderPerformance" resultType="OrderPerformanceDTO">
+		select nvl(sum(O_COUNT), 0) as ordercount, sum(O_SIZE) as orderamount
+		from orderperformance where M_ID = #{memberId}
+		<![CDATA[
+			and OD_DATE >= TRUNC(sysdate, 'MM')
+			and OD_DATE <= LAST_DAY(sysdate)
+		]]>
+	</select>
+	
+	<select id="getOrderPerformanceAll" resultType="OrderPerformanceDTO">
+		select M_ID, sum(O_COUNT) as ordercount, sum(O_SIZE) as orderamount
+		from orderperformance
+		<![CDATA[
+			where OD_DATE >= TRUNC(sysdate, 'MM')
+			and OD_DATE <= LAST_DAY(sysdate)
+		]]>
+        group by M_ID
+	</select>
+	
+</mapper>

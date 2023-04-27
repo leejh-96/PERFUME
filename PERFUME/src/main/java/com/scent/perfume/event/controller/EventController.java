@@ -28,6 +28,9 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.scent.perfume.cart.model.vo.Benefit;
+import com.scent.perfume.common.util.MultipartFileUtil;
+import com.scent.perfume.common.util.PageInfo;
 import com.scent.perfume.event.model.service.EventService;
 import com.scent.perfume.event.model.service.EventServiceImpl;
 import com.scent.perfume.event.model.service.UserMailSendService;
@@ -35,8 +38,6 @@ import com.scent.perfume.event.model.vo.ReplyBoard;
 import com.scent.perfume.event.model.vo.MemberBenefitInfo;
 import com.scent.perfume.event.model.vo.Terms;
 import com.scent.perfume.planning.model.vo.Member;
-import com.scent.perfume.cart.model.vo.Benefit;
-import com.scent.perfume.common.util.*;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,14 +53,14 @@ public class EventController {
 	EventServiceImpl eventServiceImpl;
 	@Autowired
 	private UserMailSendService mailsender;
-	
+		
 // 사이트 소개 페이지 연결
 	@RequestMapping("/aboutSite")
 	public String aboutSite() {
 		System.out.println("사이트 소개창 연결 테스트");
 		return "event/aboutSite";
 	}
-	
+
 	
 // 회원가입 페이지 연결
 	@GetMapping("join")
@@ -80,6 +81,30 @@ public class EventController {
 							 .APPLICATION_JSON_VALUE).body(map);		
 	}
 	
+// 이메일 중복 검사
+	@PostMapping("/event/emailCheck")
+	public ResponseEntity<Map<String, Boolean>> emailCheck(@RequestParam("email") String email){	
+		Map<String, Boolean> map = new HashMap<>();
+		
+		map.put("duplicate", service.isDuplicateEmail(email));
+		
+		return ResponseEntity.ok()
+							 .header(HttpHeaders.CONTENT_TYPE, MediaType
+							 .APPLICATION_JSON_VALUE).body(map);		
+	}
+// 폰 중복 검사 /event/phoneCheck
+	@PostMapping("/event/phoneCheck")
+	public ResponseEntity<Map<String, Boolean>> phoneCheck(@RequestParam("phone") String phone){	
+		Map<String, Boolean> map = new HashMap<>();
+		
+		map.put("duplicate", service.isDuplicatePhone(phone));
+		
+		return ResponseEntity.ok()
+							 .header(HttpHeaders.CONTENT_TYPE, MediaType
+							 .APPLICATION_JSON_VALUE).body(map);		
+	}
+
+	
 // 전화번호 인증 문자 메세지 전송 컨트롤러
 	@RequestMapping("/sendSMS") //jsp 페이지 넘긴 mapping 값
 	@ResponseBody    
@@ -96,8 +121,9 @@ public class EventController {
         // 휴대폰 api 쪽으로 가기
         eventServiceImpl.certifiedPhoneNumber(phoneNumber, numStr);
         
-        //찐으로 쓸 때  return numStr; 서비스 api도 변경하기
-        return "0000";
+        //찐으로 쓸 때  서비스 api도 변경하기
+        return numStr;
+        //return "0000";
     }
 	
 // 회원가입
@@ -131,8 +157,8 @@ public class EventController {
 		
 		result = service.save(member, terms, tCheck);	// tCheck 선택약관동의
 		
-		// 인증 메일 보내는 메소드
-		mailsender.mailSendWithUserKey(member.getMail(),member.getId(), request);
+		// 인증 메일 보내는 메소드 기능 시연 시 주석 풀어두기
+		 mailsender.mailSendWithUserKey(member.getMail(),member.getId(), request);
 		
 		if(result > 0) {
 			modelAndView.addObject("msg", "회원가입 인증 이메일이 발송되었습니다. 등록한 이메일을 확인해주시고 인증 절차를 거쳐주시기 바랍니다.");
@@ -204,6 +230,8 @@ public class EventController {
 		
 		modelAndView.addObject("pageInfo", pageInfo);
 		modelAndView.addObject("list", list);
+		modelAndView.addObject("searchType", type);
+		modelAndView.addObject("searchKeyword", keyword);
 		modelAndView.setViewName("event/eventSearch");
 		
 		return modelAndView;
@@ -229,31 +257,24 @@ public class EventController {
 		board.setBnEndDate(service.selectEventEndByTitle(bTitle));
 		log.info("보드 셋 서비스 탄 후 : {}", board);
 		
-//		String preTitle = service.findPreTitleByNo(no);
-//		String nextTitle = service.findNextTitleByNo(no);
-//		
-//		board.setPreTitle(preTitle);
-//		board.setNextTitle(nextTitle);
-//		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
-//		board.setPreNo(service.findPreNoByPreTitle(preTitle));
-//		board.setNextNo(service.findNextNoByNextTitle(nextTitle));
+		// 이전글 다음글 번호 알아오기
+		int preNo = service.findPreNoByBNo(no);
+		int nextNo = service.findNextNoByBNo(no);
 		
-		String preTitle = service.findPreTitleByNo(no);
-		String nextTitle = service.findNextTitleByNo(no);
+		board.setPreNo(preNo);
+		board.setNextNo(nextNo);
 
-		board.setPreTitle(preTitle != null ? preTitle : null);
-		board.setNextTitle(nextTitle != null ? nextTitle : null);
-		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
-
-		if (preTitle != null) {
-		    board.setPreNo(service.findPreNoByPreTitle(preTitle));
-		}
-		if (nextTitle != null) {
-		    board.setNextNo(service.findNextNoByNextTitle(nextTitle));
-		}
-
-		
 		log.info("이전글 다음글 번호 찾는서비스 탄 후 : {}", board);
+		
+		if(preNo != 0) {
+			board.setPreTitle(service.findPreTitleByPreNo(preNo));
+		}
+		
+		if(nextNo != 0) {
+			board.setNextTitle(service.findNextTitleByNextNo(nextNo));
+		}
+
+		log.info("이전글 다음글 찾는서비스 탄 후 : {}", board);
 		
 		modelAndView.addObject("board", board);
 		modelAndView.setViewName("event/eventView");
@@ -411,6 +432,9 @@ public class EventController {
 		
 		board = service.findBoardByNo(no);
 		
+		log.info("파인드 보드 바이 엔오 하고 : {}", board);
+		log.info("로그인 멤버 : {}", loginMember);
+		
 		if(board != null && loginMember.getDivision() == 1) {
 			modelAndView.addObject("board", board);
 			modelAndView.setViewName("/event/eventUpdate");
@@ -436,7 +460,7 @@ public class EventController {
 		
 		board = service.findBoardByNo(no);
 		
-		if(board != null && board.getMNo() == loginMember.getNo()) {
+		if(board != null && loginMember.getDivision() == 1) {
 		
 		
 			board.setBTitle(bTitle);
@@ -468,14 +492,14 @@ public class EventController {
 	public ModelAndView delete(ModelAndView modelAndView, @RequestParam int no,
 			   @SessionAttribute("loginMember") Member loginMember) {
 		
-		// 본인 게시글 여부 확인
+		// 어드민 확인
 		int result = 0;
 		ReplyBoard board = null;
 		
 		board = service.findBoardByNo(no);
-		
-		if(board != null && board.getMNo() == loginMember.getNo()) {
-			// 작성자 본인이 맞으면 삭제작업
+				
+		if(board != null && loginMember.getDivision() == 1) {
+			// 어드민 계정이 확인되면 삭제 작업
 			result = service.deleteEventBoard(no);
 			
 			if(result > 0) {
@@ -518,46 +542,55 @@ public class EventController {
 		char ch = 'Y';
 //		log.info("동의 여부 확인 : {}",optionAgr);
 		
-		if(!optionAgr.contains(Character.toString(ch))) { // String 과 char 타입이 자바에서는 다르기 때문에 직접 optionAgr != 'Y'이런 식으로 비교하면 에러 발생.
-		// 선택 약관에 동의하지 않았을 때 (optionAgr에 'Y'가 포함되어 있지 않을 때)	약관 동의 선택 여부 묻기
-
-			modelAndView.addObject("msg", "선택 약관에 동의하지 않으시면 참여가 불가능합니다. 동의 후 이벤트에 참여하시겠습니까?");
-			modelAndView.addObject("locationAgr", "/optionAgree?bNo=" + BNo + "&mNo=" + mNo + "&bTitle=" + BTitle);	// 확인 후 작동 잘 하면 수신 동의 참여 컨트롤러로 변경!
-			modelAndView.addObject("locationNotAgr", "/event/eventView?no=" + BNo);	// 수신 동의하지 않을시 해당 페이지에 머무르기		
-			modelAndView.setViewName("event/confirm");
-		} else {
-		// 선택 약관에 동의했을 때 이벤트 참여
+		if(loginMember.getDivision() == 1) {
+			modelAndView.addObject("msg", "관리자 계정은 이벤트 참여가 불가능합니다.");
+			modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+			modelAndView.setViewName("common/msg");
 			
-			int participate = 0;
-			// 이미 참여한 회원인지 확인
-			participate = service.getParticipateEventMNo(mNo);
-			
-			if(participate > 0) {
-				// 이미 참여한 회원
-				modelAndView.addObject("msg", "이미 이벤트에 참여하셨습니다.");
-				modelAndView.addObject("location", "/event/eventView?no=" + BNo);	
+		}else {
+		
+			if(!optionAgr.contains(Character.toString(ch))) { // String 과 char 타입이 자바에서는 다르기 때문에 직접 optionAgr != 'Y'이런 식으로 비교하면 에러 발생.
+			// 선택 약관에 동의하지 않았을 때 (optionAgr에 'Y'가 포함되어 있지 않을 때)	약관 동의 선택 여부 묻기
+	
+				modelAndView.addObject("msg", "선택 약관에 동의하지 않으시면 참여가 불가능합니다. 동의 후 이벤트에 참여하시겠습니까?");
+				modelAndView.addObject("locationAgr", "/optionAgree?bNo=" + BNo + "&mNo=" + mNo + "&bTitle=" + BTitle);	// 확인 후 작동 잘 하면 수신 동의 참여 컨트롤러로 변경!
+				modelAndView.addObject("locationNotAgr", "/event/eventView?no=" + BNo);	// 수신 동의하지 않을시 해당 페이지에 머무르기		
+				modelAndView.setViewName("event/confirm");
 			} else {
-				// EVENT_MEMBER에 회원 mNo INSERT
+			// 선택 약관에 동의했을 때 이벤트 참여
 				
-				// BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
-				int bnNo = 0;
-				bnNo = service.getBnNoByBTitle(BTitle);
+				int participate = 0;
+				// 이미 참여한 회원인지 확인
+				participate = service.getParticipateEventMNo(mNo);
 				
-				// 이벤트 참여 회원 DB에 저장
-				int successParticipate = 0;
-				successParticipate = service.participateEvent(mNo, bnNo);
-				
-				if(successParticipate > 0) {
-					modelAndView.addObject("msg", "이벤트 참여가 완료되었습니다. 당첨자에게는 문자를 전송해 드리니 당첨일(이벤트 종료날로부터 일주일 후) 이후 확인부탁드립니다.");
-					modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+				if(participate > 0) {
+					// 이미 참여한 회원
+					modelAndView.addObject("msg", "이미 이벤트에 참여하셨습니다.");
+					modelAndView.addObject("location", "/event/eventView?no=" + BNo);	
 				} else {
-					modelAndView.addObject("msg", "이벤트 참여가 정상적으로 완료되지 않았습니다.");
-					modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+					// EVENT_MEMBER에 회원 mNo INSERT
+					
+					// BTitle로 혜택 번호(BENEFIT 테이블의 BN_NO) 알아오기
+					int bnNo = 0;
+					bnNo = service.getBnNoByBTitle(BTitle);
+					
+					// 이벤트 참여 회원 DB에 저장
+					int successParticipate = 0;
+					successParticipate = service.participateEvent(mNo, bnNo);
+					
+					if(successParticipate > 0) {
+						modelAndView.addObject("msg", "이벤트 참여가 완료되었습니다. 당첨자에게는 문자를 전송해 드리니 당첨일 이후 확인부탁드립니다.");
+						modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+					} else {
+						modelAndView.addObject("msg", "이벤트 참여가 정상적으로 완료되지 않았습니다.");
+						modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+					}
+					
 				}
-				
+	
 			}
-
 			modelAndView.setViewName("common/msg");		
+		
 		}
 		
 		return modelAndView;
@@ -596,10 +629,82 @@ public class EventController {
 	
 	// 당첨자 추첨 컨트롤러
 	@GetMapping("/pickWinner")
-	public String pickWinner() {
-		return "/event/testEvent";
+	public ModelAndView pickWinner(ModelAndView modelAndView, @SessionAttribute("loginMember") Member loginMember,
+								@RequestParam("bNo") int BNo, @RequestParam("bTitle") String BTitle) {
+		System.out.println("당첨자 추첨 컨트롤러 잘 탔는지 시소");
+		
+		int bnNo = 0;
+		int emNo = 0;
+		int epMNo = 0;
+		int setEventPrize = 0;
+		int setBenefit = 0;
+		
+		if( loginMember.getDivision() != 1) {
+			modelAndView.addObject("msg", "관리자만 접근할 수 있는 페이지입니다.");
+			modelAndView.addObject("location", "/eventList");	
+		} else {
+			
+			String pickEventWinner = null;
+			String bnTitle = BTitle + " 당첨자 쿠폰";
+			// 이미 당첨자 뽑은 이벤트인지 확인
+			pickEventWinner = service.getBnTitleByBTitleForWinner(bnTitle);
+			
+			if(pickEventWinner != null) {
+				// 이미 당첨자 뽑은 이벤트
+				modelAndView.addObject("msg", "이미 당첨자를 뽑은 이벤트입니다.");
+				modelAndView.addObject("location", "/event/eventView?no=" + BNo);	
+			} else {
+			
+				// BTitle로 BENEFIT 테이블에서 혜택번호(BN_NO) 알아오기
+				bnNo = service.getBnNoByBTitle(BTitle);
+//				log.info("비이이이이엔엔오오오오오옹 bnNo : {}", bnNo);
+				
+				// bnNo(혜택번호)를 가져가 이벤트를 조건으로 지정한 후 해당 이벤트 당첨자(EM_NO 참여번호, EP_MNO 회원번호) 뽑기
+				// EM_NO(참여 번호 뽑기) 랜덤 추출
+				emNo = service.pickEventWinner(bnNo);
+//				log.info("이엠엔오오오오오옹 emNo : {}", emNo);
+				// emNo로 epMNo 가져오기
+				epMNo = service.getEpMNo(emNo);
+//				log.info("이피피피피피피피엠엔오 epMNo : {}", epMNo);
+				// 당첨자 정보 DB 저장
+				setEventPrize = service.insertEventPrize(emNo, epMNo);
+//				log.info("셋이벤트 프라이즈 저장 잘됐으면 1 : {}", setEventPrize);
+				
+				if(setEventPrize > 0) { // 제대로 저장 완료
+					// 당첨자에게 쿠폰 발급 benefit 에 인서트 작업 setBenefit 추출
+					setBenefit = service.insertBenefit(epMNo, BTitle);
+//					log.info("베네핏 잘들어갔으면 1 : {}", setBenefit);
+					
+					if(setBenefit > 0 ) { // 제대로 저장 완료
+//						// epMNo로 당첨자 전화번호 알아오기
+						String winnerPhone = service.findPhoneNoForWinner(epMNo);
+						log.info("당첨자 폰번호 : {}", winnerPhone);
+//						
+//						// 폰번호 받아와 문자 전송 coolsms api로					
+						if (eventServiceImpl.sendSMSToWinner(winnerPhone, BTitle)) {
+							modelAndView.addObject("msg", "당첨자 추첨이 완료되었습니다. 관리자 페이지에서 발급된 쿠폰을 확인해주세요.");
+							modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+					    } else {
+					    	modelAndView.addObject("msg", "메세지 전송에 실패하였습니다.");
+					    	modelAndView.addObject("location", "/event/eventView?no=" + BNo);
+					    }
+							
+					} else { // 베네핏 저장 실패
+						modelAndView.addObject("msg", "당첨자 추첨이 제대로 완료되지 않았습니다. BENEFIT INSERT ERROR");
+						modelAndView.addObject("location", "/event/eventView?no=" + BNo);	
+					}
+					
+				} else { // 이벤트 프라이스 테이블에 제대로 저장 미완료
+					modelAndView.addObject("msg", "당첨자 추첨이 제대로 완료되지 않았습니다. EVENT_PRIZE INSERT ERROR");
+					modelAndView.addObject("location", "/event/eventView?no=" + BNo);		
+				}
+			}
+		}
+		
+		modelAndView.setViewName("common/msg");
+		
+		return modelAndView;
 	}
-	
 	
 	
 	

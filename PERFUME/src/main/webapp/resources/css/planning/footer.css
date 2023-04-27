@@ -6,16 +6,15 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Nanum Myeongjo', serif;
 }
 
-/* 푸터 영역 */
+/* 푸터 내비 영역 */
 .footer-nav {
     display: flex;
     justify-content: space-between;
     height:200px;
     align-items: center;
-    background-color: #f8f7f2;
 }
 
 .footer-nav ul {
@@ -33,7 +32,7 @@ body {
     margin-top: 30px;
 }
 
-.footer-nav li p {
+.footer-nav li pre {
     margin-top: 30px;
 }
 
@@ -41,9 +40,16 @@ body {
     font-size: 30px;
 }
 
+/* 푸터 텍스트 영역 */
 .footer-text {
+	font-family: 'Nanum Myeongjo', serif;
     height: auto;
     font-size: medium;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 50px;
+}
+
+.footer-text a {
+	text-decoration: none;
+	color: red;
 }
