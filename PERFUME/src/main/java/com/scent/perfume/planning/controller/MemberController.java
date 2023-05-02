@@ -143,7 +143,6 @@ public class MemberController {
 
 		    // 이메일 전송
 		    try {
-		        sendEmail(userId, userEmail, tempPassword);
 		        model.addAttribute("msg", "임시 비밀번호가 이메일로 전송되었습니다.");
 		    } catch (Exception e) {
 		        model.addAttribute("msg", "이메일 전송에 실패했습니다. 관리자에게 문의해주세요.");
@@ -151,36 +150,6 @@ public class MemberController {
 		    return "planning/findPwdResult";
 		}
 	};
-	
-	// 이메일 전송 메소드
-	private void sendEmail(String userId, String userEmail, String password) throws Exception {
-		String host = "smtp.gmail.com";
-		int port = 587;
-		String username = "perfume.find.pwd@gmail.com";
-		String password2 = "zvipezqfbaaztjii";
-
-		Properties properties = new Properties();
-		properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.auth", "true");
-		properties.put("mail.smtp.host", host);
-		properties.put("mail.smtp.port", port);
-
-		Authenticator auth = new Authenticator() {
-		    public PasswordAuthentication getPasswordAuthentication() {
-		        return new PasswordAuthentication(username, password2);
-		    }
-		};
-
-		Session session = Session.getInstance(properties, auth);
-
-		Message message = new MimeMessage(session);
-		message.setFrom(new InternetAddress("perfume.find.pwd@gmail.com"));
-		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail));
-		message.setSubject("임시 비밀번호 발급");
-		message.setText(userId + "님의 임시 비밀번호는 " + password + "입니다.");
-
-		Transport.send(message);
-	}
 	
 	@GetMapping("/planning/special")
 	public String special() {

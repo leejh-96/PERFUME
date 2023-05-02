@@ -51,9 +51,7 @@ public class EventController {
 	private EventService service;
 	@Autowired
 	EventServiceImpl eventServiceImpl;
-	@Autowired
-	private UserMailSendService mailsender;
-		
+	
 // 사이트 소개 페이지 연결
 	@RequestMapping("/aboutSite")
 	public String aboutSite() {
@@ -158,8 +156,6 @@ public class EventController {
 		result = service.save(member, terms, tCheck);	// tCheck 선택약관동의
 		
 		// 인증 메일 보내는 메소드 기능 시연 시 주석 풀어두기
-		 mailsender.mailSendWithUserKey(member.getMail(),member.getId(), request);
-		
 		if(result > 0) {
 			modelAndView.addObject("msg", "회원가입 인증 이메일이 발송되었습니다. 등록한 이메일을 확인해주시고 인증 절차를 거쳐주시기 바랍니다.");
 			modelAndView.addObject("location", "/");
@@ -177,8 +173,6 @@ public class EventController {
 	@GetMapping("/join/key_update")
 	public String key_alterConfirm(@RequestParam("m_id") String id, @RequestParam("m_mailstatus") String key, Benefit benefit, MemberBenefitInfo memBenefitInfo) {
 								// UserMailSendService 서비스의 mailSendWithUserKey 메소드 a태그 내 url에서 name 속성 지정한 값을 RequestParam의 속성명으로 주기 
-		mailsender.alter_userKey_service(id, key, benefit, memBenefitInfo);
-		
 		return "event/userJoinSuccess";
 	}
 	
