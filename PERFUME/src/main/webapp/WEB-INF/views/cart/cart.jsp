@@ -1344,7 +1344,7 @@
 	                    		등록된 사진이 없습니다.
 	                    	</c:if>
 	                    	<c:if test="${ not empty clist[status.index].cartProduct.productRfName}">
-	                    		<img src="${path}/upload/product/${clist[status.index].cartProduct.productRfName}" width="150px">
+	                    		<img src="${path}/upload/product/${clist[status.index].cartProduct.productRfName}" width="100px">
 	                    	</c:if>
 	                    </th>
 	                    <th class="align-middle">
@@ -1352,7 +1352,7 @@
 	                            <a href="${path}/product/detail?no=${cart.productNo}">
 	                            	<span>[${cart.cartProduct.productBrand}]</span>
 	                            	<span>${cart.cartProduct.productEngName}</span><br>
-	                                <span>${cart.cartProduct.productTitle}</span><br>
+	                                <%-- <span>${cart.cartProduct.productTitle}</span><br> --%>
 	                                [옵션사이즈 <span id="optionsize${cart.cartNo}">${cart.cartProduct.productOptionSize}</span>ml]<br>
 	                                <span>[현재 재고 ${cart.cartProduct.productAmount}개]</span>
 	                            </a>

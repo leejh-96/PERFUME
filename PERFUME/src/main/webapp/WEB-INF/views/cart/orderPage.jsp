@@ -224,7 +224,7 @@
 	                        	등록된 사진이 없습니다.
 	                        </c:if>
 	                        <c:if test="${not empty directInfo.file.renameFileName}">
-                        		<img src="${path}/upload/product/${directInfo.file.renameFileName}" width="150px">
+                        		<img src="${path}/upload/product/${directInfo.file.renameFileName}" width="100px">
 	                        </c:if>
 	                    </th>
 	                    <th class="align-middle">
@@ -232,7 +232,7 @@
 	                            <a href="${path}/product/detail?no=${directInfo.productNo}">
 	                            	<span>[${directInfo.product.productBrand}]</span>
 	                            	<span>${directInfo.product.productEngName}</span><br>
-	                                <span>${directInfo.product.productTitle}</span><br>
+	                                <%-- <span>${directInfo.product.productTitle}</span><br> --%>
 	                                [옵션사이즈 <span id="optionsize">${option.poName}</span>ml]<br>
 	                                <span>[현재 재고 ${directInfo.poAmount}개]</span>
 	                            </a>

@@ -108,10 +108,10 @@ nav a {
     cursor: pointer;
 }
 
-button {
+#loginmodal button {
   border: 0;
   outline: none;
-  font-size: 30px;
+  font-size: 15px;
   background: black;
   color: white;
   padding: 10px;
@@ -119,7 +119,7 @@ button {
   border-radius: 10px;
 }
 
-button:hover {
+#loginmodal button:hover {
   color: white;
   background: orange;
 }

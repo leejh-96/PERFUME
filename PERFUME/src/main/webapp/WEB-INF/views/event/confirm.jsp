@@ -11,9 +11,9 @@
 	<script>
 	// 이벤트 참여할 때 약관 동의 비동의	
 		if (confirm('${ msg }')) {
-		  window.location.href = '${ pageContext.request.contextPath }${locationAgr}'; 	  // 선택약관 Y로 변경 동의시 이동할 url
+		  window.location.href = '${ pageContext.request.contextPath }/${locationAgr}'; 	  // 선택약관 Y로 변경 동의시 이동할 url
 		} else {
-		  window.location.href = '${ pageContext.request.contextPath }${locationNotAgr}'; // 선택약관 Y로 변경 동의하지 않을시 이동할 url
+		  window.location.href = '${ pageContext.request.contextPath }/${locationNotAgr}'; // 선택약관 Y로 변경 동의하지 않을시 이동할 url
 		}
 	</script>
 </body>

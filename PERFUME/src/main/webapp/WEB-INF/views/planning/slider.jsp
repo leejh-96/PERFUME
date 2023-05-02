@@ -46,7 +46,7 @@
 			<script>
 				function showCouponMessage() {
 				    alert("이미 5% 할인 쿠폰을 발급받으셨습니다. 마이페이지에서 쿠폰 내역을 확인해보세요.");
-				    window.location.href = "${path}/mypage";
+				    window.location.href = "${path}/mypage/mypage";
 				}
 			</script>
 	      </div>
