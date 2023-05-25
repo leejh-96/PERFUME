@@ -29,6 +29,7 @@ public class CartServiceImpl implements CartService{
 		
 		CartMember member = null;
 		
+		//회원의 쿠폰,포인트 정보를 가져옴
 		member = cartMapper.selectCartMemberInfo(memberNo);
 		
 		return member;
@@ -39,10 +40,14 @@ public class CartServiceImpl implements CartService{
 		
 		List<Cart> clist = null;
 		
+		//회원을 식별하는 회원생성번호로 장바구니 목록을 가져옴
 		clist = cartMapper.selectCart(memberNo);
 		
+		//List에 담긴 상품들의 갯수만큼 반복하는 반복문
 		for(int i = 0; i<clist.size(); i++) {
+			// n번째 상품의 상품정보,옵션정보를 가져옴
 			clist.get(i).setCartProduct(cartMapper.selectCartProductInfo(clist.get(i).getCartNo(),clist.get(i).getProductNo()));
+			// n번째 상품에 적용된 할인정보 목록을 가져옴(기획전할인,이벤트적용,쿠폰적용)
 			clist.get(i).setBenefitList(cartMapper.selectProductBenefit(clist.get(i).getProductNo()));;
 		}
 		return clist;

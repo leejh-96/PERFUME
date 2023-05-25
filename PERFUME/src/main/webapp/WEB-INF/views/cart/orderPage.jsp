@@ -654,22 +654,30 @@ $(document).ready(function(){
     	
     }
      
+    //적립금 사용하기를 클릭하면 이벤트가 발생하여 pointCheck함수가 호출
     function pointCheck(){
     	
+    	//입력한 값을 읽어온 후 숫자로 형변환해준다.
     	let pointInput = $('#pointInput').val();
     	let point2 = parseInt(pointInput);
+    	
+    	//화면에 표시된 회원의 첫 적립금을 읽어온 후 특수문자를 빼고 숫자로 형변환해준다.
     	let memberpoint = $('#memberpoint').text();
     	let formatmemberpoint= memberpoint.split(',').join("");
     	let parseformatmemberpoint = parseInt(formatmemberpoint);
     	
+    	//입력한 값이 회원의 첫 적립금보다 큰지 체크하는 조건문
     	if (point2 > parseformatmemberpoint) {
 			alert('적립금 한도를 초과했습니다. 다시 입력해주세요!^^')
+			//클릭이벤트를 강제로 발생시켜 취소하기 버튼이 클릭된다.
 			$('#reset').trigger('click');
 		}else if (point2 < parseformatmemberpoint || point2 == parseformatmemberpoint) {
 			
+			//다시 한번 회원에게 사용유무를 확인한다.
 			if (confirm(point2+'point 적립금을 사용하시겠습니까?')) {
 				
 				if (point2<parseformatmemberpoint || point2 == parseformatmemberpoint) {
+					//결제정보란 사용내역에 사용한 적립금을 표시해주기 위해서 포인트 사용내역 text를 읽어온 후 특수문자를 빼고 숫자로 형변환해준다.
 					let savesale = $('#save-sale2').text()
 					let formatsavesale= savesale.split(',').join("");
 			        let parseformatsavesale = parseInt(formatsavesale);
@@ -678,14 +686,18 @@ $(document).ready(function(){
 			        pointremember = point2
 			        console.log('pointremember : '+pointremember)
 			        
+			        //결제정보란 사용내역에 사용한 적립금을 표시해준다.
 					$('#save-sale2').text(parseformatsavesale);
 					
+			        //사용된 적립금은 결제정보란 최종결제금액에 반영되어 나타나야하기 때문에 계산해주기 위해 최종결제금액 text를 읽어온 후 특수문자를 빼고 숫자로 형변환해준다.
 			        let finaltotal = $('#finaltotal').text();
 					let formatfinaltotal= finaltotal.split(',').join("");
 		        	let parseformatfinaltotal = parseInt(formatfinaltotal);
 					
+		        	//최종결제금액에서 사용한 적립금을 뺀 후 다시 최종결제금액 text에 (원)단위로 포맷하여 보여준다.
 		        	$('#finaltotal').text(new Intl.NumberFormat('ko-kr').format(parseformatfinaltotal-pointremember));
 		        	
+		        	//마지막으로 적림금사용하기 버튼을 비활성화 시킨다.
 		        	$('#pointtry').attr('disabled',true);
 				}
 			}
@@ -694,17 +706,23 @@ $(document).ready(function(){
 		}
     }
     
+    //사용되는 쿠폰들의 값을 기억하기 위한 변수 선언
     let couponTotal = 0;
+    //회원이 쿠폰 적용하기 버튼을 클릭하면 couponCheck함수가 호출
     function couponCheck(memberNo,benefitNo,benefitRatio){
+    	
+    	//비동기로 서버와 통신하여 해당하는 멤버번호, 혜택(쿠폰)번호를 매개변수로 보낸다.
     	$.ajax({
     		url : '${path}/cart/couponUpdate',
     		type : 'post',
     		data : {memberNo,benefitNo},
+    		//성공적으로 서버에서 필요한 로직이 수행되면 실행되는 콜백함수
     		success : function(success){
     			console.log('쿠폰 업데이트 성공')
     			
     			$('input:checkbox[name="cartCheckBox"]').each(function() {
 					
+    			//사용한 쿠폰은 숨기고, 취소하기 버튼이 있는 쿠폰을 노출시킨다.
 			  	if ($('#coupon'+benefitNo).css('display')=='block') {
 	    			$('#coupon'+benefitNo).css('display','none');
 					$('#couponreset'+benefitNo).css('display','block');
@@ -1058,6 +1076,7 @@ $(document).ready(function(){
 				        	type : 'POST',
 				        	url : '${path}/verifyIamport/' + rsp.imp_uid 
 				        }).done(function(data) {
+				        	console.log('검증성공')
 				        	let orderDate = new Date().getTime();//결제날짜 생성
 				        	if(rsp.paid_amount == data.response.amount){
 				        		if (memberNo != 0) {//회원검증

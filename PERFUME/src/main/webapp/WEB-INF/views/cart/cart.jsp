@@ -1116,7 +1116,6 @@
 							            		url : '${path}/order/pointUpdate/'+point+'/'+memberNo+'/',
 							            		type : 'GET',
 							            		data : {point,memberNo},
-							            		/* contentType: 'application/json; charset=utf-8', */
 							            		dataType : 'json',
 							            		success : function(result){
 							            			if (result > 0) {
@@ -1124,7 +1123,6 @@
 								            			$.ajax({
 															url : '${path}/order/plusPoint/'+plusPoint+'/'+memberNo+'/',
 															type : 'GET',
-															/* contentType: 'application/json; charset=utf-8', */
 															data : {plusPoint,memberNo},
 															dataType : 'json',
 															success : function(result){
@@ -1133,14 +1131,12 @@
 																}
 															},
 											        		error : function(){
-											        			/* $('#myModal').modal('hide') */
 											        			console.log('적립금 업데이트 오류')
 											        		}
 														})
 													}
 							            		},
 							            		error : function(){
-							            			/* $('#myModal').modal('hide') */
 							            			console.log('적립금 업데이트 오류')
 							            		}
 							               })
@@ -1158,7 +1154,6 @@
 				        			contentType: 'application/json; charset=utf-8',
 				        			async : false,
 				        			success : function(obj){
-				        				/* $('#myModalorder').modal('show') */
 				        				
 			        					$('input:checkbox[name=cartCheckBox]').each(function(index){
 			        						if (this.disabled == true) {
@@ -1190,7 +1185,6 @@
 				        								console.log('order-product-complete 결제에 성공하였습니다.')
 				        							},
 				        							error : function(error){
-				        								/* $('#myModalorder').modal('hide') */
 				        								console.log('order-product-error 결제에 실패하였습니다.')
 				        							}
 				        						})
@@ -1198,16 +1192,13 @@
 				        				})
 				        			},
 				        			error : function(error){
-				        				 /* $('#myModalorder').modal('hide')  */
 				        				console.log('order-insert-error')
 				        			}
 				        		})
 				        		payment = '';
-				        		 /* $('#myModalorder').modal('hide') */  
  				        		window.location.href='${path}/cart/orderList/'+order.orderNo+'/'+order.memberNo+'/'+plusPoint;
  				        	} else {
 				        		//결제 실패 로직
-				        		/*  $('#myModalorder').modal('hide')  */
 				        		alert("결제에 실패하였습니다.");
 				        	}
 				        });

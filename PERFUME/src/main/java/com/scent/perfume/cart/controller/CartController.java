@@ -113,8 +113,6 @@ public class CartController {
 	public int cartDelete(@RequestParam("memberNo")int memberNo,
 						  @RequestParam("cartNo") int cartNo){
 		
-		System.out.println("memberNo : "+memberNo+", "+"carNo : "+cartNo);
-		
 		int result = cartService.cartDelete(memberNo,cartNo);
 		
 		if (result > 0) {
@@ -136,8 +134,6 @@ public class CartController {
 		
 		order.setOrderNo(orderNo);
 		
-		System.out.println(order);
-		
 		if (result > 0) {
 			log.info("성공");
 		}else {
@@ -149,8 +145,6 @@ public class CartController {
 	@ResponseBody
 	@RequestMapping(value="cart/order", method=RequestMethod.POST, produces="application/json;")
 	public int order(@RequestBody OrderList orderList) {
-		
-		System.out.println("orderList : "+orderList);
 		
 		int result = cartService.orderListInsert(orderList);
 		
@@ -173,16 +167,21 @@ public class CartController {
 			return iamport.paymentByImpUid(imp_uid);
 	}
 	
-	@RequestMapping("/cart/orderList/{orderNo}/{memberNo}/{plusPoint}")
+	@GetMapping("/cart/orderList/{orderNo}/{memberNo}/{plusPoint}")
 	public String orderList(@PathVariable("orderNo") String orderNo,
 							@PathVariable("memberNo") int memberNo,
 							@PathVariable("plusPoint") int plusPoint,
 							Model model) {
 		Order order = null;
 		
+		/*
+		 * 결제 시 생성된 주문번호를 매개변수로 받아서 데이터베이스에 저장된 결제정보,배송지정보,주문상품정보를 조회한다.
+		 */ 
 		order = cartService.orderList(orderNo);
 		
 		model.addAttribute("order", order);
+		
+		//매 결제시 계산이 완료된 적립금을 주문완료페이지로 렌더링해서 보여주기 위한 작업
 		model.addAttribute("plusPoint", plusPoint);
 		
 		return "cart/orderList";
@@ -283,9 +282,5 @@ public class CartController {
 		}
 		return result;
 	}
-	
-	
-	
-	
 	
 }

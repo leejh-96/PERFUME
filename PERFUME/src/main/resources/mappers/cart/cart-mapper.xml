@@ -4,7 +4,6 @@
 
 <mapper namespace="com.scent.perfume.cart.model.mapper.CartMapper">
 	
-	<!-- 0 -->
 	<resultMap id="selectCartMemberInfoResultMap" type="com.scent.perfume.cart.model.vo.CartMember">
 		<id property="memberNo" column="m_no"/>
 		<result property="memberId" column="m_id"/>
@@ -103,9 +102,6 @@
 		<result property="poName" column="po_name"/>
 		<result property="poPrice" column="po_price"/>
 		<result property="poAmount" column="po_amount"/>
-		<!-- <association property="product" select="selectNowProduct" column="p_no" javaType="CartProduct"/>
-		<association property="file" select="selectNowFile" column="p_no" javaType="AdminProductFile"/>
-		<collection property="benefitList" select="selectProductBenefit" column="p_no" javaType="arraylist"/> -->
 	</resultMap>
 	
 	<resultMap id="nowProductResultMap" type="CartProduct">
@@ -184,7 +180,7 @@
 	ORDER BY 7 DESC
 	</select>
 	
-	<!-- 0 -->
+	<!-- 장바구니에 담긴 상품의 상세정보,옵션정보,이미지를 조회하는 쿼리문 -->
 	<select id="selectCartProductInfo" parameterType="_int" resultMap="selectCartProductInfoResultMap">
 	SELECT 
 		P.P_BRAND,
