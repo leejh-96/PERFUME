@@ -5,9 +5,13 @@
 
 #### 1.[프로젝트 소개](#프로젝트-소개)
 
-#### 2.[개발 사항](#개발-사항)
+#### 2.[Flow Chart](#Flow-Chart)
 
-#### 3.[느낀점](#느낀점)
+#### 3.[ERDiagram](#ERDiagram)
+
+#### 4.[개발 사항](#개발-사항)
+
+#### 5.[느낀점](#느낀점)
 
 ## 프로젝트 소개
 ### 개요
@@ -37,7 +41,14 @@ Spring Framework와 MVC패턴을 접목하여 쇼핑몰 웹사이트 사이클�
 ### 빌드 툴
 * `Maven 4.0`
 ### 서버
-* `Apache Tomcat 9.0` 
+* `Apache Tomcat 9.0`
+
+## Flow Chart
+* 본격적인 UI기획 및 ERD 설계 전, 향수 쇼핑몰에 필요한 기능의 작업흐름을 파악하기 위해 플로우 차트를 제작하여 활용했습니다. (디자인 커뮤니케이션 협업툴인 윔지컬을 통해 제작)
+<img width="900" alt="윔지컬" src="https://github.com/leejh-96/perfume/assets/115613811/b605ccd8-5f09-4905-b4cc-a8ce6893a521">
+
+## ERDiagram
+<img width="900" alt="erd" src="https://github.com/leejh-96/perfume/assets/115613811/fcc722cd-248a-4bb0-b93b-f32d3356d7f1">
 
 ## 개발 사항
 * 아임포트 결제 API를 활용한 결제 기능 테스트 
