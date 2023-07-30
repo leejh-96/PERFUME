@@ -1,66 +1,53 @@
 <br><br>
 # 내음 - 코로 맡을 수 있는 나쁘지 않거나 향기로운 기운
-<br>
 
-## 📃개요
+## 목차
+
+#### 1.[프로젝트 소개](#프로젝트-소개)
+
+#### 2.[개발 주요사항](#개발-주요사항)
+
+#### 3.[느낀점](#느낀점)
+
+## 프로젝트 소개
+### 개요
 세상에는 수많은 향수가 있지만
 그 중 나에게 맞는 향을 찾기란 매우 어렵습니다.
 
 ‘내음’은 향수 시향이 어려운 환경에 있는 당신을 위해
 시향지에 다양한 향기를 담아 보내드리거나
-나를 표현할 수 있는 향을 찾게 도와드립니다. 
+나를 표현할 수 있는 향을 찾게 도와드립니다.
 
-## 프로젝트 목적
+### 프로젝트 목적
 Spring Framework와 MVC패턴을 접목하여 쇼핑몰 웹사이트 사이클에 대해 이해하고, 기술적 고민을 경험해 보는 것을 목표로 시작했습니다.<br>
 하나의 기능을 완성감 있게 구현하며 개발하는 것을 목표로, 웹 개발의 전반적인 지식을 쌓는 것에 목적에 두었습니다.
 
-## 개발 환경
- - WindowOS
- - Spring Tool Suite3 
- - Visual Studio Code
- - GitHub
- - Sourcetree
- - sqldeveloper
+### 개발인원
+* 총 6명(백엔드)
 
-## 사용 기술 
+### 개발 환경
+* `WindowOS` `Spring Tool Suite3` `Visual Studio Code` `GitHub` `Sourcetree`  `sqldeveloper`
+### 사용기술
+* Frontend - 
+`HTML5` `CSS3` `JavaScript` `jQuery` `AJAX` ` JSON` `Bootstrap4`
+* Backend - 
+`Spring Framework` `Lombok` `JAVA` `MyBatis` 
+### 데이터베이스
+* `Oracle`
+### 빌드 툴
+* `Maven 4.0`
+### 서버
+* `Apache Tomcat 9.0` 
 
-**백엔드**
-  - Java 11
-  - Spring Framework
-  - MyBatis Framework
-  - Lombok
-    
-**프론트엔드**
- -   Html5/css3
- -   Javascript
- -   jQuery
- -   Bootstrap4
- -   Ajax
- 
-**빌드 툴**
- - Maven 4.0
-
-**데이터베이스**
- - Oracle
-
-**서버**
-  - Apache Tomcat 9.0
-
-## 📃개발 주요사항
+## 개발 사항
 * 아임포트 결제 API를 활용한 결제 기능 테스트 
 * 비동기 통신을 이용한 클라이언트와 서버 간의 요청과 응답 처리
 * Spring Framework를 이용한 백엔드 개발
 
-## 담당 역할
-  - 장바구니페이지
-  - 주문/결제페이지
-  - 주문완료페이지 
-
-## 📃구현 설명
-* 
-
-## 📃개발 이슈
-* 
+### 담당 역할
+* 장바구니페이지
+* 주문/결제페이지
+* 주문완료페이지
 
 ## 느낀점
 이번 프로젝트로 인해 개발을 바라보는 자세가 많이 바뀐 계기가 된 것 같습니다.
